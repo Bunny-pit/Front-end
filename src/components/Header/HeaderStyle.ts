@@ -20,12 +20,12 @@ export const HedearStyle = styled.div`
       flex-direction: row;
       justify-content: space-between;
       li {
-        margin: 0 1rem;
+        margin: 0 3rem;
         a {
           text-decoration: none;
           font-size: 2rem;
           color: black;
-          padding: 0 1rem;
+          padding: 1rem 1.5rem;
         }
       }
     }
