@@ -9,7 +9,10 @@ function App() {
   return (
     <>
       <MainPage />
-      <Router></Router>
+      <Router>
+        {/* <Header />
+      <Footer /> */}
+      </Router>
     </>
   );
 }
