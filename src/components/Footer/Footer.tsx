@@ -10,26 +10,26 @@ const DefaultFooter = () => {
     <FooterStyle>
       <div className="wrapper">
         <div className="sec1">
-          <img className="logo" src={FooterLogo} />
-          <img className="vector" src={FooterVector} />
+          <img className="logo" src={FooterLogo} alt="푸터 로고" />
+          <img className="vector" src={FooterVector} alt="선!" />
         </div>
         <div className="sec2">
           <p>친구들과 함께 만드는 우리의 공간</p>
           <ul>
             <li>
-              <a href="#">김종현</a>
+              <a href="https://github.com/PossumCircus">김종현</a>
             </li>
             <li>
-              <a href="#">류이서</a>
+              <a href="https://github.com/ryuiseo">류이서</a>
             </li>
             <li>
-              <a href="#">이준미</a>
+              <a href="https://github.com/ddun-Ttu">이준미</a>
             </li>
             <li>
-              <a href="#">이종욱</a>
+              <a href="https://github.com/Loo-ke">이종욱</a>
             </li>
             <li>
-              <a href="#">오창현</a>
+              <a href="https://github.com/ChanghyeonO">오창현</a>
             </li>
           </ul>
           <a href="https://github.com/Bunny-pit/bunny-pit">

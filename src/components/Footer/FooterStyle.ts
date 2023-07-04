@@ -32,6 +32,7 @@ export const FooterStyle = styled.div`
     p {
       color: #fb9bf9;
       font-weight: 600;
+      margin-bottom: 6rem;
     }
     ul {
       list-style: none;
