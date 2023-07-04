@@ -5,51 +5,51 @@ export const FooterStyle = styled.div`
   background: #181820;
   color: #fff;
   font-size: 1.8rem;
-  .wrapper {
-    height: 24rem;
-    margin: 0 4rem;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .sec1 {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    .logo {
-      width: 7.6rem;
-      height: 10.5rem;
-    }
-    .vector {
-      margin: 0 0 0 5rem;
-      height: 10rem;
-    }
-  }
-  .sec2 {
-    width: 35rem;
-    text-align: right;
-    p {
-      color: #fb9bf9;
-      font-weight: 600;
-    }
-    ul {
-      list-style: none;
-      display: flex;
-      justify-content: space-between;
-      padding: 0;
-      li {
-        a {
-          text-decoration: none;
-          color: #fff;
-          padding: 0.2rem 0 0.2rem 0.8rem;
-        }
-      }
-    }
-    a {
-      color: #b3b3b3;
-      padding: 0.2rem 0 0.2rem 0.8rem;
-      text-decoration: none;
-    }
-  }
+`;
+export const Wrapper = styled.div`
+  height: 24rem;
+  margin: 0 4rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
+export const Sec1 = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+export const Logo = styled.img`
+  width: 7.6rem;
+  height: 10.5rem;
+`;
+export const Line = styled.img`
+  margin: 0 0 0 5rem;
+  height: 10rem;
+`;
+export const Sec2 = styled.div`
+  width: 35rem;
+  text-align: right;
+`;
+export const Title = styled.p`
+  color: #fb9bf9;
+  font-weight: 600;
+  margin-bottom: 6rem;
+`;
+export const MemberList = styled.ul`
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  padding: 0;
+`;
+export const List = styled.li``;
+export const MemberLink = styled.a`
+  text-decoration: none;
+  color: #fff;
+  padding: 0.2rem 0 0.2rem 0.8rem;
+`;
+export const ProjectLink = styled.a`
+  color: #b3b3b3;
+  padding: 0.2rem 0 0.2rem 0.8rem;
+  text-decoration: none;
 `;

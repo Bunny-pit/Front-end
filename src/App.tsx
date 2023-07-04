@@ -10,8 +10,8 @@ function App() {
     <>
       <MainPage />
       <Router>
-        {/* <Header />
-      <Footer /> */}
+        <Header />
+        <Footer />
       </Router>
     </>
   );
