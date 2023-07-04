@@ -112,8 +112,27 @@ export const LeftSection = styled.div`
     font-size: 3rem;
   }
 `;
+export const RightSection = styled.div`
+  margin-left: 13rem;
+  background-color: ${({ theme }) => theme.colors.text};
+  height: 37rem;
+  width: 70rem;
+  border-radius: 3.7rem;
+  position: relative;
+  & p {
+    color: white;
+    position: absolute;
+    top: 12rem;
+    left: 25rem;
+    font-size: 3rem;
+  }
+`;
 export const RightContent = styled.div`
   margin-left: auto;
+  margin-right: 15rem;
+`;
+export const LeftContent = styled.div`
+  margin-left: 8rem;
   margin-right: 15rem;
 `;
 export const MidContent = styled.p`
@@ -122,4 +141,42 @@ export const MidContent = styled.p`
 `;
 export const MidSecContent = styled.p`
   font-size: 3rem;
+`;
+export const ThirdSection = styled.div`
+  margin-top: -30rem;
+  display: flex;
+  background-color: ${({ theme }) => theme.colors.gray300};
+  padding: 20rem 0;
+`;
+export const FourthSection = styled.div`
+  margin-top: 0rem;
+  display: flex;
+  background-color: ${({ theme }) => theme.colors.background};
+  padding: 20rem 0;
+`;
+export const HalfCircle = styled.div`
+  height: 62rem;
+  background: linear-gradient(
+    360deg,
+    #7954f8 0%,
+    rgba(251, 155, 249, 0.62) 55.73%,
+    rgba(251, 155, 249, 0) 100%
+  );
+  border-bottom-left-radius: 50% 80%;
+  border-bottom-right-radius: 50% 80%;
+  margin-bottom: 20rem;
+  display: flex;
+  justify-content: center;
+`;
+export const ShareBtn = styled.button`
+  width: 53rem;
+  height: 12rem;
+  background: ${({ theme }) => theme.colors.background};
+  border-radius: 3rem;
+  border: none;
+  color: ${({ theme }) => theme.colors.pointcolor};
+  font-size: 3rem;
+  font-weight: 700;
+  margin-top: 20rem;
+  cursor: pointer;
 `;
