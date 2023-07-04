@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const HedearStyle = styled.div`
-  border-bottom: 0.1rem solid #db7bf9;
+  border-bottom: 0.1rem solid ${({ theme }) => theme.colors.logocolor};
 `;
 export const HeaderWrapper = styled.div`
   margin: 0 4rem;
@@ -23,12 +23,12 @@ export const MenuUl = styled.ul`
 `;
 export const MenuLi = styled.li`
   margin: 0 3rem;
-`;
-export const MenuLink = styled.a`
-  text-decoration: none;
-  font-size: 2rem;
-  color: black;
-  padding: 1rem 1.5rem;
+  a {
+    text-decoration: none;
+    font-size: 2rem;
+    color: black;
+    padding: 1rem 1.5rem;
+  }
 `;
 export const Option = styled.img`
   width: 3.4rem;

@@ -1,9 +1,9 @@
-import React from 'react';
-import MainLogo from '../../assets/icons/MainLogo.png';
-import GreenHeart from '../../assets/images/greenheart.png';
-import BlueHeart from '../../assets/images/blueheart.png';
-import PinkHeart from '../../assets/images/pinkheart.png';
-import Avatar from '../../assets/images/avatar.png';
+import React from "react";
+import MainLogo from "../../assets/icons/MainLogo.png";
+import GreenHeart from "../../assets/images/greenheart.png";
+import BlueHeart from "../../assets/images/blueheart.png";
+import PinkHeart from "../../assets/images/pinkheart.png";
+import Avatar from "../../assets/images/avatar.png";
 
 import {
   FirstSection,
@@ -27,7 +27,7 @@ import {
   SecondSection,
   LeftSection,
   RightContent,
-} from './MainStyle';
+} from "./MainStyle";
 const MainPage = () => {
   return (
     <>
@@ -44,7 +44,7 @@ const MainPage = () => {
             <BigText1>친구들과 함께 만드는,</BigText1>
             <BigText2>우리의 공간</BigText2>
             <MidText>
-              자유롭게 사진을 올리고, 공유할 수 있는 우리만의 공간을 <br />{' '}
+              자유롭게 사진을 올리고, 공유할 수 있는 우리만의 공간을 <br />{" "}
               버니톡과 함께 만들어가요
             </MidText>
             <ImgContainer>
