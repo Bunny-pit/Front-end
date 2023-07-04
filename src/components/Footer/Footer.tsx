@@ -26,21 +26,30 @@ const DefaultFooter = () => {
           <Title>친구들과 함께 만드는 우리의 공간</Title>
           <MemberList>
             <List>
-              <MemberLink href="https://github.com/PossumCircus">
+              <MemberLink
+                target="_blank"
+                href="https://github.com/PossumCircus"
+              >
                 김종현
               </MemberLink>
             </List>
             <List>
-              <MemberLink href="https://github.com/ryuiseo">류이서</MemberLink>
+              <MemberLink target="_blank" href="https://github.com/ryuiseo">
+                류이서
+              </MemberLink>
             </List>
             <List>
-              <MemberLink href="https://github.com/ddun-Ttu">이준미</MemberLink>
+              <MemberLink target="_blank" href="https://github.com/ddun-Ttu">
+                이준미
+              </MemberLink>
             </List>
             <List>
-              <MemberLink href="https://github.com/Loo-ke">이종욱</MemberLink>
+              <MemberLink target="_blank" href="https://github.com/Loo-ke">
+                이종욱
+              </MemberLink>
             </List>
             <List>
-              <MemberLink href="https://github.com/ChanghyeonO">
+              <MemberLink target="_blank" href="https://github.com/ChanghyeonO">
                 오창현
               </MemberLink>
             </List>

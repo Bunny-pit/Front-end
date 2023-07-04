@@ -1,17 +1,16 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import MainPage from './pages/Main/Main';
-import DefaultButton from './components/Buttons/DefaultButton';
-import Header from './components/Header/Header';
-import Footer from './components/Footer/Footer';
+import UserMain from './pages/UserMain/UserMain';
 
 function App() {
   return (
     <>
-      <MainPage />
       <Router>
-        <Header />
-        <Footer />
+        <Routes>
+          <Route path="/" element={<MainPage />} />
+          <Route path="/usermain" element={<UserMain />} />
+        </Routes>
       </Router>
     </>
   );

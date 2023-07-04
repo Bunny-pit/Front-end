@@ -45,7 +45,7 @@ export const MemberList = styled.ul`
 export const List = styled.li``;
 export const MemberLink = styled.a`
   text-decoration: none;
-  color: #fff;
+  color: ${({ theme }) => theme.colors.background};
   padding: 0.2rem 0 0.2rem 0.8rem;
 `;
 export const ProjectLink = styled.a`
