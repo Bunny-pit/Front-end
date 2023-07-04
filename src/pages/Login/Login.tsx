@@ -9,7 +9,6 @@ export default function LoginPage() {
       <TitleAndLogoWrap>
         <LogoWrap>
           <img src={MainLogo} alt="main-logo" style={{ marginTop: "10rem" }} />
-          <br />
         </LogoWrap>
         <TitleWrap>
           환영해요 버니!
