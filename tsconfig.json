@@ -16,18 +16,5 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  /* path alias */
-  "baseUrl": ".",
-  "paths": {
-    "@public/*": ["public/*"],
-    "@src/*": ["src/*"],
-    "@components/*": ["src/components/*"],
-    "@pages/*": ["src/pages/*"],
-    "@assets/*": ["src/assets/*"],
-    "@styles/*": ["src/styles/*"],
-    "@utils/*": ["src/utils/*"],
-    "@api/*": ["src/api/*"],
-    "@types/*": ["src/types/*"]
-  },
   "include": ["src"]
 }

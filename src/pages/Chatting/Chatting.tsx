@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
-import InputBar from '../../components/Input/Input';
+
 import {
   Container,
   DmContainer,
@@ -37,9 +37,7 @@ const Chatting = () => {
             ))}
           </DmList>
         </DmContainer>
-        <ChattingContainer>
-          <InputBar />
-        </ChattingContainer>
+        <ChattingContainer></ChattingContainer>
       </Container>
       <Footer />
     </>
