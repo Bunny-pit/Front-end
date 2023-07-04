@@ -113,7 +113,8 @@ export const LeftSection = styled.div`
   }
 `;
 export const RightSection = styled.div`
-  margin-left: 13rem;
+  margin-left: auto;
+  margin-right: 8rem;
   background-color: ${({ theme }) => theme.colors.text};
   height: 37rem;
   width: 70rem;
