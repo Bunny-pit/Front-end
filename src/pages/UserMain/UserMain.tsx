@@ -1,8 +1,8 @@
-import React from "react";
-import Header from "../../components/Header/Header";
-import Footer from "../../components/Footer/Footer";
-import userImage from "../../assets/images/userimage.png";
-import plusIcon from "../../assets/icons/UserPlus.png";
+import React from 'react';
+import Header from '../../components/Header/Header';
+import Footer from '../../components/Footer/Footer';
+import userImage from '../../assets/images/userimage.png';
+import plusIcon from '../../assets/icons/UserPlus.png';
 import {
   Container,
   Sec1,
@@ -20,7 +20,7 @@ import {
   Email,
   UserId,
   PlusIcon,
-} from "./UserMainStyle";
+} from './UserMainStyle';
 
 const UserMain = () => {
   let postCount = 50;
@@ -39,21 +39,21 @@ const UserMain = () => {
               <PlusIcon
                 src={plusIcon}
                 onClick={() => {
-                  alert("친구 추가하기 버튼!");
+                  alert('친구 추가하기 버튼!');
                 }}
               />
             </Wrapper1>
             <Wrapper2>
               <FriendButton
                 onClick={() => {
-                  alert("친구초대하기");
+                  alert('친구초대하기');
                 }}
               >
                 친구초대하기
               </FriendButton>
               <EditButton
                 onClick={() => {
-                  alert("프로필 편집하기");
+                  alert('프로필 편집하기');
                 }}
               >
                 프로필 편집
