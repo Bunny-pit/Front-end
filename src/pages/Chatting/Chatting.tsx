@@ -1,4 +1,3 @@
-import React from 'react';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 
@@ -13,6 +12,7 @@ import {
   UserNickName,
 } from './ChattingStyle';
 import userimage from '../../assets/images/userimage.png';
+import InputBar from '../../components/Input/InputBar';
 
 const userProfile = [
   { username: 'cute_hyeon' },
@@ -37,7 +37,9 @@ const Chatting = () => {
             ))}
           </DmList>
         </DmContainer>
-        <ChattingContainer></ChattingContainer>
+        <ChattingContainer>
+          <InputBar placeholder="채팅을 시작하세요" />
+        </ChattingContainer>
       </Container>
       <Footer />
     </>
