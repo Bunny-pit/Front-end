@@ -13,8 +13,11 @@ import {
 	InputContainer,
 	InputArea,
 	SendIcon,
+	MessageContainer,
+	Message,
 } from './ChattingStyle';
 import userimage from '../../assets/images/userimage.png';
+import { useState, useEffect, useRef } from 'react';
 
 const userProfile = [
 	{ username: 'cute_hyeon', id: 1 },
@@ -24,6 +27,43 @@ const userProfile = [
 	{ username: 'cute_hansome_gang', id: 5 },
 ];
 const Chatting = () => {
+	const [messages, setMessages] = useState<string[]>([]);
+	const [inputMessage, setInputMessage] = useState<string>('');
+	const messagesEndRef = useRef<HTMLDivElement | null>(null);
+	const [windowHeight, setWindowHeight] = useState(window.innerHeight);
+
+	useEffect(() => {
+		const handleResize = () => {
+			setWindowHeight(window.innerHeight);
+		};
+
+		window.addEventListener('resize', handleResize);
+
+		return () => {
+			window.removeEventListener('resize', handleResize);
+		};
+	}, []);
+
+	const sendMessage = () => {
+		if (inputMessage.trim() !== '') {
+			setMessages([...messages, inputMessage]);
+			setInputMessage('');
+		}
+	};
+
+	const handleEnterKey = (e: React.KeyboardEvent<HTMLInputElement>): void => {
+		if (e.key === 'Enter') {
+			e.preventDefault();
+			sendMessage();
+		}
+	};
+
+	useEffect(() => {
+		if (messagesEndRef.current) {
+			messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+		}
+	}, [messages]);
+
 	return (
 		<>
 			<Header />
@@ -39,10 +79,21 @@ const Chatting = () => {
 						))}
 					</DmList>
 				</DmContainer>
-				<ChattingContainer>
+				<ChattingContainer windowHeight={windowHeight}>
+					{messages.map((message, index) => (
+						<MessageContainer key={index}>
+							<Message>{message}</Message>
+						</MessageContainer>
+					))}
+					<div ref={messagesEndRef} />
 					<InputContainer>
-						<InputArea placeholder='메시지 보내기' />
-						<SendIcon src={sendicon} alt='send-icon' />
+						<InputArea
+							placeholder='메시지 보내기'
+							value={inputMessage}
+							onChange={(e: any) => setInputMessage(e.target.value)}
+							onKeyDown={handleEnterKey}
+						/>
+						<SendIcon src={sendicon} alt='send-icon' onClick={sendMessage} />
 					</InputContainer>
 				</ChattingContainer>
 			</Container>

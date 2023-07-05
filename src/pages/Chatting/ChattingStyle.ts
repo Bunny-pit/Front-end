@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
 	display: flex;
-	min-height: 170rem;
+	min-height: 70rem;
 `;
 export const DmContainer = styled.div`
 	width: 30%;
@@ -34,17 +34,22 @@ export const ProfileImg = styled.img`
 export const UserNickName = styled.p`
 	font-size: 2.5rem;
 `;
-export const ChattingContainer = styled.div`
+export const ChattingContainer = styled.div<{ windowHeight: number }>`
 	width: 70%;
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	padding: 5rem 4rem;
+	height: ${(props) => props.windowHeight}px;
+	overflow-y: auto;
 `;
 export const InputContainer = styled.div`
 	width: 70%;
 	display: flex;
 	align-items: center;
 	margin-top: 150rem;
+	margin-bottom: 6.5rem;
 `;
 export const InputArea = styled.input`
 	width: 80rem;
@@ -54,9 +59,26 @@ export const InputArea = styled.input`
 	border: none;
 	padding: 0 2rem;
 	margin-right: 2rem;
+	font-size: 2rem;
 `;
 export const SendIcon = styled.img`
 	width: 5%;
-	height: 5%;
 	cursor: pointer;
+`;
+export const MessageContainer = styled.div`
+	width: auto;
+	min-width: 5%;
+	flex-shrink: 1;
+	height: auto;
+	border-radius: 19rem;
+	background: #cdc0fc;
+	display: flex;
+	flex-direction: column;
+	padding: 0.5rem 3rem;
+	align-self: flex-end;
+	margin-bottom: 4rem;
+`;
+
+export const Message = styled.p`
+	font-size: 2rem;
 `;
