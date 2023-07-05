@@ -15,11 +15,11 @@ import userimage from '../../assets/images/userimage.png';
 import InputBar from '../../components/Input/InputBar';
 
 const userProfile = [
-  { username: 'cute_hyeon' },
-  { username: 'navi_rabbit3' },
-  { username: 'lets_drinkwine' },
-  { username: 'cartoon_writer' },
-  { username: 'cute_hansome_gang' },
+  { username: 'cute_hyeon', id: 1 },
+  { username: 'navi_rabbit3', id: 2 },
+  { username: 'lets_drinkwine', id: 3 },
+  { username: 'cartoon_writer', id: 4 },
+  { username: 'cute_hansome_gang', id: 5 },
 ];
 const Chatting = () => {
   return (
@@ -30,7 +30,7 @@ const Chatting = () => {
           <Dmtitle>다이렉트 메시지</Dmtitle>
           <DmList>
             {userProfile.map((userData) => (
-              <ProfileCard>
+              <ProfileCard key={userData.id}>
                 <ProfileImg src={userimage} alt="userimage" />
                 <UserNickName>{userData.username}</UserNickName>
               </ProfileCard>
@@ -38,7 +38,7 @@ const Chatting = () => {
           </DmList>
         </DmContainer>
         <ChattingContainer>
-          <InputBar placeholder="채팅을 시작하세요" />
+          <InputBar />
         </ChattingContainer>
       </Container>
       <Footer />
