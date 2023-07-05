@@ -1,6 +1,5 @@
-import { Container, InputArea, SendIcon } from './Input';
+import { Container, InputArea, SendIcon } from './InputBarStyle';
 import sendicon from '../../assets/icons/Sendicon.png';
-import React from 'react';
 
 interface InputBarProps {
   placeholder: string;
