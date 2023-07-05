@@ -1,15 +1,16 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import MainPage from './pages/Main/Main';
-import UserMain from './pages/UserMain/UserMain';
-
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import MainPage from "./pages/Main/Main";
+import UserMainPage from "./pages/UserMain/UserMain";
+import Chatting from "./pages/Chatting/Chatting";
 function App() {
   return (
     <>
       <Router>
         <Routes>
           <Route path="/" element={<MainPage />} />
-          <Route path="/usermain" element={<UserMain />} />
+          <Route path="/usermain" element={<UserMainPage />} />
+          <Route path="/chatting" element={<Chatting />} />
         </Routes>
       </Router>
     </>
