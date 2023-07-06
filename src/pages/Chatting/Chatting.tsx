@@ -25,7 +25,7 @@ const Chatting = () => {
 						path='*'
 						element={
 							<PlaceHoldContent>
-								채팅할 버니를 골라 채팅을 시작하세요!
+								채팅할 버니를 골라 채팅을 시작하세요
 							</PlaceHoldContent>
 						}
 					/>
