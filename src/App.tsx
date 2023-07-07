@@ -12,7 +12,6 @@ function App() {
 					<Route path='/' element={<MainPage />} />
 					<Route path='/usermain' element={<UserMainPage />} />
 					<Route path='/chatting' element={<Chatting />} />
-					<Route path='/detail' element={<Detail />} />
 				</Routes>
 			</Router>
 		</>
