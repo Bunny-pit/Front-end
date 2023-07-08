@@ -8,13 +8,6 @@ import {
 	ContentBox,
 	ImageWrap,
 	UserImage,
-	UserSecretName,
-	InnerContent,
-	Content,
-	Date,
-	Wrapper,
-	Edit,
-	Delete,
 } from './MainHomeStyle';
 
 const Mainhome = () => {
@@ -22,27 +15,13 @@ const Mainhome = () => {
 		<>
 			<Header />
 			<Container>
-				<Title>Unknown Bunnies</Title>
+				<Title>
+					<h1>Unknown Bunnies</h1>
+				</Title>
 				<ContentBox>
 					<ImageWrap>
 						<UserImage src={userImage} alt='User Image' />
 					</ImageWrap>
-					<InnerContent>
-						<UserSecretName>잠자는 버니</UserSecretName>
-						<Content>
-							Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere,
-							inventore perferendis porro tempora doloribus similique, autem
-							suscipit temporibus eum veniam rem aliquid magni voluptatum? Quam
-							culpa quia dolores recusandae esse.
-						</Content>
-						<Date>
-							<p>23:32・2023년 5월 5일</p>
-						</Date>
-						<Wrapper>
-							<Edit>수정</Edit>
-							<Delete>삭제</Delete>
-						</Wrapper>
-					</InnerContent>
 				</ContentBox>
 			</Container>
 			<Footer />
