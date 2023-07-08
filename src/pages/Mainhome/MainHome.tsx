@@ -2,6 +2,7 @@ import React from 'react';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import userImage from '../../assets/images/userimage.png';
+import sendIcon from '../../assets/icons/Sendicon.png';
 import {
 	Container,
 	Title,
@@ -15,6 +16,11 @@ import {
 	Wrapper,
 	Edit,
 	Delete,
+	TextBox,
+	TextWrapper,
+	TextArea,
+	SendButton,
+	SendIcon,
 } from './MainHomeStyle';
 
 const Mainhome = () => {
@@ -45,6 +51,14 @@ const Mainhome = () => {
 					</InnerContent>
 				</ContentBox>
 			</Container>
+			<TextBox>
+				<TextWrapper>
+					<TextArea></TextArea>
+					<SendButton>
+						<SendIcon src={sendIcon} alt='Send Icon' />
+					</SendButton>
+				</TextWrapper>
+			</TextBox>
 			<Footer />
 		</>
 	);

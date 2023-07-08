@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
 	width: 100%;
-	height: 100rem;
+	height: 80rem;
 `;
 
 export const Title = styled.div`
@@ -58,3 +58,44 @@ export const Wrapper = styled.div`
 
 export const Edit = styled.button``;
 export const Delete = styled.button``;
+
+export const TextBox = styled.div`
+	position: fixed;
+	bottom: 24rem;
+	width: 100%;
+	height: 15rem;
+	background-color: #fff;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+`;
+
+export const TextWrapper = styled.div`
+	background-color: #d9d9d9;
+	width: 57%;
+	height: 7rem;
+	display: flex;
+	align-items: center;
+	border-radius: 2rem;
+`;
+
+export const TextArea = styled.input`
+	flex-grow: 9.5;
+	border: 0px;
+	margin-left: 3rem;
+	height: 90%;
+	background-color: transparent;
+	font-size: 2rem;
+	outline: none;
+`;
+
+export const SendButton = styled.button`
+	flex-grow: 0.5;
+	height: 90%;
+	border: 0;
+	background-color: transparent;
+`;
+
+export const SendIcon = styled.img`
+	cursor: pointer;
+`;
