@@ -1,14 +1,13 @@
 import React from 'react';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
-import userImage from '../../assets/images/userimage.png';
 import sendIcon from '../../assets/icons/Sendicon.png';
 import {
 	Container,
 	Title,
 	ContentBox,
 	ImageWrap,
-	UserImage,
+	UserRandomImage,
 	UserSecretName,
 	InnerContent,
 	Content,
@@ -24,6 +23,9 @@ import {
 } from './MainHomeStyle';
 
 const Mainhome = () => {
+	const seed = 'john'; // 아바타 이미지를 생성할 때 사용할 시드 값을 설정
+	const avatarUrl = `https://avatars.dicebear.com/api/identicon/${seed}.svg`; // 시드 값으로 아바타 이미지 URL을 생성
+
 	return (
 		<>
 			<Header />
@@ -31,7 +33,7 @@ const Mainhome = () => {
 				<Title>Unknown Bunnies</Title>
 				<ContentBox>
 					<ImageWrap>
-						<UserImage src={userImage} alt='User Image' />
+						<UserRandomImage src={avatarUrl} alt='User Random Image' />{' '}
 					</ImageWrap>
 					<InnerContent>
 						<UserSecretName>잠자는 버니</UserSecretName>

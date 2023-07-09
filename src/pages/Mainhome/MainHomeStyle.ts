@@ -28,7 +28,7 @@ export const ImageWrap = styled.div`
 	align-items: center;
 `;
 
-export const UserImage = styled.img`
+export const UserRandomImage = styled.img`
 	width: 100%;
 	margin: 0 auto;
 `;
