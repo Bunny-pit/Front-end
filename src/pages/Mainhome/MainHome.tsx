@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { FC } from 'react';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import sendIcon from '../../assets/icons/Sendicon.png';
+import md5 from 'md5'; // 추가된 라이브러리
 import {
 	Container,
 	Title,
@@ -22,8 +23,9 @@ import {
 	SendIcon,
 } from './MainHomeStyle';
 
-const Mainhome = () => {
-	const randomNames = [
+const Mainhome: FC = () => {
+	//FC는 Function Component를 나타냄
+	const randomNames: string[] = [
 		'지루한',
 		'따분한',
 		'목마른',
@@ -43,15 +45,16 @@ const Mainhome = () => {
 		'밥먹는',
 	];
 
-	const getRandomName = () => {
+	const getRandomName = (): string => {
 		const randomIndex = Math.floor(Math.random() * randomNames.length);
 		return randomNames[randomIndex];
 	};
 
-	const secretName = `${getRandomName()} 버니`;
+	const secretName: string = `${getRandomName()} 버니`;
 
-	const seed = secretName;
-	const avatarUrl = `https://avatars.dicebear.com/api/identicon/${seed}.svg`;
+	const randomEmail: string = `${secretName}@example.com`;
+	const hashedEmail: string = md5(randomEmail.trim().toLowerCase());
+	const avatarUrl: string = `https://www.gravatar.com/avatar/${hashedEmail}?d=identicon`;
 
 	return (
 		<>
