@@ -23,8 +23,35 @@ import {
 } from './MainHomeStyle';
 
 const Mainhome = () => {
-	const seed = 'john'; // 아바타 이미지를 생성할 때 사용할 시드 값을 설정
-	const avatarUrl = `https://avatars.dicebear.com/api/identicon/${seed}.svg`; // 시드 값으로 아바타 이미지 URL을 생성
+	const randomNames = [
+		'지루한',
+		'따분한',
+		'목마른',
+		'배고픈',
+		'화가난',
+		'소심한',
+		'당당한',
+		'외로운',
+		'고민중인',
+		'코딩하는',
+		'배아픈',
+		'똥마려운',
+		'요리하는',
+		'공부중인',
+		'화장하는',
+		'유쾌한',
+		'밥먹는',
+	];
+
+	const getRandomName = () => {
+		const randomIndex = Math.floor(Math.random() * randomNames.length);
+		return randomNames[randomIndex];
+	};
+
+	const secretName = `${getRandomName()} 버니`;
+
+	const seed = secretName;
+	const avatarUrl = `https://avatars.dicebear.com/api/identicon/${seed}.svg`;
 
 	return (
 		<>
@@ -33,10 +60,10 @@ const Mainhome = () => {
 				<Title>Unknown Bunnies</Title>
 				<ContentBox>
 					<ImageWrap>
-						<UserRandomImage src={avatarUrl} alt='User Random Image' />{' '}
+						<UserRandomImage src={avatarUrl} alt='User Random Image' />
 					</ImageWrap>
 					<InnerContent>
-						<UserSecretName>잠자는 버니</UserSecretName>
+						<UserSecretName>{secretName}</UserSecretName>
 						<Content>
 							Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere,
 							inventore perferendis porro tempora doloribus similique, autem
