@@ -2,7 +2,8 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
 	width: 100%;
-	height: 80rem;
+	height: auto;
+	padding-bottom: 10rem;
 `;
 
 export const Title = styled.div`
@@ -18,21 +19,22 @@ export const ContentBox = styled.div`
 	width: 100%;
 	display: flex;
 	padding: 0 22%;
-	margin: 0 auto;
 	box-sizing: border-box;
 `;
 export const ImageWrap = styled.div`
-	margin: 5rem auto;
+	flex: 1;
+	margin: auto;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 `;
 
 export const UserRandomImage = styled.img`
-	width: 100%;
+	max-width: 100%;
 	margin: 0 auto;
 `;
 export const InnerContent = styled.div`
+	flex: 2;
 	position: relative;
 	padding: 5%;
 `;

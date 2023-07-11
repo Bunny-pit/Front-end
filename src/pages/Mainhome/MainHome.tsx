@@ -1,4 +1,5 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
+import axios from 'axios';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import sendIcon from '../../assets/icons/Sendicon.png';
@@ -25,6 +26,34 @@ import {
 
 const Mainhome: FC = () => {
 	//FC는 Function Component를 나타냄
+
+	interface Post {
+		_id: string;
+		// name: string;
+		title: string;
+		content: string;
+		createdAt: string;
+		updatedAt: string;
+		__v: number;
+	}
+
+	const [posts, setPosts] = useState<Post[]>([]);
+
+	useEffect(() => {
+		const fetchPosts = async () => {
+			try {
+				const res = await axios.get(
+					'https://port-0-back-end-kvmh2mljxnw03c.sel4.cloudtype.app/api/mainhome',
+				);
+				setPosts(res.data);
+			} catch (err) {
+				console.error(err);
+			}
+		};
+
+		fetchPosts();
+	}, []);
+
 	const randomNames: string[] = [
 		'지루한',
 		'따분한',
@@ -53,7 +82,9 @@ const Mainhome: FC = () => {
 	const secretName: string = `${getRandomName()} 버니`;
 
 	const randomEmail: string = `${secretName}@example.com`;
+
 	const hashedEmail: string = md5(randomEmail.trim().toLowerCase());
+
 	const avatarUrl: string = `https://www.gravatar.com/avatar/${hashedEmail}?d=identicon`;
 
 	return (
@@ -61,27 +92,24 @@ const Mainhome: FC = () => {
 			<Header />
 			<Container>
 				<Title>Unknown Bunnies</Title>
-				<ContentBox>
-					<ImageWrap>
-						<UserRandomImage src={avatarUrl} alt='User Random Image' />
-					</ImageWrap>
-					<InnerContent>
-						<UserSecretName>{secretName}</UserSecretName>
-						<Content>
-							Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere,
-							inventore perferendis porro tempora doloribus similique, autem
-							suscipit temporibus eum veniam rem aliquid magni voluptatum? Quam
-							culpa quia dolores recusandae esse.
-						</Content>
-						<Date>
-							<p>23:32・2023년 5월 5일</p>
-						</Date>
-						<Wrapper>
-							<Edit>수정</Edit>
-							<Delete>삭제</Delete>
-						</Wrapper>
-					</InnerContent>
-				</ContentBox>
+				{posts.map((post, index) => (
+					<ContentBox key={index}>
+						<ImageWrap>
+							<UserRandomImage src={avatarUrl} alt='User Random Image' />
+						</ImageWrap>
+						<InnerContent>
+							<UserSecretName>{secretName}</UserSecretName>
+							<Content>{post.content}</Content>
+							<Date>
+								<p>{post.createdAt}</p>
+							</Date>
+							<Wrapper>
+								<Edit>수정</Edit>
+								<Delete>삭제</Delete>
+							</Wrapper>
+						</InnerContent>
+					</ContentBox>
+				))}
 			</Container>
 			<TextBox>
 				<TextWrapper>
