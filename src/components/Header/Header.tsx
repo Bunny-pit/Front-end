@@ -5,10 +5,10 @@ import {
   MenuUl,
   MenuLi,
   Option,
-} from "./HeaderStyle";
-import { Link } from "react-router-dom";
-import HeaderLogo from "../../assets/icons/HedearLogo.png";
-import HeaderOption from "../../assets/icons/HedearOption.png";
+} from './HeaderStyle';
+import { Link } from 'react-router-dom';
+import HeaderLogo from '../../assets/icons/HedearLogo.png';
+import HeaderOption from '../../assets/icons/HedearOption.png';
 
 const DefaultHeader = () => {
   return (
