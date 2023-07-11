@@ -11,6 +11,7 @@ function App() {
 				<Routes>
 					<Route path='/' element={<MainPage />} />
 					<Route path='/usermain' element={<UserMainPage />} />
+					<Route path='/Detail' element={<Detail />} />
 					<Route path='/chatting' element={<Chatting />} />
 				</Routes>
 			</Router>

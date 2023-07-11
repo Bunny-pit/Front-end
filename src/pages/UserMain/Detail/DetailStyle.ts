@@ -3,99 +3,111 @@ import styled from 'styled-components';
 export const Container = styled.div`
 	width: 75%;
 	margin: 0 auto;
-	.profile-wrap {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		.profile {
-			display: flex;
-			align-items: center;
-			img {
-				width: 10rem;
-			}
-			p {
-				font-size: 2.7rem;
-			}
-		} //profile
-		button {
-			border: none;
-			background: #fff;
-			cursor: pointer;
-		}
-	} // profile-wrap
-	.post-wrap {
-		.img-wrap {
-			.post-img {
-				width: 100%;
-			} //post-img
-			width: 100%;
-			height: 60rem;
-			background: lightblue;
-		} //img-wrap
-		.post-detail-wrap {
-			display: flex;
-			flex-direction: row;
-			justify-content: space-between;
-			align-items: center;
-			.like-wrap {
-				display: flex;
-				align-items: center;
-				.like-button {
-					border: none;
-					background: #fff;
-					img {
-						width: 3.6rem;
-					} //img
-				}
-			} //like-button
-			.like-count-wrap {
-				font-size: 2rem;
-				.like-count {
-					font-weight: 600;
-				} //like-count
-			} //like-wrap
-			.post-time {
-				font-size: 1.8rem;
-				color: ${({ theme }) => theme.colors.gray600};
-			}
-		} //.post-detail-wrap
-		.content-wrap {
-			margin: 2rem 0;
-			font-size: 2rem;
-		} //content-wrap
-	} //post-wrap
-	.comment-wrap {
-		h3 {
-			text-align: center;
-		}
-		.comment-ul {
-			list-style: none;
-			padding: 0;
-			display: flex;
-			flex-direction: column;
-			.comment-li {
-				display: flex;
-				flex-direction: row;
-				align-items: center;
-				.comment-userId {
-					font-size: 1.8rem;
-					margin-right: 2rem;
-				}
-				.comment-content {
-					font-size: 1.8rem;
-				}
-			} //comment-li
-		} //comment-ul
-		.comment-input {
-			width: 99%;
-			margin: 0;
-			padding: 0;
-			margin: 2rem 0 6rem;
-		}
-	} //comment-wrap
 `;
-export const DeleteButton = styled.img`
+export const ProfileWrap = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+`;
+export const Profile = styled.div`
+	display: flex;
+	align-items: center;
+`;
+export const ProfileUserImage = styled.img`
+	width: 10rem;
+`;
+export const ProfileId = styled.p`
+	font-size: 2.7rem;
+`;
+export const DeleteButtonWrap = styled.div`
+	border: none;
+`;
+export const DeleteButton = styled.button`
+	border: none;
+	background: #fff;
+	cursor: pointer;
+`;
+export const DeleteButtonIcon = styled.img`
 	width: 3.3rem;
 	background: #fff;
 	margin: 0 auto;
+`;
+
+export const PostWrap = styled.div``;
+export const ContentWrap = styled.div`
+	margin: 2rem 0;
+	font-size: 2rem;
+`;
+export const Content = styled.div`
+	color: ${({ theme }) => theme.colors.text};
+`;
+
+export const ImgWrap = styled.div`
+	width: 100%;
+	height: 60rem;
+	background: lightblue;
+`;
+export const PostImg = styled.div`
+	width: 100%;
+`;
+export const PostDetailWrap = styled.div`
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+`;
+export const LikeWrap = styled.div`
+	display: flex;
+	align-items: center;
+`;
+export const LikeButton = styled.button`
+	border: none;
+	background: #fff;
+`;
+export const LikeCountWrap = styled.div`
+	font-size: 2rem;
+	display: flex;
+	align-items: center;
+`;
+export const LikeCount = styled.p`
+	font-weight: 600;
+	margin-left: 1rem;
+`;
+export const PostTime = styled.p`
+	font-size: 1.8rem;
+	color: ${({ theme }) => theme.colors.gray600};
+`;
+export const LikeButtonIcon = styled.img`
+	width: 3.6rem;
+`;
+export const CommentWrap = styled.div``;
+export const CommentTitle = styled.h3`
+	text-align: center;
+`;
+export const CommentUl = styled.ul`
+	list-style: none;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+`;
+export const Commentli = styled.li`
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+`;
+export const CommentUserId = styled.h4`
+	font-size: 1.8rem;
+	margin-right: 2rem;
+`;
+export const CommentContent = styled.p`
+	font-size: 1.8rem;
+`;
+export const CommentInput = styled.input`
+	width: 99%;
+	margin: 0;
+	padding: 0;
+	margin: 2rem 0 6rem;
+	padding: 1rem;
+	border: 1px solid ${({ theme }) => theme.colors.gray400};
+	border-radius: 0.5rem;
 `;

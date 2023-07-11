@@ -4,71 +4,98 @@ import Footer from '../../../components/Footer/Footer';
 import ProfileImg from '../../../assets/images/userimagesmall.png';
 import DeleteIcon from '../../../assets/icons/DeleteIcon.png';
 import likeIcon from '../../../assets/icons/like.png';
-import { Container, DeleteButton } from './DetailStyle';
+import {
+	Container,
+	DeleteButtonWrap,
+	DeleteButton,
+	DeleteButtonIcon,
+	ProfileWrap,
+	Profile,
+	ProfileUserImage,
+	ProfileId,
+	PostWrap,
+	ImgWrap,
+	PostImg,
+	PostDetailWrap,
+	LikeWrap,
+	LikeButton,
+	LikeButtonIcon,
+	LikeCountWrap,
+	LikeCount,
+	PostTime,
+	CommentWrap,
+	CommentTitle,
+	CommentUl,
+	Commentli,
+	CommentUserId,
+	CommentContent,
+	CommentInput,
+	ContentWrap,
+	Content,
+} from './DetailStyle';
 
 const Detail = () => {
 	return (
 		<>
 			<DetailHeader />
 			<Container>
-				<div className='profile-wrap'>
-					<div className='profile'>
-						<img src={ProfileImg} alt='userImg' />
-						<p>유저 아이디</p>
-					</div>
-					<div className='deletebutton-wrap'>
-						<button>
-							<DeleteButton src={DeleteIcon} alt='삭제버튼' />
-						</button>
-					</div>
-				</div>
-				<div className='post-wrap'>
+				<ProfileWrap>
+					<Profile>
+						<ProfileUserImage src={ProfileImg} alt='userImg' />
+						<ProfileId>유저 아이디</ProfileId>
+					</Profile>
+					<DeleteButtonWrap>
+						<DeleteButton>
+							<DeleteButtonIcon src={DeleteIcon} alt='삭제버튼' />
+						</DeleteButton>
+					</DeleteButtonWrap>
+				</ProfileWrap>
+				<PostWrap>
 					{/* 게시글 큰 wrap */}
-					<div className='img-wrap'>
+					<ImgWrap>
 						{/* 사진 wrap */}
-						<p className='post-img'>이미지 들어갈 자리</p>
-					</div>
-					<div className='post-detail-wrap'>
+						<PostImg>이미지 들어갈 자리</PostImg>
+					</ImgWrap>
+					<PostDetailWrap>
 						{/* 좋아요버튼, 좋아요수, 시간 */}
-						<div className='like-wrap'>
-							<button className='like-button'>
-								<img src={likeIcon} alt='좋아요 버튼' />
-							</button>
-							<p className='like-count-wrap'>
-								좋아요 수 <span className='like-count'>0</span>
-							</p>
-						</div>
-						<p className='post-time'>시간 들어갈 자리</p>
-					</div>
-					<div className='content-wrap'>
+						<LikeWrap>
+							<LikeButton>
+								<LikeButtonIcon src={likeIcon} alt='좋아요 버튼' />
+							</LikeButton>
+							<LikeCountWrap>
+								좋아요 수 <LikeCount>0</LikeCount>
+							</LikeCountWrap>
+						</LikeWrap>
+						<PostTime>시간 들어갈 자리</PostTime>
+					</PostDetailWrap>
+					<ContentWrap>
 						{/* 게시글 내용 들어갈 자리 */}
-						<div className='content'>
-							게시글 내용이 들어갈 자리입니다아아아아아아아앙
-						</div>
-					</div>
+						<Content>게시글 내용이 들어갈 자리입니다아아아아아아아앙</Content>
+					</ContentWrap>
 					<hr />
-				</div>
-				<div className='comment-wrap'>
-					<h3>댓글</h3>
-					<ul className='comment-ul'>
-						<li className='comment-li'>
-							<h4 className='comment-userId'>UserName</h4>
-							<p className='comment-content'>댓글 내용이다 깽깽이들아!!!</p>
-						</li>
-						<li className='comment-li'>
-							<h4 className='comment-userId'>UserName</h4>
-							<p className='comment-content'>댓글 내용이다 깽깽이들아!!!</p>
-						</li>
-						<li className='comment-li'>
-							<h4 className='comment-userId'>UserName</h4>
-							<p className='comment-content'>댓글 내용이다 깽깽이들아!!!</p>
-						</li>
-					</ul>
-					<input
-						type='text'
-						className='comment-input'
-						placeholder='댓글 남기기'></input>
-				</div>
+				</PostWrap>
+				<CommentWrap>
+					<CommentTitle>댓글</CommentTitle>
+					<CommentUl>
+						<Commentli>
+							<CommentUserId>UserName</CommentUserId>
+							<CommentContent>댓글 내용이다 깽깽이들아!!!</CommentContent>
+						</Commentli>
+						<Commentli>
+							<CommentUserId>UserName</CommentUserId>
+							<CommentContent>댓글 내용이다 깽깽이들아!!!</CommentContent>
+						</Commentli>
+						<Commentli>
+							<CommentUserId>UserName</CommentUserId>
+							<CommentContent>댓글 내용이다 깽깽이들아!!!</CommentContent>
+						</Commentli>
+						<Commentli>
+							<CommentUserId>UserName</CommentUserId>
+							<CommentContent>댓글 내용이다 깽깽이들아!!!</CommentContent>
+						</Commentli>
+					</CommentUl>
+					<CommentInput type='text' placeholder='댓글 남기기'></CommentInput>
+				</CommentWrap>
 			</Container>
 			<Footer />
 		</>
