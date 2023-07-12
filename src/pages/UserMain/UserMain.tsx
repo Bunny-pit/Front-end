@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import userImage from '../../assets/images/userimage.png';
@@ -24,7 +25,31 @@ import {
 	PostTitle,
 } from './UserMainStyle';
 
+interface Post {
+	_id: string;
+	userId: string;
+	profileImage: string;
+	images: string[];
+	content: string;
+}
+const backUrl = 'https://port-0-back-end-kvmh2mljxnw03c.sel4.cloudtype.app/api';
+
 const UserMain = () => {
+	const [posts, setPosts] = useState<Post[]>([]);
+	useEffect(() => {
+		// MongoDB에서 데이터 가져오는 함수
+		const fetchPosts = async () => {
+			try {
+				const response = await axios.get(`${backUrl}/post`);
+				setPosts(response.data);
+			} catch (error) {
+				console.error('Error fetching posts:', error);
+			}
+		};
+
+		fetchPosts();
+	}, []);
+
 	const userdata = {
 		userId: 'pretty_bunny_kim',
 		postCount: 50,
@@ -87,16 +112,17 @@ const UserMain = () => {
 				<PostContainer>
 					<PostTitle>게시물</PostTitle>
 					<ul>
-						<li>1</li>
-						<li>1</li>
-						<li>1</li>
-						<li>1</li>
-						<li>1</li>
-						<li>1</li>
-						<li>1</li>
-						<li>1</li>
-						<li>1</li>
-						<li>1</li>
+						{posts.map((post, i) => (
+							<li key={post._id}>
+								<p>{post.content}</p>
+								<img
+									key={i}
+									src={post.images[0]}
+									alt={`post ${i}`}
+									style={{ width: '15rem' }}
+								/>
+							</li>
+						))}
 					</ul>
 				</PostContainer>
 			</Container>
