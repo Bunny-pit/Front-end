@@ -7,6 +7,7 @@ export const WorkSpaceWrapper = styled.div`
 
 export const Channels = styled.nav`
 	width: 40rem;
+	min-height: 165rem;
 	display: inline-flex;
 	flex-direction: column;
 	background: rgba(252, 155, 249, 0.29);
@@ -20,35 +21,6 @@ export const Channels = styled.nav`
 		line-height: 28px;
 		display: flex;
 		align-items: center;
-		&.selected {
-			color: white;
-		}
-	}
-	& .bold {
-		color: ${({ theme }) => theme.colors.text};
-		font-weight: bold;
-	}
-	& .count {
-		margin-left: auto;
-		background: #cd2553;
-		border-radius: 16px;
-		display: inline-block;
-		font-size: 12px;
-		font-weight: 700;
-		height: 18px;
-		line-height: 18px;
-		padding: 0 9px;
-		color: white;
-		margin-right: 16px;
-	}
-	& h2 {
-		height: 36px;
-		line-height: 36px;
-		margin: 0;
-		text-overflow: ellipsis;
-		overflow: hidden;
-		white-space: nowrap;
-		font-size: 15px;
 	}
 `;
 export const WorkspaceName = styled.button`
@@ -70,10 +42,6 @@ export const WorkspaceName = styled.button`
 	cursor: pointer;
 `;
 
-export const MenuScroll = styled.div`
-	height: calc(100vh - 102px);
-	overflow-y: auto;
-`;
 export const PlaceHoldContent = styled.div`
 	margin-top: 5rem;
 	font-size: 2.5rem;
