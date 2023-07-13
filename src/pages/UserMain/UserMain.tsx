@@ -24,6 +24,8 @@ import {
 	PlusIcon,
 	PostContainer,
 	PostTitle,
+	PostUl,
+	PostLi,
 } from './UserMainStyle';
 
 interface Post {
@@ -112,21 +114,16 @@ const UserMain = () => {
 				<hr />
 				<PostContainer>
 					<PostTitle>게시물</PostTitle>
-					<ul>
+					<PostUl>
 						{posts.map((post, i) => (
-							<li key={post._id}>
-								<Link to={`/post/${post._id}`}>
-									<p>{post.content}</p>
-									<img
-										key={i}
-										src={post.images[0]}
-										alt={`post ${i}`}
-										style={{ width: '15rem' }}
-									/>
+							<PostLi key={post._id}>
+								<Link className='link' to={`/post/${post._id}`}>
+									{/* <p>{post.content}</p> */}
+									<img key={i} src={post.images[0]} alt={`post ${i}`} />
 								</Link>
-							</li>
+							</PostLi>
 						))}
-					</ul>
+					</PostUl>
 				</PostContainer>
 			</Container>
 			<Footer />
