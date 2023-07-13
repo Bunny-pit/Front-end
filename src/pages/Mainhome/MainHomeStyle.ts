@@ -38,9 +38,19 @@ export const InnerContent = styled.div`
 	position: relative;
 	padding: 5%;
 `;
+export const UserSecretContainer = styled.div`
+	display: flex;
+	align-items: center;
+`;
 
 export const UserSecretName = styled.h2`
 	font-size: 2.5rem;
+`;
+
+export const GoSecretChat = styled.img`
+	margin-left: auto;
+	margin-top: auto;
+	cursor: pointer;
 `;
 
 export const Content = styled.p`

@@ -2,6 +2,7 @@ import React, { FC, useEffect, useState } from 'react';
 import axios from 'axios';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
+import message from '../../assets/icons/message.png';
 import sendIcon from '../../assets/icons/Sendicon.png';
 import md5 from 'md5'; // 추가된 라이브러리
 import {
@@ -10,7 +11,9 @@ import {
 	ContentBox,
 	ImageWrap,
 	UserRandomImage,
+	UserSecretContainer,
 	UserSecretName,
+	GoSecretChat,
 	InnerContent,
 	Content,
 	Date,
@@ -98,7 +101,10 @@ const Mainhome: FC = () => {
 							<UserRandomImage src={avatarUrl} alt='User Random Image' />
 						</ImageWrap>
 						<InnerContent>
-							<UserSecretName>{secretName}</UserSecretName>
+							<UserSecretContainer>
+								<UserSecretName>{secretName}</UserSecretName>
+								<GoSecretChat src={message} alt='message Icon' />
+							</UserSecretContainer>
 							<Content>{post.content}</Content>
 							<Date>
 								<p>{post.createdAt}</p>
