@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-	width: 100%;
-	height: auto;
-	padding-bottom: 10rem;
+	width: 80%;
+	margin: auto;
+	max-height: 150rem;
+	overflow-y: auto;
 `;
 
 export const Title = styled.div`
@@ -18,25 +19,25 @@ export const Title = styled.div`
 export const ContentBox = styled.div`
 	width: 100%;
 	display: flex;
-	padding: 0 22%;
+	padding: 0 15%;
 	box-sizing: border-box;
 `;
 export const ImageWrap = styled.div`
-	flex: 1;
+	flex: 0.5;
 	margin: auto;
 	display: flex;
-	justify-content: center;
+	justify-content: left;
 	align-items: center;
 `;
 
 export const UserRandomImage = styled.img`
 	max-width: 100%;
-	margin: 0 auto;
+	// margin: 0 auto;
 `;
 export const InnerContent = styled.div`
 	flex: 2;
 	position: relative;
-	padding: 5%;
+	padding: 5% 2%;
 `;
 export const UserSecretContainer = styled.div`
 	display: flex;
@@ -57,7 +58,7 @@ export const Content = styled.p`
 	font-size: 1.8rem;
 `;
 
-export const Date = styled.p`
+export const Date = styled.div`
 	font-size: 1.5rem;
 	color: #717171;
 `;
@@ -66,13 +67,28 @@ export const Wrapper = styled.div`
 	position: absolute;
 	bottom: 0;
 	right: 0;
+	padding-right: 2.5rem;
 `;
 
-export const Edit = styled.button``;
-export const Delete = styled.button``;
+export const Edit = styled.button`
+	width: 7rem;
+	height: 3.5rem;
+	margin-right: 1.5rem;
+	border: 0;
+	border-radius: 0.7rem;
+	background-color: #feb29a;
+	cursor: pointer;
+`;
+export const Delete = styled.button`
+	width: 7rem;
+	height: 3.5rem;
+	border: 0;
+	border-radius: 0.7rem;
+	background-color: #fb7c7c;
+	cursor: pointer;
+`;
 
 export const TextBox = styled.div`
-	position: fixed;
 	bottom: 24rem;
 	width: 100%;
 	height: 15rem;

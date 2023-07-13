@@ -4,7 +4,6 @@ import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import message from '../../assets/icons/message.png';
 import sendIcon from '../../assets/icons/Sendicon.png';
-import md5 from 'md5'; // 추가된 라이브러리
 import {
 	Container,
 	Title,
@@ -28,11 +27,10 @@ import {
 } from './MainHomeStyle';
 
 const Mainhome: FC = () => {
-	//FC는 Function Component를 나타냄
-
 	interface Post {
 		_id: string;
-		// name: string;
+		name: string;
+		email: string;
 		title: string;
 		content: string;
 		createdAt: string;
@@ -57,65 +55,67 @@ const Mainhome: FC = () => {
 		fetchPosts();
 	}, []);
 
-	const randomNames: string[] = [
-		'지루한',
-		'따분한',
-		'목마른',
-		'배고픈',
-		'화가난',
-		'소심한',
-		'당당한',
-		'외로운',
-		'고민중인',
-		'코딩하는',
-		'배아픈',
-		'똥마려운',
-		'요리하는',
-		'공부중인',
-		'화장하는',
-		'유쾌한',
-		'밥먹는',
-	];
-
-	const getRandomName = (): string => {
-		const randomIndex = Math.floor(Math.random() * randomNames.length);
-		return randomNames[randomIndex];
+	const updatePost = async (postId: string, newData: Partial<Post>) => {
+		try {
+			const response = await axios.patch(
+				`https://port-0-back-end-kvmh2mljxnw03c.sel4.cloudtype.app/api/mainhome/${postId}`,
+				newData,
+			);
+		} catch (err) {
+			console.error(err);
+		}
 	};
 
-	const secretName: string = `${getRandomName()} 버니`;
-
-	const randomEmail: string = `${secretName}@example.com`;
-
-	const hashedEmail: string = md5(randomEmail.trim().toLowerCase());
-
-	const avatarUrl: string = `https://www.gravatar.com/avatar/${hashedEmail}?d=identicon`;
+	const deletePost = async (postId: string) => {
+		try {
+			await axios.delete(
+				`https://port-0-back-end-kvmh2mljxnw03c.sel4.cloudtype.app/api/mainhome/${postId}`,
+			);
+			setPosts(posts.filter((post) => post._id !== postId));
+		} catch (err) {
+			console.error(err);
+		}
+	};
 
 	return (
 		<>
 			<Header />
+			<Title>Unknown Bunnies</Title>
+
 			<Container>
-				<Title>Unknown Bunnies</Title>
-				{posts.map((post, index) => (
-					<ContentBox key={index}>
-						<ImageWrap>
-							<UserRandomImage src={avatarUrl} alt='User Random Image' />
-						</ImageWrap>
-						<InnerContent>
-							<UserSecretContainer>
-								<UserSecretName>{secretName}</UserSecretName>
-								<GoSecretChat src={message} alt='message Icon' />
-							</UserSecretContainer>
-							<Content>{post.content}</Content>
-							<Date>
-								<p>{post.createdAt}</p>
-							</Date>
-							<Wrapper>
-								<Edit>수정</Edit>
-								<Delete>삭제</Delete>
-							</Wrapper>
-						</InnerContent>
-					</ContentBox>
-				))}
+				{posts.map((post) => {
+					const hashedEmail: string = post.email;
+					const avatarUrl: string = `https://www.gravatar.com/avatar/${hashedEmail}?d=identicon`;
+
+					return (
+						<ContentBox key={post._id}>
+							<ImageWrap>
+								<UserRandomImage src={avatarUrl} alt='User Random Image' />
+							</ImageWrap>
+							<InnerContent>
+								<UserSecretContainer>
+									<UserSecretName>{post.name}</UserSecretName>
+									<GoSecretChat src={message} alt='message Icon' />
+								</UserSecretContainer>
+								<Content>{post.content}</Content>
+								<Date>
+									<p>{post.createdAt}</p>
+								</Date>
+								<Wrapper>
+									<Edit onClick={() => updatePost(post._id, {})}>수정</Edit>
+									<Delete
+										onClick={() => {
+											if (window.confirm('정말로 게시글을 삭제하시겠습니까?')) {
+												deletePost(post._id);
+											}
+										}}>
+										삭제
+									</Delete>
+								</Wrapper>
+							</InnerContent>
+						</ContentBox>
+					);
+				})}
 			</Container>
 			<TextBox>
 				<TextWrapper>
