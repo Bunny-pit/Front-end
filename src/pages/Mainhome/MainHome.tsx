@@ -14,7 +14,9 @@ import {
 	UserSecretName,
 	GoSecretChat,
 	InnerContent,
+	ContentContainer,
 	Content,
+	EditContentArea,
 	Date,
 	Wrapper,
 	Edit,
@@ -39,6 +41,8 @@ const Mainhome: FC = () => {
 	}
 
 	const [posts, setPosts] = useState<Post[]>([]);
+	const [editingPostId, setEditingPostId] = useState<string | null>(null);
+	const [updatedContent, setUpdatedContent] = useState<string>('');
 
 	useEffect(() => {
 		const fetchPosts = async () => {
@@ -55,17 +59,23 @@ const Mainhome: FC = () => {
 		fetchPosts();
 	}, []);
 
-	const updatePost = async (postId: string, newData: Partial<Post>) => {
+	const updatePost = async (postId: string) => {
 		try {
-			const response = await axios.patch(
+			await axios.patch(
 				`https://port-0-back-end-kvmh2mljxnw03c.sel4.cloudtype.app/api/mainhome/${postId}`,
-				newData,
+				{ content: updatedContent },
 			);
+			setPosts(
+				posts.map((post) =>
+					post._id === postId ? { ...post, content: updatedContent } : post,
+				),
+			);
+			setEditingPostId(null);
+			setUpdatedContent('');
 		} catch (err) {
 			console.error(err);
 		}
 	};
-
 	const deletePost = async (postId: string) => {
 		try {
 			await axios.delete(
@@ -75,6 +85,10 @@ const Mainhome: FC = () => {
 		} catch (err) {
 			console.error(err);
 		}
+	};
+
+	const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+		setUpdatedContent(e.target.value);
 	};
 
 	return (
@@ -97,20 +111,55 @@ const Mainhome: FC = () => {
 									<UserSecretName>{post.name}</UserSecretName>
 									<GoSecretChat src={message} alt='message Icon' />
 								</UserSecretContainer>
-								<Content>{post.content}</Content>
+								<ContentContainer>
+									<Content isEditing={editingPostId === post._id}>
+										{post.content}
+									</Content>
+									<EditContentArea
+										isEditing={editingPostId === post._id}
+										value={updatedContent}
+										onChange={handleContentChange}
+									/>
+								</ContentContainer>
 								<Date>
 									<p>{post.createdAt}</p>
 								</Date>
 								<Wrapper>
-									<Edit onClick={() => updatePost(post._id, {})}>수정</Edit>
-									<Delete
-										onClick={() => {
-											if (window.confirm('정말로 게시글을 삭제하시겠습니까?')) {
-												deletePost(post._id);
-											}
-										}}>
-										삭제
-									</Delete>
+									{/* 수정하기 */}
+									{editingPostId === post._id ? (
+										<>
+											<Edit onClick={() => updatePost(post._id)}>저장</Edit>
+											<Edit
+												onClick={() => {
+													setEditingPostId(null);
+													setUpdatedContent('');
+												}}>
+												취소
+											</Edit>
+										</>
+									) : (
+										<>
+											<Edit
+												onClick={() => {
+													setEditingPostId(post._id);
+													setUpdatedContent(post.content);
+												}}>
+												수정
+											</Edit>
+
+											{/* 삭제하기 */}
+											<Delete
+												onClick={() => {
+													if (
+														window.confirm('정말로 게시글을 삭제하시겠습니까?')
+													) {
+														deletePost(post._id);
+													}
+												}}>
+												삭제
+											</Delete>
+										</>
+									)}
 								</Wrapper>
 							</InnerContent>
 						</ContentBox>

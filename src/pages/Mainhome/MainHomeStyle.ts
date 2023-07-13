@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.div`
 	width: 80%;
 	margin: auto;
-	max-height: 150rem;
+	max-height: 120rem;
 	overflow-y: auto;
 `;
 
@@ -54,8 +54,24 @@ export const GoSecretChat = styled.img`
 	cursor: pointer;
 `;
 
-export const Content = styled.p`
+export const ContentContainer = styled.div`
+	position: relative;
+`;
+
+export const Content = styled.p<{ isEditing: boolean }>`
+	display: ${(props) => (props.isEditing ? 'none' : 'block')};
 	font-size: 1.8rem;
+`;
+
+export const EditContentArea = styled.textarea<{ isEditing: boolean }>`
+	position: absolute;
+	border-radius: 1rem;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 5rem;
+	resize: none;
+	display: ${(props) => (props.isEditing ? 'block' : 'none')};
 `;
 
 export const Date = styled.div`
@@ -65,6 +81,8 @@ export const Date = styled.div`
 
 export const Wrapper = styled.div`
 	position: absolute;
+	display: flex;
+	gap: 1.5rem;
 	bottom: 0;
 	right: 0;
 	padding-right: 2.5rem;
@@ -73,7 +91,6 @@ export const Wrapper = styled.div`
 export const Edit = styled.button`
 	width: 7rem;
 	height: 3.5rem;
-	margin-right: 1.5rem;
 	border: 0;
 	border-radius: 0.7rem;
 	background-color: #feb29a;
