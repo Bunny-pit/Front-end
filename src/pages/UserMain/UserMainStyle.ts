@@ -24,7 +24,6 @@ export const UserImage = styled.img`
 export const ProfileWrap = styled.div`
 	margin-left: 2rem;
 	width: 50%;
-	border: 1px solid red;
 `;
 export const Wrapper1 = styled.div`
 	display: flex;
@@ -40,7 +39,6 @@ export const PlusIcon = styled.img`
 `;
 export const Wrapper2 = styled.div`
 	margin-bottom: 2rem;
-	border: 1px solid red;
 `;
 export const FriendButton = styled.button`
 	width: 11.4rem;
@@ -121,18 +119,16 @@ export const PostUl = styled.ul`
 	grid-template-columns: 1fr 1fr 1fr;
 	grid-template-rows: 1fr 1fr 1fr;
 	gap: 3rem;
+	place-items: center;
 `;
 export const PostLi = styled.li`
-	height: auto;
+	height: 22rem;
 	overflow: hidden;
-	border: 1px solid red;
 	.link {
 		width: 100%;
 		height: auto;
 		img {
 			width: 100%;
-			overflow: hidden;
-			size: cover;
 		}
 	}
 `;
