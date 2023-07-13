@@ -4,6 +4,7 @@ import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import userImage from '../../assets/images/userimage.png';
 import plusIcon from '../../assets/icons/UserPlus.png';
+import { Link } from 'react-router-dom';
 import {
 	Container,
 	Sec1,
@@ -40,7 +41,7 @@ const UserMain = () => {
 		// MongoDB에서 데이터 가져오는 함수
 		const fetchPosts = async () => {
 			try {
-				const response = await axios.get(`${backUrl}/post`);
+				const response = await axios.get(`http://localhost:4000/api/post`);
 				setPosts(response.data);
 			} catch (error) {
 				console.error('Error fetching posts:', error);
@@ -114,13 +115,15 @@ const UserMain = () => {
 					<ul>
 						{posts.map((post, i) => (
 							<li key={post._id}>
-								<p>{post.content}</p>
-								<img
-									key={i}
-									src={post.images[0]}
-									alt={`post ${i}`}
-									style={{ width: '15rem' }}
-								/>
+								<Link to={`/post/${post._id}`}>
+									<p>{post.content}</p>
+									<img
+										key={i}
+										src={post.images[0]}
+										alt={`post ${i}`}
+										style={{ width: '15rem' }}
+									/>
+								</Link>
 							</li>
 						))}
 					</ul>

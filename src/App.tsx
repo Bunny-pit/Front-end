@@ -11,8 +11,8 @@ function App() {
 			<Router>
 				<Routes>
 					<Route path='/' element={<MainPage />} />
-					<Route path='/usermain' element={<UserMainPage />} />
-					<Route path='/Detail' element={<Detail />} />
+					<Route path='/post' element={<UserMainPage />} />
+					<Route path='/post/:postId' element={<Detail />} />
 					<Route path='/mainhome' element={<Mainhome />} />
 					<Route path='/chatting/*' element={<Chatting />} />
 				</Routes>
