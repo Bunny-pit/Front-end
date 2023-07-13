@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-	border: 1px solid black;
 	width: 75%;
 	margin: 0 auto;
 `;
@@ -10,6 +9,7 @@ export const Sec1 = styled.div`
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
+	padding: 10rem 0;
 `;
 export const ImageWrap = styled.div`
   width: 50%;
@@ -24,6 +24,7 @@ export const UserImage = styled.img`
 export const ProfileWrap = styled.div`
 	margin-left: 2rem;
 	width: 50%;
+	border: 1px solid red;
 `;
 export const Wrapper1 = styled.div`
 	display: flex;
@@ -39,6 +40,7 @@ export const PlusIcon = styled.img`
 `;
 export const Wrapper2 = styled.div`
 	margin-bottom: 2rem;
+	border: 1px solid red;
 `;
 export const FriendButton = styled.button`
 	width: 11.4rem;
@@ -76,7 +78,7 @@ export const Wrapper3 = styled.div`
 		}
 	}
 	:nth-child(2) {
-		margin-left: 1rem;
+		margin-left: 2.5rem;
 	}
 `;
 export const Wrapper4 = styled.div`
@@ -106,23 +108,31 @@ export const Email = styled.a`
 
 // 여기부터 게시글!!
 export const PostContainer = styled.div`
-	border: 1px solid red;
 	text-align: center;
-	ul {
-		list-style: none;
-		border: 1px solid orange;
-		padding: 0;
-		display: grid;
-		grid-template-columns: 1fr 1fr 1fr;
-		grid-template-rows: 1fr 1fr 1fr;
-		gap: 3rem;
-		li {
-			border: 1px solid green;
-			height: 22rem;
-		}
-	}
 `;
 export const PostTitle = styled.h3`
 	font-size: 2.4rem;
 	font-weight: 500;
+`;
+export const PostUl = styled.ul`
+	list-style: none;
+	padding: 0;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-rows: 1fr 1fr 1fr;
+	gap: 3rem;
+`;
+export const PostLi = styled.li`
+	height: auto;
+	overflow: hidden;
+	border: 1px solid red;
+	.link {
+		width: 100%;
+		height: auto;
+		img {
+			width: 100%;
+			overflow: hidden;
+			size: cover;
+		}
+	}
 `;
