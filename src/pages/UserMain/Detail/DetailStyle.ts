@@ -47,7 +47,7 @@ export const ImgWrap = styled.div`
 	height: 60rem;
 	background: lightblue;
 `;
-export const PostImg = styled.div`
+export const PostImg = styled.img`
 	width: 100%;
 `;
 export const PostDetailWrap = styled.div`
