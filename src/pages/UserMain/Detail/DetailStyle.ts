@@ -8,6 +8,7 @@ export const ProfileWrap = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+	margin: 8rem 0 2rem;
 `;
 export const Profile = styled.div`
 	display: flex;
@@ -18,6 +19,7 @@ export const ProfileUserImage = styled.img`
 `;
 export const ProfileId = styled.p`
 	font-size: 2.7rem;
+	margin-left: 3rem;
 `;
 export const DeleteButtonWrap = styled.div`
 	border: none;
@@ -44,8 +46,6 @@ export const Content = styled.div`
 
 export const ImgWrap = styled.div`
 	width: 100%;
-	height: 60rem;
-	background: lightblue;
 `;
 export const PostImg = styled.img`
 	width: 100%;
