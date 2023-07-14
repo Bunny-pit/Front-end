@@ -9,6 +9,7 @@ import Footer from '../../../components/Footer/Footer';
 import ProfileImg from '../../../assets/images/userimagesmall.png';
 import DeleteIcon from '../../../assets/icons/DeleteIcon.png';
 import likeIcon from '../../../assets/icons/like.png';
+import CommentDeleteIcon from '../../../assets/icons/CommentDeleteIcon.png';
 import {
 	Container,
 	DeleteButtonWrap,
@@ -37,6 +38,9 @@ import {
 	CommentInput,
 	ContentWrap,
 	Content,
+	CommentContentWrap,
+	CommentDeleteButton,
+	CommentDeleteImg,
 } from './DetailStyle';
 
 const backUrl = 'https://port-0-back-end-kvmh2mljxnw03c.sel4.cloudtype.app/api';
@@ -191,8 +195,15 @@ const Detail = () => {
 					<CommentUl>
 						{comments.map((comment, index) => (
 							<Commentli key={index}>
-								<CommentUserId>{comment.userName}</CommentUserId>
-								<CommentContent>{comment.comment}</CommentContent>
+								<CommentContentWrap>
+									<CommentUserId>{comment.userName}</CommentUserId>
+									<CommentContent>{comment.comment}</CommentContent>
+								</CommentContentWrap>
+								<CommentDeleteButton>
+									<CommentDeleteImg
+										src={CommentDeleteIcon}
+										alt='댓글 삭제 버튼'></CommentDeleteImg>
+								</CommentDeleteButton>
 							</Commentli>
 						))}
 					</CommentUl>

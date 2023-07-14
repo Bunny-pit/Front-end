@@ -34,6 +34,7 @@ interface Post {
 	profileImage: string;
 	images: string[];
 	content: string;
+	createdAt: Date;
 }
 const backUrl = 'https://port-0-back-end-kvmh2mljxnw03c.sel4.cloudtype.app/api';
 
@@ -52,13 +53,18 @@ const UserMain = () => {
 
 		fetchPosts();
 	}, []);
-
+	// 가짜데이터
 	const userdata = {
 		userId: 'pretty_bunny_kim',
 		postCount: 50,
 		followerCount: 5000,
 		email: 'prtty_bunny@naver.com',
 	};
+	// 게시글 최신순으로 정렬
+	const sortedPosts = posts.sort(
+		(a: Post, b: Post) =>
+			new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+	);
 
 	return (
 		<>
@@ -115,10 +121,9 @@ const UserMain = () => {
 				<PostContainer>
 					<PostTitle>게시물</PostTitle>
 					<PostUl>
-						{posts.map((post, i) => (
+						{sortedPosts.map((post: Post, i: number) => (
 							<PostLi key={post._id}>
 								<Link className='link' to={`/post/${post._id}`}>
-									{/* <p>{post.content}</p> */}
 									<img key={i} src={post.images[0]} alt={`post ${i}`} />
 								</Link>
 							</PostLi>
