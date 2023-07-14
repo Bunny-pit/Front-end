@@ -10,6 +10,7 @@ import ProfileImg from '../../../assets/images/userimagesmall.png';
 import DeleteIcon from '../../../assets/icons/DeleteIcon.png';
 import likeIcon from '../../../assets/icons/like.png';
 import CommentDeleteIcon from '../../../assets/icons/CommentDeleteIcon.png';
+import dayjs from 'dayjs';
 import {
 	Container,
 	DeleteButtonWrap,
@@ -55,6 +56,7 @@ interface Post {
 }
 interface Comment {
 	comment: string;
+	_id: string;
 	postId: string;
 	userId: string;
 	userName: string;
@@ -104,7 +106,7 @@ const Detail = () => {
 		fetchPosts();
 		fetchComments();
 	}, [postId]);
-	// 댓글 생성 코드
+	//----- 댓글 생성 코드------
 	const handleCommentInputChange = (
 		event: React.ChangeEvent<HTMLInputElement>,
 	) => {
@@ -137,6 +139,19 @@ const Detail = () => {
 			setCommentInput('');
 		} catch (error) {
 			console.error('Error posting comment:', error);
+		}
+	};
+	//-----댓글 삭제 코드 -----
+	const deleteComment = async (postId: string, commentId: string) => {
+		try {
+			await axios.delete(
+				`http://localhost:4000/api/comment/${postId}/${commentId}`,
+			);
+
+			// 삭제된 댓글을 제외한 댓글들로 상태를 업데이트합니다.
+			setComments(comments.filter((comment) => comment._id !== commentId));
+		} catch (error) {
+			console.error('Error deleting comment:', error);
 		}
 	};
 
@@ -182,7 +197,7 @@ const Detail = () => {
 								좋아요 수 <LikeCount>0</LikeCount>
 							</LikeCountWrap>
 						</LikeWrap>
-						<PostTime>{post?.createdAt}</PostTime>
+						<PostTime>{dayjs(post?.createdAt).format('YYYY-MM-DD')}</PostTime>
 					</PostDetailWrap>
 					<ContentWrap>
 						{/* 게시글 내용 들어갈 자리 */}
@@ -199,7 +214,8 @@ const Detail = () => {
 									<CommentUserId>{comment.userName}</CommentUserId>
 									<CommentContent>{comment.comment}</CommentContent>
 								</CommentContentWrap>
-								<CommentDeleteButton>
+								<CommentDeleteButton
+									onClick={() => deleteComment(comment.postId, comment._id)}>
 									<CommentDeleteImg
 										src={CommentDeleteIcon}
 										alt='댓글 삭제 버튼'></CommentDeleteImg>
