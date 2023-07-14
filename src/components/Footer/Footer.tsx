@@ -1,5 +1,5 @@
-import FooterLogo from "../../assets/icons/FooterLogo.png";
-import FooterVector from "../../assets/icons/FooterVector.png";
+import FooterLogo from '../../assets/icons/FooterLogo.png';
+import FooterVector from '../../assets/icons/FooterVector.png';
 import {
   FooterStyle,
   Wrapper,
@@ -12,7 +12,7 @@ import {
   MemberLink,
   List,
   ProjectLink,
-} from "./FooterStyle";
+} from './FooterStyle';
 
 const DefaultFooter = () => {
   return (
