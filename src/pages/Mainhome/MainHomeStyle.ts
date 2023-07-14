@@ -13,7 +13,7 @@ export const Title = styled.div`
 	text-align: center;
 	font-size: 5rem;
 	font-weight: 700;
-	color: #db7bf9;
+	color: ${({ theme }) => theme.colors.maincolor};
 `;
 
 export const ContentBox = styled.div`
@@ -60,6 +60,7 @@ export const ContentContainer = styled.div`
 
 export const Content = styled.p<{ isEditing: boolean }>`
 	display: ${(props) => (props.isEditing ? 'none' : 'block')};
+	color: ${({ theme }) => theme.colors.text};
 	font-size: 1.8rem;
 `;
 
@@ -76,7 +77,7 @@ export const EditContentArea = styled.textarea<{ isEditing: boolean }>`
 
 export const Date = styled.div`
 	font-size: 1.5rem;
-	color: #717171;
+	color: ${({ theme }) => theme.colors.gray500};
 `;
 
 export const Wrapper = styled.div`
@@ -93,7 +94,8 @@ export const Edit = styled.button`
 	height: 3.5rem;
 	border: 0;
 	border-radius: 0.7rem;
-	background-color: #feb29a;
+	background-color: #cdc0fc;
+	color: #fff;
 	cursor: pointer;
 `;
 export const Delete = styled.button`
@@ -101,7 +103,8 @@ export const Delete = styled.button`
 	height: 3.5rem;
 	border: 0;
 	border-radius: 0.7rem;
-	background-color: #fb7c7c;
+	background-color: ${({ theme }) => theme.colors.maincolor};
+	color: #fff;
 	cursor: pointer;
 `;
 
@@ -116,7 +119,7 @@ export const TextBox = styled.div`
 `;
 
 export const TextWrapper = styled.div`
-	background-color: #d9d9d9;
+	background-color: ${({ theme }) => theme.colors.gray200};
 	width: 57%;
 	height: 7rem;
 	display: flex;

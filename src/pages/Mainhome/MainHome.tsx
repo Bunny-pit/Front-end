@@ -76,6 +76,11 @@ const Mainhome: FC = () => {
 			console.error(err);
 		}
 	};
+
+	const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+		setUpdatedContent(e.target.value);
+	};
+
 	const deletePost = async (postId: string) => {
 		try {
 			await axios.delete(
@@ -85,10 +90,6 @@ const Mainhome: FC = () => {
 		} catch (err) {
 			console.error(err);
 		}
-	};
-
-	const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-		setUpdatedContent(e.target.value);
 	};
 
 	return (
@@ -168,7 +169,7 @@ const Mainhome: FC = () => {
 			</Container>
 			<TextBox>
 				<TextWrapper>
-					<TextArea></TextArea>
+					<TextArea placeholder='익명으로 글을 남기게 되면 프로필이 비공개 처리돼요!'></TextArea>
 					<SendButton>
 						<SendIcon src={sendIcon} alt='Send Icon' />
 					</SendButton>
