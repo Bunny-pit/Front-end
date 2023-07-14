@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useRef, useEffect, useState } from 'react';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
@@ -51,25 +51,27 @@ const Mainhome: FC = () => {
 	const [updatedContent, setUpdatedContent] = useState<string>('');
 	const [newPostContent, setNewPostContent] = useState<string>('');
 
-	useEffect(() => {
-		const fetchPosts = async () => {
-			try {
-				const res = await axios.get(
-					'https://port-0-back-end-kvmh2mljxnw03c.sel4.cloudtype.app/api/mainhome',
-				);
-				const updatedPosts = res.data.map((post: Post) => ({
-					...post,
-					createdAt: dayjs(post.createdAt)
-						.utc()
-						.tz('Asia/Seoul')
-						.format('YYYY-MM-DD HH:mm:ss'),
-				}));
-				setPosts(updatedPosts);
-			} catch (err) {
-				console.error(err);
-			}
-		};
+	const containerRef = useRef<HTMLDivElement>(null);
 
+	const fetchPosts = async () => {
+		try {
+			const res = await axios.get(
+				'https://port-0-back-end-kvmh2mljxnw03c.sel4.cloudtype.app/api/mainhome',
+			);
+			const updatedPosts = res.data.map((post: Post) => ({
+				...post,
+				createdAt: dayjs(post.createdAt)
+					.utc()
+					.tz('Asia/Seoul')
+					.format('YYYY-MM-DD HH:mm:ss'),
+			}));
+			setPosts(updatedPosts);
+		} catch (err) {
+			console.error(err);
+		}
+	};
+
+	useEffect(() => {
 		fetchPosts();
 	}, []);
 
@@ -116,7 +118,7 @@ const Mainhome: FC = () => {
 		const dummyName = 'Dummy Name';
 
 		try {
-			const res = await axios.post(
+			await axios.post(
 				'https://port-0-back-end-kvmh2mljxnw03c.sel4.cloudtype.app/api/mainhome',
 				{
 					email: dummyEmail,
@@ -124,10 +126,13 @@ const Mainhome: FC = () => {
 					content: newPostContent,
 				},
 			);
-			// Add the new post to the posts list
-			setPosts([...posts, res.data]);
-			// Clear the new post content
 			setNewPostContent('');
+			await fetchPosts();
+
+			if (containerRef.current) {
+				window.scrollTo(0, 0);
+				containerRef.current.scrollTop = 0;
+			}
 		} catch (err) {
 			console.error(err);
 		}
@@ -138,7 +143,7 @@ const Mainhome: FC = () => {
 			<Header />
 			<Title>Unknown Bunnies</Title>
 
-			<Container>
+			<Container ref={containerRef}>
 				{posts.map((post) => {
 					const hashedEmail: string = post.email;
 					const avatarUrl: string = `https://www.gravatar.com/avatar/${hashedEmail}?d=identicon`;
