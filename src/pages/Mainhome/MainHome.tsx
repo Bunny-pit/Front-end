@@ -1,5 +1,8 @@
 import React, { FC, useEffect, useState } from 'react';
 import axios from 'axios';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import message from '../../assets/icons/message.png';
@@ -28,6 +31,9 @@ import {
 	SendIcon,
 } from './MainHomeStyle';
 
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
 const Mainhome: FC = () => {
 	interface Post {
 		_id: string;
@@ -51,7 +57,14 @@ const Mainhome: FC = () => {
 				const res = await axios.get(
 					'https://port-0-back-end-kvmh2mljxnw03c.sel4.cloudtype.app/api/mainhome',
 				);
-				setPosts(res.data);
+				const updatedPosts = res.data.map((post: Post) => ({
+					...post,
+					createdAt: dayjs(post.createdAt)
+						.utc()
+						.tz('Asia/Seoul')
+						.format('YYYY-MM-DD HH:mm:ss'),
+				}));
+				setPosts(updatedPosts);
 			} catch (err) {
 				console.error(err);
 			}
