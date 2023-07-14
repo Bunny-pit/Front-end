@@ -55,6 +55,7 @@ interface Post {
 }
 interface Comment {
 	comment: string;
+	_id: string;
 	postId: string;
 	userId: string;
 	userName: string;
@@ -104,7 +105,7 @@ const Detail = () => {
 		fetchPosts();
 		fetchComments();
 	}, [postId]);
-	// 댓글 생성 코드
+	//----- 댓글 생성 코드------
 	const handleCommentInputChange = (
 		event: React.ChangeEvent<HTMLInputElement>,
 	) => {
@@ -137,6 +138,22 @@ const Detail = () => {
 			setCommentInput('');
 		} catch (error) {
 			console.error('Error posting comment:', error);
+		}
+	};
+	//-----댓글 삭제 코드 -----
+	const deleteComment = async (postId: string, commentId: string) => {
+		try {
+			console.log(postId, `<br/>`, commentId);
+			const response = await axios.delete(
+				`http://localhost:4000/api/comment/${postId}/${commentId}`,
+			);
+
+			console.log(response.data);
+
+			// 삭제된 댓글을 제외한 댓글들로 상태를 업데이트합니다.
+			setComments(comments.filter((comment) => comment._id !== commentId));
+		} catch (error) {
+			console.error('Error deleting comment:', error);
 		}
 	};
 
@@ -199,7 +216,8 @@ const Detail = () => {
 									<CommentUserId>{comment.userName}</CommentUserId>
 									<CommentContent>{comment.comment}</CommentContent>
 								</CommentContentWrap>
-								<CommentDeleteButton>
+								<CommentDeleteButton
+									onClick={() => deleteComment(comment.postId, comment._id)}>
 									<CommentDeleteImg
 										src={CommentDeleteIcon}
 										alt='댓글 삭제 버튼'></CommentDeleteImg>
