@@ -58,13 +58,12 @@ export const ContentContainer = styled.div`
 	position: relative;
 `;
 
-export const Content = styled.p<{ isEditing: boolean }>`
-	display: ${(props) => (props.isEditing ? 'none' : 'block')};
+export const Content = styled.p`
 	color: ${({ theme }) => theme.colors.text};
 	font-size: 1.8rem;
 `;
 
-export const EditContentArea = styled.textarea<{ isEditing: boolean }>`
+export const EditContentArea = styled.textarea`
 	position: absolute;
 	border-radius: 1rem;
 	top: 0;
@@ -72,7 +71,6 @@ export const EditContentArea = styled.textarea<{ isEditing: boolean }>`
 	width: 100%;
 	height: 5rem;
 	resize: none;
-	display: ${(props) => (props.isEditing ? 'block' : 'none')};
 `;
 
 export const Date = styled.div`
