@@ -62,6 +62,7 @@ export const LikeWrap = styled.div`
 `;
 export const LikeButton = styled.button`
 	border: none;
+	cursor: pointer;
 	background: #fff;
 `;
 export const LikeCountWrap = styled.div`
