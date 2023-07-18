@@ -5,7 +5,7 @@ import Mainhome from './pages/Mainhome/MainHome';
 import UserMainPage from './pages/UserMain/UserMain';
 import Chatting from './pages/Chatting/Chatting';
 import Detail from './pages/UserMain/Detail/Detail';
-import LoginPage from './pages/Login/Login'
+import LoginPage from './pages/UserAccount/Login/Login'
 // import SignUpPage from './pages/SignUp/SignUp'
 
 function App() {

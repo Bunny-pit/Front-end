@@ -38,7 +38,7 @@ display:flex;
 justify-content : center;
 `
 
-const ContentWrap = styled.div`
+const FormWrap = styled.div`
 margin-top : 2.6rem;
 flex : 1;
 `
@@ -60,7 +60,14 @@ border : 1px solid #e3e0e0;
 }
 `
 
-const InputBar = styled.input`
+const EmailInput = styled.input`
+width: 100%;
+border : none;
+outline : none;
+height: 2rem;
+`
+
+const PasswordInput = styled.input`
 width: 100%;
 border : none;
 outline : none;
@@ -89,4 +96,16 @@ cursor : pointer;
 }
 `
 
-export { Page, TitleAndLogoWrap, TitleWrap, LogoWrap, ContentWrap, InputTitle, InputWrap, InputBar, ErrorMessageWrap, BottomButton }
+export {
+    Page,
+    TitleAndLogoWrap,
+    TitleWrap, 
+    LogoWrap, 
+    FormWrap, 
+    InputTitle, 
+    InputWrap, 
+    EmailInput,
+    PasswordInput,
+    ErrorMessageWrap, 
+    BottomButton
+}

@@ -1,12 +1,11 @@
 import axios from 'axios';
-import { getToken } from 'api/token.ts';
+import { getToken } from '.token.js';
 
-//env에 apiURL 설정 필요!!(아직 설정 안함)
-const apiURL = process.env.API_URL;
+const baseUrl = process.env.REACT_APP_BASE_URL;
 
 //axios 인스턴스 생성
-const request = axios.create({
-    baseURL : apiURL
+const api = axios.create({
+    baseURL : baseUrl
 });
 
 //요청 타임아웃 설정
@@ -44,4 +43,4 @@ request.interceptors.response.use(
 );
 
 // axios 인스턴스 내보내기
-export default request;
+export default api;

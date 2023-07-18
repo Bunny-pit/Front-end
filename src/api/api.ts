@@ -1,52 +1,73 @@
 import axios, { AxiosRequestConfig } from 'axios';
+import api from './aixosInstance.js';
 
-const createRequestConfig = (
-	method: string,
-	url: string,
-	data: any | null = null
-): AxiosRequestConfig => {
-	const config: AxiosRequestConfig = {
-		method: method,
-		url: url,
-		headers: { 'Content-Type': 'application/json' },
-		withCredentials: true,
-	};
+const baseUrl = process.env.REACT_APP_BASE_URL;
 
-	if (data) {
-		config.data = data;
-	}
-
-	return config;
-}
 
 // axios.get
-const getRequest = async (url: string): Promise<void> => {
-	const config: AxiosRequestConfig = createRequestConfig('GET', url);
+export const get = async <T>(
+	url: string,
+	config?: AxiosRequestConfig,
+): Promise<T> => {
+	const targetURL = baseUrl + url;
 	try {
-		const response = await axios(config);
-		console.log('get response.data', response.data);
-	} catch (error) {
-		console.log('get error', error);
+		const response = await api.get<T>(targetURL, {
+			...config,
+			withCredentials: true,
+		});
+		return response.data;
+	} catch (err) {
+		throw new Error((err as any).response.data.name);
 	}
-}
+};
+
 // axios.post
-const postRequest = async (url: string, data: any): Promise<void> => {
-	const config: AxiosRequestConfig = createRequestConfig('POST', url, data);
+export const post = async <T>(
+	url: string,
+	data?: any,
+	config?: AxiosRequestConfig,
+): Promise<T> => {
+	const targetURL = baseUrl + url;
 	try {
-		const response = await axios(config);
-		console.log('post response.data', response.data);
+		const response = await api.post<T>(targetURL, data, {
+			...config,
+			withCredentials: true,
+		});
+		return response.data;
 	} catch (error) {
-		console.log('request error', error);
+		throw new Error((error as any).response.data.name);
 	}
-}
+};
+
+// axios.patch
+export const patch = async <T>(
+	url: string,
+	data?: any,
+	config?: AxiosRequestConfig,
+): Promise<void> => {
+	const targetURL = baseUrl + url
+	try {
+		await api.patch<T>(targetURL, data, {
+			...config,
+			withCredentials: true,
+		});
+	} catch (err) {
+		throw new Error((err as any).response.data.name);
+	}
+};
 
 // axios.delete
-const deleteRequest = async (url: string): Promise<void> => {
-	const config: AxiosRequestConfig = createRequestConfig('DELETE', url);
+export const del = async <T>(
+	url: string,
+	config?: AxiosRequestConfig,
+): Promise<void> => {
+	const targetURL = baseUrl + url
 	try {
-		const response = await axios(config);
-		console.log('delete response.data', response.data);
-	} catch (error) {
-		console.log('delete error', error);
+		await api.delete<T>(targetURL, {
+			...config,
+			withCredentials: true,
+		});
+	} catch (err) {
+		throw new Error((err as any).response.data.name);
 	}
-}
+};
