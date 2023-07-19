@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import MainLogo from '../../../assets/icons/MainLogo.png';
 import { useNavigate } from 'react-router-dom';
 import { emailValidation } from '../../../utils/registerValidation';
+import { DataType } from '../../../types/dataType'
 import {
   Page,
   TitleAndLogoWrap,

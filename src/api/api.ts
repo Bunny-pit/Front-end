@@ -3,7 +3,6 @@ import api from './aixosInstance.js';
 
 const baseUrl = process.env.REACT_APP_BASE_URL;
 
-
 // axios.get
 export const get = async <T>(
 	url: string,

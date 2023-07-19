@@ -6,6 +6,8 @@ import UserMainPage from './pages/UserMain/UserMain';
 import Chatting from './pages/Chatting/Chatting';
 import Detail from './pages/UserMain/Detail/Detail';
 import LoginPage from './pages/UserAccount/Login/Login'
+import RegisterPage from './pages/UserAccount/Register/Register';
+
 // import SignUpPage from './pages/SignUp/SignUp'
 
 function App() {
@@ -16,8 +18,9 @@ function App() {
           <Route path="/" element={<MainPage />} />
           {/* {!isLogin && (<>
             <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<SignUp />} />
+             />
           </>)} */}
+          <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path='/post' element={<UserMainPage />} />
           <Route path='/post/:postId' element={<Detail />} />

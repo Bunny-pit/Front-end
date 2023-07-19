@@ -5,9 +5,11 @@ export const emailValidation = (email: string): boolean => {
 }
 
 export const passwordValidation = (password: string): boolean => {
-    return password.length >= 8 && password.length <= 20;
+    const regex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@#$%^&+=!]).{8,}$/;
+    return regex.test(password) && (password.length >= 8 && password.length <= 20)
 };
 
-export const userNameValidation = (userName: string): boolean => {
+export const nickNameValidation = (userName: string): boolean => {
     return userName.length >= 2 && userName.length <= 8;
 }
+

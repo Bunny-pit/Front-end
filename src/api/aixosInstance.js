@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getToken } from '.token.js';
+import { getToken } from './token';
 
 const baseUrl = process.env.REACT_APP_BASE_URL;
 
@@ -9,10 +9,10 @@ const api = axios.create({
 });
 
 //요청 타임아웃 설정
-request.defaults.timeout = 2500;
+api.defaults.timeout = 2500;
 
 //요청 인터셉터 추가
-request.interceptors.request.use(
+api.interceptors.request.use(
     config => {
         //요청을 보내기 전에 수행할 로직
         const token = getToken();
@@ -29,7 +29,7 @@ request.interceptors.request.use(
 );
 
 //응답 인터셉터 추가
-request.interceptors.response.use(
+api.interceptors.response.use(
     response =>{
         //응답에 대한 로직
         const res = response.data
