@@ -2,23 +2,24 @@ import sendBtn from '../../assets/icons/Sendicon.png';
 import { Container, InputBar, SendButton } from './ChatBoxStyle';
 import { useEffect, useState } from 'react';
 import { useSocket } from '../../hooks/useSocket';
-import MessageBubble from '../MessageBubble/MessageBubble';
 
 interface ChatBoxProps {
 	chatId: string;
 	userId: string;
+	onNewMessage: (message: string) => void;
 }
 
-const ChatBox = ({ chatId, userId }: ChatBoxProps) => {
+const ChatBox = ({ chatId, userId, onNewMessage }: ChatBoxProps) => {
 	const [inputArea, setInputArea] = useState('');
-	const [messages, setMessages] = useState<string[]>([]);
 	const socket = useSocket('http://localhost:3000');
 
 	useEffect(() => {
+		console.log('useEffect is called');
 		if (socket) {
+			socket.off('newMessage');
 			socket.emit('joinRoom', { chatId, userId });
 			socket.on('newMessage', (message) => {
-				setMessages((prevMessages) => [...prevMessages, message]);
+				onNewMessage(message.content);
 			});
 		}
 		return () => {
@@ -46,9 +47,6 @@ const ChatBox = ({ chatId, userId }: ChatBoxProps) => {
 	return (
 		<>
 			<Container>
-				{messages.map((message, idx) => (
-					<MessageBubble key={idx} message={message} />
-				))}
 				<InputBar
 					value={inputArea}
 					onChange={handleInputChange}
