@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import MainLogo from '../../../assets/icons/MainLogo.png';
 import { useNavigate } from 'react-router-dom';
-
+import { emailValidation } from '../../../utils/registerValidation';
 import {
   Page,
   TitleAndLogoWrap,
@@ -10,10 +10,9 @@ import {
   FormWrap,
   InputTitle,
   InputWrap,
-  EmailInput,
-  PasswordInput,
-  ErrorMessageWrap,
-  BottomButton
+  InputBar,
+  ButtonWrap,
+  BottomButton,
 } from './LoginStyle';
 
 import {
@@ -32,6 +31,26 @@ export default function LoginPage() {
   const [checkForm, setCheckForm] = useState<boolean>(true);
   const navigate = useNavigate();
 
+  const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+  }
+  const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+  }
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setCheckEmail(true);
+
+    if (email === '' || password === '') {
+      return setCheckForm(false);
+    } else if (!emailValidation(email)) {
+      setCheckEmail(false)
+      return setCheckForm(false)
+    }
+    setCheckForm(true);
+  }
+
   return (
     <Page>
       <TitleAndLogoWrap>
@@ -42,29 +61,30 @@ export default function LoginPage() {
           환영해요 버니!
         </TitleWrap>
       </TitleAndLogoWrap>
-      <FormWrap>
+      <FormWrap onSubmit={handleSubmit}>
         <InputTitle>이메일</InputTitle>
         <InputWrap>
-          <EmailInput
+          <InputBar
             type="text"
             placeholder="jennaryu@naver.com"
             value={email}
+            onChange={onChangeEmail}
           />
         </InputWrap>
-        {!checkForm ? ('') : (<ErrorMessageWrap>올바른 이메일을 입력해주세요</ErrorMessageWrap>)}
         <InputTitle>비밀번호</InputTitle>
         <InputWrap>
-          <PasswordInput
+          <InputBar
             type="password"
             placeholder="영문, 숫자, 특수문자 포함 8자 이상"
             value={password}
+            onChange={onChangePassword}
           />
         </InputWrap>
-        {!checkForm ? '' : <ErrorMessageWrap>영문, 숫자, 특수문자 포함 8자 이상을 입력해주세요</ErrorMessageWrap>}
-        <BottomButton type='submit'>로그인하기</BottomButton>
-        {/* register로 이동하게 로직 수정 필요 */}
-        {/* <BottomButton to='/api/user/register'>회원가입하기</BottomButton>
-         */}
+        <ButtonWrap>
+          <BottomButton type='submit'>로그인하기</BottomButton>
+          <BottomButton onClick={() => { { navigate('/register'); } }}>회원가입하기</BottomButton>
+        </ButtonWrap>
+
       </FormWrap>
 
     </Page>
