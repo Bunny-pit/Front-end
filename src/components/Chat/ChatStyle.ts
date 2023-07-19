@@ -15,3 +15,11 @@ export const ChatBoxConatiner = styled.div`
 	margin-top: auto;
 	margin-bottom: 5rem;
 `;
+export const MessageContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	overflow-y: auto;
+	height: 70vh;
+	padding: 10rem;
+`;

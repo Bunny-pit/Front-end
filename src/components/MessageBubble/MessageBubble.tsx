@@ -14,10 +14,11 @@ const Bubble = styled.div<{ width: string }>`
 	width: ${(props) => props.width}px;
 	max-width: 40%;
 	white-space: pre-wrap;
+	font-size: 2rem;
 `;
 
 const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
-	const adjustedWidth = message.length * 10;
+	const adjustedWidth = message.length * 12;
 	return <Bubble width={adjustedWidth.toString()}>{message}</Bubble>;
 };
 
