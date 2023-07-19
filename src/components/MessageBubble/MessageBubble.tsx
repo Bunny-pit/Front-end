@@ -4,16 +4,21 @@ interface MessageBubbleProps {
 	message: string;
 }
 
-const Bubble = styled.div`
+const Bubble = styled.div<{ width: string }>`
 	margin: 10px;
 	padding: 10px;
-	background-color: #f0f0f0;
-	border-radius: 5px;
-	display: inline-block;
-	max-width: 70%;
+	background-color: #cdc0fc;
+	border-radius: 19.34px;
+	display: inline-flex;
+	flex-direcion: column;
+	width: ${(props) => props.width}px;
+	max-width: 40%;
+	white-space: pre-wrap;
 `;
+
 const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
-	return <Bubble>{message}</Bubble>;
+	const adjustedWidth = message.length * 10;
+	return <Bubble width={adjustedWidth.toString()}>{message}</Bubble>;
 };
 
 export default MessageBubble;
