@@ -21,17 +21,13 @@ export const get = async <T>(
 };
 
 // axios.post
-export const post = async <T>(
-	url: string,
-	userData?: any,
-	config?: AxiosRequestConfig,
-)=> {
+export const post = async <T>(url: string, userData?: any, config?: AxiosRequestConfig) => {
 	try {
 		const response = await api.post<T>(url, userData, {
-			...config,
+			...config
 		});
 		return response
-	} catch (error:any) {
+	} catch (error: any) {
 		throw new Error((error as any).response.data.name)
 	}
 };

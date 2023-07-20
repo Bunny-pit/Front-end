@@ -3,7 +3,7 @@ import MainLogo from '../../../assets/icons/MainLogo.png';
 
 import { useNavigate } from 'react-router-dom';
 import { post } from '../../../api/api';
-import { DataType } from '../../../types/dataType';
+import { UserDataType } from '../../../types/dataType';
 import {
     emailValidation,
     passwordValidation,
@@ -49,7 +49,7 @@ export default function RegisterPage() {
                 passwordValidation(password) &&
                 userNameValidation(userName)
             ) {
-                await post<DataType>('/api/user/register', {
+                await post<UserDataType>('/api/user/register', {
                     name,
                     userName,
                     email,
