@@ -18,12 +18,10 @@ import {
 } from './LoginStyle';
 
 import {
-  API_USER_REGISTER,
   API_USER_LOGIN,
-  API_USER_LOGOUT,
-  API_USER_EDIT,
-  API_USER_DELETE
 } from '../../../utils/constant'
+import { Content } from '../../Mainhome/MainHomeStyle';
+import { type } from 'os';
 
 export default function LoginPage() {
   const [email, setEmail] = useState<string>('');
@@ -53,12 +51,8 @@ export default function LoginPage() {
     setCheckForm(true);
 
     try {
-      await post<UserDataType>('/api/user/login', {
-        email,
-        password,
-      }, {
-        withCredentials: true,
-      })
+      await post<UserDataType>(API_USER_LOGIN, { email, password },
+        { headers: { 'Content-Type': 'application/json' } })
     } catch (error) {
       console.log('로그인 post 오류', error)
     }
