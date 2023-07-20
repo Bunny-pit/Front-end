@@ -4,10 +4,10 @@ import MainLogo from '../../../assets/icons/MainLogo.png';
 import { useNavigate } from 'react-router-dom';
 import { post } from '../../../api/api';
 import { DataType } from '../../../types/dataType';
-import { 
-    emailValidation, 
-    passwordValidation, 
-    nickNameValidation
+import {
+    emailValidation,
+    passwordValidation,
+    userNameValidation
 } from '../../../utils/registerValidation';
 import {
     Page,
@@ -25,11 +25,10 @@ import {
 
 export default function RegisterPage() {
     const [name, setName] = useState<string>('')
-    const [nickName, setNickName] = useState<string>('')
+    const [userName, setUserName] = useState<string>('')
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [checkPassword, setCheckPassword] = useState<string>('');
-
 
     const navigate = useNavigate();
 
@@ -40,23 +39,29 @@ export default function RegisterPage() {
             };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        if (password !== checkPassword) {
-            // 비밀번호 불일치 알림창
-            alert('제출한 두 비밀번호가 일치하지 않습니다.')
-        } else if (
-            emailValidation(email) &&
-            passwordValidation(password) &&
-            nickNameValidation(nickName)
-        ) {
-            await post<DataType>('/api/user/register', {
-                name,
-                nickName,
-                email,
-                password
-            });
-            navigate('/login');
-            // 로그인해달라는 알림창
+        e.preventDefault();
+        try {
+            if (password !== checkPassword) {
+                // 비밀번호 불일치 알림창
+                console.log('패스워드 불일치')
+            } else if (
+                emailValidation(email) &&
+                passwordValidation(password) &&
+                userNameValidation(userName)
+            ) {
+                await post<DataType>('/api/user/register', {
+                    name,
+                    userName,
+                    email,
+                    password
+                });
+                //로그인 해달라는 알림창.
+                navigate('/login');
+            }
+        } catch (error) {
+            console.log(error)
         }
+
     }
     return (
         <Page>
@@ -83,8 +88,8 @@ export default function RegisterPage() {
                     <InputBar
                         type="text"
                         placeholder="엄마가준비한식사"
-                        value={nickName}
-                        onChange={onChangeSetter(setNickName)}
+                        value={userName}
+                        onChange={onChangeSetter(setUserName)}
                     />
                 </InputWrap>
                 <InputTitle>이메일</InputTitle>
@@ -110,13 +115,13 @@ export default function RegisterPage() {
                     <InputBar
                         type="password"
                         placeholder="위에서 입력한 비밀번호를 다시 입력해주세요"
-                        value={password}
+                        value={checkPassword}
                         onChange={onChangeSetter(setCheckPassword)}
                     />
                 </InputWrap>
 
                 <ButtonWrap>
-                    <BottomButton type='submit' onClick={() => { navigate('/') }}>회원가입완료</BottomButton>
+                    <BottomButton type='submit'>회원가입완료</BottomButton>
                 </ButtonWrap>
 
             </FormWrap>

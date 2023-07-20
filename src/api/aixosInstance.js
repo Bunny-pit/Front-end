@@ -1,15 +1,15 @@
 import axios from 'axios';
 import { getToken } from './token';
 
-const baseUrl = process.env.REACT_APP_BASE_URL;
-
 //axios 인스턴스 생성
 const api = axios.create({
-    baseURL : baseUrl
+    baseURL : process.env.REACT_APP_API_URL
 });
 
-//요청 타임아웃 설정
+//요청 타임아웃
 api.defaults.timeout = 2500;
+api.defaults.withCredentials = true;
+
 
 //요청 인터셉터 추가
 api.interceptors.request.use(
@@ -33,11 +33,11 @@ api.interceptors.response.use(
     response =>{
         //응답에 대한 로직
         const res = response.data
-        return res
+        return console.log('서버 응답 :', res)
     },
     error => {
         //응답 에러 발생 시 수해알 로직
-        console.log(error) //디버깅
+        console.log('axios response 오류 발생', error) //디버깅
         return Promise.reject(error);
     }
 );
