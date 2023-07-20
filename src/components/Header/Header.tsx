@@ -14,16 +14,18 @@ const DefaultHeader = () => {
 	return (
 		<HedearStyle>
 			<HeaderWrapper>
-				<Logo src={HeaderLogo} alt='로고' />
+				<Link to='/post'>
+					<Logo src={HeaderLogo} alt='로고' />
+				</Link>
 				<MenuUl>
 					<MenuLi>
-						<Link to='bunnies'>익명의 버니들</Link>
+						<Link to='/mainhome'>익명의 버니들</Link>
 					</MenuLi>
 					<MenuLi>
 						<Link to='friends'>친구 버니들</Link>
 					</MenuLi>
 					<MenuLi>
-						<Link to='talk'>버니톡</Link>
+						<Link to='/chatting/*'>버니톡</Link>
 					</MenuLi>
 				</MenuUl>
 				<Option src={HeaderOption} alt='옵션' />
