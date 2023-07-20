@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import MainLogo from '../../../assets/icons/MainLogo.png';
 import { useNavigate } from 'react-router-dom';
 import { emailValidation } from '../../../utils/registerValidation';
+import { post } from '../../../api/api';
+import { UserDataType } from '../../../types/dataType'
 import {
   Page,
   TitleAndLogoWrap,
@@ -49,6 +51,17 @@ export default function LoginPage() {
       return setCheckForm(false)
     }
     setCheckForm(true);
+
+    try {
+      await post<UserDataType>('/api/user/login', {
+        email,
+        password,
+      }, {
+        withCredentials: true,
+      })
+    } catch (error) {
+      console.log('로그인 post 오류', error)
+    }
   }
 
   return (

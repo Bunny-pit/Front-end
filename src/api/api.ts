@@ -3,7 +3,6 @@ import api from './aixosInstance.js';
 
 const baseUrl = process.env.REACT_APP_BASE_URL;
 
-
 // axios.get
 export const get = async <T>(
 	url: string,
@@ -24,30 +23,28 @@ export const get = async <T>(
 // axios.post
 export const post = async <T>(
 	url: string,
-	data?: any,
+	userData?: any,
 	config?: AxiosRequestConfig,
-): Promise<T> => {
-	const targetURL = baseUrl + url;
+)=> {
 	try {
-		const response = await api.post<T>(targetURL, data, {
+		const response = await api.post<T>(url, userData, {
 			...config,
-			withCredentials: true,
 		});
-		return response.data;
-	} catch (error) {
-		throw new Error((error as any).response.data.name);
+		return response
+	} catch (error:any) {
+		throw new Error((error as any).response.data.name)
 	}
 };
 
 // axios.patch
 export const patch = async <T>(
 	url: string,
-	data?: any,
+	userData?: any,
 	config?: AxiosRequestConfig,
 ): Promise<void> => {
 	const targetURL = baseUrl + url
 	try {
-		await api.patch<T>(targetURL, data, {
+		await api.patch<T>(targetURL, userData, {
 			...config,
 			withCredentials: true,
 		});
