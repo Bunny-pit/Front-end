@@ -6,7 +6,7 @@ import {
 	MessageContainer,
 } from '../../components/Chat/ChatStyle';
 import ChatBox from '../ChatBox/ChatBox';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import MessageBubble from '../MessageBubble/MessageBubble';
 import { useAutoScroll } from '../../hooks/useAutoScroll';
 
