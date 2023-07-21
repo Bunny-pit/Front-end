@@ -1,87 +1,139 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import userImage from '../../assets/images/userimage.png';
 import plusIcon from '../../assets/icons/UserPlus.png';
+import { Link } from 'react-router-dom';
 import {
-  Container,
-  Sec1,
-  UserImage,
-  ImageWrap,
-  ProfileWrap,
-  Wrapper1,
-  Wrapper2,
-  Wrapper3,
-  Wrapper4,
-  FriendButton,
-  EditButton,
-  ProfileUl,
-  ProfileLi,
-  Email,
-  UserId,
-  PlusIcon,
+	Container,
+	Sec1,
+	UserImage,
+	ImageWrap,
+	ProfileWrap,
+	Wrapper1,
+	Wrapper2,
+	Wrapper3,
+	Wrapper4,
+	FriendButton,
+	EditButton,
+	ProfileUl,
+	ProfileLi,
+	Email,
+	UserId,
+	PlusIcon,
+	PostContainer,
+	PostTitle,
+	PostUl,
+	PostLi,
 } from './UserMainStyle';
 
-const UserMainPage = () => {
-  let postCount = 50;
-  let followerCount = 5000;
-  return (
-    <>
-      <Header />
-      <Container>
-        <Sec1>
-          <ImageWrap>
-            <UserImage src={userImage}></UserImage>
-          </ImageWrap>
-          <ProfileWrap>
-            <Wrapper1>
-              <UserId>Pretty_bunny_kim</UserId>
-              <PlusIcon
-                src={plusIcon}
-                onClick={() => {
-                  alert('친구 추가하기 버튼!');
-                }}
-              />
-            </Wrapper1>
-            <Wrapper2>
-              <FriendButton
-                onClick={() => {
-                  alert('친구초대하기');
-                }}
-              >
-                친구초대하기
-              </FriendButton>
-              <EditButton
-                onClick={() => {
-                  alert('프로필 편집하기');
-                }}
-              >
-                프로필 편집
-              </EditButton>
-            </Wrapper2>
-            <Wrapper3>
-              <span>게시물 {postCount}</span>
+interface Post {
+	_id: string;
+	userId: string;
+	profileImage: string;
+	images: string[];
+	content: string;
+	createdAt: Date;
+}
+const backUrl = 'https://port-0-back-end-kvmh2mljxnw03c.sel4.cloudtype.app/api';
 
-              <span>나를 좋아하는 버니들 {followerCount}</span>
-            </Wrapper3>
-            <Wrapper4>
-              <ProfileUl>
-                <ProfileLi>#블랙덕후</ProfileLi>
-                <ProfileLi>#개발자</ProfileLi>
-                <ProfileLi>#소통</ProfileLi>
-              </ProfileUl>
-              <Email href="#">pretty_bunny@naver.com</Email>
-            </Wrapper4>
-          </ProfileWrap>
-        </Sec1>
-        <hr />
-        <div>
-          <h3>게시물</h3>
-        </div>
-      </Container>
-      <Footer />
-    </>
-  );
+const UserMain = () => {
+	const [posts, setPosts] = useState<Post[]>([]);
+	useEffect(() => {
+		// MongoDB에서 데이터 가져오는 함수
+		const fetchPosts = async () => {
+			try {
+				const response = await axios.get(`http://localhost:4000/api/post`);
+				setPosts(response.data);
+			} catch (error) {
+				console.error('Error fetching posts:', error);
+			}
+		};
+
+		fetchPosts();
+	}, []);
+	// 가짜데이터
+	const userdata = {
+		userId: 'pretty_bunny_kim',
+		postCount: 50,
+		followerCount: 5000,
+		email: 'prtty_bunny@naver.com',
+	};
+	// 게시글 최신순으로 정렬
+	const sortedPosts = posts.sort(
+		(a: Post, b: Post) =>
+			new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+	);
+
+	return (
+		<>
+			<Header />
+			<Container>
+				<Sec1>
+					<ImageWrap>
+						<UserImage src={userImage}></UserImage>
+					</ImageWrap>
+					<ProfileWrap>
+						<Wrapper1>
+							<UserId>{userdata.userId}</UserId>
+							<PlusIcon
+								src={plusIcon}
+								onClick={() => {
+									alert('친구 추가하기 버튼!');
+								}}
+							/>
+						</Wrapper1>
+						<Wrapper2>
+							<FriendButton
+								onClick={() => {
+									alert('친구초대하기');
+								}}>
+								친구초대하기
+							</FriendButton>
+							<EditButton
+								onClick={() => {
+									alert('프로필 편집하기');
+								}}>
+								프로필 편집
+							</EditButton>
+						</Wrapper2>
+						<Wrapper3>
+							<p>
+								게시물 <span>{userdata.postCount}</span>
+							</p>
+
+							<p>
+								나를 좋아하는 버니들 <span>{userdata.followerCount}</span>
+							</p>
+						</Wrapper3>
+						<Wrapper4>
+							<ProfileUl>
+								<ProfileLi>#블랙덕후</ProfileLi>
+								<ProfileLi>#개발자</ProfileLi>
+								<ProfileLi>#소통</ProfileLi>
+							</ProfileUl>
+							<Email href='#'>{userdata.email}</Email>
+						</Wrapper4>
+					</ProfileWrap>
+				</Sec1>
+				<hr />
+				<PostContainer>
+					<PostTitle>게시물</PostTitle>
+					<PostUl>
+						{sortedPosts.map((post: Post, i: number) => (
+							<PostLi key={post._id}>
+								<Link className='link' to={`/post/${post._id}`}>
+									<img key={i} src={post.images[0]} alt={`post ${i}`} />
+								</Link>
+							</PostLi>
+						))}
+					</PostUl>
+				</PostContainer>
+			</Container>
+			<Footer />
+		</>
+	);
 };
 
-export default UserMainPage;
+export default UserMain;

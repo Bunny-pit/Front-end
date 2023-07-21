@@ -34,7 +34,6 @@ const memberData = [
 ];
 const DMList = () => {
 	const [channelCollapse, setChannelCollapse] = useState(false);
-	const [onlineList, setOnlineList] = useState<number[]>([]);
 
 	const toggleChannelCollapse = useCallback(() => {
 		setChannelCollapse((prev) => !prev);
@@ -53,7 +52,6 @@ const DMList = () => {
 			<MemberList>
 				{!channelCollapse &&
 					memberData?.map((member) => {
-						const isOnline = onlineList.includes(member.id);
 						return (
 							<NavLink key={member.id} to={`/chatting/dm/${member.nickname}`}>
 								<Profile
