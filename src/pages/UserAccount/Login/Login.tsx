@@ -45,10 +45,7 @@ export default function LoginPage() {
 			await post<UserDataType>(
 				API_USER_LOGIN,
 				{ email, password },
-				{
-					headers: { 'Content-Type': 'application/json' },
-					withCredentials: true, // 추가
-				},
+				{ headers: { 'Content-Type': 'application/json' } },
 			);
 		} catch (error) {
 			console.log('로그인 post 오류', error);
