@@ -56,7 +56,7 @@ const Mainhome: FC = () => {
 	const fetchPosts = async () => {
 		try {
 			const res = await axios.get(
-				'https://port-0-back-end-kvmh2mljxnw03c.sel4.cloudtype.app/api/mainhome',
+				`${process.env.REACT_APP_API_URL}/api/mainhome`,
 			);
 			const updatedPosts = res.data.map((post: Post) => ({
 				...post,
@@ -84,7 +84,7 @@ const Mainhome: FC = () => {
 			}
 
 			await axios.patch(
-				`https://port-0-back-end-kvmh2mljxnw03c.sel4.cloudtype.app/api/mainhome/${postId}`,
+				`${process.env.REACT_APP_API_URL}/api/mainhome/${postId}`,
 				{ content: updatedContent },
 			);
 			setPosts(
@@ -106,7 +106,7 @@ const Mainhome: FC = () => {
 	const deletePost = async (postId: string) => {
 		try {
 			await axios.delete(
-				`https://port-0-back-end-kvmh2mljxnw03c.sel4.cloudtype.app/api/mainhome/${postId}`,
+				`${process.env.REACT_APP_API_URL}/api/mainhome/${postId}`,
 			);
 			setPosts(posts.filter((post) => post._id !== postId));
 		} catch (err) {
@@ -114,25 +114,16 @@ const Mainhome: FC = () => {
 		}
 	};
 	const createPost = async () => {
-		const dummyEmail = 'dummy@email.com';
-		const dummyName = 'Dummy Name';
-
 		try {
 			await axios.post(
-				'https://port-0-back-end-kvmh2mljxnw03c.sel4.cloudtype.app/api/mainhome',
+				`${process.env.REACT_APP_API_URL}/api/mainhome`,
 				{
-					email: dummyEmail,
-					name: dummyName,
 					content: newPostContent,
 				},
+				{ withCredentials: true }, // 쿠키를 요청과 함께 보내려면 이 옵션이 필요합니다.
 			);
 			setNewPostContent('');
 			await fetchPosts();
-
-			if (containerRef.current) {
-				window.scrollTo(0, 0);
-				containerRef.current.scrollTop = 0;
-			}
 		} catch (err) {
 			console.error(err);
 		}
@@ -145,8 +136,8 @@ const Mainhome: FC = () => {
 
 			<Container ref={containerRef}>
 				{posts.map((post) => {
-					const hashedEmail: string = post.email;
-					const avatarUrl: string = `https://www.gravatar.com/avatar/${hashedEmail}?d=identicon`;
+					const email: string = post.email;
+					const avatarUrl: string = `https://www.gravatar.com/avatar/${email}?d=identicon`;
 
 					return (
 						<ContentBox key={post._id}>
