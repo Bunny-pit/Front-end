@@ -4,3 +4,4 @@ export interface UserDataType {
 	userName? : string;
 	error : any;
 }
+

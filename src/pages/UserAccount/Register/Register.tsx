@@ -9,6 +9,9 @@ import {
     passwordValidation,
     userNameValidation
 } from '../../../utils/registerValidation';
+
+import { onChangeInputSetter } from '../../../utils/inputStateSetter';
+
 import {
     Page,
     TitleAndLogoWrap,
@@ -31,12 +34,6 @@ export default function RegisterPage() {
     const [checkPassword, setCheckPassword] = useState<string>('');
 
     const navigate = useNavigate();
-
-    const onChangeSetter =
-        (setter: React.Dispatch<React.SetStateAction<string>>) =>
-            (e: React.ChangeEvent<HTMLInputElement>) => {
-                setter(e.target.value);
-            };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -80,7 +77,7 @@ export default function RegisterPage() {
                         type="text"
                         placeholder="엄준식"
                         value={name}
-                        onChange={onChangeSetter(setName)}
+                        onChange={onChangeInputSetter(setName)}
                     />
                 </InputWrap>
                 <InputTitle>닉네임</InputTitle>
@@ -89,7 +86,7 @@ export default function RegisterPage() {
                         type="text"
                         placeholder="엄마가준비한식사"
                         value={userName}
-                        onChange={onChangeSetter(setUserName)}
+                        onChange={onChangeInputSetter(setUserName)}
                     />
                 </InputWrap>
                 <InputTitle>이메일</InputTitle>
@@ -98,7 +95,7 @@ export default function RegisterPage() {
                         type="text"
                         placeholder="jennaryu@naver.com"
                         value={email}
-                        onChange={onChangeSetter(setEmail)}
+                        onChange={onChangeInputSetter(setEmail)}
                     />
                 </InputWrap>
                 <InputTitle>비밀번호</InputTitle>
@@ -107,7 +104,7 @@ export default function RegisterPage() {
                         type="password"
                         placeholder="영문, 숫자, 특수문자 포함 8자 이상"
                         value={password}
-                        onChange={onChangeSetter(setPassword)}
+                        onChange={onChangeInputSetter(setPassword)}
                     />
                 </InputWrap>
                 <InputTitle>비밀번호 확인</InputTitle>
@@ -116,7 +113,7 @@ export default function RegisterPage() {
                         type="password"
                         placeholder="위에서 입력한 비밀번호를 다시 입력해주세요"
                         value={checkPassword}
-                        onChange={onChangeSetter(setCheckPassword)}
+                        onChange={onChangeInputSetter(setCheckPassword)}
                     />
                 </InputWrap>
 

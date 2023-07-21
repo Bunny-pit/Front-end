@@ -17,11 +17,12 @@ import {
   BottomButton,
 } from './LoginStyle';
 
+import { onChangeInputSetter } from '../../../utils/inputStateSetter';
+
 import {
   API_USER_LOGIN,
 } from '../../../utils/constant'
-import { Content } from '../../Mainhome/MainHomeStyle';
-import { type } from 'os';
+
 
 export default function LoginPage() {
   const [email, setEmail] = useState<string>('');
@@ -30,13 +31,6 @@ export default function LoginPage() {
   const [checkPassword, setCheckPassword] = useState<boolean>(true);
   const [checkForm, setCheckForm] = useState<boolean>(true);
   const navigate = useNavigate();
-
-  const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-  }
-  const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
-  }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -75,7 +69,7 @@ export default function LoginPage() {
             type="text"
             placeholder="jennaryu@naver.com"
             value={email}
-            onChange={onChangeEmail}
+            onChange={onChangeInputSetter(setEmail)}
           />
         </InputWrap>
         <InputTitle>비밀번호</InputTitle>
@@ -84,7 +78,7 @@ export default function LoginPage() {
             type="password"
             placeholder="영문, 숫자, 특수문자 포함 8자 이상"
             value={password}
-            onChange={onChangePassword}
+            onChange={onChangeInputSetter(setPassword)}
           />
         </InputWrap>
         <ButtonWrap>
