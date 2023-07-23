@@ -12,7 +12,7 @@ interface ChatBoxProps {
 const ChatBox = ({ chatId, userId, onNewMessage }: ChatBoxProps) => {
 	const [inputArea, setInputArea] = useState('');
 	const socket = useSocket(
-		'https://port-0-back-end-kvmh2mljxnw03c.sel4.cloudtype.app/api',
+		'https://port-0-back-end-kvmh2mljxnw03c.sel4.cloudtype.app',
 	);
 
 	useEffect(() => {
