@@ -11,10 +11,12 @@ interface ChatBoxProps {
 
 const ChatBox = ({ chatId, userId, onNewMessage }: ChatBoxProps) => {
 	const [inputArea, setInputArea] = useState('');
-	const socket = useSocket('http://localhost:3000');
+	const socket = useSocket(
+		'https://port-0-back-end-kvmh2mljxnw03c.sel4.cloudtype.app/api',
+	);
 
 	useEffect(() => {
-		console.log('useEffect is called');
+		console.log('socket has changed', socket);
 		if (socket) {
 			socket.off('newMessage');
 			socket.emit('joinRoom', { chatId, userId });
@@ -28,19 +30,27 @@ const ChatBox = ({ chatId, userId, onNewMessage }: ChatBoxProps) => {
 				socket.off('newMessage');
 			}
 		};
-	}, [socket, chatId, userId]);
+	}, [chatId, userId, onNewMessage, socket]);
 
 	const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setInputArea(event.target.value);
 	};
 
 	const handleSendButtonClick = () => {
-		if (socket) {
-			socket.emit('chatMessage', {
-				senderId: userId,
-				chatId,
-				content: inputArea,
-			});
+		if (socket && inputArea.trim().length > 0) {
+			socket.emit(
+				'chatMessage',
+				{
+					senderId: userId,
+					chatId,
+					content: inputArea,
+				},
+				(error: any) => {
+					if (error) {
+						console.error(error);
+					}
+				},
+			);
 		}
 		setInputArea('');
 	};

@@ -6,7 +6,7 @@ import {
 	MessageContainer,
 } from '../../components/Chat/ChatStyle';
 import ChatBox from '../ChatBox/ChatBox';
-import { useState, useRef } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import MessageBubble from '../MessageBubble/MessageBubble';
 import { useAutoScroll } from '../../hooks/useAutoScroll';
 
@@ -19,9 +19,10 @@ const Chat = () => {
 	const messageListRef = useRef<HTMLDivElement>(null);
 	useAutoScroll(messageListRef, messages);
 
-	const onNewMessage = (newMessage: string) => {
+	const onNewMessage = useCallback((newMessage: string) => {
+		console.log('New message', newMessage);
 		setMessages((prevMessages) => [...prevMessages, newMessage]);
-	};
+	}, []);
 
 	return (
 		<>
