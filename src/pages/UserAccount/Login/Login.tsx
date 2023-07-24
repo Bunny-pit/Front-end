@@ -41,16 +41,17 @@ export default function LoginPage() {
 		}
 		setCheckForm(true);
 
-		try {
-			await post<UserDataType>(
-				API_USER_LOGIN,
-				{ email, password },
-				{ headers: { 'Content-Type': 'application/json' } },
-			);
-		} catch (error) {
-			console.log('로그인 post 오류', error);
-		}
-	};
+    try {
+      await post<UserDataType>(API_USER_LOGIN, {
+        email,
+        password
+      },
+        { headers: { 'Content-Type': 'application/json' } })
+      // navigate('/')
+    } catch (error) {
+      console.log('로그인 post 오류', error)
+    }
+  }
 
 	return (
 		<Page>

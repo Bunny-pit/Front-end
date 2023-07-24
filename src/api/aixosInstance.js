@@ -17,7 +17,8 @@ api.interceptors.request.use(
         //요청을 보내기 전에 수행할 로직
         const token = getToken();
         if(token){
-            config.headers.Authorization = `Bearer ${token}`;
+            // config.headers.Authorization = `Bearer ${token}`;
+            console.log('요청 인터셉터 -  토큰 획득', token)
         }
         return config;
     },
@@ -37,7 +38,7 @@ api.interceptors.response.use(
     },
     error => {
         //응답 에러 발생 시 수해알 로직
-        console.log('axios response 오류 발생', error) //디버깅
+        console.log('서버 응답 오류 발생', error) //디버깅
         return Promise.reject(error);
     }
 );
