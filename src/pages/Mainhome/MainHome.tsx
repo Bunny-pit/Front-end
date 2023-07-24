@@ -120,7 +120,9 @@ const Mainhome: FC = () => {
 				{
 					content: newPostContent,
 				},
-				{ withCredentials: true }, // 쿠키를 요청과 함께 보내려면 이 옵션이 필요합니다.
+				{
+					withCredentials: true,
+				},
 			);
 			setNewPostContent('');
 			await fetchPosts();
