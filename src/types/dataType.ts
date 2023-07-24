@@ -1,7 +1,8 @@
 export interface UserDataType {
-	email? : string;
-	password? : string;
-	userName? : string;
-	error : any;
+	data: string;
+	map: any;
+	email?: string;
+	password?: string;
+	userName?: string;
+	error: any;
 }
-

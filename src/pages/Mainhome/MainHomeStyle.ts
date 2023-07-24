@@ -24,6 +24,7 @@ export const ContentBox = styled.div`
 	padding: 0 5%;
 	box-sizing: border-box;
 `;
+
 export const ImageWrap = styled.div`
 	flex: 0.5;
 	margin: auto;
