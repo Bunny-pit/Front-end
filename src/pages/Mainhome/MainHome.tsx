@@ -63,7 +63,7 @@ const Mainhome: FC = () => {
 				createdAt: dayjs(post.createdAt)
 					.utc()
 					.tz('Asia/Seoul')
-					.format('YYYY-MM-DD HH:mm:ss'),
+					.format('YYYY-MM-DD HH:mm'),
 			}));
 			setPosts(updatedPosts);
 		} catch (err) {
