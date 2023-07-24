@@ -1,5 +1,8 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useRef, useEffect, useState } from 'react';
 import axios from 'axios';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import message from '../../assets/icons/message.png';
@@ -28,6 +31,9 @@ import {
 	SendIcon,
 } from './MainHomeStyle';
 
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
 const Mainhome: FC = () => {
 	interface Post {
 		_id: string;
@@ -41,28 +47,44 @@ const Mainhome: FC = () => {
 	}
 
 	const [posts, setPosts] = useState<Post[]>([]);
-	const [editingPostId, setEditingPostId] = useState<string | null>(null);
+	const [editingPostId, setEditingPostId] = useState<string>('');
 	const [updatedContent, setUpdatedContent] = useState<string>('');
+	const [newPostContent, setNewPostContent] = useState<string>('');
+
+	const containerRef = useRef<HTMLDivElement>(null);
+
+	const fetchPosts = async () => {
+		try {
+			const res = await axios.get(
+				`${process.env.REACT_APP_API_URL}/api/mainhome`,
+			);
+			const updatedPosts = res.data.map((post: Post) => ({
+				...post,
+				createdAt: dayjs(post.createdAt)
+					.utc()
+					.tz('Asia/Seoul')
+					.format('YYYY-MM-DD HH:mm'),
+			}));
+			setPosts(updatedPosts);
+		} catch (err) {
+			console.error(err);
+		}
+	};
 
 	useEffect(() => {
-		const fetchPosts = async () => {
-			try {
-				const res = await axios.get(
-					'https://port-0-back-end-kvmh2mljxnw03c.sel4.cloudtype.app/api/mainhome',
-				);
-				setPosts(res.data);
-			} catch (err) {
-				console.error(err);
-			}
-		};
-
 		fetchPosts();
 	}, []);
 
 	const updatePost = async (postId: string) => {
 		try {
+			// 글자가 1 글자 이하일 때
+			if (updatedContent.trim().length <= 1) {
+				alert('내용을 작성해주세요.');
+				return;
+			}
+
 			await axios.patch(
-				`https://port-0-back-end-kvmh2mljxnw03c.sel4.cloudtype.app/api/mainhome/${postId}`,
+				`${process.env.REACT_APP_API_URL}/api/mainhome/${postId}`,
 				{ content: updatedContent },
 			);
 			setPosts(
@@ -70,7 +92,7 @@ const Mainhome: FC = () => {
 					post._id === postId ? { ...post, content: updatedContent } : post,
 				),
 			);
-			setEditingPostId(null);
+			setEditingPostId('');
 			setUpdatedContent('');
 		} catch (err) {
 			console.error(err);
@@ -84,9 +106,26 @@ const Mainhome: FC = () => {
 	const deletePost = async (postId: string) => {
 		try {
 			await axios.delete(
-				`https://port-0-back-end-kvmh2mljxnw03c.sel4.cloudtype.app/api/mainhome/${postId}`,
+				`${process.env.REACT_APP_API_URL}/api/mainhome/${postId}`,
 			);
 			setPosts(posts.filter((post) => post._id !== postId));
+		} catch (err) {
+			console.error(err);
+		}
+	};
+	const createPost = async () => {
+		try {
+			await axios.post(
+				`${process.env.REACT_APP_API_URL}/api/mainhome`,
+				{
+					content: newPostContent,
+				},
+				{
+					withCredentials: true,
+				},
+			);
+			setNewPostContent('');
+			await fetchPosts();
 		} catch (err) {
 			console.error(err);
 		}
@@ -97,10 +136,10 @@ const Mainhome: FC = () => {
 			<Header />
 			<Title>Unknown Bunnies</Title>
 
-			<Container>
+			<Container ref={containerRef}>
 				{posts.map((post) => {
-					const hashedEmail: string = post.email;
-					const avatarUrl: string = `https://www.gravatar.com/avatar/${hashedEmail}?d=identicon`;
+					const email: string = post.email;
+					const avatarUrl: string = `https://www.gravatar.com/avatar/${email}?d=identicon`;
 
 					return (
 						<ContentBox key={post._id}>
@@ -113,14 +152,14 @@ const Mainhome: FC = () => {
 									<GoSecretChat src={message} alt='message Icon' />
 								</UserSecretContainer>
 								<ContentContainer>
-									<Content isEditing={editingPostId === post._id}>
-										{post.content}
-									</Content>
-									<EditContentArea
-										isEditing={editingPostId === post._id}
-										value={updatedContent}
-										onChange={handleContentChange}
-									/>
+									{editingPostId === post._id ? (
+										<EditContentArea
+											value={updatedContent}
+											onChange={handleContentChange}
+										/>
+									) : (
+										<Content>{post.content}</Content>
+									)}
 								</ContentContainer>
 								<Date>
 									<p>{post.createdAt}</p>
@@ -132,7 +171,7 @@ const Mainhome: FC = () => {
 											<Edit onClick={() => updatePost(post._id)}>저장</Edit>
 											<Edit
 												onClick={() => {
-													setEditingPostId(null);
+													setEditingPostId('');
 													setUpdatedContent('');
 												}}>
 												취소
@@ -169,8 +208,15 @@ const Mainhome: FC = () => {
 			</Container>
 			<TextBox>
 				<TextWrapper>
-					<TextArea placeholder='익명으로 글을 남기게 되면 프로필이 비공개 처리돼요!'></TextArea>
-					<SendButton>
+					<TextArea
+						placeholder='익명으로 글을 남기게 되면 프로필이 비공개 처리돼요!'
+						value={newPostContent}
+						onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+							setNewPostContent(e.target.value)
+						}
+					/>
+
+					<SendButton onClick={createPost}>
 						<SendIcon src={sendIcon} alt='Send Icon' />
 					</SendButton>
 				</TextWrapper>

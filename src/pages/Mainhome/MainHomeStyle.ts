@@ -1,15 +1,17 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-	width: 80%;
+	width: 50%;
 	margin: auto;
-	max-height: 120rem;
+	border-left: 1px solid ${({ theme }) => theme.colors.maincolor};
+	border-right: 1px solid ${({ theme }) => theme.colors.maincolor};
+	max-height: 65rem;
 	overflow-y: auto;
 `;
 
 export const Title = styled.div`
 	width: 100%;
-	margin: 15rem 0 15rem 0;
+	margin: 8rem 0 8rem 0;
 	text-align: center;
 	font-size: 5rem;
 	font-weight: 700;
@@ -19,7 +21,7 @@ export const Title = styled.div`
 export const ContentBox = styled.div`
 	width: 100%;
 	display: flex;
-	padding: 0 15%;
+	padding: 0 5%;
 	box-sizing: border-box;
 `;
 export const ImageWrap = styled.div`
@@ -32,7 +34,7 @@ export const ImageWrap = styled.div`
 
 export const UserRandomImage = styled.img`
 	max-width: 100%;
-	// margin: 0 auto;
+	margin: 0 auto;
 `;
 export const InnerContent = styled.div`
 	flex: 2;
@@ -58,13 +60,12 @@ export const ContentContainer = styled.div`
 	position: relative;
 `;
 
-export const Content = styled.p<{ isEditing: boolean }>`
-	display: ${(props) => (props.isEditing ? 'none' : 'block')};
+export const Content = styled.p`
 	color: ${({ theme }) => theme.colors.text};
 	font-size: 1.8rem;
 `;
 
-export const EditContentArea = styled.textarea<{ isEditing: boolean }>`
+export const EditContentArea = styled.textarea`
 	position: absolute;
 	border-radius: 1rem;
 	top: 0;
@@ -72,7 +73,6 @@ export const EditContentArea = styled.textarea<{ isEditing: boolean }>`
 	width: 100%;
 	height: 5rem;
 	resize: none;
-	display: ${(props) => (props.isEditing ? 'block' : 'none')};
 `;
 
 export const Date = styled.div`
@@ -120,7 +120,7 @@ export const TextBox = styled.div`
 
 export const TextWrapper = styled.div`
 	background-color: ${({ theme }) => theme.colors.gray200};
-	width: 57%;
+	width: 45%;
 	height: 7rem;
 	display: flex;
 	align-items: center;
