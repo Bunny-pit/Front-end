@@ -7,3 +7,6 @@ export const API_USER_DELETE: string = '/api/user/delete';
 
 //mainhome api url
 export const API_MAINHOME: string = '/api/mainhome';
+
+//chatting api url
+export const API_CHATTING_START: string = '/api/chat/start';
