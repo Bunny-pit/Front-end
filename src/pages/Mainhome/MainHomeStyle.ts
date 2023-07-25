@@ -20,8 +20,9 @@ export const Title = styled.div`
 
 export const ContentBox = styled.div`
 	width: 100%;
+	height: 25rem;
 	display: flex;
-	padding: 0 5%;
+	padding: 0 5rem;
 	box-sizing: border-box;
 `;
 
@@ -54,6 +55,7 @@ export const UserSecretName = styled.h2`
 export const GoSecretChat = styled.img`
 	margin-left: auto;
 	margin-top: auto;
+	margin-bottom: 1.5%;
 	cursor: pointer;
 `;
 
@@ -71,8 +73,8 @@ export const EditContentArea = styled.textarea`
 	border-radius: 1rem;
 	top: 0;
 	left: 0;
-	width: 100%;
-	height: 5rem;
+	width: 98.5%;
+	height: 7rem;
 	resize: none;
 `;
 

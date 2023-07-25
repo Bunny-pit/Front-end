@@ -106,7 +106,7 @@ const Mainhome: FC = () => {
 			setUpdatedContent('');
 		} catch (err) {
 			alert('수정 권한이 없습니다!');
-			console.error(err);
+			return;
 		}
 	};
 
@@ -124,7 +124,7 @@ const Mainhome: FC = () => {
 			setPosts(posts.filter((post) => post._id !== postId));
 		} catch (err) {
 			alert('삭제 권한이 없습니다!');
-			console.error(err);
+			return;
 		}
 	};
 	const createPost = async () => {
@@ -141,7 +141,9 @@ const Mainhome: FC = () => {
 			setNewPostContent('');
 			await fetchPosts();
 		} catch (err) {
-			console.error(err);
+			alert('게시글 작성을 위해서는 로그인이 필요합니다.');
+			setNewPostContent('');
+			return;
 		}
 	};
 
