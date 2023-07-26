@@ -3,7 +3,9 @@ import MainLogo from '../../../assets/icons/MainLogo.png';
 import { useNavigate } from 'react-router-dom';
 import { emailValidation } from '../../../utils/registerValidation';
 import { post } from '../../../api/api';
+import { setToken } from '../../../api/token';
 import { UserDataType } from '../../../types/dataType';
+
 import {
 	Page,
 	TitleAndLogoWrap,
@@ -16,10 +18,11 @@ import {
 	ButtonWrap,
 	BottomButton,
 } from './LoginStyle';
-
+import { useUser } from '../../../utils/swrFetcher';
+import axios, { AxiosResponse } from 'axios'
 import { onChangeInputSetter } from '../../../utils/inputStateSetter';
 
-import { API_USER_LOGIN } from '../../../utils/constant';
+import { API_USER_LOGIN, API_USER_ACCESS_TOKEN } from '../../../utils/constant';
 
 export default function LoginPage() {
 	const [email, setEmail] = useState<string>('');
@@ -28,7 +31,7 @@ export default function LoginPage() {
 	const [checkPassword, setCheckPassword] = useState<boolean>(true);
 	const [checkForm, setCheckForm] = useState<boolean>(true);
 	const navigate = useNavigate();
-
+	const { userData, isError } = useUser();
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		setCheckEmail(true);
@@ -41,17 +44,24 @@ export default function LoginPage() {
 		}
 		setCheckForm(true);
 
-    try {
-      await post<UserDataType>(API_USER_LOGIN, {
-        email,
-        password
-      },
-        { headers: { 'Content-Type': 'application/json' } })
-      // navigate('/')
-    } catch (error) {
-      console.log('로그인 post 오류', error)
-    }
-  }
+		try {
+			const response: AxiosResponse<{ accessToken: string }> = await post(
+				API_USER_LOGIN,
+				{
+					email,
+					password
+				},
+				{ headers: { 'Content-Type': 'application/json' } }
+			);
+			const accessToken: string = response.data.accessToken;
+			setToken(accessToken);
+			// navigate('/')
+		} catch (error) {
+			console.log('로그인 post 오류', error)
+		}
+
+
+	}
 
 	return (
 		<Page>
@@ -59,7 +69,7 @@ export default function LoginPage() {
 				<LogoWrap>
 					<img src={MainLogo} alt='main-logo' style={{ marginTop: '10rem' }} />
 				</LogoWrap>
-				<TitleWrap>환영해요 버니!</TitleWrap>
+				<TitleWrap>환영해요 버니!{userData}</TitleWrap>
 			</TitleAndLogoWrap>
 			<FormWrap onSubmit={handleSubmit}>
 				<InputTitle>이메일</InputTitle>
