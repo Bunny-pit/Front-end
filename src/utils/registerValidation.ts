@@ -2,7 +2,7 @@ export const emailValidation = (email: string): boolean => {
     return (
         email.match(/^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/) !== null
     );
-}
+};
 
 export const passwordValidation = (password: string): boolean => {
     const regex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@#$%^&+=!]).{8,}$/;
@@ -11,5 +11,5 @@ export const passwordValidation = (password: string): boolean => {
 
 export const userNameValidation = (userName: string): boolean => {
     return userName.length >= 2 && userName.length <= 8;
-}
+};
 

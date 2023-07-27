@@ -69,7 +69,7 @@ export default function LoginPage() {
 				<LogoWrap>
 					<img src={MainLogo} alt='main-logo' style={{ marginTop: '10rem' }} />
 				</LogoWrap>
-				<TitleWrap>환영해요 버니!{userData}</TitleWrap>
+				<TitleWrap>환영해요 버니!{userData.userName}</TitleWrap>
 			</TitleAndLogoWrap>
 			<FormWrap onSubmit={handleSubmit}>
 				<InputTitle>이메일</InputTitle>
