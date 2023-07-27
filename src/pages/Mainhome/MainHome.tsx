@@ -214,40 +214,43 @@ const Mainhome: FC = () => {
 								</Date>
 								<Wrapper>
 									{/* 수정하기 */}
-									{editingPostId === post._id ? (
-										<>
-											<Edit onClick={() => updatePost(post._id)}>저장</Edit>
-											<Edit
-												onClick={() => {
-													setEditingPostId('');
-													setUpdatedContent('');
-												}}>
-												취소
-											</Edit>
-										</>
-									) : (
-										<>
-											<Edit
-												onClick={() => {
-													setEditingPostId(post._id);
-													setUpdatedContent(post.content);
-												}}>
-												수정
-											</Edit>
+									{userData?._id === post.userId &&
+										(editingPostId === post._id ? (
+											<>
+												<Edit onClick={() => updatePost(post._id)}>저장</Edit>
+												<Edit
+													onClick={() => {
+														setEditingPostId('');
+														setUpdatedContent('');
+													}}>
+													취소
+												</Edit>
+											</>
+										) : (
+											<>
+												<Edit
+													onClick={() => {
+														setEditingPostId(post._id);
+														setUpdatedContent(post.content);
+													}}>
+													수정
+												</Edit>
 
-											{/* 삭제하기 */}
-											<Delete
-												onClick={() => {
-													if (
-														window.confirm('정말로 게시글을 삭제하시겠습니까?')
-													) {
-														deletePost(post._id);
-													}
-												}}>
-												삭제
-											</Delete>
-										</>
-									)}
+												{/* 삭제하기 */}
+												<Delete
+													onClick={() => {
+														if (
+															window.confirm(
+																'정말로 게시글을 삭제하시겠습니까?',
+															)
+														) {
+															deletePost(post._id);
+														}
+													}}>
+													삭제
+												</Delete>
+											</>
+										))}
 								</Wrapper>
 							</InnerContent>
 						</ContentBox>
