@@ -13,4 +13,3 @@ export interface LoginDataType {
 	password: string;
 	loginData?:string;
 }
-

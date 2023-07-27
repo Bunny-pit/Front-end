@@ -1,5 +1,10 @@
 import React, { FC, useRef, useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { get, post, patch, del } from '../../api/api';
+import { API_MAINHOME } from '../../utils/constant';
+import { API_CHATTING_START } from '../../utils/constant';
+import { UserDataType } from '../../types/dataType';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
@@ -37,6 +42,7 @@ dayjs.extend(timezone);
 const Mainhome: FC = () => {
 	interface Post {
 		_id: string;
+		userId: string;
 		name: string;
 		email: string;
 		title: string;
@@ -53,6 +59,7 @@ const Mainhome: FC = () => {
 
 	const containerRef = useRef<HTMLDivElement>(null);
 
+	//후에 리팩토링 예정
 	const fetchPosts = async () => {
 		try {
 			const res = await axios.get(
@@ -83,9 +90,12 @@ const Mainhome: FC = () => {
 				return;
 			}
 
-			await axios.patch(
-				`${process.env.REACT_APP_API_URL}/api/mainhome/${postId}`,
-				{ content: updatedContent },
+			await patch<UserDataType>(
+				`${API_MAINHOME}/${postId}`,
+				{
+					content: updatedContent,
+				},
+				{ withCredentials: true },
 			);
 			setPosts(
 				posts.map((post) =>
@@ -95,6 +105,7 @@ const Mainhome: FC = () => {
 			setEditingPostId('');
 			setUpdatedContent('');
 		} catch (err) {
+			alert('수정 권한이 없습니다!');
 			console.error(err);
 		}
 	};
@@ -104,19 +115,22 @@ const Mainhome: FC = () => {
 	};
 
 	const deletePost = async (postId: string) => {
+		console.log(`${API_MAINHOME}/${postId}`);
+
 		try {
-			await axios.delete(
-				`${process.env.REACT_APP_API_URL}/api/mainhome/${postId}`,
-			);
+			await del<UserDataType>(`${API_MAINHOME}/${postId}`, {
+				withCredentials: true,
+			});
 			setPosts(posts.filter((post) => post._id !== postId));
 		} catch (err) {
+			alert('삭제 권한이 없습니다!');
 			console.error(err);
 		}
 	};
 	const createPost = async () => {
 		try {
-			await axios.post(
-				`${process.env.REACT_APP_API_URL}/api/mainhome`,
+			await post<UserDataType>(
+				API_MAINHOME,
 				{
 					content: newPostContent,
 				},
@@ -128,6 +142,25 @@ const Mainhome: FC = () => {
 			await fetchPosts();
 		} catch (err) {
 			console.error(err);
+		}
+	};
+
+	const navigate = useNavigate();
+
+	const moveToChatPage = async (userId: string) => {
+		try {
+			await post<UserDataType>(
+				API_CHATTING_START,
+				{ writerId: userId },
+				{
+					withCredentials: true,
+				},
+			);
+
+			console.log(`writerId :  ${userId}`);
+			navigate(`/chatting`);
+		} catch (error) {
+			console.error(error);
 		}
 	};
 
@@ -149,7 +182,11 @@ const Mainhome: FC = () => {
 							<InnerContent>
 								<UserSecretContainer>
 									<UserSecretName>{post.name}</UserSecretName>
-									<GoSecretChat src={message} alt='message Icon' />
+									<GoSecretChat
+										src={message}
+										alt='message Icon'
+										onClick={() => moveToChatPage(post.userId)}
+									/>
 								</UserSecretContainer>
 								<ContentContainer>
 									{editingPostId === post._id ? (
