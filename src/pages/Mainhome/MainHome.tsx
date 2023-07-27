@@ -5,6 +5,7 @@ import { get, post, patch, del } from '../../api/api';
 import { API_MAINHOME } from '../../utils/constant';
 import { API_CHATTING_START } from '../../utils/constant';
 import { UserDataType } from '../../types/dataType';
+import { useUser } from '../../utils/swrFetcher';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
@@ -50,6 +51,14 @@ const Mainhome: FC = () => {
 		createdAt: string;
 		updatedAt: string;
 		__v: number;
+	}
+
+	const { userData, isError } = useUser();
+
+	if (isError) {
+		console.log('유저 데이터를 불러오는데 실패했습니다.');
+	} else if (!userData) {
+		console.log('유저 데이터를 불러오는 중...');
 	}
 
 	const [posts, setPosts] = useState<Post[]>([]);
@@ -106,7 +115,7 @@ const Mainhome: FC = () => {
 			setUpdatedContent('');
 		} catch (err) {
 			alert('수정 권한이 없습니다!');
-			console.error(err);
+			return;
 		}
 	};
 
@@ -124,7 +133,7 @@ const Mainhome: FC = () => {
 			setPosts(posts.filter((post) => post._id !== postId));
 		} catch (err) {
 			alert('삭제 권한이 없습니다!');
-			console.error(err);
+			return;
 		}
 	};
 	const createPost = async () => {
@@ -141,23 +150,25 @@ const Mainhome: FC = () => {
 			setNewPostContent('');
 			await fetchPosts();
 		} catch (err) {
-			console.error(err);
+			alert('게시글 작성을 위해서는 로그인이 필요합니다.');
+			setNewPostContent('');
+			return;
 		}
 	};
 
 	const navigate = useNavigate();
 
-	const moveToChatPage = async (userId: string) => {
+	const moveToChatPage = async (_id: string, userId: string) => {
 		try {
 			await post<UserDataType>(
 				API_CHATTING_START,
-				{ writerId: userId },
+				{ userId: _id, anonymousUserId: userId },
 				{
 					withCredentials: true,
 				},
 			);
 
-			console.log(`writerId :  ${userId}`);
+			console.log(` userId: ${_id} , anonymousUserId :  ${userId}`);
 			navigate(`/chatting`);
 		} catch (error) {
 			console.error(error);
@@ -185,7 +196,7 @@ const Mainhome: FC = () => {
 									<GoSecretChat
 										src={message}
 										alt='message Icon'
-										onClick={() => moveToChatPage(post.userId)}
+										onClick={() => moveToChatPage(userData._id, post.userId)}
 									/>
 								</UserSecretContainer>
 								<ContentContainer>
