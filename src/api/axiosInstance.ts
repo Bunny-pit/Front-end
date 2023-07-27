@@ -6,12 +6,17 @@ const accessTokenInLocalStorage = getToken();
 //api 요청 타임아웃 2.5초 : 인스턴스 생성 후.
 axios.defaults.timeout = 2500;
 
-//axios 인스턴스 생성시 config 설정
-const api = axios.create({
+export const swrApi = axios.create({
     baseURL: process.env.REACT_APP_API_URL,
     headers: {
         Authorization: `Bearer ${accessTokenInLocalStorage}`
     },
+    withCredentials: true,
+});
+
+//axios 인스턴스 생성시 config 설정
+export const api = axios.create({
+    baseURL: process.env.REACT_APP_API_URL,
     withCredentials: true,
 });
 
@@ -48,4 +53,3 @@ api.interceptors.response.use(
 
 
 // axios 인스턴스 내보내기
-export default api;

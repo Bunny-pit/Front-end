@@ -1,19 +1,18 @@
 import useSWR from 'swr'
-import axios from 'axios'
-import api from '../api/axiosInstance';
-import { API_USER_ACCESS_TOKEN, API_USER_LOGIN } from './constant';
+import { swrApi } from '../api/axiosInstance';
+import { API_USER_ACCESS_TOKEN } from './constant';
 
-const fetcher = (url: string) => api.get(url).then(res => res.data)
+const fetcher = (url: string) => swrApi.get(url).then(res => res.data)
 
 export function useUser() {
+    const petchingURL = `${process.env.REACT_APP_API_URL}${API_USER_ACCESS_TOKEN}`
 
-    const { data, error, isLoading } = useSWR(`http://localhost:4000/api/user/accessToken`, fetcher)
-    // const petchingURL = `${process.env.REACT_APP_API_URL}${API_USER_LOGIN}`
+    const { data, error, isLoading } = useSWR(petchingURL, fetcher)
 
     if (isLoading) {
         console.log('로딩중')
     }
-    if (error) {
+    if (error && data === undefined) { // 데이터가 없을 때만 에러 출력
         console.error('Error fetching user data :', error.message);
     }
     if (data) {

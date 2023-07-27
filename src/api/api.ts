@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig } from 'axios';
-import api from './axiosInstance';
+import {api} from './axiosInstance';
 
 // axios.get
 export const get = async <T>(url: string, config?: AxiosRequestConfig) => {
