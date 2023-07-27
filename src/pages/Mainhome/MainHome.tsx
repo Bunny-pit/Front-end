@@ -94,7 +94,7 @@ const Mainhome: FC = () => {
 	const updatePost = async (postId: string) => {
 		try {
 			// 글자가 1 글자 이하일 때
-			if (updatedContent.trim().length <= 1) {
+			if (updatedContent.trim().length < 1) {
 				alert('내용을 작성해주세요.');
 				return;
 			}
