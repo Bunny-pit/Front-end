@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { get, post, patch, del } from '../../api/api';
 import { API_MAINHOME } from '../../utils/constant';
 import { API_CHATTING_START } from '../../utils/constant';
-import { UserDataType } from '../../types/dataType';
+import { UserDataType, Post } from '../../types/dataType';
 import { useUser } from '../../utils/swrFetcher';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
@@ -41,18 +41,6 @@ dayjs.extend(utc);
 dayjs.extend(timezone);
 
 const Mainhome: FC = () => {
-	interface Post {
-		_id: string;
-		userId: string;
-		name: string;
-		email: string;
-		title: string;
-		content: string;
-		createdAt: string;
-		updatedAt: string;
-		__v: number;
-	}
-
 	const { userData, isError } = useUser();
 
 	if (isError) {
@@ -71,9 +59,8 @@ const Mainhome: FC = () => {
 	//후에 리팩토링 예정
 	const fetchPosts = async () => {
 		try {
-			const res = await axios.get(
-				`${process.env.REACT_APP_API_URL}/api/mainhome`,
-			);
+			const res = await get<Post[]>(API_MAINHOME);
+
 			const updatedPosts = res.data.map((post: Post) => ({
 				...post,
 				createdAt: dayjs(post.createdAt)
@@ -93,8 +80,8 @@ const Mainhome: FC = () => {
 
 	const updatePost = async (postId: string) => {
 		try {
-			// 글자가 1 글자 이하일 때
-			if (updatedContent.trim().length <= 1) {
+			// 글자가 1 글자 미만일 때
+			if (updatedContent.trim().length < 1) {
 				alert('내용을 작성해주세요.');
 				return;
 			}
@@ -158,17 +145,19 @@ const Mainhome: FC = () => {
 
 	const navigate = useNavigate();
 
-	const moveToChatPage = async (_id: string, userId: string) => {
+	const moveToChatPage = async (_id: string, userId: string, name: string) => {
 		try {
 			await post<UserDataType>(
 				API_CHATTING_START,
-				{ userId: _id, anonymousUserId: userId },
+				{ userId: _id, anonymousUserId: userId, anonymousUserName: name },
 				{
 					withCredentials: true,
 				},
 			);
 
-			console.log(` userId: ${_id} , anonymousUserId :  ${userId}`);
+			console.log(
+				` userId: ${_id} , anonymousUserId :  ${userId}, anonymousUserName: name`,
+			);
 			navigate(`/chatting`);
 		} catch (error) {
 			console.error(error);
@@ -196,7 +185,9 @@ const Mainhome: FC = () => {
 									<GoSecretChat
 										src={message}
 										alt='message Icon'
-										onClick={() => moveToChatPage(userData._id, post.userId)}
+										onClick={() =>
+											moveToChatPage(userData._id, post.userId, post.name)
+										}
 									/>
 								</UserSecretContainer>
 								<ContentContainer>
@@ -214,40 +205,43 @@ const Mainhome: FC = () => {
 								</Date>
 								<Wrapper>
 									{/* 수정하기 */}
-									{editingPostId === post._id ? (
-										<>
-											<Edit onClick={() => updatePost(post._id)}>저장</Edit>
-											<Edit
-												onClick={() => {
-													setEditingPostId('');
-													setUpdatedContent('');
-												}}>
-												취소
-											</Edit>
-										</>
-									) : (
-										<>
-											<Edit
-												onClick={() => {
-													setEditingPostId(post._id);
-													setUpdatedContent(post.content);
-												}}>
-												수정
-											</Edit>
+									{userData?._id === post.userId &&
+										(editingPostId === post._id ? (
+											<>
+												<Edit onClick={() => updatePost(post._id)}>저장</Edit>
+												<Edit
+													onClick={() => {
+														setEditingPostId('');
+														setUpdatedContent('');
+													}}>
+													취소
+												</Edit>
+											</>
+										) : (
+											<>
+												<Edit
+													onClick={() => {
+														setEditingPostId(post._id);
+														setUpdatedContent(post.content);
+													}}>
+													수정
+												</Edit>
 
-											{/* 삭제하기 */}
-											<Delete
-												onClick={() => {
-													if (
-														window.confirm('정말로 게시글을 삭제하시겠습니까?')
-													) {
-														deletePost(post._id);
-													}
-												}}>
-												삭제
-											</Delete>
-										</>
-									)}
+												{/* 삭제하기 */}
+												<Delete
+													onClick={() => {
+														if (
+															window.confirm(
+																'정말로 게시글을 삭제하시겠습니까?',
+															)
+														) {
+															deletePost(post._id);
+														}
+													}}>
+													삭제
+												</Delete>
+											</>
+										))}
 								</Wrapper>
 							</InnerContent>
 						</ContentBox>
