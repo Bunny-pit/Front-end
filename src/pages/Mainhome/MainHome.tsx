@@ -145,17 +145,19 @@ const Mainhome: FC = () => {
 
 	const navigate = useNavigate();
 
-	const moveToChatPage = async (_id: string, userId: string) => {
+	const moveToChatPage = async (_id: string, userId: string, name: string) => {
 		try {
 			await post<UserDataType>(
 				API_CHATTING_START,
-				{ userId: _id, anonymousUserId: userId },
+				{ userId: _id, anonymousUserId: userId, anonymousUserName: name },
 				{
 					withCredentials: true,
 				},
 			);
 
-			console.log(` userId: ${_id} , anonymousUserId :  ${userId}`);
+			console.log(
+				` userId: ${_id} , anonymousUserId :  ${userId}, anonymousUserName: name`,
+			);
 			navigate(`/chatting`);
 		} catch (error) {
 			console.error(error);
@@ -183,7 +185,9 @@ const Mainhome: FC = () => {
 									<GoSecretChat
 										src={message}
 										alt='message Icon'
-										onClick={() => moveToChatPage(userData._id, post.userId)}
+										onClick={() =>
+											moveToChatPage(userData._id, post.userId, post.name)
+										}
 									/>
 								</UserSecretContainer>
 								<ContentContainer>
