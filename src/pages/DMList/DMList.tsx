@@ -43,7 +43,7 @@ const DMList = () => {
 		<>
 			<TopContainer>
 				<CollapseButton
-					collapse={channelCollapse}
+					collapse={channelCollapse ? 'true' : 'false'}
 					onClick={toggleChannelCollapse}
 					src={toggleBtn}
 					alt='toggle-button'></CollapseButton>

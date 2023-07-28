@@ -9,7 +9,12 @@ export const TopContainer = styled.div`
 		font-weight: 700;
 	}
 `;
-export const CollapseButton = styled.img<{ collapse: boolean }>`
+
+export const CollapseButton = styled.img.attrs<{ collapse: string }>(
+	(props) => ({
+		collapse: props.collapse ? 'true' : 'false',
+	}),
+)<{ collapse: string }>`
 	background: transparent;
 	border: none;
 	width: 2rem;
@@ -22,6 +27,7 @@ export const CollapseButton = styled.img<{ collapse: boolean }>`
 	margin-right: 2rem;
 	cursor: pointer;
 `;
+
 export const MemberList = styled.div`
 	margin-top: 5rem;
 	font-size: 2rem;
