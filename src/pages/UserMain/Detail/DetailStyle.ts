@@ -62,6 +62,7 @@ export const LikeWrap = styled.div`
 `;
 export const LikeButton = styled.button`
 	border: none;
+	cursor: pointer;
 	background: #fff;
 `;
 export const LikeCountWrap = styled.div`
@@ -83,27 +84,58 @@ export const LikeButtonIcon = styled.img`
 export const CommentWrap = styled.div``;
 export const CommentTitle = styled.h3`
 	text-align: center;
+	font-size: 2rem;
 `;
 export const CommentUl = styled.ul`
 	list-style: none;
 	padding: 0;
 	display: flex;
 	flex-direction: column;
+	li:hover {
+		border-radius: 3rem;
+		background-color: rgba(251, 155, 249, 0.3);
+	}
+	li:hover button {
+		display: block;
+	}
 `;
 export const Commentli = styled.li`
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+	padding: 1rem 0 1rem 1.5rem;
+	position: relative;
+`;
+
+export const CommentContentWrap = styled.div`
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between
+	align-items: center;
+`;
+
+export const CommentDeleteButton = styled.button`
+	display: none;
+	position: absolute;
+	right: 3rem;
+	cursor: pointer;
+	background-color: transparent;
+	border-color: transparent;
+`;
+export const CommentDeleteImg = styled.img`
+	width: 1.7rem;
 `;
 export const CommentUserId = styled.h4`
 	font-size: 1.8rem;
-	margin-right: 2rem;
+	margin: 0 2rem 0 0;
 `;
 export const CommentContent = styled.p`
 	font-size: 1.8rem;
+	margin: 0px;
 `;
 export const CommentInput = styled.input`
-	width: 99%;
+	width: 100%;
+	box-sizing: border-box;
 	margin: 0;
 	padding: 0;
 	margin: 2rem 0 6rem;

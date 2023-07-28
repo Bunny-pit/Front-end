@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -9,6 +9,9 @@ import Footer from '../../../components/Footer/Footer';
 import ProfileImg from '../../../assets/images/userimagesmall.png';
 import DeleteIcon from '../../../assets/icons/DeleteIcon.png';
 import likeIcon from '../../../assets/icons/like.png';
+import likedIcon from '../../../assets/icons/liked.png';
+import CommentDeleteIcon from '../../../assets/icons/CommentDeleteIcon.png';
+import dayjs from 'dayjs';
 import {
 	Container,
 	DeleteButtonWrap,
@@ -37,6 +40,9 @@ import {
 	CommentInput,
 	ContentWrap,
 	Content,
+	CommentContentWrap,
+	CommentDeleteButton,
+	CommentDeleteImg,
 } from './DetailStyle';
 
 const backUrl = 'https://port-0-back-end-kvmh2mljxnw03c.sel4.cloudtype.app/api';
@@ -48,17 +54,20 @@ interface Post {
 	images: string[];
 	content: string;
 	createdAt: string;
+	likeCount: number; // 추가된 부분
 }
 interface Comment {
 	comment: string;
+	_id: string;
 	postId: string;
 	userId: string;
 	userName: string;
 	createdAt: Date;
 	updatedAt: Date;
 }
+
 const settings = {
-	dots: false, // dot navigation을 보여줄지에 대한 여부
+	dots: true, // dot navigation을 보여줄지에 대한 여부
 	infinite: true, // 무한으로 슬라이드가 돌아가는지에 대한 여부
 	speed: 500, // 슬라이드가 넘어가는 속도(ms 단위)
 	slidesToShow: 1, // 한 번에 보여줄 슬라이드 수
@@ -66,11 +75,13 @@ const settings = {
 };
 
 const Detail = () => {
+	const navigate = useNavigate();
 	const { postId } = useParams();
 	const [post, setPost] = useState<Post | null>(null); // 초기 상태를 null로 설정
 	const [comments, setComments] = useState<Comment[]>([]); // 댓글 상태를 추가
 	const [commentInput, setCommentInput] = useState(''); // Add this line
-
+	const [likeCount, setLikeCount] = useState<number>(0);
+	const [isLiked, setIsLiked] = useState<boolean>(false);
 	useEffect(() => {
 		// MongoDB에서 데이터 가져오는 함수
 		//게시글 가져옴
@@ -79,7 +90,20 @@ const Detail = () => {
 				const response = await axios.get(
 					`http://localhost:4000/api/post/${postId}`,
 				);
-				setPost(response.data);
+				setPost(response.data.post);
+				if (response.data.like && response.data.like.userId) {
+					setLikeCount(response.data.like.userId.length);
+					const currentUser = 'frontTest'; // temporary id
+					const isUserLiked = response.data.like.userId.includes(currentUser);
+					setIsLiked(isUserLiked);
+					// console.log('userId = ', response.data.like.userId);
+					// console.log('count = ', response.data.like.userId.length);
+					// console.log('liked = ', isUserLiked);
+				} else {
+					setLikeCount(0);
+					setIsLiked(false);
+				}
+				// console.log(response.data.post);
 			} catch (error) {
 				console.error('Error fetching posts:', error);
 			}
@@ -99,8 +123,22 @@ const Detail = () => {
 
 		fetchPosts();
 		fetchComments();
-	}, [postId]);
-	// 댓글 생성 코드
+	}, [postId, isLiked]);
+	//----------게시글 삭제------------
+	const handleDeletePostButton = async () => {
+		const confirmed = window.confirm('정말로 삭제하시겠습니까?');
+
+		if (confirmed) {
+			try {
+				await axios.delete(`http://localhost:4000/api/post/${postId}`);
+				navigate('/post');
+			} catch (error) {
+				console.error('Error deleting post:', error);
+			}
+		}
+	};
+
+	//----- 댓글 생성 코드------
 	const handleCommentInputChange = (
 		event: React.ChangeEvent<HTMLInputElement>,
 	) => {
@@ -122,8 +160,8 @@ const Detail = () => {
 				{
 					comment: commentInput,
 					// You should also send the user id and username here, for example:
-					userId: 'jonguk@gamil.com',
-					userName: '프론트 종욱',
+					userId: 'frontTest',
+					userName: 'frontTest',
 					// userId: currentUser.id,
 					// userName: currentUser.name,
 				},
@@ -135,7 +173,36 @@ const Detail = () => {
 			console.error('Error posting comment:', error);
 		}
 	};
+	//-----댓글 삭제 코드 -----
+	const deleteComment = async (postId: string, commentId: string) => {
+		try {
+			await axios.delete(
+				`http://localhost:4000/api/comment/${postId}/${commentId}`,
+			);
 
+			// 삭제된 댓글을 제외한 댓글들로 상태를 업데이트합니다.
+			setComments(comments.filter((comment) => comment._id !== commentId));
+		} catch (error) {
+			console.error('Error deleting comment:', error);
+		}
+	};
+	// --------좋아요 기능 ----------
+	const handleLikeButton = async () => {
+		try {
+			const response = await axios.post(
+				`http://localhost:4000/api/like/${postId}`,
+				{
+					userId: 'frontTest',
+				},
+			);
+
+			const { liked, count } = response.data;
+			setIsLiked(liked);
+			setLikeCount(count);
+		} catch (error) {
+			console.error('Error updating like:', error);
+		}
+	};
 	if (post === null) {
 		// post가 null일 때 로딩 상태로 처리
 		return <div>Loading...</div>;
@@ -151,7 +218,7 @@ const Detail = () => {
 						<ProfileId>유저 아이디</ProfileId>
 					</Profile>
 					<DeleteButtonWrap>
-						<DeleteButton>
+						<DeleteButton onClick={handleDeletePostButton}>
 							<DeleteButtonIcon src={DeleteIcon} alt='삭제버튼' />
 						</DeleteButton>
 					</DeleteButtonWrap>
@@ -171,14 +238,17 @@ const Detail = () => {
 					<PostDetailWrap>
 						{/* 좋아요버튼, 좋아요수, 시간 */}
 						<LikeWrap>
-							<LikeButton>
-								<LikeButtonIcon src={likeIcon} alt='좋아요 버튼' />
+							<LikeButton onClick={handleLikeButton}>
+								<LikeButtonIcon
+									src={isLiked ? likedIcon : likeIcon}
+									alt='좋아요 버튼'
+								/>
 							</LikeButton>
 							<LikeCountWrap>
-								좋아요 수 <LikeCount>0</LikeCount>
+								좋아요 <LikeCount>{likeCount}</LikeCount>
 							</LikeCountWrap>
 						</LikeWrap>
-						<PostTime>{post?.createdAt}</PostTime>
+						<PostTime>{dayjs(post?.createdAt).format('YYYY-MM-DD')}</PostTime>
 					</PostDetailWrap>
 					<ContentWrap>
 						{/* 게시글 내용 들어갈 자리 */}
@@ -191,8 +261,16 @@ const Detail = () => {
 					<CommentUl>
 						{comments.map((comment, index) => (
 							<Commentli key={index}>
-								<CommentUserId>{comment.userName}</CommentUserId>
-								<CommentContent>{comment.comment}</CommentContent>
+								<CommentContentWrap>
+									<CommentUserId>{comment.userName}</CommentUserId>
+									<CommentContent>{comment.comment}</CommentContent>
+								</CommentContentWrap>
+								<CommentDeleteButton
+									onClick={() => deleteComment(comment.postId, comment._id)}>
+									<CommentDeleteImg
+										src={CommentDeleteIcon}
+										alt='댓글 삭제 버튼'></CommentDeleteImg>
+								</CommentDeleteButton>
 							</Commentli>
 						))}
 					</CommentUl>
