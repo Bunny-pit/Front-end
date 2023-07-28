@@ -60,6 +60,7 @@ const Mainhome: FC = () => {
 	const fetchPosts = async () => {
 		try {
 			const res = await get<Post[]>(API_MAINHOME);
+
 			const updatedPosts = res.data.map((post: Post) => ({
 				...post,
 				createdAt: dayjs(post.createdAt)
