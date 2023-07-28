@@ -39,16 +39,18 @@ api.interceptors.request.use(
 
 //응답 인터셉터 추가
 api.interceptors.response.use(
-	(response) => {
-		//응답에 대한 로직
-		console.log('서버 응답 :', response.data);
-		return response;
-	},
-	(error) => {
-		//응답 에러 발생 시 수행 로직
-		console.log('서버 응답 오류 발생', error); //디버깅
-		return Promise.reject(error);
-	},
+
+    (response) => {
+        //응답에 대한 로직
+        console.log('서버 응답 :', response)
+        return response
+    },
+    error => {
+        //응답 에러 발생 시 수행 로직
+        console.log('서버 응답 오류 발생', error) //디버깅
+        return Promise.reject(error);
+    }
+
 );
 
 // axios 인스턴스 내보내기
