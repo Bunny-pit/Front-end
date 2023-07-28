@@ -41,8 +41,8 @@ api.interceptors.request.use(
 api.interceptors.response.use(
     (response) => {
         //응답에 대한 로직
-        console.log('서버 응답 :', response.data)
-        return response.data
+        console.log('서버 응답 :', response)
+        return response
     },
     error => {
         //응답 에러 발생 시 수행 로직
