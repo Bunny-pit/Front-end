@@ -5,9 +5,8 @@ import { API_USER_ACCESS_TOKEN } from './constant';
 const fetcher = (url: string) => swrApi.get(url).then(res => res.data)
 
 export function useUser() {
-    const petchingURL = `${process.env.REACT_APP_API_URL}${API_USER_ACCESS_TOKEN}`
-
-    const { data, error, isLoading } = useSWR(petchingURL, fetcher)
+    const fetchingURL = `${process.env.REACT_APP_API_URL}${API_USER_ACCESS_TOKEN}`
+    const { data, error, isLoading } = useSWR(fetchingURL, fetcher)
 
     if (isLoading) {
         console.log('로딩중')
@@ -16,11 +15,9 @@ export function useUser() {
         console.error('Error fetching user data :', error.message);
     }
     if (data) {
-        console.log('data 가져옴', data);
+        console.log('data 가져옴', data.userData);
         const userData = data.userData;
         return { userData, isError: false };
     }
-
     return { userData: null, isError: true };
-
 }

@@ -7,11 +7,10 @@ const accessTokenInLocalStorage = getToken();
 axios.defaults.timeout = 2500;
 
 export const swrApi = axios.create({
-	baseURL: process.env.REACT_APP_API_URL,
-	headers: {
-		Authorization: `Bearer ${accessTokenInLocalStorage}`,
-	},
-	withCredentials: true,
+    headers: {
+        Authorization: `Bearer ${accessTokenInLocalStorage}`
+    },
+    withCredentials: true,
 });
 
 //axios 인스턴스 생성시 config 설정
@@ -50,7 +49,4 @@ api.interceptors.response.use(
         console.log('서버 응답 오류 발생', error) //디버깅
         return Promise.reject(error);
     }
-
 );
-
-// axios 인스턴스 내보내기
