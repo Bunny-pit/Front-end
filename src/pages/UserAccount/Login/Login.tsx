@@ -54,6 +54,7 @@ export default function LoginPage() {
 			);
 			const accessToken: string = response.data.accessToken;
 			setToken(accessToken);
+			window.location.reload();
 			// navigate('/')
 		} catch (error) {
 			console.log('로그인 post 오류', error)
