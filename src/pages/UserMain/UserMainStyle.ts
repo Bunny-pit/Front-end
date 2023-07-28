@@ -98,6 +98,7 @@ export const ProfileUl = styled.ul`
 export const ProfileLi = styled.li`
 	font-size: 1.8rem;
 `;
+
 export const Email = styled.a`
 	text-decoration: none;
 	color: #000;
@@ -120,6 +121,8 @@ export const PostUl = styled.ul`
 	grid-template-rows: 1fr 1fr 1fr;
 	gap: 3rem;
 	place-items: center;
+	position: relative;
+	border: 1px solid green;
 `;
 export const PostLi = styled.li`
 	height: 22rem;
@@ -131,4 +134,16 @@ export const PostLi = styled.li`
 			width: 100%;
 		}
 	}
+`;
+export const NothingWrap = styled.div`
+	border: 1px solid blue;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+`;
+export const NothingPost = styled.p`
+	border: 1px solid red;
+	font-size: 2rem;
+	font-weight: 600;
 `;

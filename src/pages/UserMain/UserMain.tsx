@@ -26,6 +26,8 @@ import {
 	PostTitle,
 	PostUl,
 	PostLi,
+	NothingWrap,
+	NothingPost,
 } from './UserMainStyle';
 
 interface Post {
@@ -121,13 +123,19 @@ const UserMain = () => {
 				<PostContainer>
 					<PostTitle>게시물</PostTitle>
 					<PostUl>
-						{sortedPosts.map((post: Post, i: number) => (
-							<PostLi key={post._id}>
-								<Link className='link' to={`/post/${post._id}`}>
-									<img key={i} src={post.images[0]} alt={`post ${i}`} />
-								</Link>
-							</PostLi>
-						))}
+						{sortedPosts.length > 0 ? (
+							sortedPosts.map((post: Post, i: number) => (
+								<PostLi key={post._id}>
+									<Link className='link' to={`/post/${post._id}`}>
+										<img key={i} src={post.images[0]} alt={`post ${i}`} />
+									</Link>
+								</PostLi>
+							))
+						) : (
+							<NothingWrap>
+								<NothingPost>게시글이 없습니다.</NothingPost>
+							</NothingWrap>
+						)}
 					</PostUl>
 				</PostContainer>
 			</Container>
