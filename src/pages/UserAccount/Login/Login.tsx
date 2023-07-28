@@ -19,7 +19,7 @@ import {
 	BottomButton,
 } from './LoginStyle';
 import { useUser } from '../../../utils/swrFetcher';
-import axios, { AxiosResponse } from 'axios'
+import { AxiosResponse } from 'axios'
 import { onChangeInputSetter } from '../../../utils/inputStateSetter';
 
 import { API_USER_LOGIN, API_USER_ACCESS_TOKEN } from '../../../utils/constant';
@@ -34,7 +34,6 @@ export default function LoginPage() {
 	const { userData, isError } = useUser();
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		setCheckEmail(true);
 
 		if (email === '' || password === '') {
 			return setCheckForm(false);
@@ -55,6 +54,7 @@ export default function LoginPage() {
 			);
 			const accessToken: string = response.data.accessToken;
 			setToken(accessToken);
+			window.location.reload();
 			// navigate('/')
 		} catch (error) {
 			console.log('로그인 post 오류', error)
