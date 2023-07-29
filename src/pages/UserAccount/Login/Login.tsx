@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import MainLogo from '../../../assets/icons/MainLogo.png';
 import { useNavigate } from 'react-router-dom';
 import { emailValidation } from '../../../utils/registerValidation';
 import { post } from '../../../api/api';
 import { setToken } from '../../../api/token';
 import { UserDataType } from '../../../types/dataType';
-
+import { fetchUserData, fetcher } from '../../../utils/swrFetcher';
+import { AxiosResponse } from 'axios'
+import { onChangeInputSetter } from '../../../utils/inputStateSetter';
+import useSWR from 'swr'
+import { API_USER_LOGIN, API_USER_ACCESS_TOKEN } from '../../../utils/constant';
+import { redirect } from 'react-router-dom';
 import {
 	Page,
 	TitleAndLogoWrap,
@@ -18,31 +23,60 @@ import {
 	ButtonWrap,
 	BottomButton,
 } from './LoginStyle';
-import { useUser } from '../../../utils/swrFetcher';
-import { AxiosResponse } from 'axios'
-import { onChangeInputSetter } from '../../../utils/inputStateSetter';
 
-import { API_USER_LOGIN, API_USER_ACCESS_TOKEN } from '../../../utils/constant';
 
 export default function LoginPage() {
 	const [email, setEmail] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
 	const [checkEmail, setCheckEmail] = useState<boolean>(true);
 	const [checkPassword, setCheckPassword] = useState<boolean>(true);
-	const [checkForm, setCheckForm] = useState<boolean>(true);
+	const [checkLoginData, setCheckLoginData] = useState<boolean>(true);
 	const navigate = useNavigate();
-	const { userData, isError } = useUser();
+	const { data, error, mutate } = useSWR(checkLoginData ? `${process.env.REACT_APP_API_URL}${API_USER_ACCESS_TOKEN}` : null, fetchUserData, {
+		errorRetryInterval: 1000 * 3,
+		dedupingInterval: 1000 * 3,
+		revalidateOnMount : false
+	});
+	// const handleSubmit = useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
+	// 	e.preventDefault();
+
+	// 	if (email === '' || password === '') {
+	// 		setCheckLoginData(false);
+	// 	} else if (!emailValidation(email)) {
+	// 		setCheckEmail(false);
+	// 		return setCheckLoginData(false);
+	// 	}
+	// 	setCheckLoginData(true);
+	// 	console.log('checkEmail:', checkEmail, 'checkPassword:', checkPassword, 'checkLoginData:', checkLoginData)
+	// 	try {
+	// 		const response: AxiosResponse<{ accessToken: string }> = await post(
+	// 			API_USER_LOGIN,
+	// 			{
+	// 				email,
+	// 				password
+	// 			},
+	// 			{ headers: { 'Content-Type': 'application/json' } }
+	// 		);
+	// 		const accessToken: string = response.data.accessToken;
+	// 		setToken(accessToken);
+	// 		mutate();
+	// 		window.location.reload();
+	// 	} catch (error) {
+	// 		console.log('로그인 post 오류', error)
+	// 	}
+	// }, [])
+
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
 		if (email === '' || password === '') {
-			return setCheckForm(false);
+			setCheckLoginData(false);
 		} else if (!emailValidation(email)) {
 			setCheckEmail(false);
-			return setCheckForm(false);
+			return setCheckLoginData(false);
 		}
-		setCheckForm(true);
-
+		setCheckLoginData(true);
+		console.log('checkEmail:', checkEmail, 'checkPassword:', checkPassword, 'checkLoginData:', checkLoginData)
 		try {
 			const response: AxiosResponse<{ accessToken: string }> = await post(
 				API_USER_LOGIN,
@@ -54,15 +88,12 @@ export default function LoginPage() {
 			);
 			const accessToken: string = response.data.accessToken;
 			setToken(accessToken);
-			window.location.reload();
-			// navigate('/')
+			mutate();
+			window.location.reload(); 
 		} catch (error) {
 			console.log('로그인 post 오류', error)
 		}
-
-
 	}
-
 	return (
 		<Page>
 			<TitleAndLogoWrap>

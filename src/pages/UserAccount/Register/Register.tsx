@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import MainLogo from '../../../assets/icons/MainLogo.png';
-
 import { useNavigate } from 'react-router-dom';
 import { post } from '../../../api/api';
 import { UserDataType } from '../../../types/dataType';
@@ -9,9 +8,7 @@ import {
     passwordValidation,
     userNameValidation
 } from '../../../utils/registerValidation';
-
 import { onChangeInputSetter } from '../../../utils/inputStateSetter';
-
 import {
     Page,
     TitleAndLogoWrap,
@@ -32,7 +29,6 @@ export default function RegisterPage() {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [checkPassword, setCheckPassword] = useState<string>('');
-
     const navigate = useNavigate();
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
