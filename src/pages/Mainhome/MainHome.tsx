@@ -156,7 +156,7 @@ const Mainhome: FC = () => {
 			);
 
 			console.log(
-				` userId: ${_id} , anonymousUserId :  ${userId}, anonymousUserName: name`,
+				` userId: ${_id} , anonymousUserId :  ${userId}, anonymousUserName: ${name}`,
 			);
 			navigate(`/chatting`);
 		} catch (error) {
