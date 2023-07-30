@@ -5,40 +5,57 @@ import {
 	TopContainer,
 	Profile,
 } from './DMListStyle';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import toggleBtn from '../../assets/icons/downarrow.png';
 import gravatar from 'gravatar';
-
-const memberData = [
+import { useUser } from '../../utils/swrFetcher';
+import { get } from '../../api/api';
+import { DataType } from '../../types/dataType';
+import { DmListType } from '../../types/chatType';
+const memberList = [
 	{
 		id: 1,
-		nickname: '자고있는 버니',
-		email: 'rks85227@gmail.com',
-	},
-	{
-		id: 2,
-		nickname: '노래하는 버니',
-		email: 'rabbit545@gmail.com',
-	},
-	{
-		id: 3,
-		nickname: '귀여운 버니',
-		email: 'cute9687@gmail.com',
-	},
-	{
-		id: 4,
-		nickname: '사랑스러운 버니',
-		email: 'dltjchlrh@gmail.com',
+		nickname: '사자',
+		email: 'rekdk',
 	},
 ];
 const DMList = () => {
+	const { userData, isError } = useUser();
+
+	if (isError) {
+		console.log('유저 데이터를 불러오는데 실패했습니다.');
+	} else if (!userData) {
+		console.log('유저 데이터를 불러오는 중...');
+	}
+
+	const userId = userData?._id;
 	const [channelCollapse, setChannelCollapse] = useState(false);
+	const [dmList, setDmList] = useState<DmListType[] | null>(null);
+
+	useEffect(() => {
+		const saveDMList = async () => {
+			try {
+				const response = await get<DmListType[]>(`/api/chat/${userId}`);
+				setDmList(response.data);
+				console.log('여기다', response.data);
+			} catch (error) {
+				console.error('Error saveDMList:', error);
+			}
+		};
+		saveDMList();
+	}, [userId]);
 
 	const toggleChannelCollapse = useCallback(() => {
 		setChannelCollapse((prev) => !prev);
 	}, []);
 
+	const babo = dmList?.map((list) => {
+		list.users.forEach((user) => {
+			console.log('진짜', user.secretName);
+		});
+	});
+	console.log('babo', babo);
 	return (
 		<>
 			<TopContainer>
@@ -51,19 +68,21 @@ const DMList = () => {
 			</TopContainer>
 			<MemberList>
 				{!channelCollapse &&
-					memberData?.map((member) => {
-						return (
-							<NavLink key={member.id} to={`/chatting/dm/${member.nickname}`}>
-								<Profile
-									src={gravatar.url(member.email, {
-										s: '24px',
-										d: 'identicon',
-									})}
-									alt={member.nickname}
-								/>
-								<Nickname>{member.nickname}</Nickname>
-							</NavLink>
-						);
+					dmList?.map((list: any) => {
+						if (list.users.length > 1) {
+							return (
+								<NavLink key={list._id} to={`/chatting/dm/${list._id}`}>
+									<Profile
+										src={gravatar.url(list.users[1].email, {
+											s: '24px',
+											d: 'identicon',
+										})}
+										alt={list.users[1].secretName}
+									/>
+									<Nickname>{list.users[1].secretName}</Nickname>
+								</NavLink>
+							);
+						}
 					})}
 			</MemberList>
 		</>
