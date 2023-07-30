@@ -13,13 +13,7 @@ import { useUser } from '../../utils/swrFetcher';
 import { get } from '../../api/api';
 import { DataType } from '../../types/dataType';
 import { DmListType } from '../../types/chatType';
-const memberList = [
-	{
-		id: 1,
-		nickname: '사자',
-		email: 'rekdk',
-	},
-];
+
 const DMList = () => {
 	const { userData, isError } = useUser();
 
@@ -38,7 +32,6 @@ const DMList = () => {
 			try {
 				const response = await get<DmListType[]>(`/api/chat/${userId}`);
 				setDmList(response.data);
-				console.log('여기다', response.data);
 			} catch (error) {
 				console.error('Error saveDMList:', error);
 			}
@@ -50,12 +43,6 @@ const DMList = () => {
 		setChannelCollapse((prev) => !prev);
 	}, []);
 
-	const babo = dmList?.map((list) => {
-		list.users.forEach((user) => {
-			console.log('진짜', user.secretName);
-		});
-	});
-	console.log('babo', babo);
 	return (
 		<>
 			<TopContainer>
@@ -71,7 +58,9 @@ const DMList = () => {
 					dmList?.map((list: any) => {
 						if (list.users.length > 1) {
 							return (
-								<NavLink key={list._id} to={`/chatting/dm/${list._id}`}>
+								<NavLink
+									key={list._id}
+									to={`/chatting/dm/${list.users[1].secretName}`}>
 									<Profile
 										src={gravatar.url(list.users[1].email, {
 											s: '24px',
