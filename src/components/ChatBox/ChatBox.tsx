@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useSocket } from '../../hooks/useSocket';
 
 interface ChatBoxProps {
-	chatId: string;
+	chatId?: string;
 	userId: string;
 	onNewMessage: (message: string) => void;
 }
@@ -12,8 +12,8 @@ interface ChatBoxProps {
 const ChatBox = ({ chatId, userId, onNewMessage }: ChatBoxProps) => {
 	const [inputArea, setInputArea] = useState('');
 	const socket = useSocket(
-		'https://port-0-back-end-kvmh2mljxnw03c.sel4.cloudtype.app',
-		// 'http://localhost:3000',
+		// 'https://port-0-back-end-kvmh2mljxnw03c.sel4.cloudtype.app',
+		'http://localhost:3000',
 	);
 
 	useEffect(() => {

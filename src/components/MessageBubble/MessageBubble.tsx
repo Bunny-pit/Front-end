@@ -15,6 +15,7 @@ const Bubble = styled.div<{ width: string }>`
 	max-width: 40%;
 	white-space: pre-wrap;
 	font-size: 2rem;
+	justify-content: center;
 `;
 
 const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
