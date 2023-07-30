@@ -133,7 +133,7 @@ const UserMain = () => {
 							))
 						) : (
 							<NothingWrap>
-								<NothingPost>게시글이 없습니다.</NothingPost>
+								<NothingPost>게시글이 없습니다</NothingPost>
 							</NothingWrap>
 						)}
 					</PostUl>
