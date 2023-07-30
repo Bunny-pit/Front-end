@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useSocket } from '../../hooks/useSocket';
 
 interface ChatBoxProps {
-	chatId: string;
+	chatId?: string;
 	userId: string;
 	onNewMessage: (message: string) => void;
 }

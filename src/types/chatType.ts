@@ -12,3 +12,17 @@ export interface DmListType {
 }
 
 export type chatListType = DmListType[];
+
+export interface MessageType {
+	_id: string;
+	sender: Array<{
+		_id: string;
+		email: string;
+	}>;
+	chat: string;
+	content: string;
+	timestamp: string;
+	__v: number;
+}
+
+export type MessageListType = MessageType[];
