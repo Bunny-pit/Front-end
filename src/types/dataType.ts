@@ -25,3 +25,8 @@ export interface Post {
 	updatedAt: string;
 	__v: number;
 }
+
+export interface DataType {
+	data: any;
+	error: any;
+}
