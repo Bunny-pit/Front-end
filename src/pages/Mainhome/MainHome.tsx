@@ -1,14 +1,15 @@
 import React, { FC, useRef, useEffect, useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+
 import { get, post, patch, del } from '../../api/api';
 import { API_MAINHOME } from '../../utils/constant';
 import { API_CHATTING_START } from '../../utils/constant';
 import { UserDataType, Post } from '../../types/dataType';
 import { useUser } from '../../utils/swrFetcher';
-import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
-import timezone from 'dayjs/plugin/timezone';
+
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import message from '../../assets/icons/message.png';
@@ -56,7 +57,6 @@ const Mainhome: FC = () => {
 
 	const containerRef = useRef<HTMLDivElement>(null);
 
-	//후에 리팩토링 예정
 	const fetchPosts = async () => {
 		try {
 			const res = await get<Post[]>(API_MAINHOME);
@@ -123,7 +123,14 @@ const Mainhome: FC = () => {
 			return;
 		}
 	};
+
 	const createPost = async () => {
+		const token = localStorage.getItem('accessToken');
+		if (!token) {
+			alert('게시글 작성을 위해서는 로그인이 필요합니다.');
+			setNewPostContent('');
+			return;
+		}
 		try {
 			await post<UserDataType>(
 				API_MAINHOME,
@@ -137,8 +144,7 @@ const Mainhome: FC = () => {
 			setNewPostContent('');
 			await fetchPosts();
 		} catch (err) {
-			alert('게시글 작성을 위해서는 로그인이 필요합니다.');
-			setNewPostContent('');
+			console.log(err);
 			return;
 		}
 	};
