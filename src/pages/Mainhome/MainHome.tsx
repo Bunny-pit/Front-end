@@ -205,13 +205,15 @@ const Mainhome: FC = () => {
 							<InnerContent>
 								<UserSecretContainer>
 									<UserSecretName>{post.name}</UserSecretName>
-									<GoSecretChat
-										src={message}
-										alt='message Icon'
-										onClick={() =>
-											moveToChatPage(userData._id, post.userId, post.name)
-										}
-									/>
+									{userData._id !== post.userId && (
+										<GoSecretChat
+											src={message}
+											alt='message Icon'
+											onClick={() =>
+												moveToChatPage(userData._id, post.userId, post.name)
+											}
+										/>
+									)}
 								</UserSecretContainer>
 								<ContentContainer>
 									{editingPostId === post._id ? (
