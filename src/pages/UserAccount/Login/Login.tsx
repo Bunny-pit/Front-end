@@ -1,16 +1,11 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import MainLogo from '../../../assets/icons/MainLogo.png';
 import { useNavigate } from 'react-router-dom';
-import { emailValidation } from '../../../utils/registerValidation';
+import { emailValidation, passwordValidation } from '../../../utils/registerValidation';
 import { post } from '../../../api/api';
 import { setToken } from '../../../api/token';
 import { UserDataType } from '../../../types/dataType';
-import { fetchUserData, fetcher } from '../../../utils/swrFetcher';
-import { AxiosResponse } from 'axios'
-import { onChangeInputSetter } from '../../../utils/inputStateSetter';
-import useSWR from 'swr'
-import { API_USER_LOGIN, API_USER_ACCESS_TOKEN } from '../../../utils/constant';
-import { redirect } from 'react-router-dom';
+
 import {
 	Page,
 	TitleAndLogoWrap,
@@ -23,77 +18,85 @@ import {
 	ButtonWrap,
 	BottomButton,
 } from './LoginStyle';
+import { useUser } from '../../../utils/swrFetcher';
+import { AxiosResponse } from 'axios'
+import { onChangeInputSetter } from '../../../utils/inputStateSetter';
 
+import { API_USER_LOGIN, API_USER_ACCESS_TOKEN } from '../../../utils/constant';
+
+interface LoginFormState {
+	email: string;
+	password: string;
+	isEmailValid: boolean;
+	isPasswordValid: boolean;
+	isFormValid: boolean;
+}
+
+const initialLoginFormState: LoginFormState = {
+	email: '',
+	password: '',
+	isEmailValid: true,
+	isPasswordValid: true,
+	isFormValid: true,
+};
 
 export default function LoginPage() {
 	const [email, setEmail] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
-	const [checkEmail, setCheckEmail] = useState<boolean>(true);
-	const [checkPassword, setCheckPassword] = useState<boolean>(true);
-	const [checkLoginData, setCheckLoginData] = useState<boolean>(true);
-	const navigate = useNavigate();
-	const { data, error, mutate } = useSWR(checkLoginData ? `${process.env.REACT_APP_API_URL}${API_USER_ACCESS_TOKEN}` : null, fetchUserData, {
-		errorRetryInterval: 1000 * 3,
-		dedupingInterval: 1000 * 3,
-		revalidateOnMount : false
-	});
-	// const handleSubmit = useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
-	// 	e.preventDefault();
+	// const [checkEmail, setCheckEmail] = useState<boolean>(true);
+	// const [checkPassword, setCheckPassword] = useState<boolean>(true);
+	// const [checkForm, setCheckForm] = useState<boolean>(true);
+	const [loginForm, setLoginForm] = useState<LoginFormState>(initialLoginFormState);
 
-	// 	if (email === '' || password === '') {
-	// 		setCheckLoginData(false);
-	// 	} else if (!emailValidation(email)) {
-	// 		setCheckEmail(false);
-	// 		return setCheckLoginData(false);
-	// 	}
-	// 	setCheckLoginData(true);
-	// 	console.log('checkEmail:', checkEmail, 'checkPassword:', checkPassword, 'checkLoginData:', checkLoginData)
-	// 	try {
-	// 		const response: AxiosResponse<{ accessToken: string }> = await post(
-	// 			API_USER_LOGIN,
-	// 			{
-	// 				email,
-	// 				password
-	// 			},
-	// 			{ headers: { 'Content-Type': 'application/json' } }
-	// 		);
-	// 		const accessToken: string = response.data.accessToken;
-	// 		setToken(accessToken);
-	// 		mutate();
-	// 		window.location.reload();
-	// 	} catch (error) {
-	// 		console.log('로그인 post 오류', error)
-	// 	}
-	// }, [])
+	const navigate = useNavigate();
+	const { userData, isError, refreshData } = useUser();
+
+	useEffect(() => {
+		return () => {
+			// 컴포넌트가 언마운트될 때 상태 초기화
+			setLoginForm(initialLoginFormState);
+			refreshData();
+		};
+	}, []);
+
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-
-		if (email === '' || password === '') {
-			setCheckLoginData(false);
-		} else if (!emailValidation(email)) {
-			setCheckEmail(false);
-			return setCheckLoginData(false);
-		}
-		setCheckLoginData(true);
-		console.log('checkEmail:', checkEmail, 'checkPassword:', checkPassword, 'checkLoginData:', checkLoginData)
-		try {
-			const response: AxiosResponse<{ accessToken: string }> = await post(
-				API_USER_LOGIN,
-				{
+		const isEmailValid = emailValidation(email);
+		const isPasswordValid = passwordValidation(password);
+		const isFormValid = isEmailValid && isPasswordValid;
+		console.log(isEmailValid, isPasswordValid)
+		if (isFormValid) {
+			try {
+				setLoginForm({
 					email,
-					password
-				},
-				{ headers: { 'Content-Type': 'application/json' } }
-			);
-			const accessToken: string = response.data.accessToken;
-			setToken(accessToken);
-			mutate();
-			window.location.reload(); 
-		} catch (error) {
-			console.log('로그인 post 오류', error)
+					password,
+					isEmailValid,
+					isPasswordValid,
+					isFormValid,
+				});
+				console.log('loginForm', loginForm)
+				const response: AxiosResponse<{ accessToken: string }> = await post(
+					API_USER_LOGIN,
+					{
+						email,
+						password
+					},
+					{ headers: { 'Content-Type ': 'application/json' } }
+				);
+				const accessToken: string = response.data.accessToken;
+				setToken(accessToken);
+				refreshData();
+			} catch (error) {
+				console.log('로그인 post 오류', error)
+			}
+
+		} else {
+			// 유효하지 않은 입력에 대한 사용자 알림 등 추가 로직
+			alert('입력 정보를 확인해주세요!')
 		}
-	}
+	};
+
 	return (
 		<Page>
 			<TitleAndLogoWrap>
@@ -132,6 +135,8 @@ export default function LoginPage() {
 						회원가입하기
 					</BottomButton>
 				</ButtonWrap>
+				{!loginForm.isEmailValid && <p>유효하지 않은 이메일입니다.</p>}
+				{!loginForm.isPasswordValid && <p>유효하지 않은 패스워드입니다.</p>}
 			</FormWrap>
 		</Page>
 	);
