@@ -12,12 +12,12 @@ import { useAutoScroll } from '../../hooks/useAutoScroll';
 import { useUser } from '../../utils/swrFetcher';
 import { MessageType } from '../../types/chatType';
 import { get } from '../../api/api';
+import useSWR from 'swr';
 
 const Chat = () => {
 	const { nickname } = useParams();
 	const chatId = nickname;
 	const [messages, setMessages] = useState<string[]>([]);
-
 	const [savedMessages, setSavedMessages] = useState<MessageType[] | null>(
 		null,
 	);
@@ -51,14 +51,20 @@ const Chat = () => {
 		};
 		loadSaveMessage();
 	}, [chatId]);
+	console.log('messages', messages);
+	const senderId = savedMessages?.map((msg) => msg.sender._id);
 
 	return (
 		<>
 			<Container>
-				<Content>예의를 지켜서 올바른 채팅 문화를 만들어요</Content>
+				<Content>나와 님의 채팅방입니다</Content>
 				<MessageContainer ref={messageListRef}>
 					{messages.map((message, idx) => (
-						<MessageBubble key={idx} message={message} />
+						<MessageBubble
+							key={idx}
+							message={message}
+							currentUser={senderId !== undefined && senderId[1] === userId}
+						/>
 					))}
 				</MessageContainer>
 				<ChatBoxConatiner>
