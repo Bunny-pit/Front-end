@@ -46,5 +46,5 @@ export const Profile = styled.img`
 export const Exiticon = styled.img`
 	margin-left: 3rem;
 	cursor: pointer;
-	width: 15%;
+	width: 6%;
 `;

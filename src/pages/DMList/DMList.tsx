@@ -13,7 +13,10 @@ import gravatar from 'gravatar';
 import { useUser } from '../../utils/swrFetcher';
 import { get, del } from '../../api/api';
 import { DmListType } from '../../types/chatType';
-import xicon from '../../assets/icons/x-circle-light.png';
+import deleteicon from '../../assets/icons/DeleteIcon.png';
+import alertList from '../../utils/swal';
+import Swal from 'sweetalert2';
+import useSWR from 'swr';
 
 const DMList = () => {
 	const { userData, isError } = useUser();
@@ -29,7 +32,7 @@ const DMList = () => {
 	const [dmList, setDmList] = useState<DmListType[] | null>(null);
 
 	useEffect(() => {
-		const saveDMList = async () => {
+		const loadDMList = async () => {
 			try {
 				const response = await get<DmListType[]>(`/api/chat/${userId}`);
 				setDmList(response.data);
@@ -37,14 +40,22 @@ const DMList = () => {
 				console.error('Error saveDMList:', error);
 			}
 		};
-		saveDMList();
+		loadDMList();
 	}, [userId]);
 
 	const exitChattingRoom = async (chatId: string) => {
-		await del<DmListType[]>(`/api/chat/${chatId}`);
-		setDmList(
-			(dmList) => dmList?.filter((list) => list._id !== chatId) || null,
+		const result = await Swal.fire(
+			alertList.doubleCheckTitkeMsg(
+				'채팅방을 나가시겠습니까?',
+				'채팅방을 나가면 대화 내용은 복구할 수 없습니다.',
+			),
 		);
+		if (result.isConfirmed) {
+			await del<DmListType[]>(`/api/chat/${chatId}`);
+			setDmList(
+				(dmList) => dmList?.filter((list) => list._id !== chatId) || null,
+			);
+		}
 	};
 
 	const toggleChannelCollapse = useCallback(() => {
@@ -76,7 +87,7 @@ const DMList = () => {
 									/>
 									<Nickname>{list.users[1].secretName}</Nickname>
 									<Exiticon
-										src={xicon}
+										src={deleteicon}
 										alt='x-icon'
 										onClick={() => exitChattingRoom(list._id)}></Exiticon>
 								</NavLink>

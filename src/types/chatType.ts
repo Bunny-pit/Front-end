@@ -15,10 +15,11 @@ export type chatListType = DmListType[];
 
 export interface MessageType {
 	_id: string;
-	sender: Array<{
-		_id: string;
+	sender: {
 		email: string;
-	}>;
+		secretName: string;
+		_id: string;
+	};
 	chat: string;
 	content: string;
 	timestamp: string;
