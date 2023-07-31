@@ -10,8 +10,8 @@ import { useState, useCallback, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import toggleBtn from '../../assets/icons/downarrow.png';
 import gravatar from 'gravatar';
-import { useUser } from '../../utils/swrFetcher';
-import { get, del } from '../../api/api';
+import { useUser, fetcher } from '../../utils/swrFetcher';
+import { del } from '../../api/api';
 import { DmListType } from '../../types/chatType';
 import deleteicon from '../../assets/icons/DeleteIcon.png';
 import alertList from '../../utils/swal';
@@ -29,19 +29,16 @@ const DMList = () => {
 
 	const userId = userData?._id;
 	const [channelCollapse, setChannelCollapse] = useState(false);
-	const [dmList, setDmList] = useState<DmListType[] | null>(null);
+	const { data: dmList, error } = useSWR<DmListType[]>(
+		`http://localhost:3000/api/chat/${userId}`,
+		fetcher,
+	);
 
 	useEffect(() => {
-		const loadDMList = async () => {
-			try {
-				const response = await get<DmListType[]>(`/api/chat/${userId}`);
-				setDmList(response.data);
-			} catch (error) {
-				console.error('Error saveDMList:', error);
-			}
-		};
-		loadDMList();
-	}, [userId]);
+		if (error) {
+			console.error('Error saveDMList:', error);
+		}
+	}, [error]);
 
 	const exitChattingRoom = async (chatId: string) => {
 		const result = await Swal.fire(
@@ -52,9 +49,6 @@ const DMList = () => {
 		);
 		if (result.isConfirmed) {
 			await del<DmListType[]>(`/api/chat/${chatId}`);
-			setDmList(
-				(dmList) => dmList?.filter((list) => list._id !== chatId) || null,
-			);
 		}
 	};
 
