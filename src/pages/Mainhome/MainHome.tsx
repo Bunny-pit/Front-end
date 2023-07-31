@@ -126,8 +126,6 @@ const Mainhome: FC = () => {
 	};
 
 	const deletePost = async (postId: string) => {
-		console.log(`${API_MAINHOME}/${postId}`);
-
 		try {
 			await del<UserDataType>(`${API_MAINHOME}/${postId}`, {
 				withCredentials: true,
@@ -175,10 +173,6 @@ const Mainhome: FC = () => {
 					withCredentials: true,
 				},
 			);
-
-			console.log(
-				` userId: ${_id} , anonymousUserId :  ${userId}, anonymousUserName: ${name}`,
-			);
 			navigate(`/chatting`);
 		} catch (error) {
 			console.error(error);
@@ -205,7 +199,7 @@ const Mainhome: FC = () => {
 							<InnerContent>
 								<UserSecretContainer>
 									<UserSecretName>{post.name}</UserSecretName>
-									{userData._id !== post.userId && (
+									{userData?._id !== post.userId && (
 										<GoSecretChat
 											src={message}
 											alt='message Icon'

@@ -6,28 +6,56 @@ import {
 	MessageContainer,
 } from '../../components/Chat/ChatStyle';
 import ChatBox from '../ChatBox/ChatBox';
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import MessageBubble from '../MessageBubble/MessageBubble';
 import { useAutoScroll } from '../../hooks/useAutoScroll';
+import { useUser } from '../../utils/swrFetcher';
+import { MessageType } from '../../types/chatType';
+import { get } from '../../api/api';
 
 const Chat = () => {
 	const { nickname } = useParams();
-	const chatId = '64b5f1cfe121bc3f9001eb41';
-	const userId = '64b2bbd49ac9b031f09b302a';
+	const chatId = nickname;
 	const [messages, setMessages] = useState<string[]>([]);
 
+	const [savedMessages, setSavedMessages] = useState<MessageType[] | null>(
+		null,
+	);
+	const { userData, isError } = useUser();
+
+	if (isError) {
+		console.log('유저 데이터를 불러오는데 실패했습니다.');
+	} else if (!userData) {
+		console.log('유저 데이터를 불러오는 중...');
+	}
+	const userId = userData?._id;
 	const messageListRef = useRef<HTMLDivElement>(null);
 	useAutoScroll(messageListRef, messages);
 
 	const onNewMessage = useCallback((newMessage: string) => {
-		console.log('New message', newMessage);
 		setMessages((prevMessages) => [...prevMessages, newMessage]);
 	}, []);
+
+	useEffect(() => {
+		const loadSaveMessage = async () => {
+			try {
+				const response = await get<MessageType[]>(
+					`/api/chat/${chatId}/messages`,
+				);
+				setSavedMessages(response.data);
+				const messageText = response.data.map((msg) => msg.content);
+				setMessages(messageText);
+			} catch (error) {
+				console.error('Error loadSaveMessage:', error);
+			}
+		};
+		loadSaveMessage();
+	}, [chatId]);
 
 	return (
 		<>
 			<Container>
-				<Content>이 대화방은 나와 {nickname} 님과의 대화방입니다</Content>
+				<Content>예의를 지켜서 올바른 채팅 문화를 만들어요</Content>
 				<MessageContainer ref={messageListRef}>
 					{messages.map((message, idx) => (
 						<MessageBubble key={idx} message={message} />
