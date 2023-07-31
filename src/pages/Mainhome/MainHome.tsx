@@ -1,4 +1,4 @@
-import React, { FC, useRef, useEffect, useState } from 'react';
+import React, { FC, useRef, useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
@@ -54,20 +54,35 @@ const Mainhome: FC = () => {
 	const [editingPostId, setEditingPostId] = useState<string>('');
 	const [updatedContent, setUpdatedContent] = useState<string>('');
 	const [newPostContent, setNewPostContent] = useState<string>('');
+	const [page, setPage] = useState(1);
 
 	const containerRef = useRef<HTMLDivElement>(null);
+	const observer = useRef<IntersectionObserver | null>(null);
+
+	const lastPostElementRef = useCallback((element: HTMLDivElement | null) => {
+		if (observer.current) observer.current.disconnect();
+		observer.current = new IntersectionObserver((entries) => {
+			if (entries[0].isIntersecting) {
+				setPage((prevPage) => prevPage + 1);
+			}
+		});
+		if (element) observer.current.observe(element);
+	}, []);
 
 	const fetchPosts = async () => {
 		try {
-			const res = await get<Post[]>(API_MAINHOME);
+			const res = await get<Post[]>(`${API_MAINHOME}?page=${page}&limit=10`);
 
-			const updatedPosts = res.data.map((post: Post) => ({
-				...post,
-				createdAt: dayjs(post.createdAt)
-					.utc()
-					.tz('Asia/Seoul')
-					.format('YYYY-MM-DD HH:mm'),
-			}));
+			const updatedPosts = [
+				...posts,
+				...res.data.map((post: Post) => ({
+					...post,
+					createdAt: dayjs(post.createdAt)
+						.utc()
+						.tz('Asia/Seoul')
+						.format('YYYY-MM-DD HH:mm'),
+				})),
+			];
 			setPosts(updatedPosts);
 		} catch (err) {
 			console.error(err);
@@ -76,7 +91,7 @@ const Mainhome: FC = () => {
 
 	useEffect(() => {
 		fetchPosts();
-	}, []);
+	}, [page]);
 
 	const updatePost = async (postId: string) => {
 		try {
@@ -132,7 +147,7 @@ const Mainhome: FC = () => {
 			return;
 		}
 		try {
-			await post<UserDataType>(
+			const response = await post<Post>(
 				API_MAINHOME,
 				{
 					content: newPostContent,
@@ -142,7 +157,7 @@ const Mainhome: FC = () => {
 				},
 			);
 			setNewPostContent('');
-			await fetchPosts();
+			setPosts([response.data, ...posts]);
 		} catch (err) {
 			console.log(err);
 			return;
@@ -176,25 +191,29 @@ const Mainhome: FC = () => {
 			<Title>Unknown Bunnies</Title>
 
 			<Container ref={containerRef}>
-				{posts.map((post) => {
+				{posts.map((post, index) => {
 					const email: string = post.email;
 					const avatarUrl: string = `https://www.gravatar.com/avatar/${email}?d=identicon`;
 
 					return (
-						<ContentBox key={post._id}>
+						<ContentBox
+							key={post._id}
+							ref={index == posts.length - 1 ? lastPostElementRef : null}>
 							<ImageWrap>
 								<UserRandomImage src={avatarUrl} alt='User Random Image' />
 							</ImageWrap>
 							<InnerContent>
 								<UserSecretContainer>
 									<UserSecretName>{post.name}</UserSecretName>
-									<GoSecretChat
-										src={message}
-										alt='message Icon'
-										onClick={() =>
-											moveToChatPage(userData._id, post.userId, post.name)
-										}
-									/>
+									{userData._id !== post.userId && (
+										<GoSecretChat
+											src={message}
+											alt='message Icon'
+											onClick={() =>
+												moveToChatPage(userData._id, post.userId, post.name)
+											}
+										/>
+									)}
 								</UserSecretContainer>
 								<ContentContainer>
 									{editingPostId === post._id ? (
