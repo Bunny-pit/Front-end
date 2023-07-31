@@ -199,7 +199,7 @@ const Mainhome: FC = () => {
 							<InnerContent>
 								<UserSecretContainer>
 									<UserSecretName>{post.name}</UserSecretName>
-									{userData._id !== post.userId && (
+									{userData?._id !== post.userId && (
 										<GoSecretChat
 											src={message}
 											alt='message Icon'
