@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import sendIcon from '../../assets/icons/Sendicon.png';
 import useMainHomePost from '../../hooks/useMainHomePost';
 
@@ -10,9 +10,12 @@ import {
 	SendIcon,
 } from './MainHomeSendBoxStyle';
 
-const MainHomeSendBox: FC = () => {
-	const { newPostContent, setNewPostContent, createPost } = useMainHomePost();
+interface Props {
+	mainHomePost: ReturnType<typeof useMainHomePost>;
+}
 
+const MainHomeSendBox = ({ mainHomePost }: Props) => {
+	const { newPostContent, setNewPostContent, createPost } = mainHomePost;
 	return (
 		<TextBox>
 			<TextWrapper>
