@@ -5,6 +5,7 @@ import timezone from 'dayjs/plugin/timezone';
 
 import { Post } from '../../types/dataType';
 import message from '../../assets/icons/message.png';
+import useMainHomePost from '../../hooks/useMainHomePost';
 
 import {
 	Container,
@@ -29,34 +30,25 @@ dayjs.extend(timezone);
 
 type Props = {
 	userData: any;
-	posts: Post[];
-	setPosts: Function;
-	editingPostId: string;
-	setEditingPostId: Function;
-	updatedContent: string;
-	setUpdatedContent: Function;
-	page: number;
-	setPage: Function;
-	lastPostElementRef: (node: HTMLDivElement) => void;
 	moveToChatPage: (id: string, userId: string, name: string) => void;
-	updatePost: (id: string) => void;
-	handleContentChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
-	deletePost: (id: string) => void;
 };
 
-const MainHomeContent: FC<Props> = ({
-	userData,
-	posts,
-	editingPostId,
-	setEditingPostId,
-	updatedContent,
-	setUpdatedContent,
-	lastPostElementRef,
-	moveToChatPage,
-	updatePost,
-	handleContentChange,
-	deletePost,
-}) => {
+const MainHomeContent: FC<Props> = ({ userData, moveToChatPage }) => {
+	const {
+		posts,
+		editingPostId,
+		setEditingPostId,
+		updatedContent,
+		setUpdatedContent,
+		lastPostElementRef,
+		updatePost,
+		deletePost,
+	} = useMainHomePost();
+
+	const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+		setUpdatedContent(e.target.value);
+	};
+
 	return (
 		<Container>
 			{posts.map((post, index) => {

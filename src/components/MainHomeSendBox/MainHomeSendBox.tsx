@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import sendIcon from '../../assets/icons/Sendicon.png';
+import useMainHomePost from '../../hooks/useMainHomePost';
 
 import {
 	TextBox,
@@ -9,17 +10,9 @@ import {
 	SendIcon,
 } from './MainHomeSendBoxStyle';
 
-type Props = {
-	newPostContent: string;
-	setNewPostContent: (content: string) => void;
-	createPost: () => void;
-};
+const MainHomeSendBox: FC = () => {
+	const { newPostContent, setNewPostContent, createPost } = useMainHomePost();
 
-const MainHomeSendBox: FC<Props> = ({
-	newPostContent,
-	setNewPostContent,
-	createPost,
-}) => {
 	return (
 		<TextBox>
 			<TextWrapper>
