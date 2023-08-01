@@ -22,14 +22,9 @@ interface UserData {
 export function useUser(): {
     userData: UserData | null;
     isError: boolean;
-    refreshData: () => Promise<SWRResponse<UserData, Error> | undefined>
 } {
     const fetchingURL = `${process.env.REACT_APP_API_URL}${API_USER_ACCESS_TOKEN}`
-    const { data, error, mutate } = useSWR(fetchingURL, fetcher)
-
-    const refreshData = () => {
-        return mutate(fetchingURL)
-    }
+    const { data, error } = useSWR(fetchingURL, fetcher)
 
     if (error && data === undefined) { // 데이터가 없을 때만 에러 출력
         console.error('Error fetching user data :', error.message);
@@ -37,7 +32,7 @@ export function useUser(): {
     if (data) {
         console.log('data.userData 가져옴', data.userData);
         // const userData = data.userData;
-        return { userData: data.userData, isError: false, refreshData };
+        return { userData: data.userData, isError: false };
     }
-    return { userData: null, isError: true, refreshData };
+    return { userData: null, isError: true };
 }

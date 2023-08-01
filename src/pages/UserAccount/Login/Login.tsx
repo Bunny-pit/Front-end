@@ -6,6 +6,7 @@ import { post } from '../../../api/api';
 import { setToken } from '../../../api/token';
 import { UserDataType } from '../../../types/dataType';
 
+ 
 import {
 	Page,
 	TitleAndLogoWrap,
@@ -43,19 +44,13 @@ const initialLoginFormState: LoginFormState = {
 export default function LoginPage() {
 	const [email, setEmail] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
-	// const [checkEmail, setCheckEmail] = useState<boolean>(true);
-	// const [checkPassword, setCheckPassword] = useState<boolean>(true);
-	// const [checkForm, setCheckForm] = useState<boolean>(true);
 	const [loginForm, setLoginForm] = useState<LoginFormState>(initialLoginFormState);
-
 	const navigate = useNavigate();
-	const { userData, isError, refreshData } = useUser();
 
 	useEffect(() => {
 		return () => {
 			// 컴포넌트가 언마운트될 때 상태 초기화
 			setLoginForm(initialLoginFormState);
-			refreshData();
 		};
 	}, []);
 
@@ -86,7 +81,7 @@ export default function LoginPage() {
 				);
 				const accessToken: string = response.data.accessToken;
 				setToken(accessToken);
-				refreshData();
+				navigate("/");
 			} catch (error) {
 				console.log('로그인 post 오류', error)
 			}
