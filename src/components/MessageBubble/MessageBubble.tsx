@@ -8,8 +8,9 @@ interface MessageBubbleProps {
 const Bubble = styled.div<{ width: string; currentUser: boolean }>`
 	margin: 10px;
 	padding: 10px;
-	background-color: ${(props) => (props.currentUser ? '#cdc0fc' : '#f0f0f0')};
+	background-color: ${(props) => (props.currentUser ? '#cdc0fc' : '#ffff')};
 	border-radius: 19.34px;
+	border: ${(props) => (props.currentUser ? 'none' : '1px solid #cdc0fc')};
 	display: inline-flex;
 	flex-direcion: column;
 	width: ${(props) => props.width}rem;
@@ -17,6 +18,7 @@ const Bubble = styled.div<{ width: string; currentUser: boolean }>`
 	white-space: pre-wrap;
 	font-size: 2rem;
 	justify-content: center;
+	align-self: ${(props) => (props.currentUser ? 'flex-end' : 'flex-start')};
 `;
 
 const MessageBubble: React.FC<MessageBubbleProps> = ({
