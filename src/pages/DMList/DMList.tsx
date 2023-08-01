@@ -16,7 +16,7 @@ import { DmListType } from '../../types/chatType';
 import deleteicon from '../../assets/icons/DeleteIcon.png';
 import alertList from '../../utils/swal';
 import Swal from 'sweetalert2';
-import useSWR from 'swr';
+import useSWR, { mutate } from 'swr';
 
 const DMList = () => {
 	const { userData, isError } = useUser();
@@ -49,6 +49,8 @@ const DMList = () => {
 		);
 		if (result.isConfirmed) {
 			await del<DmListType[]>(`/api/chat/${chatId}`);
+			mutate(`http://localhost:3000/api/chat/${userId}`);
+			mutate(`http://localhost:3000/api/chat/${chatId}/messages`);
 		}
 	};
 
@@ -68,22 +70,30 @@ const DMList = () => {
 			</TopContainer>
 			<MemberList>
 				{!channelCollapse &&
-					dmList?.map((list: any) => {
-						if (list.users.length > 1) {
+					dmList?.map((chatRoom: DmListType) => {
+						const otherUser = chatRoom.users.find(
+							(user) => user._id !== userId,
+						);
+						if (otherUser) {
+							const otherUserEmail = otherUser.email;
+							const otherUserName = otherUser.secretName;
+							const profileSrc = otherUserEmail
+								? gravatar.url(otherUserEmail, {
+										s: '24px',
+										d: 'identicon',
+								  })
+								: undefined;
+
 							return (
-								<NavLink key={list._id} to={`/chatting/dm/${list._id}`}>
-									<Profile
-										src={gravatar.url(list.users[1].email, {
-											s: '24px',
-											d: 'identicon',
-										})}
-										alt={list.users[1].secretName}
-									/>
-									<Nickname>{list.users[1].secretName}</Nickname>
+								<NavLink key={chatRoom._id} to={`/chatting/dm/${chatRoom._id}`}>
+									{profileSrc && (
+										<Profile src={profileSrc} alt={otherUserName} />
+									)}
+									<Nickname>{otherUserName}</Nickname>
 									<Exiticon
 										src={deleteicon}
 										alt='x-icon'
-										onClick={() => exitChattingRoom(list._id)}></Exiticon>
+										onClick={() => exitChattingRoom(chatRoom._id)}></Exiticon>
 								</NavLink>
 							);
 						}
