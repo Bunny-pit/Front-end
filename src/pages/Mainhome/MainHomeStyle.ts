@@ -25,7 +25,7 @@ export const ContentBox = styled.div`
 	background-color: ${({ theme }) => theme.colors.gray100};
 	&:hover {
 		background-color: ${({ theme }) => theme.colors.gray200};
-		transform: scale(1.2);
+		// transform: scale(1.2);
 	}
 `;
 
