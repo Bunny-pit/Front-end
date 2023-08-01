@@ -9,6 +9,8 @@ import { API_MAINHOME } from '../../utils/constant';
 import { API_CHATTING_START } from '../../utils/constant';
 import { UserDataType, Post } from '../../types/dataType';
 import { useUser } from '../../utils/swrFetcher';
+import alertList from '../../utils/swal';
+import Swal from 'sweetalert2';
 
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
@@ -97,7 +99,7 @@ const Mainhome: FC = () => {
 		try {
 			// 글자가 1 글자 미만일 때
 			if (updatedContent.trim().length < 1) {
-				alert('내용을 작성해주세요.');
+				Swal.fire(alertList.errorMessage('최소 1글자 이상 작성해주세요.'));
 				return;
 			}
 
@@ -116,7 +118,7 @@ const Mainhome: FC = () => {
 			setEditingPostId('');
 			setUpdatedContent('');
 		} catch (err) {
-			alert('수정 권한이 없습니다!');
+			Swal.fire(alertList.errorMessage('수정 권한이 없습니다.'));
 			return;
 		}
 	};
@@ -126,21 +128,31 @@ const Mainhome: FC = () => {
 	};
 
 	const deletePost = async (postId: string) => {
-		try {
-			await del<UserDataType>(`${API_MAINHOME}/${postId}`, {
-				withCredentials: true,
-			});
-			setPosts(posts.filter((post) => post._id !== postId));
-		} catch (err) {
-			alert('삭제 권한이 없습니다!');
-			return;
+		const result = await Swal.fire(
+			alertList.doubleCheckTitkeMsg(
+				'게시글을 삭제하시겠습니까?',
+				'한번 삭제한 게시글은 복구할 수 없습니다.',
+			),
+		);
+		if (result.isConfirmed) {
+			try {
+				await del<UserDataType>(`${API_MAINHOME}/${postId}`, {
+					withCredentials: true,
+				});
+				setPosts(posts.filter((post) => post._id !== postId));
+			} catch (err) {
+				Swal.fire(alertList.errorMessage('삭제 권한이 없습니다.'));
+				return;
+			}
 		}
 	};
 
 	const createPost = async () => {
 		const token = localStorage.getItem('accessToken');
 		if (!token) {
-			alert('게시글 작성을 위해서는 로그인이 필요합니다.');
+			Swal.fire(
+				alertList.errorMessage('게시글 작성을 위해서는 로그인이 필요합니다.'),
+			);
 			setNewPostContent('');
 			return;
 		}
@@ -199,7 +211,7 @@ const Mainhome: FC = () => {
 							<InnerContent>
 								<UserSecretContainer>
 									<UserSecretName>{post.name}</UserSecretName>
-									{userData?._id !== post.userId && (
+									{userData && userData?._id !== post.userId && (
 										<GoSecretChat
 											src={message}
 											alt='message Icon'
@@ -249,11 +261,7 @@ const Mainhome: FC = () => {
 												{/* 삭제하기 */}
 												<Delete
 													onClick={() => {
-														if (
-															window.confirm(
-																'정말로 게시글을 삭제하시겠습니까?',
-															)
-														) {
+														{
 															deletePost(post._id);
 														}
 													}}>
