@@ -29,6 +29,7 @@ import {
 	PostLi,
 	NothingWrap,
 	NothingPost,
+	PostButton,
 } from './UserMainStyle';
 
 interface Post {
@@ -39,7 +40,7 @@ interface Post {
 	content: string;
 	createdAt: Date;
 }
-const backUrl = 'https://port-0-back-end-kvmh2mljxnw03c.sel4.cloudtype.app/api';
+// const backUrl = 'https://port-0-back-end-kvmh2mljxnw03c.sel4.cloudtype.app/api';
 
 const UserMain = () => {
 	const [posts, setPosts] = useState<Post[]>([]);
@@ -50,9 +51,6 @@ const UserMain = () => {
 	} else if (!userData) {
 		console.log('유저 데이터를 불러오는 중...');
 	}
-
-	const userId = userData?._id;
-	console.log('userId', userId);
 	useEffect(() => {
 		// MongoDB에서 데이터 가져오는 함수
 		const fetchPosts = async () => {
@@ -78,13 +76,7 @@ const UserMain = () => {
 
 		fetchPosts();
 	}, []);
-	// 가짜데이터
-	const userdata = {
-		userId: 'pretty_bunny_kim',
-		postCount: 50,
-		followerCount: 5000,
-		email: 'prtty_bunny@naver.com',
-	};
+
 	// 게시글 최신순으로 정렬
 	const sortedPosts = posts.sort(
 		(a: Post, b: Post) =>
@@ -101,21 +93,24 @@ const UserMain = () => {
 					</ImageWrap>
 					<ProfileWrap>
 						<Wrapper1>
-							<UserId>{userdata.userId}</UserId>
+							<UserId>{userData?.userName}</UserId>
 							<PlusIcon
 								src={plusIcon}
 								onClick={() => {
 									alert('친구 추가하기 버튼!');
 								}}
 							/>
-						</Wrapper1>
-						<Wrapper2>
 							<FriendButton
 								onClick={() => {
 									alert('친구초대하기');
 								}}>
 								친구초대하기
 							</FriendButton>
+						</Wrapper1>
+						<Wrapper2>
+							<PostButton>
+								<Link to={`/post/upload`}>게시글 등록</Link>
+							</PostButton>
 							<EditButton
 								onClick={() => {
 									alert('프로필 편집하기');
@@ -125,11 +120,12 @@ const UserMain = () => {
 						</Wrapper2>
 						<Wrapper3>
 							<p>
-								게시물 <span>{userdata.postCount}</span>
+								게시물 <span>0</span>
+								{/*  <span>{userData.postCount}</span> */}
 							</p>
 
 							<p>
-								나를 좋아하는 버니들 <span>{userdata.followerCount}</span>
+								나를 좋아하는 버니들 <span>0</span>
 							</p>
 						</Wrapper3>
 						<Wrapper4>
@@ -138,7 +134,7 @@ const UserMain = () => {
 								<ProfileLi>#개발자</ProfileLi>
 								<ProfileLi>#소통</ProfileLi>
 							</ProfileUl>
-							<Email href='#'>{userdata.email}</Email>
+							<Email href='#'>{userData?.email}</Email>
 						</Wrapper4>
 					</ProfileWrap>
 				</Sec1>
