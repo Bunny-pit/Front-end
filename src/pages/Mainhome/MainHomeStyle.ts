@@ -7,6 +7,9 @@ export const Container = styled.div`
 	max-height: 65rem;
 	overflow-y: auto;
 	border-radius: 2rem;
+	:hover {
+		background-color: ${({ theme }) => theme.colors.gray300};
+	}
 `;
 
 export const Title = styled.div`
@@ -15,7 +18,6 @@ export const Title = styled.div`
 	text-align: center;
 	font-size: 5rem;
 	font-weight: 700;
-	color: ${({ theme }) => theme.colors.maincolor};
 `;
 
 export const ContentBox = styled.div`
@@ -37,6 +39,7 @@ export const ImageWrap = styled.div`
 export const UserRandomImage = styled.img`
 	max-width: 100%;
 	margin: 0 auto;
+	border-radius: 50%;
 `;
 export const InnerContent = styled.div`
 	flex: 2;
@@ -101,6 +104,7 @@ export const Edit = styled.button`
 	color: #fff;
 	cursor: pointer;
 `;
+
 export const Delete = styled.button`
 	width: 7rem;
 	height: 3.5rem;
