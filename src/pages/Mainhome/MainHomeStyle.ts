@@ -14,6 +14,7 @@ export const Title = styled.div`
 	text-align: center;
 	font-size: 5rem;
 	font-weight: 700;
+	color: ${({ theme }) => theme.colors.maincolor};
 `;
 
 export const ContentBox = styled.div`
