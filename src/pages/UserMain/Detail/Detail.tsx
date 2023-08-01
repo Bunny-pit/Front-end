@@ -87,8 +87,19 @@ const Detail = () => {
 		//게시글 가져옴
 		const fetchPosts = async () => {
 			try {
+				// const token = localStorage.getItem('token');
+				const token =
+					'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyT2lkIjoiNjRiNTc4YWExODBhNWM2MTQ3NzRhNjcxIiwidXNlcklkIjoiNmMwODUxOTAtMzE0NS00Njg5LTllMzYtMzUxNjQ2ZjU2YTBiIiwiZW1haWwiOiJqb25ndWtAbmF2ZXIuY29tIiwidXNlck5hbWUiOiLsooXsmrEiLCJyb2xlIjowLCJpYXQiOjE2OTA3MzQ4NTksImV4cCI6MTY5NDMzNDg1OSwiaXNzIjoiQnVubnlQaXQifQ.zch4f4HgaWxAwitFM8cKrPT1I1AQK6BtY0D3I1oQnmI';
+
+				// 헤더에 토큰을 추가하는 config 객체를 만듭니다.
+				const config = {
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				};
 				const response = await axios.get(
 					`http://localhost:4000/api/post/${postId}`,
+					config,
 				);
 				setPost(response.data.post);
 				if (response.data.like && response.data.like.userId) {

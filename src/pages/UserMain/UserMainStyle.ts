@@ -129,6 +129,7 @@ export const PostUl = styled.ul`
 export const PostLi = styled.li`
 	height: 22rem;
 	overflow: hidden;
+	box-sizing: border-box;
 	.link {
 		width: 100%;
 		height: auto;

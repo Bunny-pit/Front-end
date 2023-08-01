@@ -5,6 +5,7 @@ import Footer from '../../components/Footer/Footer';
 import userImage from '../../assets/images/userimage.png';
 import plusIcon from '../../assets/icons/UserPlus.png';
 import { Link } from 'react-router-dom';
+import { useUser } from '../../utils/swrFetcher';
 import {
 	Container,
 	Sec1,
@@ -42,11 +43,33 @@ const backUrl = 'https://port-0-back-end-kvmh2mljxnw03c.sel4.cloudtype.app/api';
 
 const UserMain = () => {
 	const [posts, setPosts] = useState<Post[]>([]);
+	const { userData, isError } = useUser();
+
+	if (isError) {
+		console.log('유저 데이터를 불러오는데 실패했습니다.');
+	} else if (!userData) {
+		console.log('유저 데이터를 불러오는 중...');
+	}
+
+	const userId = userData?._id;
+	console.log('userId', userId);
 	useEffect(() => {
 		// MongoDB에서 데이터 가져오는 함수
 		const fetchPosts = async () => {
 			try {
-				const response = await axios.get(`http://localhost:4000/api/post`);
+				// 로컬 스토리지에서 토큰을 가져옵니다.
+				const token = localStorage.getItem('accessToken');
+				// 헤더에 토큰을 추가하는 config 객체를 만듭니다.
+				const config = {
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				};
+				const response = await axios.get(
+					`http://localhost:4000/api/post`,
+					config,
+				);
+				console.log(response);
 				setPosts(response.data);
 			} catch (error) {
 				console.error('Error fetching posts:', error);
