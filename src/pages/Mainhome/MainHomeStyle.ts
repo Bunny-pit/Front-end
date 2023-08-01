@@ -20,12 +20,14 @@ export const ContentBox = styled.div`
 	width: 100%;
 	height: 25rem;
 	display: flex;
-	padding: 0 5rem;
+	padding: 1rem 5rem;
 	box-sizing: border-box;
 	background-color: ${({ theme }) => theme.colors.gray100};
 	&:hover {
 		background-color: ${({ theme }) => theme.colors.gray200};
-		// transform: scale(1.2);
+		transition: 0.5s;
+		transform: scale(1.05);
+		border-radius: 2rem;
 	}
 `;
 
