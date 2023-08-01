@@ -3,10 +3,10 @@ import styled from 'styled-components';
 export const Container = styled.div`
 	width: 50%;
 	margin: auto;
-	border-left: 1px solid ${({ theme }) => theme.colors.maincolor};
-	border-right: 1px solid ${({ theme }) => theme.colors.maincolor};
+	background-color: ${({ theme }) => theme.colors.gray100};
 	max-height: 65rem;
 	overflow-y: auto;
+	border-radius: 2rem;
 `;
 
 export const Title = styled.div`
@@ -115,18 +115,17 @@ export const TextBox = styled.div`
 	bottom: 24rem;
 	width: 100%;
 	height: 15rem;
-	background-color: #fff;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 `;
 
 export const TextWrapper = styled.div`
-	background-color: ${({ theme }) => theme.colors.gray200};
-	width: 45%;
+	width: 50%;
 	height: 7rem;
 	display: flex;
 	align-items: center;
+	background-color: ${({ theme }) => theme.colors.gray200};
 	border-radius: 2rem;
 `;
 

@@ -2,7 +2,7 @@ import useSWR from 'swr';
 import { swrApi } from '../api/axiosInstance';
 import { API_USER_ACCESS_TOKEN } from './constant';
 
-const fetcher = (url: string) => swrApi.get(url).then((res) => res.data);
+export const fetcher = (url: string) => swrApi.get(url).then((res) => res.data);
 
 export function useUser() {
 	const fetchingURL = `${process.env.REACT_APP_API_URL}${API_USER_ACCESS_TOKEN}`;
