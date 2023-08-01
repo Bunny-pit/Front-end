@@ -4,7 +4,7 @@ import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import userImage from '../../assets/images/userimage.png';
 import plusIcon from '../../assets/icons/UserPlus.png';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useUser } from '../../utils/swrFetcher';
 import {
 	Container,
@@ -44,7 +44,10 @@ interface Post {
 
 const UserMain = () => {
 	const [posts, setPosts] = useState<Post[]>([]);
+	const [postCount, setPostCount] = useState(0);
+	const [userName, setUserName] = useState('');
 	const { userData, isError } = useUser();
+	const { email } = useParams();
 
 	if (isError) {
 		console.log('유저 데이터를 불러오는데 실패했습니다.');
@@ -52,12 +55,9 @@ const UserMain = () => {
 		console.log('유저 데이터를 불러오는 중...');
 	}
 	useEffect(() => {
-		// MongoDB에서 데이터 가져오는 함수
 		const fetchPosts = async () => {
 			try {
-				// 로컬 스토리지에서 토큰을 가져옵니다.
 				const token = localStorage.getItem('accessToken');
-				// 헤더에 토큰을 추가하는 config 객체를 만듭니다.
 				const config = {
 					headers: {
 						Authorization: `Bearer ${token}`,
@@ -67,21 +67,40 @@ const UserMain = () => {
 					`http://localhost:4000/api/post`,
 					config,
 				);
-				console.log(response);
-				setPosts(response.data);
+				setPosts(response.data.posts);
+				setUserName(response.data.userName);
+				setPostCount(response.data.length);
 			} catch (error) {
 				console.error('Error fetching posts:', error);
 			}
 		};
 
-		fetchPosts();
-	}, []);
+		const fetchOtherUserPosts = async () => {
+			try {
+				const token = localStorage.getItem('accessToken');
+				const config = {
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				};
+				const response = await axios.get(
+					`http://localhost:4000/api/post/user/${email}`,
+					config,
+				);
+				setPosts(response.data.posts);
+				setUserName(response.data.userName);
+				setPostCount(response.data.length);
+			} catch (error) {
+				console.error('Error fetching posts:', error);
+			}
+		};
 
-	// 게시글 최신순으로 정렬
-	const sortedPosts = posts.sort(
-		(a: Post, b: Post) =>
-			new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
-	);
+		if (email) {
+			fetchOtherUserPosts();
+		} else {
+			fetchPosts();
+		}
+	}, [email]);
 
 	return (
 		<>
@@ -93,7 +112,7 @@ const UserMain = () => {
 					</ImageWrap>
 					<ProfileWrap>
 						<Wrapper1>
-							<UserId>{userData?.userName}</UserId>
+							<UserId>{userName}</UserId>
 							<PlusIcon
 								src={plusIcon}
 								onClick={() => {
@@ -120,8 +139,7 @@ const UserMain = () => {
 						</Wrapper2>
 						<Wrapper3>
 							<p>
-								게시물 <span>0</span>
-								{/*  <span>{userData.postCount}</span> */}
+								게시물 <span>{postCount}</span>
 							</p>
 
 							<p>
@@ -142,8 +160,8 @@ const UserMain = () => {
 				<PostContainer>
 					<PostTitle>게시물</PostTitle>
 					<PostUl>
-						{sortedPosts.length > 0 ? (
-							sortedPosts.map((post: Post, i: number) => (
+						{posts.length > 0 ? (
+							posts.map((post: Post, i: number) => (
 								<PostLi key={post._id}>
 									<Link className='link' to={`/post/${post._id}`}>
 										<img key={i} src={post.images[0]} alt={`post ${i}`} />
