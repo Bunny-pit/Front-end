@@ -19,8 +19,9 @@ const Chat = () => {
 	const { nickname } = useParams();
 	const chatId = nickname;
 	const [messages, setMessages] = useState<string[]>([]);
-	const [savedMessages, setSavedMessages] = useState<MessageType[] | null>(
-		null,
+	const { data: savedMessages, error: messageError } = useSWR<MessageType[]>(
+		`http://localhost:3000/api/chat/${chatId}/messages`,
+		fetcher,
 	);
 	const { userData, isError } = useUser();
 	const [selectedChat, setSelectedChat] = useState<DmListType | null>(null);
@@ -45,37 +46,29 @@ const Chat = () => {
 	}, []);
 
 	useEffect(() => {
-		const loadSaveMessage = async () => {
-			try {
-				const response = await get<MessageType[]>(
-					`/api/chat/${chatId}/messages`,
-				);
-				setSavedMessages(response.data);
-				const messageText = response.data.map((msg) => msg.content);
-				setMessages(messageText);
-				const chatInfo = dmList?.find((chat) => chat._id === chatId);
-				setSelectedChat(chatInfo || null);
-			} catch (error) {
-				console.error('Error loadSaveMessage:', error);
-			}
-		};
-		loadSaveMessage();
-	}, [chatId]);
+		if (savedMessages) {
+			const messageText = savedMessages.map((msg) => msg.content);
+			setMessages(messageText);
+			const chatInfo = dmList?.find((chat) => chat._id === chatId);
+			setSelectedChat(chatInfo || null);
+		}
+	}, [savedMessages, chatId]);
 
-	const senderId = savedMessages?.map((msg) => msg.sender._id);
-
+	const chattingWithUser = selectedChat?.users.find(
+		(user) => user._id !== userId,
+	);
 	return (
 		<>
 			<Container>
 				{selectedChat !== null && (
-					<Content>{`나와 ${selectedChat.users[1].secretName}님의 채팅방입니다.`}</Content>
+					<Content>{`나와 ${chattingWithUser?.secretName}님의 채팅방입니다.`}</Content>
 				)}
 				<MessageContainer ref={messageListRef}>
-					{messages.map((message, idx) => (
+					{savedMessages?.map((message, idx) => (
 						<MessageBubble
 							key={idx}
-							message={message}
-							currentUser={senderId !== undefined && senderId[1] === userId}
+							message={message.content}
+							currentUser={message.sender._id === userId}
 						/>
 					))}
 				</MessageContainer>

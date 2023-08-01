@@ -21,5 +21,4 @@ export const MessageContainer = styled.div`
 	overflow-y: auto;
 	height: 70vh;
 	padding: 10rem;
-	align-items: flex-end;
 `;

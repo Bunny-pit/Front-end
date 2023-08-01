@@ -3,8 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.div`
 	width: 50%;
 	margin: auto;
-	background-color: ${({ theme }) => theme.colors.gray100};
-	max-height: 65rem;
+	height: 100rem;
 	overflow-y: auto;
 	border-radius: 2rem;
 `;
@@ -22,8 +21,15 @@ export const ContentBox = styled.div`
 	width: 100%;
 	height: 25rem;
 	display: flex;
-	padding: 0 5rem;
+	padding: 1rem 5rem;
 	box-sizing: border-box;
+	background-color: ${({ theme }) => theme.colors.gray100};
+	&:hover {
+		background-color: ${({ theme }) => theme.colors.gray200};
+		transition: 0.5s;
+		transform: scale(1.05);
+		border-radius: 2rem;
+	}
 `;
 
 export const ImageWrap = styled.div`
@@ -37,6 +43,7 @@ export const ImageWrap = styled.div`
 export const UserRandomImage = styled.img`
 	max-width: 100%;
 	margin: 0 auto;
+	border-radius: 50%;
 `;
 export const InnerContent = styled.div`
 	flex: 2;
@@ -101,6 +108,7 @@ export const Edit = styled.button`
 	color: #fff;
 	cursor: pointer;
 `;
+
 export const Delete = styled.button`
 	width: 7rem;
 	height: 3.5rem;
