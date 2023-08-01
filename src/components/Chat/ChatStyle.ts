@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
 	margin-top: 5rem;
-	width: 100%;
+	width: 77%;
 	display: flex;
 	flex-direction: column;
 `;
@@ -18,7 +18,6 @@ export const ChatBoxConatiner = styled.div`
 export const MessageContainer = styled.div`
 	display: flex;
 	flex-direction: column;
-	align-items: flex-end;
 	overflow-y: auto;
 	height: 70vh;
 	padding: 10rem;

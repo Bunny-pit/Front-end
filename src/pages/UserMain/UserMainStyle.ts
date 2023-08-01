@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-	width: 75%;
 	margin: 0 auto;
+	max-width: 50%;
 `;
 export const Sec1 = styled.div`
 	display: flex;
@@ -27,6 +27,7 @@ export const ProfileWrap = styled.div`
 `;
 export const Wrapper1 = styled.div`
 	display: flex;
+	justify-content: space-between;
 	align-items: center;
 `;
 export const UserId = styled.h4`
@@ -34,26 +35,26 @@ export const UserId = styled.h4`
 `;
 export const PlusIcon = styled.img`
 	width: 3.1rem;
-	margin-left: 2rem;
 	cursor: pointer;
 `;
 export const Wrapper2 = styled.div`
 	margin-bottom: 2rem;
+	display: flex;
+	justify-content: start;
 `;
 export const FriendButton = styled.button`
-	width: 11.4rem;
+	width: 10rem;
 	height: 3.9rem;
 	font-size: 1.4rem;
 	border-radius: 0.5rem;
 	background-color: ${({ theme }) => theme.colors.lightpurple};
 	color: ${({ theme }) => theme.colors.background};
 	font-weight: 600;
-	margin-right: 2rem;
 	cursor: pointer;
 	border: none;
 `;
 export const EditButton = styled.button`
-	width: 11.4rem;
+	width: 10rem;
 	cursor: pointer;
 	height: 3.9rem;
 	font-size: 1.4rem;
@@ -62,7 +63,21 @@ export const EditButton = styled.button`
 	background-color: ${({ theme }) => theme.colors.strongpurple};
 	color: ${({ theme }) => theme.colors.background};
 	font-weight: 600;
+`;
+export const PostButton = styled.button`
+	width: 10rem;
+	cursor: pointer;
+	height: 3.9rem;
+	font-size: 1.4rem;
+	border: none;
+	border-radius: 0.5rem;
+	background-color: ${({ theme }) => theme.colors.lightpurple};
+	font-weight: 600;
 	margin-right: 2rem;
+	a {
+		text-decoration: none;
+		color: ${({ theme }) => theme.colors.background};
+	}
 `;
 
 export const Wrapper3 = styled.div`
@@ -98,6 +113,7 @@ export const ProfileUl = styled.ul`
 export const ProfileLi = styled.li`
 	font-size: 1.8rem;
 `;
+
 export const Email = styled.a`
 	text-decoration: none;
 	color: #000;
@@ -107,6 +123,7 @@ export const Email = styled.a`
 // 여기부터 게시글!!
 export const PostContainer = styled.div`
 	text-align: center;
+	height: 70rem;
 `;
 export const PostTitle = styled.h3`
 	font-size: 2.4rem;
@@ -114,16 +131,20 @@ export const PostTitle = styled.h3`
 `;
 export const PostUl = styled.ul`
 	list-style: none;
+	height: 80%;
+	box-sizing: border-box;
 	padding: 0;
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
 	grid-template-rows: 1fr 1fr 1fr;
 	gap: 3rem;
 	place-items: center;
+	position: relative;
 `;
 export const PostLi = styled.li`
 	height: 22rem;
 	overflow: hidden;
+	box-sizing: border-box;
 	.link {
 		width: 100%;
 		height: auto;
@@ -131,4 +152,12 @@ export const PostLi = styled.li`
 			width: 100%;
 		}
 	}
+`;
+export const NothingWrap = styled.div`
+	width: 100%;
+	position: absolute;
+`;
+export const NothingPost = styled.p`
+	font-size: 2rem;
+	font-weight: 600;
 `;
