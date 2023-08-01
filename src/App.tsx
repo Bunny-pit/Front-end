@@ -1,5 +1,10 @@
 import { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import {
+	BrowserRouter as Router,
+	Routes,
+	Route,
+	useLocation,
+} from 'react-router-dom';
 import MainPage from './pages/Main/Main';
 import Mainhome from './pages/Mainhome/MainHome';
 import UserMainPage from './pages/UserMain/UserMain';
@@ -8,7 +13,6 @@ import Detail from './pages/UserMain/Detail/Detail';
 import LoginPage from './pages/UserAccount/Login/Login';
 import RegisterPage from './pages/UserAccount/Register/Register';
 import UploadPost from './pages/UserMain/UploadPost/UploadPost';
-
 
 function App() {
 	const [isLogin, setIsLogin] = useState(false);
@@ -42,7 +46,6 @@ function App() {
 	// 	};
 	// }, []);
 
-
 	return (
 		<>
 			<Router>
@@ -59,6 +62,7 @@ function App() {
 						</>
 					)} */}
 					<Route path='/post' element={<UserMainPage />} />
+					<Route path='/post/user/:email' element={<UserMainPage />} />
 					<Route path='/post/:postId' element={<Detail />} />
 					<Route path='/post/upload' element={<UploadPost />} />
 					<Route path='/mainhome' element={<Mainhome />} />

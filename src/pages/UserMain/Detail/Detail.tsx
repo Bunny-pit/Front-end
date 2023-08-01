@@ -80,7 +80,8 @@ const Detail = () => {
 	const { postId } = useParams();
 	const [post, setPost] = useState<Post | null>(null); // 초기 상태를 null로 설정
 	const [comments, setComments] = useState<Comment[]>([]); // 댓글 상태를 추가
-	const [commentInput, setCommentInput] = useState(''); // Add this line
+	const [commentInput, setCommentInput] = useState('');
+	const [userName, setUserName] = useState(''); // userName 게시글 기준으로 추가해야됨
 	const [likeCount, setLikeCount] = useState<number>(0);
 	const [isLiked, setIsLiked] = useState<boolean>(false);
 	const { userData, isError } = useUser();
@@ -116,9 +117,12 @@ const Detail = () => {
 					// console.log('currentUser = ', currentUser);
 					// console.log('count = ', response.data.like.userId.length);
 					// console.log('liked = ', isUserLiked);
+					console.log(response.data);
+					setUserName(response.data.post.userName);
 				} else {
 					setLikeCount(0);
 					setIsLiked(false);
+					setUserName(response.data.post.userName);
 				}
 				// console.log(response.data.post);
 			} catch (error) {
@@ -231,7 +235,7 @@ const Detail = () => {
 		// post가 null일 때 로딩 상태로 처리
 		return <div>Loading...</div>;
 	}
-
+	console.log('유저데이터는!!!', userData);
 	return (
 		<>
 			<DetailHeader />
@@ -239,7 +243,7 @@ const Detail = () => {
 				<ProfileWrap>
 					<Profile>
 						<ProfileUserImage src={ProfileImg} alt='userImg' />
-						<ProfileId>{userData?.userName}</ProfileId>
+						<ProfileId>{userName}</ProfileId>
 					</Profile>
 					<DeleteButtonWrap>
 						<DeleteButton onClick={handleDeletePostButton}>

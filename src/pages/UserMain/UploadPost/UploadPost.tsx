@@ -109,7 +109,7 @@ const UserMain = () => {
 								/>
 							</StyledFileInputLabel>
 						)}
-						<Slider {...settings}>
+						<Slider {...settings} className='Slider'>
 							{previewURLs.map((url, index) => (
 								<img src={url} alt={`preview ${index}`} key={url} />
 							))}

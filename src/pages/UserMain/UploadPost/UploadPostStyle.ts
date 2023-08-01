@@ -1,20 +1,23 @@
 import styled from 'styled-components';
 import UploadPost from '../../../assets/icons/UploadPost.png';
 export const Container = styled.div`
-	width: 75%;
+	width: 50%;
 	margin: 0 auto;
 `;
 export const UploadWrap = styled.div`
 	width: 100%;
 `;
 export const StyledForm = styled.form`
-	border: 1px solid red;
 	margin: 7rem 0;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
 	height: 100rem;
+	.Slider {
+		margin-bottom: 2rem;
+	}
 `;
+
 export const StyledFileInput = styled.input.attrs({ type: 'file' })`
 	display: none; // 기본 파일 인풋 숨김
 `;
@@ -29,7 +32,7 @@ export const StyledFileInputLabel = styled.label`
 	background-image: url(${UploadPost});
 	background-repeat: no-repeat;
 	background-position: center;
-	background-size: 31rem 37rem;
+	background-size: 26rem 32rem;
 `;
 export const StyledTextArea = styled.textarea`
 	resize: none; // textarea 크기 조절 비활성화

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-	width: 75%;
+	width: 50%;
 	margin: 0 auto;
 `;
 export const ProfileWrap = styled.div`
