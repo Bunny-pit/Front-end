@@ -3,13 +3,9 @@ import styled from 'styled-components';
 export const Container = styled.div`
 	width: 50%;
 	margin: auto;
-	background-color: ${({ theme }) => theme.colors.gray100};
-	max-height: 65rem;
+	height: 100rem;
 	overflow-y: auto;
 	border-radius: 2rem;
-	:hover {
-		background-color: ${({ theme }) => theme.colors.gray300};
-	}
 `;
 
 export const Title = styled.div`
@@ -26,6 +22,11 @@ export const ContentBox = styled.div`
 	display: flex;
 	padding: 0 5rem;
 	box-sizing: border-box;
+	background-color: ${({ theme }) => theme.colors.gray100};
+	&:hover {
+		background-color: ${({ theme }) => theme.colors.gray200};
+		transform: scale(1.2);
+	}
 `;
 
 export const ImageWrap = styled.div`
