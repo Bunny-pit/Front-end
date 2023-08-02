@@ -102,7 +102,7 @@ const Detail = () => {
 		const fetchPosts = async () => {
 			try {
 				const response = await axios.get(
-					`http://localhost:4000/api/post/${postId}`,
+					`${process.env.REACT_APP_API_URL}/api/post/${postId}`,
 					config,
 				);
 				setPost(response.data.post);
@@ -132,7 +132,7 @@ const Detail = () => {
 			// 댓글을 가져오는 함수
 			try {
 				const response = await axios.get(
-					`http://localhost:4000/api/comment/${postId}`,
+					`${process.env.REACT_APP_API_URL}/api/comment/${postId}`,
 				);
 				setComments(response.data);
 			} catch (error) {
@@ -160,7 +160,7 @@ const Detail = () => {
 		if (confirmed) {
 			try {
 				await axios.delete(
-					`http://localhost:4000/api/post/${postId}`,
+					`${process.env.REACT_APP_API_URL}/api/post/${postId}`,
 					getToken(),
 				);
 				navigate('/post');
@@ -186,7 +186,7 @@ const Detail = () => {
 		}
 		try {
 			const response = await axios.post(
-				`http://localhost:4000/api/comment/${postId}`,
+				`${process.env.REACT_APP_API_URL}/api/comment/${postId}`,
 				{
 					comment: commentInput,
 					userId: userData?.userId,
@@ -204,7 +204,7 @@ const Detail = () => {
 	const deleteComment = async (postId: string, commentId: string) => {
 		try {
 			await axios.delete(
-				`http://localhost:4000/api/comment/${postId}/${commentId}`,
+				`${process.env.REACT_APP_API_URL}/api/comment/${postId}/${commentId}`,
 				getToken(),
 			);
 
@@ -218,7 +218,7 @@ const Detail = () => {
 	const handleLikeButton = async () => {
 		try {
 			const response = await axios.post(
-				`http://localhost:4000/api/like/${postId}`,
+				`${process.env.REACT_APP_API_URL}/api/like/${postId}`,
 				{},
 				getToken(),
 			);
@@ -233,7 +233,6 @@ const Detail = () => {
 		// post가 null일 때 로딩 상태로 처리
 		return <div>Loading...</div>;
 	}
-	console.log('유저데이터는!!!', userData);
 	return (
 		<>
 			<DetailHeader />
