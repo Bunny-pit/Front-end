@@ -38,7 +38,7 @@ const UserMain = () => {
 	} else if (!userData) {
 		console.log('유저 데이터를 불러오는 중...');
 	}
-	console.log(userData?.user.userName);
+	console.log(userData?.userName);
 
 	const handleContentChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
 		setContent(e.target.value);
