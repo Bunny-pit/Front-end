@@ -25,7 +25,7 @@ export function useUser(): {
     isError: boolean;
 } {
     const fetchingURL = `${process.env.REACT_APP_API_URL}${API_USER_ACCESS_TOKEN}`
-    const { data, error } = useSWR(fetchingURL, fetcher)
+    const { data, error } = useSWR(fetchingURL, fetcher, {dedupingInterval : 1000000, errorRetryInterval : 5000})
 
     if (error && data === undefined) { // 데이터가 없을 때만 에러 출력
         console.error('Error fetching user data :', error.message);

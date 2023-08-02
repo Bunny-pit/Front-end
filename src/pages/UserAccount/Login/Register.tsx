@@ -8,6 +8,8 @@ import {
     passwordValidation,
     userNameValidation
 } from '../../../utils/registerValidation';
+import { AxiosResponse } from 'axios';
+import { API_USER_REGISTER } from '../../../utils/constant';
 import { onChangeInputSetter } from '../../../utils/inputStateSetter';
 import {
     Page,
@@ -20,11 +22,10 @@ import {
     InputBar,
     ButtonWrap,
     BottomButton,
-} from '../Login/LoginStyle';
+} from './LoginStyle';
 
 
 export default function RegisterPage() {
-    const [name, setName] = useState<string>('')
     const [userName, setUserName] = useState<string>('')
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
@@ -37,22 +38,27 @@ export default function RegisterPage() {
             if (password !== checkPassword) {
                 // 비밀번호 불일치 알림창
                 console.log('패스워드 불일치')
+                alert('패스워드 불일치')
             } else if (
                 emailValidation(email) &&
                 passwordValidation(password) &&
                 userNameValidation(userName)
             ) {
-                await post<UserDataType>('/api/user/register', {
-                    name,
-                    userName,
-                    email,
-                    password
-                });
-                //로그인 해달라는 알림창.
+                await post(
+                    API_USER_REGISTER,
+                    {
+                        userName,
+                        email,
+                        password
+                    },
+                    { headers: { 'Content-Type ': 'application/json' } }
+                );
+
                 navigate('/login');
             }
-        } catch (error) {
-            console.log(error)
+        } catch (error : any) {
+            console.log('회원가입 post 오류', error.response.data.error)
+            // console.error(error.response.data.error)
         }
 
     }
@@ -72,11 +78,11 @@ export default function RegisterPage() {
                     <InputBar
                         type="text"
                         placeholder="엄준식"
-                        value={name}
-                        onChange={onChangeInputSetter(setName)}
+                        value={userName}
+                        onChange={onChangeInputSetter(setUserName)}
                     />
                 </InputWrap>
-                <InputTitle>닉네임</InputTitle>
+                {/* <InputTitle>닉네임</InputTitle>
                 <InputWrap>
                     <InputBar
                         type="text"
@@ -84,7 +90,7 @@ export default function RegisterPage() {
                         value={userName}
                         onChange={onChangeInputSetter(setUserName)}
                     />
-                </InputWrap>
+                </InputWrap> */}
                 <InputTitle>이메일</InputTitle>
                 <InputWrap>
                     <InputBar
@@ -115,6 +121,11 @@ export default function RegisterPage() {
 
                 <ButtonWrap>
                     <BottomButton type='submit'>회원가입완료</BottomButton>
+                    <BottomButton onClick={() => {
+                        {
+                            navigate('/login');
+                        }
+                    }}>로그인 페이지로</BottomButton>
                 </ButtonWrap>
 
             </FormWrap>
