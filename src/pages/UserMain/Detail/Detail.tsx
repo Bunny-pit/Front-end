@@ -46,8 +46,6 @@ import {
 	CommentDeleteImg,
 } from './DetailStyle';
 
-// const backUrl = 'https://port-0-back-end-kvmh2mljxnw03c.sel4.cloudtype.app/api';
-
 interface Post {
 	_id: string;
 	userId: string;
@@ -110,7 +108,7 @@ const Detail = () => {
 				setPost(response.data.post);
 				if (response.data.like && response.data.like.userId) {
 					setLikeCount(response.data.like.userId.length);
-					const currentUser = userData?.user._id;
+					const currentUser = userData?._id;
 					const isUserLiked = response.data.like.userId.includes(currentUser);
 					setIsLiked(isUserLiked);
 					// console.log('userId = ', response.data.like.userId);
@@ -191,8 +189,8 @@ const Detail = () => {
 				`http://localhost:4000/api/comment/${postId}`,
 				{
 					comment: commentInput,
-					userId: userData?.user.userId,
-					userName: userData?.user.userName,
+					userId: userData?.userId,
+					userName: userData?.userName,
 				},
 				getToken(),
 			);
