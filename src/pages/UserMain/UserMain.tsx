@@ -152,7 +152,7 @@ const UserMain = () => {
 								<ProfileLi>#개발자</ProfileLi>
 								<ProfileLi>#소통</ProfileLi>
 							</ProfileUl>
-							<Email href='#'>{userData?.user.email}</Email>
+							<Email href='#'>{userData?.email}</Email>
 						</Wrapper4>
 					</ProfileWrap>
 				</Sec1>
