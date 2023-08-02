@@ -84,8 +84,8 @@ export default function LoginPage() {
 				setToken(accessToken);
 				// navigate("/");
 				console.log(userData)
-			} catch (error) {
-				console.log('로그인 post 오류', error)
+			} catch (error : any) {
+				console.log('로그인 post 오류', error.response.data.error)
 			}
 
 		} else {
@@ -122,19 +122,19 @@ export default function LoginPage() {
 					/>
 				</InputWrap>
 				<ButtonWrap>
-					<BottomButton type='submit'>로그인하기</BottomButton>
+					<BottomButton type='submit'>로그인</BottomButton>
 					<BottomButton
 						onClick={() => {
 							{
 								navigate('/register');
 							}
 						}}>
-						회원가입하기
+						회원가입
 					</BottomButton>
 				</ButtonWrap>
-				{!loginForm.isEmailValid && <p>유효하지 않은 이메일입니다.</p>}
-				{!loginForm.isPasswordValid && <p>유효하지 않은 패스워드입니다.</p>}
 			</FormWrap>
+
+
 		</Page>
 	);
 }
