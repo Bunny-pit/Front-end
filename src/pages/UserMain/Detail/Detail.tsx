@@ -11,6 +11,7 @@ import DeleteIcon from '../../../assets/icons/DeleteIcon.png';
 import likeIcon from '../../../assets/icons/like.png';
 import likedIcon from '../../../assets/icons/liked.png';
 import CommentDeleteIcon from '../../../assets/icons/CommentDeleteIcon.png';
+import { useUser } from '../../../utils/swrFetcher';
 import dayjs from 'dayjs';
 import {
 	Container,
@@ -45,7 +46,7 @@ import {
 	CommentDeleteImg,
 } from './DetailStyle';
 
-const backUrl = 'https://port-0-back-end-kvmh2mljxnw03c.sel4.cloudtype.app/api';
+// const backUrl = 'https://port-0-back-end-kvmh2mljxnw03c.sel4.cloudtype.app/api';
 
 interface Post {
 	_id: string;
@@ -79,29 +80,49 @@ const Detail = () => {
 	const { postId } = useParams();
 	const [post, setPost] = useState<Post | null>(null); // 초기 상태를 null로 설정
 	const [comments, setComments] = useState<Comment[]>([]); // 댓글 상태를 추가
-	const [commentInput, setCommentInput] = useState(''); // Add this line
+	const [commentInput, setCommentInput] = useState('');
+	const [userName, setUserName] = useState(''); // userName 게시글 기준으로 추가해야됨
 	const [likeCount, setLikeCount] = useState<number>(0);
 	const [isLiked, setIsLiked] = useState<boolean>(false);
+	const { userData, isError } = useUser();
+	if (isError) {
+		console.log('유저 데이터를 불러오는데 실패했습니다.');
+	} else if (!userData) {
+		console.log('유저 데이터를 불러오는 중...');
+	}
+
 	useEffect(() => {
+		const token = localStorage.getItem('accessToken');
+		// 헤더에 토큰을 추가하는 config 객체를 만듭니다.
+		const config = {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		};
 		// MongoDB에서 데이터 가져오는 함수
 		//게시글 가져옴
 		const fetchPosts = async () => {
 			try {
 				const response = await axios.get(
 					`http://localhost:4000/api/post/${postId}`,
+					config,
 				);
 				setPost(response.data.post);
 				if (response.data.like && response.data.like.userId) {
 					setLikeCount(response.data.like.userId.length);
-					const currentUser = 'frontTest'; // temporary id
+					const currentUser = userData?._id;
 					const isUserLiked = response.data.like.userId.includes(currentUser);
 					setIsLiked(isUserLiked);
 					// console.log('userId = ', response.data.like.userId);
+					// console.log('currentUser = ', currentUser);
 					// console.log('count = ', response.data.like.userId.length);
 					// console.log('liked = ', isUserLiked);
+					console.log(response.data);
+					setUserName(response.data.post.userName);
 				} else {
 					setLikeCount(0);
 					setIsLiked(false);
+					setUserName(response.data.post.userName);
 				}
 				// console.log(response.data.post);
 			} catch (error) {
@@ -124,13 +145,26 @@ const Detail = () => {
 		fetchPosts();
 		fetchComments();
 	}, [postId, isLiked]);
+	// --------토큰 받아오는 함수 ---------
+	const getToken = () => {
+		const token = localStorage.getItem('accessToken');
+		const config = {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		};
+		return config;
+	};
+
 	//----------게시글 삭제------------
 	const handleDeletePostButton = async () => {
 		const confirmed = window.confirm('정말로 삭제하시겠습니까?');
-
 		if (confirmed) {
 			try {
-				await axios.delete(`http://localhost:4000/api/post/${postId}`);
+				await axios.delete(
+					`http://localhost:4000/api/post/${postId}`,
+					getToken(),
+				);
 				navigate('/post');
 			} catch (error) {
 				console.error('Error deleting post:', error);
@@ -148,25 +182,20 @@ const Detail = () => {
 		event: React.FormEvent<HTMLFormElement>,
 	) => {
 		event.preventDefault();
-
 		if (commentInput.trim() === '') {
 			alert('댓글을 입력해주세요.');
 			return;
 		}
-
 		try {
 			const response = await axios.post(
 				`http://localhost:4000/api/comment/${postId}`,
 				{
 					comment: commentInput,
-					// You should also send the user id and username here, for example:
-					userId: 'frontTest',
-					userName: 'frontTest',
-					// userId: currentUser.id,
-					// userName: currentUser.name,
+					userId: userData?.userId,
+					userName: userData?.userName,
 				},
+				getToken(),
 			);
-
 			setComments((prevComments) => [...prevComments, response.data]);
 			setCommentInput('');
 		} catch (error) {
@@ -178,6 +207,7 @@ const Detail = () => {
 		try {
 			await axios.delete(
 				`http://localhost:4000/api/comment/${postId}/${commentId}`,
+				getToken(),
 			);
 
 			// 삭제된 댓글을 제외한 댓글들로 상태를 업데이트합니다.
@@ -191,11 +221,9 @@ const Detail = () => {
 		try {
 			const response = await axios.post(
 				`http://localhost:4000/api/like/${postId}`,
-				{
-					userId: 'frontTest',
-				},
+				{},
+				getToken(),
 			);
-
 			const { liked, count } = response.data;
 			setIsLiked(liked);
 			setLikeCount(count);
@@ -207,7 +235,7 @@ const Detail = () => {
 		// post가 null일 때 로딩 상태로 처리
 		return <div>Loading...</div>;
 	}
-
+	console.log('유저데이터는!!!', userData);
 	return (
 		<>
 			<DetailHeader />
@@ -215,7 +243,7 @@ const Detail = () => {
 				<ProfileWrap>
 					<Profile>
 						<ProfileUserImage src={ProfileImg} alt='userImg' />
-						<ProfileId>유저 아이디</ProfileId>
+						<ProfileId>{userName}</ProfileId>
 					</Profile>
 					<DeleteButtonWrap>
 						<DeleteButton onClick={handleDeletePostButton}>

@@ -4,7 +4,8 @@ import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import userImage from '../../assets/images/userimage.png';
 import plusIcon from '../../assets/icons/UserPlus.png';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import { useUser } from '../../utils/swrFetcher';
 import {
 	Container,
 	Sec1,
@@ -26,6 +27,9 @@ import {
 	PostTitle,
 	PostUl,
 	PostLi,
+	NothingWrap,
+	NothingPost,
+	PostButton,
 } from './UserMainStyle';
 
 interface Post {
@@ -36,35 +40,67 @@ interface Post {
 	content: string;
 	createdAt: Date;
 }
-const backUrl = 'https://port-0-back-end-kvmh2mljxnw03c.sel4.cloudtype.app/api';
+// const backUrl = 'https://port-0-back-end-kvmh2mljxnw03c.sel4.cloudtype.app/api';
 
 const UserMain = () => {
 	const [posts, setPosts] = useState<Post[]>([]);
+	const [postCount, setPostCount] = useState(0);
+	const [userName, setUserName] = useState('');
+	const { userData, isError } = useUser();
+	const { email } = useParams();
+
+	if (isError) {
+		console.log('유저 데이터를 불러오는데 실패했습니다.');
+	} else if (!userData) {
+		console.log('유저 데이터를 불러오는 중...');
+	}
 	useEffect(() => {
-		// MongoDB에서 데이터 가져오는 함수
 		const fetchPosts = async () => {
 			try {
-				const response = await axios.get(`http://localhost:4000/api/post`);
-				setPosts(response.data);
+				const token = localStorage.getItem('accessToken');
+				const config = {
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				};
+				const response = await axios.get(
+					`http://localhost:4000/api/post`,
+					config,
+				);
+				setPosts(response.data.posts);
+				setUserName(response.data.userName);
+				setPostCount(response.data.length);
 			} catch (error) {
 				console.error('Error fetching posts:', error);
 			}
 		};
 
-		fetchPosts();
-	}, []);
-	// 가짜데이터
-	const userdata = {
-		userId: 'pretty_bunny_kim',
-		postCount: 50,
-		followerCount: 5000,
-		email: 'prtty_bunny@naver.com',
-	};
-	// 게시글 최신순으로 정렬
-	const sortedPosts = posts.sort(
-		(a: Post, b: Post) =>
-			new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
-	);
+		const fetchOtherUserPosts = async () => {
+			try {
+				const token = localStorage.getItem('accessToken');
+				const config = {
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				};
+				const response = await axios.get(
+					`http://localhost:4000/api/post/user/${email}`,
+					config,
+				);
+				setPosts(response.data.posts);
+				setUserName(response.data.userName);
+				setPostCount(response.data.length);
+			} catch (error) {
+				console.error('Error fetching posts:', error);
+			}
+		};
+
+		if (email) {
+			fetchOtherUserPosts();
+		} else {
+			fetchPosts();
+		}
+	}, [email]);
 
 	return (
 		<>
@@ -76,21 +112,24 @@ const UserMain = () => {
 					</ImageWrap>
 					<ProfileWrap>
 						<Wrapper1>
-							<UserId>{userdata.userId}</UserId>
+							<UserId>{userName}</UserId>
 							<PlusIcon
 								src={plusIcon}
 								onClick={() => {
 									alert('친구 추가하기 버튼!');
 								}}
 							/>
-						</Wrapper1>
-						<Wrapper2>
 							<FriendButton
 								onClick={() => {
 									alert('친구초대하기');
 								}}>
 								친구초대하기
 							</FriendButton>
+						</Wrapper1>
+						<Wrapper2>
+							<PostButton>
+								<Link to={`/post/upload`}>게시글 등록</Link>
+							</PostButton>
 							<EditButton
 								onClick={() => {
 									alert('프로필 편집하기');
@@ -100,11 +139,11 @@ const UserMain = () => {
 						</Wrapper2>
 						<Wrapper3>
 							<p>
-								게시물 <span>{userdata.postCount}</span>
+								게시물 <span>{postCount}</span>
 							</p>
 
 							<p>
-								나를 좋아하는 버니들 <span>{userdata.followerCount}</span>
+								나를 좋아하는 버니들 <span>0</span>
 							</p>
 						</Wrapper3>
 						<Wrapper4>
@@ -113,7 +152,7 @@ const UserMain = () => {
 								<ProfileLi>#개발자</ProfileLi>
 								<ProfileLi>#소통</ProfileLi>
 							</ProfileUl>
-							<Email href='#'>{userdata.email}</Email>
+							<Email href='#'>{userData?.email}</Email>
 						</Wrapper4>
 					</ProfileWrap>
 				</Sec1>
@@ -121,13 +160,19 @@ const UserMain = () => {
 				<PostContainer>
 					<PostTitle>게시물</PostTitle>
 					<PostUl>
-						{sortedPosts.map((post: Post, i: number) => (
-							<PostLi key={post._id}>
-								<Link className='link' to={`/post/${post._id}`}>
-									<img key={i} src={post.images[0]} alt={`post ${i}`} />
-								</Link>
-							</PostLi>
-						))}
+						{posts.length > 0 ? (
+							posts.map((post: Post, i: number) => (
+								<PostLi key={post._id}>
+									<Link className='link' to={`/post/${post._id}`}>
+										<img key={i} src={post.images[0]} alt={`post ${i}`} />
+									</Link>
+								</PostLi>
+							))
+						) : (
+							<NothingWrap>
+								<NothingPost>게시글이 없습니다</NothingPost>
+							</NothingWrap>
+						)}
 					</PostUl>
 				</PostContainer>
 			</Container>

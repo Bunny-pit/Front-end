@@ -30,7 +30,7 @@ const Chat = () => {
 	} else if (!userData) {
 		console.log('유저 데이터를 불러오는 중...');
 	}
-	const userId = userData?._id;
+	const userId = userData?.user._id;
 
 	const { data: dmList, error } = useSWR<DmListType[]>(
 		`http://localhost:3000/api/chat/${userId}`,
@@ -52,14 +52,8 @@ const Chat = () => {
 			);
 			setMessages((prevMessages) => [...prevMessages, newMessage]);
 		},
-		[userId],
+		[userId, chatId],
 	);
-	// const onNewMessage = useCallback(
-	// 	(newMessage: string) => {
-	// 		setMessages((prevMessages) => [...prevMessages, newMessage]);
-	// 	},
-	// 	[],
-	// );
 
 	useEffect(() => {
 		const chatInfo = dmList?.find((chat) => chat._id === chatId);

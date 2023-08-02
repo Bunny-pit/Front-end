@@ -5,7 +5,7 @@ import { useSocket } from '../../hooks/useSocket';
 
 interface ChatBoxProps {
 	chatId?: string;
-	userId: string;
+	userId?: string;
 	onNewMessage: (message: string) => void;
 }
 
