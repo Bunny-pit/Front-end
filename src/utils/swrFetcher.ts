@@ -2,22 +2,23 @@ import useSWR, { SWRResponse } from 'swr'
 import { swrApi } from '../api/axiosInstance';
 import { API_USER_ACCESS_TOKEN } from './constant';
 
-export const fetcher = (url: string) => swrApi.get(url).then(res => res.data)
+export const fetcher = (url: string) => swrApi.get(url).then(res => {
+    console.log(res)
+    return res.data
+})
 
 interface UserData {
-    accessToken: string;
-    user: {
-        createdAt: string;
-        email: string;
-        password: string;
-        role: number;
-        secretName: string;
-        updatedAt: string;
-        userId: string;
-        userName: string;
-        _id: string;
-    };
+    createdAt: string;
+    email: string;
+    password: string;
+    role: number;
+    secretName: string;
+    updatedAt: string;
+    userId: string;
+    userName: string;
+    _id: string;
 }
+
 
 export function useUser(): {
     userData: UserData | null;
