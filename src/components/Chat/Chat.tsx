@@ -31,7 +31,7 @@ const Chat = () => {
 		console.log('유저 데이터를 불러오는 중...');
 	}
 	const userId = userData?.user._id;
-
+	console.log('here', userId);
 	const { data: dmList, error } = useSWR<DmListType[]>(
 		`${process.env.REACT_APP_API_URL}/api/chat/${userId}`,
 		fetcher,

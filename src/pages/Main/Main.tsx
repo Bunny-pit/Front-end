@@ -4,6 +4,7 @@ import GreenHeart from '../../assets/images/greenheart.png';
 import BlueHeart from '../../assets/images/blueheart.png';
 import PinkHeart from '../../assets/images/pinkheart.png';
 import Avatar from '../../assets/images/avatar.png';
+import { Link } from 'react-router-dom';
 
 import {
 	FirstSection,
@@ -42,8 +43,12 @@ const MainPage = () => {
 					<Header>
 						<Logo src={MainLogo} alt='main-logo' />
 						<BtnContainer>
-							<LogIn>로그인</LogIn>
-							<SignUp>회원가입</SignUp>
+							<Link to='/login'>
+								<LogIn>로그인</LogIn>
+							</Link>
+							<Link to='/register'>
+								<SignUp>회원가입</SignUp>
+							</Link>
 						</BtnContainer>
 					</Header>
 					<MainContent>

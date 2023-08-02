@@ -28,9 +28,10 @@ const DMList = () => {
 	}
 
 	const userId = userData?.user?._id;
+
 	const [channelCollapse, setChannelCollapse] = useState(false);
 	const { data: dmList, error } = useSWR<DmListType[]>(
-		`${process.env.REACT_APP_API_URL}/api/chat/${userId}`,
+		`http://localhost:3000/api/chat/${userId}`,
 		fetcher,
 	);
 
@@ -49,8 +50,8 @@ const DMList = () => {
 		);
 		if (result.isConfirmed) {
 			await del<DmListType[]>(`/api/chat/${chatId}`);
-			mutate(`${process.env.REACT_APP_API_URL}/api/chat/${userId}`);
-			mutate(`${process.env.REACT_APP_API_URL}/api/chat/${chatId}/messages`);
+			mutate(`http://localhost:3000/api/chat/${userId}`);
+			mutate(`http://localhost:3000/api/chat/${chatId}/messages`);
 		}
 	};
 
