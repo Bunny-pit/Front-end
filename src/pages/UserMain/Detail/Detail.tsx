@@ -46,8 +46,6 @@ import {
 	CommentDeleteImg,
 } from './DetailStyle';
 
-// const backUrl = 'https://port-0-back-end-kvmh2mljxnw03c.sel4.cloudtype.app/api';
-
 interface Post {
 	_id: string;
 	userId: string;
