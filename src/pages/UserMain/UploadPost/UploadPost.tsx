@@ -17,8 +17,6 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Slider from 'react-slick';
 
-// const backUrl = 'https://port-0-back-end-kvmh2mljxnw03c.sel4.cloudtype.app/api';
-
 const settings = {
 	dots: true, // dot navigation을 보여줄지에 대한 여부
 	infinite: true, // 무한으로 슬라이드가 돌아가는지에 대한 여부
@@ -40,7 +38,6 @@ const UserMain = () => {
 	} else if (!userData) {
 		console.log('유저 데이터를 불러오는 중...');
 	}
-	console.log(userData?.userName);
 
 	const handleContentChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
 		setContent(e.target.value);
@@ -78,17 +75,14 @@ const UserMain = () => {
 		const token = localStorage.getItem('accessToken');
 
 		try {
-			const response = await axios.post(
-				'http://localhost:4000/api/post',
-				formData,
-				{
-					headers: {
-						Authorization: `Bearer ${token}`, // attach the token as a bearer token
-					},
+			await axios.post('${process.env.REACT_APP_API_URL}/api/post', formData, {
+				headers: {
+					Authorization: `Bearer ${token}`, // attach the token as a bearer token
 				},
-			);
-			console.log(response);
+			});
+			console.log('여기!!!');
 			navigate('/post');
+			console.log('저기!!!');
 		} catch (error) {
 			console.error('Error creating post:', error);
 		}
@@ -109,7 +103,7 @@ const UserMain = () => {
 								/>
 							</StyledFileInputLabel>
 						)}
-						<Slider {...settings}>
+						<Slider {...settings} className='Slider'>
 							{previewURLs.map((url, index) => (
 								<img src={url} alt={`preview ${index}`} key={url} />
 							))}

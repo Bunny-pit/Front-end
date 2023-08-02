@@ -1,11 +1,9 @@
-import React, { FC } from 'react';
+import React from 'react';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 
-import { Post } from '../../types/dataType';
 import message from '../../assets/icons/message.png';
-import useMainHomePost from '../../hooks/useMainHomePost';
 
 import {
 	Container,
@@ -24,16 +22,21 @@ import {
 	Edit,
 	Delete,
 } from './MainHomeContentStyle';
+import useMainHomePost from '../../hooks/useMainHomePost';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
-type Props = {
+interface Props {
 	userData: any;
-	moveToChatPage: (id: string, userId: string, name: string) => void;
-};
+	mainHomePost: ReturnType<typeof useMainHomePost>;
+}
 
-const MainHomeContent: FC<Props> = ({ userData, moveToChatPage }) => {
+const MainHomeContent = ({ userData, mainHomePost }: Props) => {
+	const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+		setUpdatedContent(e.target.value);
+	};
+
 	const {
 		posts,
 		editingPostId,
@@ -43,18 +46,14 @@ const MainHomeContent: FC<Props> = ({ userData, moveToChatPage }) => {
 		lastPostElementRef,
 		updatePost,
 		deletePost,
-	} = useMainHomePost();
-
-	const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-		setUpdatedContent(e.target.value);
-	};
+		moveToChatPage,
+	} = mainHomePost;
 
 	return (
 		<Container>
 			{posts.map((post, index) => {
 				const email: string = post.email;
 				const avatarUrl: string = `https://www.gravatar.com/avatar/${email}?d=identicon`;
-
 				return (
 					<ContentBox
 						key={post._id}
