@@ -40,7 +40,7 @@ const UserMain = () => {
 	} else if (!userData) {
 		console.log('유저 데이터를 불러오는 중...');
 	}
-	console.log(userData?.userName);
+	console.log(userData?.user.userName);
 
 	const handleContentChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
 		setContent(e.target.value);
@@ -109,7 +109,7 @@ const UserMain = () => {
 								/>
 							</StyledFileInputLabel>
 						)}
-						<Slider {...settings}>
+						<Slider {...settings} className='Slider'>
 							{previewURLs.map((url, index) => (
 								<img src={url} alt={`preview ${index}`} key={url} />
 							))}
