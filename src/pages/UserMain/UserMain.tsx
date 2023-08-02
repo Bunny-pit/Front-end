@@ -30,6 +30,7 @@ import {
 	NothingWrap,
 	NothingPost,
 	PostButton,
+	PostUlEmpty,
 } from './UserMainStyle';
 
 interface Post {
@@ -53,7 +54,7 @@ const UserMain = () => {
 	} else if (!userData) {
 		console.log('유저 데이터를 불러오는 중...');
 	}
-	console.log('userData!!!!!!!', userData?._id);
+	// console.log('userData!!!!!!!', userData?._id);
 	useEffect(() => {
 		const fetchPosts = async () => {
 			try {
@@ -64,12 +65,12 @@ const UserMain = () => {
 					},
 				};
 				const response = await axios.get(
-					`http://localhost:4000/api/post`,
+					`${process.env.REACT_APP_API_URL}/api/post`,
 					config,
 				);
 				setPosts(response.data.posts);
 				setUserName(response.data.userName);
-				setPostCount(response.data.length);
+				setPostCount(response.data.posts.length);
 			} catch (error) {
 				console.error('Error fetching posts:', error);
 			}
@@ -84,12 +85,13 @@ const UserMain = () => {
 					},
 				};
 				const response = await axios.get(
-					`http://localhost:4000/api/post/user/${email}`,
+					`${process.env.REACT_APP_API_URL}/api/post/user/${email}`,
 					config,
 				);
 				setPosts(response.data.posts);
-				setUserName(response.data.user);
-				setPostCount(response.data.length);
+				setUserName(response.data.userName);
+				setPostCount(response.data.posts.length);
+				console.log('게시글 갯수 ㅎㅎ', response.data.posts.length);
 			} catch (error) {
 				console.error('Error fetching posts:', error);
 			}
@@ -159,21 +161,23 @@ const UserMain = () => {
 				<hr />
 				<PostContainer>
 					<PostTitle>게시물</PostTitle>
-					<PostUl>
-						{posts.length > 0 ? (
-							posts.map((post: Post, i: number) => (
+					{posts.length > 0 ? (
+						<PostUl>
+							{posts.map((post: Post, i: number) => (
 								<PostLi key={post._id}>
 									<Link className='link' to={`/post/${post._id}`}>
 										<img key={i} src={post.images[0]} alt={`post ${i}`} />
 									</Link>
 								</PostLi>
-							))
-						) : (
+							))}
+						</PostUl>
+					) : (
+						<PostUlEmpty>
 							<NothingWrap>
 								<NothingPost>게시글이 없습니다</NothingPost>
 							</NothingWrap>
-						)}
-					</PostUl>
+						</PostUlEmpty>
+					)}
 				</PostContainer>
 			</Container>
 			<Footer />
