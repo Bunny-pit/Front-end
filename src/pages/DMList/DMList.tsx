@@ -27,10 +27,10 @@ const DMList = () => {
 		console.log('유저 데이터를 불러오는 중...');
 	}
 
-	const userId = userData?._id;
+	const userId = userData?.user?._id;
 	const [channelCollapse, setChannelCollapse] = useState(false);
 	const { data: dmList, error } = useSWR<DmListType[]>(
-		`http://localhost:3000/api/chat/${userId}`,
+		`${process.env.REACT_APP_API_URL}/api/chat/${userId}`,
 		fetcher,
 	);
 
@@ -49,8 +49,8 @@ const DMList = () => {
 		);
 		if (result.isConfirmed) {
 			await del<DmListType[]>(`/api/chat/${chatId}`);
-			mutate(`http://localhost:3000/api/chat/${userId}`);
-			mutate(`http://localhost:3000/api/chat/${chatId}/messages`);
+			mutate(`${process.env.REACT_APP_API_URL}/api/chat/${userId}`);
+			mutate(`${process.env.REACT_APP_API_URL}/api/chat/${chatId}/messages`);
 		}
 	};
 

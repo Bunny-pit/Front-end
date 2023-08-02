@@ -11,8 +11,7 @@ import MessageBubble from '../MessageBubble/MessageBubble';
 import { useAutoScroll } from '../../hooks/useAutoScroll';
 import { useUser, fetcher } from '../../utils/swrFetcher';
 import { MessageType } from '../../types/chatType';
-import { get } from '../../api/api';
-import useSWR from 'swr';
+import useSWR, { mutate } from 'swr';
 import { DmListType } from '../../types/chatType';
 
 const Chat = () => {
@@ -20,7 +19,7 @@ const Chat = () => {
 	const chatId = nickname;
 	const [messages, setMessages] = useState<string[]>([]);
 	const { data: savedMessages, error: messageError } = useSWR<MessageType[]>(
-		`http://localhost:3000/api/chat/${chatId}/messages`,
+		`${process.env.REACT_APP_API_URL}/api/chat/${chatId}/messages`,
 		fetcher,
 	);
 	const { userData, isError } = useUser();
@@ -31,19 +30,39 @@ const Chat = () => {
 	} else if (!userData) {
 		console.log('유저 데이터를 불러오는 중...');
 	}
-	const userId = userData?._id;
+	const userId = userData?.user._id;
 
 	const { data: dmList, error } = useSWR<DmListType[]>(
-		`http://localhost:3000/api/chat/${userId}`,
+		`${process.env.REACT_APP_API_URL}/api/chat/${userId}`,
 		fetcher,
 	);
 
 	const messageListRef = useRef<HTMLDivElement>(null);
 	useAutoScroll(messageListRef, messages);
 
-	const onNewMessage = useCallback((newMessage: string) => {
-		setMessages((prevMessages) => [...prevMessages, newMessage]);
-	}, []);
+	const onNewMessage = useCallback(
+		(newMessage: string) => {
+			mutate(
+				`${process.env.REACT_APP_API_URL}/api/chat/${chatId}/messages`,
+				(prevMessages: any) => [
+					...prevMessages,
+					{ content: newMessage, sender: { _id: userId } },
+				],
+				false,
+			);
+			setMessages((prevMessages) => [...prevMessages, newMessage]);
+		},
+		[userId, chatId],
+	);
+
+	useEffect(() => {
+		const chatInfo = dmList?.find((chat) => chat._id === chatId);
+		if (chatInfo) {
+			setSelectedChat(chatInfo);
+		} else {
+			setSelectedChat(null);
+		}
+	}, [dmList, chatId]);
 
 	useEffect(() => {
 		if (savedMessages) {
@@ -52,7 +71,7 @@ const Chat = () => {
 			const chatInfo = dmList?.find((chat) => chat._id === chatId);
 			setSelectedChat(chatInfo || null);
 		}
-	}, [savedMessages, chatId]);
+	}, [savedMessages, chatId, dmList]);
 
 	const chattingWithUser = selectedChat?.users.find(
 		(user) => user._id !== userId,
@@ -60,17 +79,20 @@ const Chat = () => {
 	return (
 		<>
 			<Container>
-				{selectedChat !== null && (
+				{selectedChat !== null ? (
 					<Content>{`나와 ${chattingWithUser?.secretName}님의 채팅방입니다.`}</Content>
+				) : (
+					<Content>채팅방이 존재하지 않습니다.</Content>
 				)}
 				<MessageContainer ref={messageListRef}>
-					{savedMessages?.map((message, idx) => (
-						<MessageBubble
-							key={idx}
-							message={message.content}
-							currentUser={message.sender._id === userId}
-						/>
-					))}
+					{savedMessages &&
+						savedMessages.map((message) => (
+							<MessageBubble
+								key={message._id}
+								message={message.content}
+								currentUser={message.sender._id === userId}
+							/>
+						))}
 				</MessageContainer>
 				<ChatBoxConatiner>
 					<ChatBox
