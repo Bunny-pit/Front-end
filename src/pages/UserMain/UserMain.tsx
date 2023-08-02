@@ -88,7 +88,7 @@ const UserMain = () => {
 					config,
 				);
 				setPosts(response.data.posts);
-				setUserName(response.data.userName);
+				setUserName(response.data.user);
 				setPostCount(response.data.length);
 			} catch (error) {
 				console.error('Error fetching posts:', error);
@@ -152,7 +152,7 @@ const UserMain = () => {
 								<ProfileLi>#개발자</ProfileLi>
 								<ProfileLi>#소통</ProfileLi>
 							</ProfileUl>
-							<Email href='#'>{userData?.email}</Email>
+							<Email href='#'>{userData?.user.email}</Email>
 						</Wrapper4>
 					</ProfileWrap>
 				</Sec1>

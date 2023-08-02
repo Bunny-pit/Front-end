@@ -110,7 +110,7 @@ const Detail = () => {
 				setPost(response.data.post);
 				if (response.data.like && response.data.like.userId) {
 					setLikeCount(response.data.like.userId.length);
-					const currentUser = userData?._id;
+					const currentUser = userData?.user._id;
 					const isUserLiked = response.data.like.userId.includes(currentUser);
 					setIsLiked(isUserLiked);
 					// console.log('userId = ', response.data.like.userId);
@@ -191,8 +191,8 @@ const Detail = () => {
 				`http://localhost:4000/api/comment/${postId}`,
 				{
 					comment: commentInput,
-					userId: userData?.userId,
-					userName: userData?.userName,
+					userId: userData?.user.userId,
+					userName: userData?.user.userName,
 				},
 				getToken(),
 			);
