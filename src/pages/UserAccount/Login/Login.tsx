@@ -5,8 +5,8 @@ import { emailValidation, passwordValidation } from '../../../utils/registerVali
 import { post } from '../../../api/api';
 import { setToken } from '../../../api/token';
 import { UserDataType } from '../../../types/dataType';
+import { useUser } from '../../../utils/swrFetcher';
 
- 
 import {
 	Page,
 	TitleAndLogoWrap,
@@ -19,7 +19,7 @@ import {
 	ButtonWrap,
 	BottomButton,
 } from './LoginStyle';
-import { useUser } from '../../../utils/swrFetcher';
+
 import { AxiosResponse } from 'axios'
 import { onChangeInputSetter } from '../../../utils/inputStateSetter';
 
@@ -45,6 +45,7 @@ export default function LoginPage() {
 	const [email, setEmail] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
 	const [loginForm, setLoginForm] = useState<LoginFormState>(initialLoginFormState);
+	const { userData, isError } = useUser()
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -81,7 +82,8 @@ export default function LoginPage() {
 				);
 				const accessToken: string = response.data.accessToken;
 				setToken(accessToken);
-				navigate("/");
+				// navigate("/");
+				console.log(userData)
 			} catch (error) {
 				console.log('로그인 post 오류', error)
 			}
