@@ -54,6 +54,13 @@ const ChatBox = ({ chatId, userId, onNewMessage }: ChatBoxProps) => {
 		}
 		setInputArea('');
 	};
+	const handleInputKeyPress = (
+		event: React.KeyboardEvent<HTMLTextAreaElement>,
+	) => {
+		if (event.key === 'Enter') {
+			handleSendButtonClick();
+		}
+	};
 	return (
 		<>
 			<Container>
@@ -61,6 +68,7 @@ const ChatBox = ({ chatId, userId, onNewMessage }: ChatBoxProps) => {
 					value={inputArea}
 					onChange={handleInputChange}
 					placeholder='메시지 보내기'
+					onKeyDown={handleInputKeyPress}
 				/>
 				<SendButton
 					src={sendBtn}
