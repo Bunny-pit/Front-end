@@ -17,8 +17,6 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Slider from 'react-slick';
 
-// const backUrl = 'https://port-0-back-end-kvmh2mljxnw03c.sel4.cloudtype.app/api';
-
 const settings = {
 	dots: true, // dot navigation을 보여줄지에 대한 여부
 	infinite: true, // 무한으로 슬라이드가 돌아가는지에 대한 여부
@@ -40,7 +38,7 @@ const UserMain = () => {
 	} else if (!userData) {
 		console.log('유저 데이터를 불러오는 중...');
 	}
-	console.log(userData?.user.userName);
+	console.log(userData?.userName);
 
 	const handleContentChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
 		setContent(e.target.value);

@@ -40,20 +40,20 @@ interface Post {
 	content: string;
 	createdAt: Date;
 }
-// const backUrl = 'https://port-0-back-end-kvmh2mljxnw03c.sel4.cloudtype.app/api';
 
 const UserMain = () => {
 	const [posts, setPosts] = useState<Post[]>([]);
 	const [postCount, setPostCount] = useState(0);
 	const [userName, setUserName] = useState('');
-	const { userData, isError } = useUser();
 	const { email } = useParams();
+	const { userData, isError } = useUser();
 
 	if (isError) {
 		console.log('유저 데이터를 불러오는데 실패했습니다.');
 	} else if (!userData) {
 		console.log('유저 데이터를 불러오는 중...');
 	}
+	console.log('userData!!!!!!!', userData?._id);
 	useEffect(() => {
 		const fetchPosts = async () => {
 			try {
@@ -152,7 +152,7 @@ const UserMain = () => {
 								<ProfileLi>#개발자</ProfileLi>
 								<ProfileLi>#소통</ProfileLi>
 							</ProfileUl>
-							<Email href='#'>{userData?.user.email}</Email>
+							<Email href='#'>{userData?.email}</Email>
 						</Wrapper4>
 					</ProfileWrap>
 				</Sec1>
