@@ -27,7 +27,7 @@ const DMList = () => {
 		console.log('유저 데이터를 불러오는 중...');
 	}
 
-	const userId = userData?.user?._id;
+	const userId = userData?._id;
 
 	const [channelCollapse, setChannelCollapse] = useState(false);
 	const { data: dmList, error } = useSWR<DmListType[]>(
