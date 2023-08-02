@@ -11,8 +11,7 @@ import MessageBubble from '../MessageBubble/MessageBubble';
 import { useAutoScroll } from '../../hooks/useAutoScroll';
 import { useUser, fetcher } from '../../utils/swrFetcher';
 import { MessageType } from '../../types/chatType';
-import { get } from '../../api/api';
-import useSWR from 'swr';
+import useSWR, { mutate } from 'swr';
 import { DmListType } from '../../types/chatType';
 
 const Chat = () => {
@@ -41,9 +40,35 @@ const Chat = () => {
 	const messageListRef = useRef<HTMLDivElement>(null);
 	useAutoScroll(messageListRef, messages);
 
-	const onNewMessage = useCallback((newMessage: string) => {
-		setMessages((prevMessages) => [...prevMessages, newMessage]);
-	}, []);
+	const onNewMessage = useCallback(
+		(newMessage: string) => {
+			mutate(
+				`http://localhost:3000/api/chat/${chatId}/messages`,
+				(prevMessages: any) => [
+					...prevMessages,
+					{ content: newMessage, sender: { _id: userId } },
+				],
+				false,
+			);
+			setMessages((prevMessages) => [...prevMessages, newMessage]);
+		},
+		[userId],
+	);
+	// const onNewMessage = useCallback(
+	// 	(newMessage: string) => {
+	// 		setMessages((prevMessages) => [...prevMessages, newMessage]);
+	// 	},
+	// 	[],
+	// );
+
+	useEffect(() => {
+		const chatInfo = dmList?.find((chat) => chat._id === chatId);
+		if (chatInfo) {
+			setSelectedChat(chatInfo);
+		} else {
+			setSelectedChat(null);
+		}
+	}, [dmList, chatId]);
 
 	useEffect(() => {
 		if (savedMessages) {
@@ -52,7 +77,7 @@ const Chat = () => {
 			const chatInfo = dmList?.find((chat) => chat._id === chatId);
 			setSelectedChat(chatInfo || null);
 		}
-	}, [savedMessages, chatId]);
+	}, [savedMessages, chatId, dmList]);
 
 	const chattingWithUser = selectedChat?.users.find(
 		(user) => user._id !== userId,
@@ -60,17 +85,20 @@ const Chat = () => {
 	return (
 		<>
 			<Container>
-				{selectedChat !== null && (
+				{selectedChat !== null ? (
 					<Content>{`나와 ${chattingWithUser?.secretName}님의 채팅방입니다.`}</Content>
+				) : (
+					<Content>채팅방이 존재하지 않습니다.</Content>
 				)}
 				<MessageContainer ref={messageListRef}>
-					{savedMessages?.map((message, idx) => (
-						<MessageBubble
-							key={idx}
-							message={message.content}
-							currentUser={message.sender._id === userId}
-						/>
-					))}
+					{savedMessages &&
+						savedMessages.map((message) => (
+							<MessageBubble
+								key={message._id}
+								message={message.content}
+								currentUser={message.sender._id === userId}
+							/>
+						))}
 				</MessageContainer>
 				<ChatBoxConatiner>
 					<ChatBox

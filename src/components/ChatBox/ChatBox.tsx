@@ -17,7 +17,6 @@ const ChatBox = ({ chatId, userId, onNewMessage }: ChatBoxProps) => {
 	);
 
 	useEffect(() => {
-		console.log('socket has changed', socket);
 		if (socket) {
 			socket.off('newMessage');
 			socket.emit('joinRoom', { chatId, userId });
