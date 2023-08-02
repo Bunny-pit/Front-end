@@ -13,7 +13,7 @@ const ChatBox = ({ chatId, userId, onNewMessage }: ChatBoxProps) => {
 	const [inputArea, setInputArea] = useState('');
 	const socket = useSocket(
 		// 'https://port-0-back-end-kvmh2mljxnw03c.sel4.cloudtype.app',
-		'http://localhost:3000',
+		`${process.env.REACT_APP_API_URL}`,
 	);
 
 	useEffect(() => {

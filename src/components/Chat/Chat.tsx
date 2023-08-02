@@ -19,7 +19,7 @@ const Chat = () => {
 	const chatId = nickname;
 	const [messages, setMessages] = useState<string[]>([]);
 	const { data: savedMessages, error: messageError } = useSWR<MessageType[]>(
-		`http://localhost:3000/api/chat/${chatId}/messages`,
+		`${process.env.REACT_APP_API_URL}/api/chat/${chatId}/messages`,
 		fetcher,
 	);
 	const { userData, isError } = useUser();
@@ -33,7 +33,7 @@ const Chat = () => {
 	const userId = userData?.user._id;
 
 	const { data: dmList, error } = useSWR<DmListType[]>(
-		`http://localhost:3000/api/chat/${userId}`,
+		`${process.env.REACT_APP_API_URL}/api/chat/${userId}`,
 		fetcher,
 	);
 
@@ -43,7 +43,7 @@ const Chat = () => {
 	const onNewMessage = useCallback(
 		(newMessage: string) => {
 			mutate(
-				`http://localhost:3000/api/chat/${chatId}/messages`,
+				`${process.env.REACT_APP_API_URL}/api/chat/${chatId}/messages`,
 				(prevMessages: any) => [
 					...prevMessages,
 					{ content: newMessage, sender: { _id: userId } },
