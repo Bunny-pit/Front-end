@@ -1,7 +1,12 @@
 import { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import {
+	BrowserRouter as Router,
+	Routes,
+	Route,
+	useLocation,
+} from 'react-router-dom';
 import MainPage from './pages/Main/Main';
-import Mainhome from './pages/Mainhome/MainHome';
+import MainHome from './pages/Mainhome/MainHome';
 import UserMainPage from './pages/UserMain/UserMain';
 import Chatting from './pages/Chatting/Chatting';
 import Detail from './pages/UserMain/Detail/Detail';
@@ -10,7 +15,6 @@ import RegisterPage from './pages/UserAccount/Login/Register';
 import UserEditPage from './pages/UserAccount/UserEdit/UserEdit';
 import UserWithdrawalPage from './pages/UserAccount/UserWithdrawal/UserWithdrawal';
 import UploadPost from './pages/UserMain/UploadPost/UploadPost';
-
 
 function App() {
 	const [isLogin, setIsLogin] = useState(false);
@@ -44,7 +48,6 @@ function App() {
 	// 	};
 	// }, []);
 
-
 	return (
 		<>
 			<Router>
@@ -64,9 +67,10 @@ function App() {
 						</>
 					)} */}
 					<Route path='/post' element={<UserMainPage />} />
+					<Route path='/post/user/:email' element={<UserMainPage />} />
 					<Route path='/post/:postId' element={<Detail />} />
 					<Route path='/post/upload' element={<UploadPost />} />
-					<Route path='/mainhome' element={<Mainhome />} />
+					<Route path='/mainhome' element={<MainHome />} />
 					<Route path='/chatting/*' element={<Chatting />} />
 				</Routes>
 			</Router>

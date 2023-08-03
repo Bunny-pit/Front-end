@@ -5,7 +5,7 @@ import { useSocket } from '../../hooks/useSocket';
 
 interface ChatBoxProps {
 	chatId?: string;
-	userId: string;
+	userId?: string;
 	onNewMessage: (message: string) => void;
 }
 
@@ -13,11 +13,10 @@ const ChatBox = ({ chatId, userId, onNewMessage }: ChatBoxProps) => {
 	const [inputArea, setInputArea] = useState('');
 	const socket = useSocket(
 		// 'https://port-0-back-end-kvmh2mljxnw03c.sel4.cloudtype.app',
-		'http://localhost:3000',
+		`${process.env.REACT_APP_API_URL}`,
 	);
 
 	useEffect(() => {
-		console.log('socket has changed', socket);
 		if (socket) {
 			socket.off('newMessage');
 			socket.emit('joinRoom', { chatId, userId });
@@ -55,6 +54,13 @@ const ChatBox = ({ chatId, userId, onNewMessage }: ChatBoxProps) => {
 		}
 		setInputArea('');
 	};
+	const handleInputKeyPress = (
+		event: React.KeyboardEvent<HTMLTextAreaElement>,
+	) => {
+		if (event.key === 'Enter') {
+			handleSendButtonClick();
+		}
+	};
 	return (
 		<>
 			<Container>
@@ -62,6 +68,7 @@ const ChatBox = ({ chatId, userId, onNewMessage }: ChatBoxProps) => {
 					value={inputArea}
 					onChange={handleInputChange}
 					placeholder='메시지 보내기'
+					onKeyDown={handleInputKeyPress}
 				/>
 				<SendButton
 					src={sendBtn}

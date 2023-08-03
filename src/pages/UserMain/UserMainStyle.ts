@@ -123,7 +123,6 @@ export const Email = styled.a`
 // 여기부터 게시글!!
 export const PostContainer = styled.div`
 	text-align: center;
-	height: 70rem;
 `;
 export const PostTitle = styled.h3`
 	font-size: 2.4rem;
@@ -131,7 +130,6 @@ export const PostTitle = styled.h3`
 `;
 export const PostUl = styled.ul`
 	list-style: none;
-	height: 80%;
 	box-sizing: border-box;
 	padding: 0;
 	display: grid;
@@ -140,6 +138,9 @@ export const PostUl = styled.ul`
 	gap: 3rem;
 	place-items: center;
 	position: relative;
+`;
+export const PostUlEmpty = styled(PostUl)`
+	height: 70rem;
 `;
 export const PostLi = styled.li`
 	height: 22rem;
@@ -150,7 +151,11 @@ export const PostLi = styled.li`
 		height: auto;
 		img {
 			width: 100%;
+			height: auto;
 		}
+	}
+	@media only screen and (min-width: 1280px) {
+		height: 33rem;
 	}
 `;
 export const NothingWrap = styled.div`
