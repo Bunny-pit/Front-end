@@ -8,7 +8,7 @@ import useMainHomePost from '../../hooks/useMainHomePost';
 
 import { Title } from './MainHomeStyle';
 
-const MainHome = () => {
+const MainHomeSecret = () => {
 	const { userData, isError } = useUser();
 	const mainHomePost = useMainHomePost();
 
@@ -31,4 +31,4 @@ const MainHome = () => {
 	);
 };
 
-export default MainHome;
+export default MainHomeSecret;
