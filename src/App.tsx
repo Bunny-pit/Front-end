@@ -6,7 +6,7 @@ import {
 	useLocation,
 } from 'react-router-dom';
 import MainPage from './pages/Main/Main';
-import MainHomeSecret from './pages/Mainhome/MainHomeSecret';
+import MainHomeUnknown from './pages/Mainhome/MainHomeUnknown';
 import MainhomeFriends from './pages/Mainhome/MainHomeFriends';
 import UserMainPage from './pages/UserMain/UserMain';
 import Chatting from './pages/Chatting/Chatting';
@@ -66,7 +66,7 @@ function App() {
 					<Route path='/post/user/:email' element={<UserMainPage />} />
 					<Route path='/post/:postId' element={<Detail />} />
 					<Route path='/post/upload' element={<UploadPost />} />
-					<Route path='/mainhome/secret' element={<MainHomeSecret />} />
+					<Route path='/mainhome/unkown' element={<MainHomeUnknown />} />
 					<Route path='/mainhome/friends' element={<MainhomeFriends />} />
 					<Route path='/chatting/*' element={<Chatting />} />
 				</Routes>
