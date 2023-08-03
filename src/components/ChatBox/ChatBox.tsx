@@ -58,6 +58,7 @@ const ChatBox = ({ chatId, userId, onNewMessage }: ChatBoxProps) => {
 		event: React.KeyboardEvent<HTMLTextAreaElement>,
 	) => {
 		if (event.key === 'Enter') {
+			event.preventDefault();
 			handleSendButtonClick();
 		}
 	};
