@@ -133,8 +133,6 @@ export default function LoginPage() {
 					</BottomButton>
 				</ButtonWrap>
 			</FormWrap>
-
-
 		</Page>
 	);
 }
