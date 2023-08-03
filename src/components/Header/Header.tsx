@@ -19,10 +19,10 @@ const DefaultHeader = () => {
 				</Link>
 				<MenuUl>
 					<MenuLi>
-						<Link to='/mainhome'>익명의 버니들</Link>
+						<Link to='/mainhome/unknown'>익명의 버니들</Link>
 					</MenuLi>
 					<MenuLi>
-						<Link to='friends'>친구 버니들</Link>
+						<Link to='/mainhome/friends'>친구 버니들</Link>
 					</MenuLi>
 					<MenuLi>
 						<Link to='/chatting/*'>버니톡</Link>
