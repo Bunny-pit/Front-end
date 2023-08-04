@@ -8,7 +8,7 @@ import useMainHomePost from '../../hooks/useMainHomePost';
 
 import { Title } from './MainHomeStyle';
 
-const MainhomeFriends = () => {
+const MainHomeFriends = () => {
 	const { userData, isError } = useUser();
 	const mainHomePost = useMainHomePost();
 
@@ -32,4 +32,4 @@ const MainhomeFriends = () => {
 	);
 };
 
-export default MainhomeFriends;
+export default MainHomeFriends;

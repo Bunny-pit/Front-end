@@ -31,6 +31,9 @@ const Chat = () => {
 		console.log('유저 데이터를 불러오는 중...');
 	}
 	const userId = userData?._id;
+	const email = userData?.email;
+	const secretName = userData?.secretName;
+
 	const { data: dmList, error } = useSWR<DmListType[]>(
 		`${process.env.REACT_APP_API_URL}/api/chat/${userId}`,
 		fetcher,
@@ -40,16 +43,23 @@ const Chat = () => {
 	useAutoScroll(messageListRef, messages);
 
 	const onNewMessage = useCallback(
-		(newMessage: string) => {
+		(newMessage: MessageType) => {
+			newMessage.sender = {
+				_id: userId ?? '',
+				email: email ?? '',
+				secretName: secretName ?? '',
+			};
 			mutate(
 				`${process.env.REACT_APP_API_URL}/api/chat/${chatId}/messages`,
-				(prevMessages: any) => [
-					...prevMessages,
-					{ content: newMessage, sender: { _id: userId } },
-				],
+				(prevMessages: MessageType[] | undefined) => {
+					if (prevMessages) {
+						return [...prevMessages, newMessage];
+					}
+					return [newMessage];
+				},
 				false,
 			);
-			setMessages((prevMessages) => [...prevMessages, newMessage]);
+			setMessages((prevMessages) => [...prevMessages, newMessage.content]);
 		},
 		[userId, chatId],
 	);

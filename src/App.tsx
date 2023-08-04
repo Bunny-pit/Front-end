@@ -7,12 +7,14 @@ import {
 } from 'react-router-dom';
 import MainPage from './pages/Main/Main';
 import MainHomeUnknown from './pages/Mainhome/MainHomeUnknown';
-import MainhomeFriends from './pages/Mainhome/MainHomeFriends';
+import MainHomeFriends from './pages/Mainhome/MainHomeFriends';
 import UserMainPage from './pages/UserMain/UserMain';
 import Chatting from './pages/Chatting/Chatting';
 import Detail from './pages/UserMain/Detail/Detail';
 import LoginPage from './pages/UserAccount/Login/Login';
 import RegisterPage from './pages/UserAccount/Login/Register';
+import UserEditPage from './pages/UserAccount/UserEdit/UserEdit';
+import UserWithdrawalPage from './pages/UserAccount/UserWithdrawal/UserWithdrawal';
 import UploadPost from './pages/UserMain/UploadPost/UploadPost';
 
 function App() {
@@ -56,10 +58,13 @@ function App() {
 						<>
 							<Route path='/register' element={<RegisterPage />} />
 							<Route path='/login' element={<LoginPage />} />
+							<Route path='/user/edit' element={<UserEditPage />} />
+							<Route path='/user/withdrawal' element={<UserWithdrawalPage />} />
 						</>
 					)}
 					{/* {isLogin && ( // 로그인 했을 때만 렌더링
 						<>
+							<Route path='/useredit' element={<UserEditPage />} />
 						</>
 					)} */}
 					<Route path='/post' element={<UserMainPage />} />
@@ -67,7 +72,7 @@ function App() {
 					<Route path='/post/:postId' element={<Detail />} />
 					<Route path='/post/upload' element={<UploadPost />} />
 					<Route path='/mainhome/unkown' element={<MainHomeUnknown />} />
-					<Route path='/mainhome/friends' element={<MainhomeFriends />} />
+					<Route path='/mainhome/friends' element={<MainHomeFriends />} />
 					<Route path='/chatting/*' element={<Chatting />} />
 				</Routes>
 			</Router>
