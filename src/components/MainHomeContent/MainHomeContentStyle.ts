@@ -37,16 +37,16 @@ export const UserRandomImage = styled.img`
 	border-radius: 50%;
 `;
 
-export const UserSecretContainer = styled.div`
+export const UserContainer = styled.div`
 	display: flex;
 	align-items: center;
 `;
 
-export const UserSecretName = styled.h2`
+export const UserName = styled.h2`
 	font-size: 2.5rem;
 `;
 
-export const GoSecretChat = styled.img`
+export const GoChat = styled.img`
 	margin-left: auto;
 	margin-top: auto;
 	margin-bottom: 1.5%;
