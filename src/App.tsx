@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom';
 import MainPage from './pages/Main/Main';
 import MainHomeUnknown from './pages/Mainhome/MainHomeUnknown';
-import MainhomeFriends from './pages/Mainhome/MainHomeFriends';
+import MainHomeFriends from './pages/Mainhome/MainHomeFriends';
 import UserMainPage from './pages/UserMain/UserMain';
 import Chatting from './pages/Chatting/Chatting';
 import Detail from './pages/UserMain/Detail/Detail';
@@ -72,7 +72,7 @@ function App() {
 					<Route path='/post/:postId' element={<Detail />} />
 					<Route path='/post/upload' element={<UploadPost />} />
 					<Route path='/mainhome/unkown' element={<MainHomeUnknown />} />
-					<Route path='/mainhome/friends' element={<MainhomeFriends />} />
+					<Route path='/mainhome/friends' element={<MainHomeFriends />} />
 					<Route path='/chatting/*' element={<Chatting />} />
 				</Routes>
 			</Router>
