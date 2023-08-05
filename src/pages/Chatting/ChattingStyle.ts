@@ -5,12 +5,13 @@ export const WorkSpaceWrapper = styled.div`
 	flex: 1;
 `;
 
-export const Channels = styled.nav`
-	width: 40rem;
+export const Channels = styled.nav<{ isRoot: boolean }>`
+	max-width: 42rem;
 	display: inline-flex;
 	flex-direction: column;
 	background: rgba(252, 155, 249, 0.29);
 	color: ${({ theme }) => theme.colors.text};
+	min-height: ${({ isRoot }) => (isRoot ? '1200px' : 'auto')};
 	vertical-align: top;
 	& a {
 		padding-left: 36px;
