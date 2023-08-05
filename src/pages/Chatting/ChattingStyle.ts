@@ -7,7 +7,6 @@ export const WorkSpaceWrapper = styled.div`
 
 export const Channels = styled.nav`
 	width: 40rem;
-	min-height: 165rem;
 	display: inline-flex;
 	flex-direction: column;
 	background: rgba(252, 155, 249, 0.29);
