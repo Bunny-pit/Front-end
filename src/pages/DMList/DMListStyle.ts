@@ -10,24 +10,6 @@ export const TopContainer = styled.div`
 	}
 `;
 
-export const CollapseButton = styled.img.attrs<{ collapse: string }>(
-	(props) => ({
-		collapse: props.collapse ? 'true' : 'false',
-	}),
-)<{ collapse: string }>`
-	background: transparent;
-	border: none;
-	width: 2rem;
-	height: 2.6rem;
-	display: inline-flex;
-	justify-content: center;
-	align-items: center;
-	color: white;
-	margin-left: 2rem;
-	margin-right: 2rem;
-	cursor: pointer;
-`;
-
 export const MemberList = styled.div`
 	margin-top: 5rem;
 	font-size: 2rem;

@@ -1,14 +1,12 @@
 import {
-	CollapseButton,
 	MemberList,
 	Nickname,
 	TopContainer,
 	Profile,
 	Exiticon,
 } from './DMListStyle';
-import { useState, useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import toggleBtn from '../../assets/icons/downarrow.png';
 import gravatar from 'gravatar';
 import { useUser, fetcher } from '../../utils/swrFetcher';
 import { del } from '../../api/api';
@@ -17,6 +15,7 @@ import deleteicon from '../../assets/icons/DeleteIcon.png';
 import alertList from '../../utils/swal';
 import Swal from 'sweetalert2';
 import useSWR, { mutate } from 'swr';
+import SearchBar from '../../components/SearchBar/SearchBar';
 
 const DMList = () => {
 	const { userData, isError } = useUser();
@@ -28,8 +27,6 @@ const DMList = () => {
 	}
 
 	const userId = userData?._id;
-
-	const [channelCollapse, setChannelCollapse] = useState(false);
 	const { data: dmList, error } = useSWR<DmListType[]>(
 		`${process.env.REACT_APP_API_URL}/api/chat/${userId}`,
 		fetcher,
@@ -55,50 +52,39 @@ const DMList = () => {
 		}
 	};
 
-	const toggleChannelCollapse = useCallback(() => {
-		setChannelCollapse((prev) => !prev);
-	}, []);
-
+	const handleSearch = (query: string) => {
+		console.log(query);
+	};
 	return (
 		<>
 			<TopContainer>
-				<CollapseButton
-					collapse={channelCollapse ? 'true' : 'false'}
-					onClick={toggleChannelCollapse}
-					src={toggleBtn}
-					alt='toggle-button'></CollapseButton>
-				<span>bunnies</span>
+				<SearchBar onSearch={handleSearch}></SearchBar>
 			</TopContainer>
 			<MemberList>
-				{!channelCollapse &&
-					dmList?.map((chatRoom: DmListType) => {
-						const otherUser = chatRoom.users.find(
-							(user) => user._id !== userId,
-						);
-						if (otherUser) {
-							const otherUserEmail = otherUser.email;
-							const otherUserName = otherUser.secretName;
-							const profileSrc = otherUserEmail
-								? gravatar.url(otherUserEmail, {
-										s: '24px',
-										d: 'identicon',
-								  })
-								: undefined;
+				{dmList?.map((chatRoom: DmListType) => {
+					const otherUser = chatRoom.users.find((user) => user._id !== userId);
+					if (otherUser) {
+						const otherUserEmail = otherUser.email;
+						const otherUserName = otherUser.secretName;
+						const profileSrc = otherUserEmail
+							? gravatar.url(otherUserEmail, {
+									s: '24px',
+									d: 'identicon',
+							  })
+							: undefined;
 
-							return (
-								<NavLink key={chatRoom._id} to={`/chatting/dm/${chatRoom._id}`}>
-									{profileSrc && (
-										<Profile src={profileSrc} alt={otherUserName} />
-									)}
-									<Nickname>{otherUserName}</Nickname>
-									<Exiticon
-										src={deleteicon}
-										alt='x-icon'
-										onClick={() => exitChattingRoom(chatRoom._id)}></Exiticon>
-								</NavLink>
-							);
-						}
-					})}
+						return (
+							<NavLink key={chatRoom._id} to={`/chatting/dm/${chatRoom._id}`}>
+								{profileSrc && <Profile src={profileSrc} alt={otherUserName} />}
+								<Nickname>{otherUserName}</Nickname>
+								<Exiticon
+									src={deleteicon}
+									alt='x-icon'
+									onClick={() => exitChattingRoom(chatRoom._id)}></Exiticon>
+							</NavLink>
+						);
+					}
+				})}
 			</MemberList>
 		</>
 	);
