@@ -1,12 +1,9 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import MainLogo from '../../../assets/icons/MainLogo.png';
 import { useNavigate } from 'react-router-dom';
 import { emailValidation, passwordValidation } from '../../../utils/registerValidation';
 import { post } from '../../../api/api';
 import { setToken } from '../../../api/token';
-import { UserDataType } from '../../../types/dataType';
-import { useUser } from '../../../utils/swrFetcher';
-
 import {
 	Page,
 	TitleAndLogoWrap,
@@ -19,11 +16,9 @@ import {
 	ButtonWrap,
 	BottomButton,
 } from './LoginStyle';
-
 import { AxiosResponse } from 'axios'
 import { onChangeInputSetter } from '../../../utils/inputStateSetter';
-
-import { API_USER_LOGIN, API_USER_ACCESS_TOKEN } from '../../../utils/constant';
+import { API_USER_LOGIN } from '../../../utils/constant';
 
 interface LoginFormState {
 	email: string;
@@ -45,7 +40,6 @@ export default function LoginPage() {
 	const [email, setEmail] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
 	const [loginForm, setLoginForm] = useState<LoginFormState>(initialLoginFormState);
-	const { userData, isError } = useUser()
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -61,7 +55,6 @@ export default function LoginPage() {
 		const isEmailValid = emailValidation(email);
 		const isPasswordValid = passwordValidation(password);
 		const isFormValid = isEmailValid && isPasswordValid;
-		console.log(isEmailValid, isPasswordValid)
 		if (isFormValid) {
 			try {
 				setLoginForm({
@@ -71,7 +64,6 @@ export default function LoginPage() {
 					isPasswordValid,
 					isFormValid,
 				});
-				console.log('loginForm', loginForm)
 				const response: AxiosResponse<{ accessToken: string }> = await post(
 					API_USER_LOGIN,
 					{
@@ -82,8 +74,7 @@ export default function LoginPage() {
 				);
 				const accessToken: string = response.data.accessToken;
 				setToken(accessToken);
-				// navigate("/");
-				console.log(userData)
+				navigate("/");
 			} catch (error : any) {
 				console.log('로그인 post 오류', error.response.data.error)
 			}
