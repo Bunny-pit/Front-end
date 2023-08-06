@@ -13,8 +13,8 @@ import {
 import { onChangeInputSetter } from '../../../utils/inputStateSetter';
 import { useNavigate } from 'react-router-dom';
 import { removeToken } from '../../../api/token';
-import { API_USER_DELETE } from '../../../utils/constant';
-import { del } from '../../../api/api';
+import { API_USER_DELETE} from '../../../utils/constant';
+import {  del } from '../../../api/api';
 
 export default function UserWithdrawalPage() {
     const [email, setEmail] = useState<string>('')
@@ -23,32 +23,34 @@ export default function UserWithdrawalPage() {
     const [formCheck, setFormCheck] = useState<boolean>(false)
     const navigate = useNavigate();
 
-
-
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         if (password && (password === passwordCheck)) {
             setFormCheck(true);
         }
-        const userData = {
-            email,
-            password,
-            passwordCheck
+        try {
+            const userData = {
+                email,
+                password,
+                passwordCheck
+            }
+            await del(API_USER_DELETE, {
+                userData,
+                headers: { 'Content-Type': 'application/json' },
+            })
+            removeToken();
+            alert('성공적으로 탈퇴 되었습니다.')
+            navigate('/');
+        } catch (error) {
+
         }
-        await del(API_USER_DELETE, {
-            userData,
-            headers: { 'Content-Type': 'application/json' },
-        })
-        removeToken();
-        alert('성공적으로 탈퇴 되었습니다.')
-        navigate('/');
     }
 
     return (
         <Page>
             <TopButtonWrap>
-                <TopButton onClick={()=>{navigate('/user/edit')}}>
+                <TopButton onClick={() => { navigate('/user/edit') }}>
                     정보 수정
                 </TopButton>
                 <TopButton>
@@ -85,7 +87,7 @@ export default function UserWithdrawalPage() {
                     />
                 </InputWrap>
                 <ButtonWrap>
-                    <BottomButton onClick={()=>{navigate('/')}}>돌아가기</BottomButton>
+                    <BottomButton onClick={() => { navigate('/') }}>돌아가기</BottomButton>
                     <BottomButton type='submit' style={formCheck ? { backgroundColor: '#E384FF' } : { backgroundColor: '#FFA3FD', opacity: 0.65 }}>계정탈퇴</BottomButton>
                 </ButtonWrap>
             </FormWrap>

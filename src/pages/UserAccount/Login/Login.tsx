@@ -74,9 +74,13 @@ export default function LoginPage() {
 				);
 				const accessToken: string = response.data.accessToken;
 				setToken(accessToken);
+				alert("환영해요 버니!")
 				navigate("/");
-			} catch (error : any) {
-				console.log('로그인 post 오류', error.response.data.error)
+			} catch (error: any) {
+				if (error.response.data.fullError) {
+					alert(error.response.data.fullError)
+				}
+				console.log('로그인 post 오류', error.response.data.fullError)
 			}
 
 		} else {
