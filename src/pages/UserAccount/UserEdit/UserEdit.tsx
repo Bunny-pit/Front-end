@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
     Page,
     TopButtonWrap,
@@ -12,9 +12,10 @@ import {
 } from './UserEditStyle';
 import { onChangeInputSetter } from '../../../utils/inputStateSetter';
 import { useNavigate } from 'react-router-dom';
-import { patch } from '../../../api/api';
-import { API_USER_EDIT } from '../../../utils/constant';
+import { post, patch } from '../../../api/api';
+import { API_USER_EDIT, API_USER_LOGOUT } from '../../../utils/constant';
 import { useUser } from '../../../utils/swrFetcher';
+import { removeToken } from '../../../api/token';
 
 export default function UserEditPage() {
     const [email, setEmail] = useState<string>('')
@@ -25,7 +26,20 @@ export default function UserEditPage() {
     const { userData, isError } = useUser();
     const navigate = useNavigate();
 
+    const formChecker = useMemo(()=>{
 
+    }, [formCheck])
+
+
+    const handleLogout = async () => {
+        try {
+            await post(API_USER_LOGOUT)
+            removeToken();
+            alert('성공적으로 로그아웃 되었습니다.')
+        } catch (error) {
+            console.error(error)
+        }
+    }
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
@@ -58,11 +72,11 @@ export default function UserEditPage() {
                 <TopButton>
                     정보 수정
                 </TopButton>
-                <TopButton onClick={()=>{navigate('/user/withdrawal')}}>
+                <TopButton onClick={() => { navigate('/user/withdrawal') }}>
                     회원 탈퇴
                 </TopButton>
             </TopButtonWrap>
-            <FormWrap onSubmit={handleSubmit}>
+            <FormWrap onSubmit={(e: React.FormEvent<HTMLFormElement>) => { handleSubmit(e) }}>
                 <InputTitle>이메일</InputTitle>
                 <InputWrap>
                     <InputBar
@@ -101,7 +115,7 @@ export default function UserEditPage() {
                 </InputWrap>
 
                 <ButtonWrap>
-                    <BottomButton>로그아웃</BottomButton>
+                    <BottomButton onClick={() => { handleLogout() }}>로그아웃</BottomButton>
                     <BottomButton type='submit' style={formCheck ? { backgroundColor: '#E384FF' } : { backgroundColor: '#FFA3FD', opacity: 0.65 }}>수정완료</BottomButton>
                 </ButtonWrap>
             </FormWrap>

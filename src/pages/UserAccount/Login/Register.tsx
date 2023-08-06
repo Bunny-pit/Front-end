@@ -53,10 +53,10 @@ export default function RegisterPage() {
                     },
                     { headers: { 'Content-Type ': 'application/json' } }
                 );
-
+                alert("회원가입에 성공했습니다. 메인 페이지로 이동합니다!");
                 navigate('/login');
             }
-        } catch (error : any) {
+        } catch (error: any) {
             console.log('회원가입 post 오류', error.response.data.error)
             // console.error(error.response.data.error)
         }
@@ -72,7 +72,7 @@ export default function RegisterPage() {
                     회원가입
                 </TitleWrap>
             </TitleAndLogoWrap>
-            <FormWrap onSubmit={handleSubmit}>
+            <FormWrap onSubmit={(e: React.FormEvent<HTMLFormElement>) => { handleSubmit(e) }}>
                 <InputTitle>이름</InputTitle>
                 <InputWrap>
                     <InputBar
