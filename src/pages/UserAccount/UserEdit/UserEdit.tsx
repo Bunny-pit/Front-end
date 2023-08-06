@@ -1,11 +1,8 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
     Page,
     TopButtonWrap,
     TopButton,
-    // TitleAndLogoWrap,
-    // TitleWrap,
-    // LogoWrap,
     FormWrap,
     InputTitle,
     InputWrap,
@@ -14,41 +11,79 @@ import {
     BottomButton,
 } from './UserEditStyle';
 import { onChangeInputSetter } from '../../../utils/inputStateSetter';
+import { useNavigate } from 'react-router-dom';
+import { post, patch } from '../../../api/api';
+import { API_USER_EDIT, API_USER_LOGOUT } from '../../../utils/constant';
+import { useUser } from '../../../utils/swrFetcher';
+import { removeToken } from '../../../api/token';
 
 export default function UserEditPage() {
-    const [userName, setUserName] = useState<string>('')
+    const [email, setEmail] = useState<string>('')
     const [prevPassword, setPrevPassword] = useState<string>('')
     const [newPassword, setNewPassword] = useState<string>('')
     const [newPasswordCheck, setNewPassWordCheck] = useState<string>('')
     const [formCheck, setFormCheck] = useState<boolean>(false)
+    const { userData, isError } = useUser();
+    const navigate = useNavigate();
 
-    if (prevPassword && (newPassword === newPasswordCheck)) {
-        setFormCheck(true);
+    const formChecker = useMemo(()=>{
+
+    }, [formCheck])
+
+
+    const handleLogout = async () => {
+        try {
+            await post(API_USER_LOGOUT)
+            removeToken();
+            alert('성공적으로 로그아웃 되었습니다.')
+        } catch (error) {
+            console.error(error)
+        }
     }
-
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
+        if (prevPassword && (newPassword === newPasswordCheck)) {
+            setFormCheck(true);
+        } else {
+            setFormCheck(false);
+        }
+
+        if (userData?.email === email) {
+            try {
+                await patch(API_USER_EDIT, {
+                    email,
+                    prevPassword,
+                    newPassword,
+                    newPasswordCheck
+                },
+                    { headers: { 'Content-Type': 'application/json' } }
+                );
+            } catch (error: any) {
+                console.error(error)
+                console.log('유저 데이터 변경 submit 오류')
+            }
+        }
     }
 
     return (
-            <Page>
+        <Page>
             <TopButtonWrap>
                 <TopButton>
                     정보 수정
                 </TopButton>
-                <TopButton>
+                <TopButton onClick={() => { navigate('/user/withdrawal') }}>
                     회원 탈퇴
                 </TopButton>
             </TopButtonWrap>
-            <FormWrap onSubmit={handleSubmit}>
-                <InputTitle>이름</InputTitle>
+            <FormWrap onSubmit={(e: React.FormEvent<HTMLFormElement>) => { handleSubmit(e) }}>
+                <InputTitle>이메일</InputTitle>
                 <InputWrap>
                     <InputBar
                         type='text'
-                        placeholder='엄준식'
-                        value={userName}
-                        onChange={onChangeInputSetter(setUserName)}
+                        placeholder='jennaryu1234@gmail.com'
+                        value={email}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChangeInputSetter(setEmail)(e)}
                     />
                 </InputWrap>
                 <InputTitle>현재 비밀번호</InputTitle>
@@ -57,7 +92,7 @@ export default function UserEditPage() {
                         type='password'
                         placeholder='********'
                         value={prevPassword}
-                        onChange={onChangeInputSetter(setPrevPassword)}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChangeInputSetter(setPrevPassword)(e)}
                     />
                 </InputWrap>
                 <InputTitle>새 비밀번호</InputTitle>
@@ -66,7 +101,7 @@ export default function UserEditPage() {
                         type='password'
                         placeholder='********'
                         value={newPassword}
-                        onChange={onChangeInputSetter(setNewPassword)}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChangeInputSetter(setNewPassword)(e)}
                     />
                 </InputWrap>
                 <InputTitle>새 비밀번호 확인</InputTitle>
@@ -75,15 +110,16 @@ export default function UserEditPage() {
                         type='password'
                         placeholder='********'
                         value={newPasswordCheck}
-                        onChange={onChangeInputSetter(setNewPassWordCheck)}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChangeInputSetter(setNewPassWordCheck)(e)}
                     />
                 </InputWrap>
+
                 <ButtonWrap>
-                    <BottomButton>로그아웃</BottomButton>
+                    <BottomButton onClick={() => { handleLogout() }}>로그아웃</BottomButton>
                     <BottomButton type='submit' style={formCheck ? { backgroundColor: '#E384FF' } : { backgroundColor: '#FFA3FD', opacity: 0.65 }}>수정완료</BottomButton>
                 </ButtonWrap>
             </FormWrap>
         </Page >
-        
+
     )
 }

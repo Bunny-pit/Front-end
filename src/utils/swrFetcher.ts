@@ -34,7 +34,7 @@ export function useUser(): {
 		console.error('Error fetching user data :', error.message);
 	}
 	if (data) {
-		console.log('data.userData 가져옴', data.userData);
+		// console.log('data.userData 가져옴', data.userData);
 		// const userData = data.userData;
 		return { userData: data.userData, isError: false };
 	}

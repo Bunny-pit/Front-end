@@ -71,12 +71,12 @@ api.interceptors.response.use(
 
     (response) => {
         //응답에 대한 로직
-        console.log('로그인 요청 서버 응답 :', response)
+        console.log('api 요청 응답 :', response)
         return response
     },
     error => {
         //응답 에러 발생 시 수행 로직
-        console.log('로그인 서버 응답 오류 발생', error) //디버깅
+        console.log('api 요청 오류 발생', error) //디버깅
         return Promise.reject(error);
     }
 
