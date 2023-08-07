@@ -12,7 +12,6 @@ const Bubble = styled.div<{ width: string; currentUser: boolean }>`
 	border-radius: 19.34px;
 	border: ${(props) => (props.currentUser ? 'none' : '1px solid #cdc0fc')};
 	display: inline-flex;
-	flex-direcion: column;
 	width: ${(props) => props.width}rem;
 	max-width: 40%;
 	white-space: pre-wrap;
@@ -25,7 +24,7 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({
 	message,
 	currentUser,
 }) => {
-	const adjustedWidth = message.length * 2;
+	const adjustedWidth = message.length * 1.8;
 	return (
 		<Bubble width={adjustedWidth.toString()} currentUser={currentUser}>
 			{message}

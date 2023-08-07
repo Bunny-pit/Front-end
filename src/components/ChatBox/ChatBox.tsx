@@ -1,12 +1,13 @@
 import sendBtn from '../../assets/icons/Sendicon.png';
 import { Container, InputBar, SendButton } from './ChatBoxStyle';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useSocket } from '../../hooks/useSocket';
+import { MessageType } from '../../types/chatType';
 
 interface ChatBoxProps {
 	chatId?: string;
 	userId?: string;
-	onNewMessage: (message: string) => void;
+	onNewMessage: (message: MessageType) => void;
 }
 
 const ChatBox = ({ chatId, userId, onNewMessage }: ChatBoxProps) => {
@@ -21,7 +22,7 @@ const ChatBox = ({ chatId, userId, onNewMessage }: ChatBoxProps) => {
 			socket.off('newMessage');
 			socket.emit('joinRoom', { chatId, userId });
 			socket.on('newMessage', (message) => {
-				onNewMessage(message.content);
+				onNewMessage(message);
 			});
 		}
 		return () => {
@@ -54,10 +55,10 @@ const ChatBox = ({ chatId, userId, onNewMessage }: ChatBoxProps) => {
 		}
 		setInputArea('');
 	};
-	const handleInputKeyPress = (
-		event: React.KeyboardEvent<HTMLTextAreaElement>,
-	) => {
+
+	const handleKeyUp = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
 		if (event.key === 'Enter') {
+			event.preventDefault();
 			handleSendButtonClick();
 		}
 	};
@@ -67,14 +68,10 @@ const ChatBox = ({ chatId, userId, onNewMessage }: ChatBoxProps) => {
 				<InputBar
 					value={inputArea}
 					onChange={handleInputChange}
+					onKeyUp={handleKeyUp}
 					placeholder='메시지 보내기'
-					onKeyDown={handleInputKeyPress}
 				/>
-				<SendButton
-					src={sendBtn}
-					alt='send-button'
-					onClick={handleSendButtonClick}
-				/>
+				<SendButton src={sendBtn} alt='send-button' />
 			</Container>
 		</>
 	);
