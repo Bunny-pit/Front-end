@@ -34,7 +34,9 @@ export default function UserEditPage() {
     const handleLogout = async () => {
         try {
             await post(API_USER_LOGOUT)
-            removeToken();
+            removeToken('accessToken');
+            
+            removeToken('refreshToken');
             alert('성공적으로 로그아웃 되었습니다.')
         } catch (error) {
             console.error(error)

@@ -5,6 +5,7 @@ export const API_USER_LOGOUT: string = '/api/user/logout';
 export const API_USER_EDIT: string = '/api/user/edit';
 export const API_USER_DELETE: string = '/api/user/delete';
 export const API_USER_ACCESS_TOKEN: string = '/api/user/accessToken';
+export const API_USER_REFRESH_TOKEN : string = '/api/user/refreshToken'
 
 //mainhome api url
 export const API_MAINHOME: string = '/api/mainhome';
