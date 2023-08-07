@@ -161,12 +161,6 @@ const Chat = () => {
 
 	const onNewMessage = useCallback(
 		(newMessage: MessageType) => {
-			newMessage.sender = {
-				_id: userId ?? '',
-				email: email ?? '',
-				secretName: secretName ?? '',
-			};
-			newMessage.sender._id = userId ?? '';
 			mutate(
 				`${process.env.REACT_APP_API_URL}/api/chat/${chatId}/messages`,
 				(prevMessages: MessageType[] | undefined) => {
@@ -178,8 +172,9 @@ const Chat = () => {
 				false,
 			);
 			setMessages((prevMessages) => [...prevMessages, newMessage]);
+			console.log('이거', messages);
 		},
-		[userId, chatId],
+		[chatId],
 	);
 
 	useEffect(() => {
