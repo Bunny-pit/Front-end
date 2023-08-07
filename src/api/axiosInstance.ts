@@ -6,7 +6,7 @@ axios.defaults.timeout = 2500;
 
 export const swrApi = axios.create({
     headers: {
-        Authorization: `Bearer ${getToken()}`,
+        Authorization: `Bearer ${getToken('accessToken')}`,
     },
     withCredentials: true,
 });
@@ -53,7 +53,7 @@ export const api = axios.create({
 api.interceptors.request.use(
     (config) => {
         //요청을 보내기 전에 수행할 로직
-        const token = getToken();
+        const token = getToken('accessToken');
         if (token) {
             console.log('api 요청 인터셉터 - 엑세스 토큰 획득 완료');
         }

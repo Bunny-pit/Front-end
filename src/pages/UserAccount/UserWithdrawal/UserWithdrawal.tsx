@@ -39,7 +39,8 @@ export default function UserWithdrawalPage() {
                 userData,
                 headers: { 'Content-Type': 'application/json' },
             })
-            removeToken();
+            removeToken('accessToken');
+            removeToken('refreshToken');
             alert('성공적으로 탈퇴 되었습니다.')
             navigate('/');
         } catch (error) {
