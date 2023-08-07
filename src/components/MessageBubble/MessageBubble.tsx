@@ -24,7 +24,7 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({
 	message,
 	currentUser,
 }) => {
-	const adjustedWidth = message.length * 2;
+	const adjustedWidth = message.length * 1.8;
 	return (
 		<Bubble width={adjustedWidth.toString()} currentUser={currentUser}>
 			{message}

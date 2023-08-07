@@ -172,7 +172,6 @@ const Chat = () => {
 				false,
 			);
 			setMessages((prevMessages) => [...prevMessages, newMessage]);
-			console.log('이거', messages);
 		},
 		[chatId],
 	);
