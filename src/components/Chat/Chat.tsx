@@ -166,6 +166,7 @@ const Chat = () => {
 				email: email ?? '',
 				secretName: secretName ?? '',
 			};
+			newMessage.sender._id = userId ?? '';
 			mutate(
 				`${process.env.REACT_APP_API_URL}/api/chat/${chatId}/messages`,
 				(prevMessages: MessageType[] | undefined) => {
