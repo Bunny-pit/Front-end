@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { checkTokenExpirationAndRefresh } from './utils/checkTokenExpirationAndRefresh';
 import MainPage from './pages/Main/Main';
-import MainHome from './pages/Mainhome/MainHome';
+import MainHomeUnknown from './pages/Mainhome/MainHomeUnknown';
+import MainHomeFriends from './pages/Mainhome/MainHomeFriends';
 import UserMainPage from './pages/UserMain/UserMain';
 import Chatting from './pages/Chatting/Chatting';
 import Detail from './pages/UserMain/Detail/Detail';
@@ -11,6 +12,7 @@ import RegisterPage from './pages/UserAccount/Login/Register';
 import UserEditPage from './pages/UserAccount/UserEdit/UserEdit';
 import UserWithdrawalPage from './pages/UserAccount/UserWithdrawal/UserWithdrawal';
 import UploadPost from './pages/UserMain/UploadPost/UploadPost';
+import FriendChatting from './pages/Chatting/FriendChatting';
 
 function App() {
 	const [isLogin, setIsLogin] = useState(false);
@@ -44,8 +46,10 @@ function App() {
 				<Route path='/post/user/:email' element={<UserMainPage />} />
 				<Route path='/post/:postId' element={<Detail />} />
 				<Route path='/post/upload' element={<UploadPost />} />
-				<Route path='/mainhome' element={<MainHome />} />
+				<Route path='/mainhome/unknown' element={<MainHomeUnknown />} />
+				<Route path='/mainhome/friends' element={<MainHomeFriends />} />
 				<Route path='/chatting/*' element={<Chatting />} />
+				<Route path='/friendchatting/*' element={<FriendChatting />} />
 			</Routes>
 		</>
 	);

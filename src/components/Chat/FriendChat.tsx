@@ -14,12 +14,12 @@ import { MessageType } from '../../types/chatType';
 import useSWR, { mutate } from 'swr';
 import { DmListType } from '../../types/chatType';
 
-const Chat = () => {
+const FriendChat = () => {
 	const { nickname } = useParams();
 	const chatId = nickname;
 	const [messages, setMessages] = useState<MessageType[]>([]);
 	const { data: savedMessages, error: messageError } = useSWR<MessageType[]>(
-		`${process.env.REACT_APP_API_URL}/api/chat/${chatId}/messages`,
+		`${process.env.REACT_APP_API_URL}/api/chat/${chatId}/friend/messages`,
 		fetcher,
 	);
 	const { userData, isError } = useUser();
@@ -33,7 +33,7 @@ const Chat = () => {
 	const userId = userData?._id;
 
 	const { data: dmList, error } = useSWR<DmListType[]>(
-		`${process.env.REACT_APP_API_URL}/api/chat/${userId}`,
+		`${process.env.REACT_APP_API_URL}/api/chat/friend/${userId}`,
 		fetcher,
 	);
 
@@ -43,7 +43,7 @@ const Chat = () => {
 	const onNewMessage = useCallback(
 		(newMessage: MessageType) => {
 			mutate(
-				`${process.env.REACT_APP_API_URL}/api/chat/${chatId}/messages`,
+				`${process.env.REACT_APP_API_URL}/api/chat/${chatId}/friend/messages`,
 				(prevMessages: MessageType[] | undefined) => {
 					if (prevMessages) {
 						return [...prevMessages, newMessage];
@@ -81,7 +81,7 @@ const Chat = () => {
 		<>
 			<Container>
 				{selectedChat !== null ? (
-					<Content>{`나와 ${chattingWithUser?.secretName}님의 채팅방입니다.`}</Content>
+					<Content>{`나와 ${chattingWithUser?.userName}님의 채팅방입니다.`}</Content>
 				) : (
 					<Content>채팅방이 존재하지 않습니다.</Content>
 				)}
@@ -106,4 +106,4 @@ const Chat = () => {
 	);
 };
 
-export default Chat;
+export default FriendChat;
