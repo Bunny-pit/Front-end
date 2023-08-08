@@ -22,7 +22,7 @@ const AdminHeader = () => {
 				<MenuUl>
 					<MenuLi>
 						<Link to='/mainhome/unknown'>
-							<Icon src={AdminHome} alt='나가기' />
+							<Icon src={AdminHome} alt='홈' />
 						</Link>
 					</MenuLi>
 					<MenuLi>
