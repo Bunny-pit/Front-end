@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 
-import useMainHomePost from '../../hooks/useMainHomePost';
+import useMainHomePost from '../../hooks/useMainHomeUnknownPost';
 import MainHomeContentImage from './MainHomeContentDetail/MainHomeContentImage';
 import MainHomeContentInnerContent from './MainHomeContentDetail/MainHomeContentInnerContent';
 
@@ -12,12 +12,12 @@ import { Container, ContentBox } from './MainHomeContentStyle';
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
-interface Props {
+interface UnKnownProps {
 	userData: any;
 	mainHomePost: ReturnType<typeof useMainHomePost>;
 }
 
-const MainHomeUnKnownContent = ({ userData, mainHomePost }: Props) => {
+const MainHomeUnKnownContent = ({ userData, mainHomePost }: UnKnownProps) => {
 	const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setUpdatedContent(e.target.value);
 	};

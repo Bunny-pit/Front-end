@@ -4,13 +4,13 @@ import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import MainHomeFriendsContent from '../../components/MainHomeContent/MainHomeFriendsContent';
 import MainHomeSendBox from '../../components/MainHomeSendBox/MainHomeSendBox';
-import useMainHomePost from '../../hooks/useMainHomePost';
+import useMainHomeFriendsPost from '../../hooks/useMainHomeFriendsPost';
 
 import { Title } from './MainHomeStyle';
 
 const MainHomeFriends = () => {
 	const { userData, isError } = useUser();
-	const mainHomePost = useMainHomePost();
+	const mainHomePost = useMainHomeFriendsPost();
 
 	if (isError) {
 		console.log('유저 데이터를 불러오는데 실패했습니다.');

@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { get, post, patch, del } from '../api/api';
-import { API_MAINHOME } from '../utils/constant';
+import { API_MAINHOME_FRIENDS } from '../utils/constant';
 import { API_CHATTING_START } from '../utils/constant';
 import { UserDataType, Post } from '../types/dataType';
 import alertList from '../utils/swal';
@@ -37,7 +37,9 @@ const useMainHomePost = () => {
 
 	async function fetchPosts() {
 		try {
-			const res = await get<Post[]>(`${API_MAINHOME}?page=${page}&limit=10`);
+			const res = await get<Post[]>(
+				`${API_MAINHOME_FRIENDS}?page=${page}&limit=10`,
+			);
 			const updatedPosts = [
 				...posts,
 				...res.data.map((post: Post) => ({
@@ -69,7 +71,7 @@ const useMainHomePost = () => {
 				return;
 			}
 			await patch<UserDataType>(
-				`${API_MAINHOME}/${postId}`,
+				`${API_MAINHOME_FRIENDS}/${postId}`,
 				{
 					content: updatedContent,
 				},
@@ -97,7 +99,7 @@ const useMainHomePost = () => {
 		);
 		if (result.isConfirmed) {
 			try {
-				await del<UserDataType>(`${API_MAINHOME}/${postId}`, {
+				await del<UserDataType>(`${API_MAINHOME_FRIENDS}/${postId}`, {
 					withCredentials: true,
 				});
 				setPosts(posts.filter((post) => post._id !== postId));
@@ -124,7 +126,7 @@ const useMainHomePost = () => {
 		}
 		try {
 			const response = await post<Post>(
-				API_MAINHOME,
+				API_MAINHOME_FRIENDS,
 				{
 					content: newPostContent,
 				},
