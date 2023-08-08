@@ -60,8 +60,14 @@ const useMainHomePost = () => {
 			if (updatedContent.trim().length < 1) {
 				Swal.fire(alertList.errorMessage('최소 1글자 이상 작성해주세요.'));
 				return;
+			} else if (updatedContent.trim().length > 100) {
+				Swal.fire(
+					alertList.errorMessage(
+						'게시글은 최대 100글자 미만으로 작성해주세요.',
+					),
+				);
+				return;
 			}
-
 			await patch<UserDataType>(
 				`${API_MAINHOME}/${postId}`,
 				{
@@ -109,6 +115,11 @@ const useMainHomePost = () => {
 				alertList.errorMessage('게시글 작성을 위해서는 로그인이 필요합니다.'),
 			);
 			setNewPostContent('');
+			return;
+		} else if (newPostContent.length > 100) {
+			Swal.fire(
+				alertList.errorMessage('게시글은 최대 100글자 미만으로 작성해주세요.'),
+			);
 			return;
 		}
 		try {

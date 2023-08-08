@@ -3,6 +3,7 @@ import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 
+import useMainHomePost from '../../hooks/useMainHomePost';
 import message from '../../assets/icons/message.png';
 
 import {
@@ -10,9 +11,9 @@ import {
 	ContentBox,
 	ImageWrap,
 	UserRandomImage,
-	UserSecretContainer,
-	UserSecretName,
-	GoSecretChat,
+	UserContainer,
+	UserName,
+	GoChat,
 	InnerContent,
 	ContentContainer,
 	Content,
@@ -22,7 +23,6 @@ import {
 	Edit,
 	Delete,
 } from './MainHomeContentStyle';
-import useMainHomePost from '../../hooks/useMainHomePost';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -62,10 +62,10 @@ const MainHomeContent = ({ userData, mainHomePost }: Props) => {
 							<UserRandomImage src={avatarUrl} alt='User Random Image' />
 						</ImageWrap>
 						<InnerContent>
-							<UserSecretContainer>
-								<UserSecretName>{post.name}</UserSecretName>
+							<UserContainer>
+								<UserName>{post.name}</UserName>
 								{userData && userData?._id !== post.userId && (
-									<GoSecretChat
+									<GoChat
 										src={message}
 										alt='message Icon'
 										onClick={() =>
@@ -73,7 +73,7 @@ const MainHomeContent = ({ userData, mainHomePost }: Props) => {
 										}
 									/>
 								)}
-							</UserSecretContainer>
+							</UserContainer>
 							<ContentContainer>
 								{editingPostId === post._id ? (
 									<EditContentArea

@@ -9,13 +9,16 @@ import {
 import DMList from '../DMList/DMList';
 import { Routes, Route } from 'react-router-dom';
 import Chat from '../../components/Chat/Chat';
+import { useLocation } from 'react-router-dom';
 
 const Chatting = () => {
+	const location = useLocation();
+
 	return (
 		<>
 			<Header />
 			<WorkSpaceWrapper>
-				<Channels>
+				<Channels isRoot={location.pathname === '/chatting'}>
 					<WorkspaceName>다이렉트 메시지</WorkspaceName>
 					<DMList></DMList>
 				</Channels>

@@ -8,7 +8,7 @@ import useMainHomePost from '../../hooks/useMainHomePost';
 
 import { Title } from './MainHomeStyle';
 
-const MainHome = () => {
+const MainHomeUnknown = () => {
 	const { userData, isError } = useUser();
 	const mainHomePost = useMainHomePost();
 
@@ -26,9 +26,10 @@ const MainHome = () => {
 			<MainHomeContent userData={userData} mainHomePost={mainHomePost} />
 
 			<MainHomeSendBox mainHomePost={mainHomePost} />
+
 			<Footer />
 		</>
 	);
 };
 
-export default MainHome;
+export default MainHomeUnknown;
