@@ -16,6 +16,8 @@ import { post, patch } from '../../../api/api';
 import { API_USER_EDIT, API_USER_LOGOUT } from '../../../utils/constant';
 import { useUser } from '../../../utils/swrFetcher';
 import { removeToken } from '../../../api/token';
+import alertList from '../../../utils/swal';
+import Swal from 'sweetalert2';
 
 export default function UserEditPage() {
     const [email, setEmail] = useState<string>('')
@@ -35,9 +37,13 @@ export default function UserEditPage() {
         try {
             await post(API_USER_LOGOUT)
             removeToken('accessToken');
-            
             removeToken('refreshToken');
-            alert('성공적으로 로그아웃 되었습니다.')
+            Swal.fire(alertList.successMessage(`로그아웃 성공! 
+                
+                홈 페이지로 이동합니다.
+
+                `))
+                navigate('/');
         } catch (error) {
             console.error(error)
         }
@@ -71,7 +77,7 @@ export default function UserEditPage() {
     return (
         <Page>
             <TopButtonWrap>
-                <TopButton>
+                <TopButton style={{borderBottom:'none'}}>
                     정보 수정
                 </TopButton>
                 <TopButton onClick={() => { navigate('/user/withdrawal') }}>
@@ -118,7 +124,7 @@ export default function UserEditPage() {
 
                 <ButtonWrap>
                     <BottomButton onClick={() => { handleLogout() }}>로그아웃</BottomButton>
-                    <BottomButton type='submit' style={formCheck ? { backgroundColor: '#E384FF' } : { backgroundColor: '#FFA3FD', opacity: 0.65 }}>수정완료</BottomButton>
+                    <BottomButton type='submit'>수정완료</BottomButton>
                 </ButtonWrap>
             </FormWrap>
         </Page >

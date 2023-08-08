@@ -3,7 +3,8 @@ import styled from 'styled-components';
 export const Page = styled.div`
 position : absolute;
 top:20%;
-bottom : 18%;
+height:auto;
+// bottom : 18%;
 width:100%;
 max-width : 60rem;
 padding : 0 2rem;
@@ -38,27 +39,6 @@ export const TopButton = styled.button`
     }
 `
 
-// export const TitleAndLogoWrap = styled.div`
-// display : flex;
-// flex-direction : column;
-// justify-content : center;
-// align-items : center;
-// `
-// export const TitleWrap = styled.div`
-// margin-top : 1rem;
-
-// font-size : 5rem;
-// font-weight : 700;
-// color : #7954F8;
-// `
-// export const LogoWrap = styled.div`
-// width : 100%;
-// background-color : pink;
-// display:flex;
-// justify-content : center;
-// align-items : center;
-// `
-
 export const FormWrap = styled.form`
 flex : 1;
 `
@@ -87,6 +67,7 @@ height: 2rem;
 `
 export const ButtonWrap = styled.div`
 margin-top : 3rem;
+margin-bottom : 3rem;
 display : flex;
 flex-direction : row;
 justify-content : space-between

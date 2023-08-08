@@ -22,7 +22,7 @@ function App() {
 	const location = useLocation();
 
 	useEffect(() => {
-		const pathsWithoutTokenCheck = ['/login', '/register', '/mainhome'];
+		const pathsWithoutTokenCheck = ['/login', '/register', '/'];
 		if (!pathsWithoutTokenCheck.includes(location.pathname)) {
 			checkTokenExpirationAndRefresh();
 		}

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import MainLogo from '../../../assets/icons/MainLogo.png';
+import BunnyTalkTitle from '../../../assets/icons/BunnyTalkTitle.png';
+import BunnyTalkLogo from '../../../assets/icons/BunnyTalkLogo.png';
 import { useNavigate } from 'react-router-dom';
 import { emailValidation, passwordValidation } from '../../../utils/registerValidation';
 import { post } from '../../../api/api';
@@ -19,6 +20,8 @@ import {
 import { AxiosResponse } from 'axios'
 import { onChangeInputSetter } from '../../../utils/inputStateSetter';
 import { API_USER_LOGIN } from '../../../utils/constant';
+import alertList from '../../../utils/swal';
+import Swal from 'sweetalert2';
 
 interface LoginFormState {
 	email: string;
@@ -78,18 +81,18 @@ export default function LoginPage() {
 
 				setToken('accessToken', accessToken);
 				setToken('refreshToken', refreshToken);
-				alert("환영해요 버니!")
+				await Swal.fire(alertList.successMessage(`환영해요 버니!`))
 				navigate("/post");
 			} catch (error: any) {
 				if (error.response.data.fullError) {
-					alert(error.response.data.fullError)
+					await Swal.fire(alertList.errorMessage(error.response.data.fullError))
 				}
 				console.log('로그인 post 오류', error.response.data.fullError)
 			}
 
 		} else {
 			// 유효하지 않은 입력에 대한 사용자 알림 등 추가 로직
-			alert('입력 정보를 확인해주세요!')
+			await Swal.fire(alertList.errorMessage(`입력 정보를 확인해주세요!`))
 		}
 	};
 
@@ -97,7 +100,8 @@ export default function LoginPage() {
 		<Page>
 			<TitleAndLogoWrap>
 				<LogoWrap>
-					<img src={MainLogo} alt='main-logo' style={{ marginTop: '10rem' }} />
+					<img src={BunnyTalkLogo} alt="logo" />
+					<img src={BunnyTalkTitle} alt="title" />
 				</LogoWrap>
 				<TitleWrap>환영해요 버니!</TitleWrap>
 			</TitleAndLogoWrap>
@@ -106,9 +110,9 @@ export default function LoginPage() {
 				<InputWrap>
 					<InputBar
 						type='text'
-						placeholder='jennaryu@naver.com'
+						placeholder="bunny001@gmail.com"
 						value={email}
-						onChange={onChangeInputSetter(setEmail)}
+						onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChangeInputSetter(setEmail)(e)}
 					/>
 				</InputWrap>
 				<InputTitle>비밀번호</InputTitle>
@@ -117,7 +121,8 @@ export default function LoginPage() {
 						type='password'
 						placeholder='영문, 숫자, 특수문자 포함 8자 이상'
 						value={password}
-						onChange={onChangeInputSetter(setPassword)}
+						minLength={8}
+						onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChangeInputSetter(setPassword)(e)}
 					/>
 				</InputWrap>
 				<ButtonWrap>

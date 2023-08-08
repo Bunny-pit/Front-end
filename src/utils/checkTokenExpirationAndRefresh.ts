@@ -3,14 +3,19 @@ import { getToken, setToken } from "../api/token";
 import { AxiosResponse } from 'axios'
 import { post } from "../api/api";
 import { API_USER_REFRESH_TOKEN } from "./constant";
+import alertList from "./swal";
+import Swal from 'sweetalert2';
 
 export const checkTokenExpirationAndRefresh = async () => {
     const accessToken = getToken('accessToken');
     const refreshToken = getToken('refreshToken');
-
     if (!accessToken || !refreshToken) {
-        // 로그인 필요
-        alert('로그인이 필요합니다.');
+        await Swal.fire(alertList.infoMessage(`토큰이 존재하지 않습니다.
+
+                로그인 화면으로 이동합니다.
+                
+                `))
+        window.location.href = '/login'
         return;
     }
 
@@ -30,19 +35,23 @@ export const checkTokenExpirationAndRefresh = async () => {
             if (response.data.accessToken) {
                 setToken('accessToken', response.data.accessToken);
             } else {
-                const confirmed = window.confirm('토큰 만료: 로그인이 필요합니다. 로그인 페이지로 이동하시겠습니까?');
-                if (confirmed) {
-                    window.location.href = '/login'
-                    return;
-                }
+                await Swal.fire(alertList.infoMessage(`토큰이 존재하지 않습니다.
+
+                로그인 화면으로 이동합니다.
+                
+                `))
+                window.location.href = '/login'
             }
         } catch (error) {
             // refreshToken 갱신 에러 처리
-            const confirmed = window.confirm('엑세스 토큰 검증 실패: 로그인이 필요합니다. 로그인 페이지로 이동하시겠습니까?');
-            if (confirmed) {
-                window.location.href = '/login';
-                return false;
-            }
+            await Swal.fire(alertList.infoMessage(`토큰 만료!
+            
+            토큰 갱신이 필요합니다.
+
+            로그인 화면으로 이동합니다.
+            
+            `))
+            window.location.href = '/login'
         }
     }
 };
