@@ -14,7 +14,7 @@ import UserWithdrawalPage from './pages/UserAccount/UserWithdrawal/UserWithdrawa
 import UploadPost from './pages/UserMain/UploadPost/UploadPost';
 import FriendChatting from './pages/Chatting/FriendChatting';
 
-import AdminHeader from './components/AdminHeader/AdminHeader';
+import AdminMain from './pages/Admin/Main/AdminMain';
 
 function App() {
 	const [isLogin, setIsLogin] = useState(false);
@@ -29,7 +29,7 @@ function App() {
 
 	return (
 		<>
-			<AdminHeader></AdminHeader>
+			<AdminMain></AdminMain>
 		</>
 	);
 }

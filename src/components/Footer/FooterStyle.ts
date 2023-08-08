@@ -5,6 +5,9 @@ export const FooterStyle = styled.div`
 	background: #181820;
 	color: #fff;
 	font-size: 1.8rem;
+
+	position: fixed;
+	bottom: 0;
 `;
 export const Wrapper = styled.div`
 	height: 20rem;
