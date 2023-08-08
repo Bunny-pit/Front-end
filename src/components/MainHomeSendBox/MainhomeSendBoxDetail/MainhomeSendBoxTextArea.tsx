@@ -14,10 +14,6 @@ const MainHomeSendBoxTextArea = ({
 	onChange,
 	onKeyDown,
 }: TextAreaProps) => {
-	const [textCount, setTextCount] = useState(0);
-
-	const CheckLengthText = () => {};
-
 	return (
 		<>
 			<TextArea
