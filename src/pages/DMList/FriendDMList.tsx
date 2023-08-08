@@ -46,9 +46,11 @@ const FriendDMList = () => {
 			),
 		);
 		if (result.isConfirmed) {
-			await del<DmListType[]>(`/api/chat/${chatId}`);
-			mutate(`${process.env.REACT_APP_API_URL}/api/chat/${userId}`);
-			mutate(`${process.env.REACT_APP_API_URL}/api/chat/${chatId}/messages`);
+			await del<DmListType[]>(`/api/chat/friend/${chatId}`);
+			mutate(`${process.env.REACT_APP_API_URL}/api/chat/friend/${userId}`);
+			mutate(
+				`${process.env.REACT_APP_API_URL}/api/chat/${chatId}/friend/messages`,
+			);
 		}
 	};
 
