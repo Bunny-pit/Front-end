@@ -6,10 +6,29 @@ export const WorkSpaceWrapper = styled.div`
 `;
 
 export const Channels = styled.nav<{ isRoot: boolean }>`
-	max-width: 42rem;
+	max-width: 44rem;
 	display: inline-flex;
 	flex-direction: column;
 	background: rgba(252, 155, 249, 0.29);
+	color: ${({ theme }) => theme.colors.text};
+	min-height: ${({ isRoot }) => (isRoot ? '1200px' : 'auto')};
+	vertical-align: top;
+	& a {
+		padding-left: 36px;
+		color: inherit;
+		text-decoration: none;
+		height: 28px;
+		line-height: 28px;
+		display: flex;
+		align-items: center;
+	}
+`;
+
+export const FriendChannels = styled.nav<{ isRoot: boolean }>`
+	max-width: 44rem;
+	display: inline-flex;
+	flex-direction: column;
+	background: ${({ theme }) => theme.colors.gray200};
 	color: ${({ theme }) => theme.colors.text};
 	min-height: ${({ isRoot }) => (isRoot ? '1200px' : 'auto')};
 	vertical-align: top;

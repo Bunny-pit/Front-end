@@ -2,7 +2,7 @@ import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import {
 	WorkSpaceWrapper,
-	Channels,
+	FriendChannels,
 	WorkspaceName,
 	PlaceHoldContent,
 } from './ChattingStyle';
@@ -18,10 +18,10 @@ const FriendChatting = () => {
 		<>
 			<Header />
 			<WorkSpaceWrapper>
-				<Channels isRoot={location.pathname === '/friendchatting'}>
+				<FriendChannels isRoot={location.pathname === '/friendchatting'}>
 					<WorkspaceName>다이렉트 메시지</WorkspaceName>
 					<FriendDMList></FriendDMList>
-				</Channels>
+				</FriendChannels>
 				<Routes>
 					<Route path='friendchatting/dm/:nickname' element={<FriendChat />} />
 					<Route
