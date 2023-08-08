@@ -64,18 +64,22 @@ export default function LoginPage() {
 					isPasswordValid,
 					isFormValid,
 				});
-				const response: AxiosResponse<{ accessToken: string }> = await post(
+				const response: AxiosResponse<{ accessToken: string, refreshToken: string }> = await post(
 					API_USER_LOGIN,
 					{
 						email,
 						password
 					},
-					{ headers: { 'Content-Type ': 'application/json' } }
+					{ headers: { 'Content-Type': 'application/json' } }
 				);
+
 				const accessToken: string = response.data.accessToken;
-				setToken(accessToken);
+				const refreshToken: string = response.data.refreshToken;
+
+				setToken('accessToken', accessToken);
+				setToken('refreshToken', refreshToken);
 				alert("환영해요 버니!")
-				navigate("/");
+				navigate("/post");
 			} catch (error: any) {
 				if (error.response.data.fullError) {
 					alert(error.response.data.fullError)
