@@ -17,7 +17,7 @@ import Swal from 'sweetalert2';
 import useSWR, { mutate } from 'swr';
 import SearchBar from '../../components/SearchBar/SearchBar';
 
-const DMList = () => {
+const FriendDMList = () => {
 	const { userData, isError } = useUser();
 
 	if (isError) {
@@ -28,7 +28,7 @@ const DMList = () => {
 
 	const userId = userData?._id;
 	const { data: dmList, error } = useSWR<DmListType[]>(
-		`${process.env.REACT_APP_API_URL}/api/chat/${userId}`,
+		`${process.env.REACT_APP_API_URL}/api/chat/friend/${userId}`,
 		fetcher,
 	);
 
@@ -42,7 +42,7 @@ const DMList = () => {
 		const result = await Swal.fire(
 			alertList.doubleCheckTitkeMsg(
 				'채팅방을 나가시겠습니까?',
-				'채팅방을 나가면 상대방의 대화목록에서도 채팅방이 삭제됩니다.',
+				'채팅방을 나가면 친구의 대화목록에서도 채팅방이 삭제됩니다.',
 			),
 		);
 		if (result.isConfirmed) {
@@ -65,7 +65,7 @@ const DMList = () => {
 					const otherUser = chatRoom.users.find((user) => user._id !== userId);
 					if (otherUser) {
 						const otherUserEmail = otherUser.email;
-						const otherUserName = otherUser.secretName;
+						const otherUserName = otherUser.userName;
 						const profileSrc = otherUserEmail
 							? gravatar.url(otherUserEmail, {
 									s: '24px',
@@ -74,7 +74,9 @@ const DMList = () => {
 							: undefined;
 
 						return (
-							<NavLink key={chatRoom._id} to={`/chatting/dm/${chatRoom._id}`}>
+							<NavLink
+								key={chatRoom._id}
+								to={`friendchatting/dm/${chatRoom._id}`}>
 								{profileSrc && <Profile src={profileSrc} alt={otherUserName} />}
 								<Nickname>{otherUserName}</Nickname>
 								<Exiticon
@@ -90,4 +92,4 @@ const DMList = () => {
 	);
 };
 
-export default DMList;
+export default FriendDMList;
