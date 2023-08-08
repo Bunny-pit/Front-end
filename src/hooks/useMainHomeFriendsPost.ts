@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { get, post, patch, del } from '../api/api';
 import { API_MAINHOME_FRIENDS } from '../utils/constant';
-import { API_CHATTING_START } from '../utils/constant';
+import { API_FRIENDCHATTING_START } from '../utils/constant';
 import { UserDataType, Post } from '../types/dataType';
 import alertList from '../utils/swal';
 import dayjs from 'dayjs';
@@ -146,13 +146,13 @@ const useMainHomePost = () => {
 	const moveToChatPage = async (_id: string, userId: string, name: string) => {
 		try {
 			await post<UserDataType>(
-				API_CHATTING_START,
+				API_FRIENDCHATTING_START,
 				{ userId: _id, anonymousUserId: userId, anonymousUserName: name },
 				{
 					withCredentials: true,
 				},
 			);
-			navigate(`/chatting`);
+			navigate(`/friendchatting`);
 		} catch (error) {
 			console.error(error);
 		}

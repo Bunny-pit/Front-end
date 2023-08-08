@@ -14,7 +14,7 @@ import { MessageType } from '../../types/chatType';
 import useSWR, { mutate } from 'swr';
 import { DmListType } from '../../types/chatType';
 
-const Chat = () => {
+const FriendChat = () => {
 	const { nickname } = useParams();
 	const chatId = nickname;
 	const [messages, setMessages] = useState<MessageType[]>([]);
@@ -81,7 +81,7 @@ const Chat = () => {
 		<>
 			<Container>
 				{selectedChat !== null ? (
-					<Content>{`나와 ${chattingWithUser?.secretName}님의 채팅방입니다.`}</Content>
+					<Content>{`나와 ${chattingWithUser?.userName}님의 채팅방입니다.`}</Content>
 				) : (
 					<Content>채팅방이 존재하지 않습니다.</Content>
 				)}
@@ -106,4 +106,4 @@ const Chat = () => {
 	);
 };
 
-export default Chat;
+export default FriendChat;

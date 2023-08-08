@@ -25,7 +25,10 @@ const DefaultHeader = () => {
 						<Link to='/mainhome/friends'>친구 버니들</Link>
 					</MenuLi>
 					<MenuLi>
-						<Link to='/chatting/*'>버니톡</Link>
+						<Link to='/chatting/*'>익명 버니톡</Link>
+					</MenuLi>
+					<MenuLi>
+						<Link to='/friendchatting/*'>친구 버니톡</Link>
 					</MenuLi>
 				</MenuUl>
 				<Option src={HeaderOption} alt='옵션' />

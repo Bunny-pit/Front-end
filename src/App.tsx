@@ -12,6 +12,7 @@ import RegisterPage from './pages/UserAccount/Login/Register';
 import UserEditPage from './pages/UserAccount/UserEdit/UserEdit';
 import UserWithdrawalPage from './pages/UserAccount/UserWithdrawal/UserWithdrawal';
 import UploadPost from './pages/UserMain/UploadPost/UploadPost';
+import FriendChatting from './pages/Chatting/FriendChatting';
 
 function App() {
 	const [isLogin, setIsLogin] = useState(false);
@@ -48,6 +49,7 @@ function App() {
 				<Route path='/mainhome/unknown' element={<MainHomeUnknown />} />
 				<Route path='/mainhome/friends' element={<MainHomeFriends />} />
 				<Route path='/chatting/*' element={<Chatting />} />
+				<Route path='/friendchatting/*' element={<FriendChatting />} />
 			</Routes>
 		</>
 	);
