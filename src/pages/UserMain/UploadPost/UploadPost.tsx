@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Header from '../../../components/Header/DetailHeader/DetailHeader';
 import Footer from '../../../components/Footer/Footer';
+import alertList from '../../../utils/swal';
+import Swal from 'sweetalert2';
 import {
 	Container,
 	StyledTextArea,
@@ -75,16 +77,16 @@ const UserMain = () => {
 		const token = localStorage.getItem('accessToken');
 
 		try {
-			await axios.post('${process.env.REACT_APP_API_URL}/api/post', formData, {
+			await axios.post(`${process.env.REACT_APP_API_URL}/api/post`, formData, {
 				headers: {
 					Authorization: `Bearer ${token}`, // attach the token as a bearer token
 				},
 			});
-			console.log('여기!!!');
+			await Swal.fire(alertList.successMessage(`게시글 등록!`));
 			navigate('/post');
-			console.log('저기!!!');
 		} catch (error) {
 			console.error('Error creating post:', error);
+			await Swal.fire(alertList.errorMessage('게시글 등록에 실패하였습니다.'));
 		}
 	};
 	return (

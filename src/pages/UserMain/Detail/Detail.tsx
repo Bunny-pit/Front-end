@@ -12,6 +12,12 @@ import likeIcon from '../../../assets/icons/like.png';
 import likedIcon from '../../../assets/icons/liked.png';
 import CommentDeleteIcon from '../../../assets/icons/CommentDeleteIcon.png';
 import { useUser } from '../../../utils/swrFetcher';
+import alertList from '../../../utils/swal';
+import { del } from '../../../api/api';
+import { PostDetailType, PostType } from '../../../types/postType';
+import Swal from 'sweetalert2';
+import useSWR, { mutate } from 'swr';
+import { CommentType } from '../../../types/postType';
 import dayjs from 'dayjs';
 import {
 	Container,
@@ -46,25 +52,6 @@ import {
 	CommentDeleteImg,
 } from './DetailStyle';
 
-interface Post {
-	_id: string;
-	userId: string;
-	profileImage: string;
-	images: string[];
-	content: string;
-	createdAt: string;
-	likeCount: number; // 추가된 부분
-}
-interface Comment {
-	comment: string;
-	_id: string;
-	postId: string;
-	userId: string;
-	userName: string;
-	createdAt: Date;
-	updatedAt: Date;
-}
-
 const settings = {
 	dots: true, // dot navigation을 보여줄지에 대한 여부
 	infinite: true, // 무한으로 슬라이드가 돌아가는지에 대한 여부
@@ -76,8 +63,8 @@ const settings = {
 const Detail = () => {
 	const navigate = useNavigate();
 	const { postId } = useParams();
-	const [post, setPost] = useState<Post | null>(null); // 초기 상태를 null로 설정
-	const [comments, setComments] = useState<Comment[]>([]); // 댓글 상태를 추가
+	const [post, setPost] = useState<PostDetailType | null>(null); // 초기 상태를 null로 설정
+	const [comments, setComments] = useState<CommentType[]>([]); // 댓글 상태를 추가
 	const [commentInput, setCommentInput] = useState('');
 	const [userName, setUserName] = useState(''); // userName 게시글 기준으로 추가해야됨
 	const [likeCount, setLikeCount] = useState<number>(0);
@@ -88,7 +75,6 @@ const Detail = () => {
 	} else if (!userData) {
 		console.log('유저 데이터를 불러오는 중...');
 	}
-
 	useEffect(() => {
 		const token = localStorage.getItem('accessToken');
 		// 헤더에 토큰을 추가하는 config 객체를 만듭니다.
@@ -115,7 +101,7 @@ const Detail = () => {
 					// console.log('currentUser = ', currentUser);
 					// console.log('count = ', response.data.like.userId.length);
 					// console.log('liked = ', isUserLiked);
-					console.log(response.data);
+					// console.log(response.data);
 					setUserName(response.data.post.userName);
 				} else {
 					setLikeCount(0);
@@ -155,18 +141,19 @@ const Detail = () => {
 	};
 
 	//----------게시글 삭제------------
-	const handleDeletePostButton = async () => {
-		const confirmed = window.confirm('정말로 삭제하시겠습니까?');
-		if (confirmed) {
-			try {
-				await axios.delete(
-					`${process.env.REACT_APP_API_URL}/api/post/${postId}`,
-					getToken(),
-				);
+	const deletePost = async () => {
+		try {
+			const result = await Swal.fire(
+				alertList.doubleCheckMessage('게시글을 삭제하시겠습니까?'),
+			);
+			if (result.isConfirmed) {
+				await del<PostType[]>(`/api/post/${postId}`);
+				mutate(`${process.env.REACT_APP_API_URL}/api/post/${postId}`);
 				navigate('/post');
-			} catch (error) {
-				console.error('Error deleting post:', error);
 			}
+		} catch (error) {
+			console.log('게시글 삭제 실패', error);
+			await Swal.fire(alertList.errorMessage('게시글 삭제에 실패하였습니다.'));
 		}
 	};
 
@@ -200,20 +187,36 @@ const Detail = () => {
 			console.error('Error posting comment:', error);
 		}
 	};
-	//-----댓글 삭제 코드 -----
-	const deleteComment = async (postId: string, commentId: string) => {
+	//----------댓글 삭제------------
+	const deleteComment = async (
+		postId: string,
+		commentId: string,
+		userId: string,
+	) => {
 		try {
-			await axios.delete(
-				`${process.env.REACT_APP_API_URL}/api/comment/${postId}/${commentId}`,
-				getToken(),
+			if (userData?._id !== userId) {
+				await Swal.fire(
+					alertList.errorMessage('댓글 아이디가 일치하지 않습니다.'),
+				);
+				return;
+			}
+			const result = await Swal.fire(
+				alertList.doubleCheckMessage('댓글을 삭제하시겠습니까?'),
 			);
-
-			// 삭제된 댓글을 제외한 댓글들로 상태를 업데이트합니다.
-			setComments(comments.filter((comment) => comment._id !== commentId));
+			if (result.isConfirmed) {
+				await del<CommentType[]>(`/api/comment/${postId}/${commentId}`);
+				mutate(
+					`${process.env.REACT_APP_API_URL}/apicomment/${postId}/${commentId}`,
+				);
+				// 삭제된 댓글을 제외한 댓글들로 상태를 업데이트합니다.
+				setComments(comments.filter((comment) => comment._id !== commentId));
+			}
 		} catch (error) {
-			console.error('Error deleting comment:', error);
+			console.log('댓글 삭제에 실패했습니다.', error);
+			await Swal.fire(alertList.errorMessage('댓글 삭제에 실패하였습니다.'));
 		}
 	};
+
 	// --------좋아요 기능 ----------
 	const handleLikeButton = async () => {
 		try {
@@ -243,7 +246,7 @@ const Detail = () => {
 						<ProfileId>{userName}</ProfileId>
 					</Profile>
 					<DeleteButtonWrap>
-						<DeleteButton onClick={handleDeletePostButton}>
+						<DeleteButton onClick={deletePost}>
 							<DeleteButtonIcon src={DeleteIcon} alt='삭제버튼' />
 						</DeleteButton>
 					</DeleteButtonWrap>
@@ -290,12 +293,16 @@ const Detail = () => {
 									<CommentUserId>{comment.userName}</CommentUserId>
 									<CommentContent>{comment.comment}</CommentContent>
 								</CommentContentWrap>
-								<CommentDeleteButton
-									onClick={() => deleteComment(comment.postId, comment._id)}>
-									<CommentDeleteImg
-										src={CommentDeleteIcon}
-										alt='댓글 삭제 버튼'></CommentDeleteImg>
-								</CommentDeleteButton>
+								{userData?._id === comment.userId && (
+									<CommentDeleteButton
+										onClick={() =>
+											deleteComment(comment.postId, comment._id, comment.userId)
+										}>
+										<CommentDeleteImg
+											src={CommentDeleteIcon}
+											alt='댓글 삭제 버튼'></CommentDeleteImg>
+									</CommentDeleteButton>
+								)}
 							</Commentli>
 						))}
 					</CommentUl>
