@@ -132,11 +132,8 @@ const UserMain = () => {
 							<PostButton>
 								<Link to={`/post/upload`}>게시글 등록</Link>
 							</PostButton>
-							<EditButton
-								onClick={() => {
-									alert('프로필 편집하기');
-								}}>
-								프로필 편집
+							<EditButton>
+								<Link to={'/user/edit'}>프로필 편집</Link>
 							</EditButton>
 						</Wrapper2>
 						<Wrapper3>

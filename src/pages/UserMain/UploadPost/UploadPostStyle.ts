@@ -3,6 +3,9 @@ import UploadPost from '../../../assets/icons/UploadPost.png';
 export const Container = styled.div`
 	width: 50%;
 	margin: 0 auto;
+	@media only screen and (min-width: 1280px) {
+		width: 25%;
+	}
 `;
 export const UploadWrap = styled.div`
 	width: 100%;

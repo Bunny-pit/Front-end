@@ -2,7 +2,13 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
 	margin: 0 auto;
-	max-width: 50%;
+	box-sizing: border-box;
+	@media only screen and (min-width: 390px) and (max-width: 550px) {
+		width: 100%;
+	}
+	@media only screen and (min-width: 1280px) and (max-width: 1980px) {
+		width: 40%;
+	}
 `;
 export const Sec1 = styled.div`
 	display: flex;
@@ -61,8 +67,11 @@ export const EditButton = styled.button`
 	border: none;
 	border-radius: 0.5rem;
 	background-color: ${({ theme }) => theme.colors.strongpurple};
-	color: ${({ theme }) => theme.colors.background};
-	font-weight: 600;
+	a {
+		color: ${({ theme }) => theme.colors.background};
+		font-weight: 600;
+		text-decoration: none;
+	}
 `;
 export const PostButton = styled.button`
 	width: 10rem;
@@ -138,12 +147,18 @@ export const PostUl = styled.ul`
 	gap: 3rem;
 	place-items: center;
 	position: relative;
+	@media only screen and (min-width: 390px) and (max-width: 1279px) {
+		gap: 0;
+	}
+	@media only screen and (min-width: 1280px) and (max-width: 1980px) {
+		gap: 1rem;
+	}
 `;
 export const PostUlEmpty = styled(PostUl)`
 	height: 70rem;
 `;
 export const PostLi = styled.li`
-	height: 22rem;
+	// height: 22rem;
 	overflow: hidden;
 	box-sizing: border-box;
 	.link {
@@ -154,8 +169,11 @@ export const PostLi = styled.li`
 			height: auto;
 		}
 	}
-	@media only screen and (min-width: 1280px) {
-		height: 33rem;
+	@media only screen and (min-width: 390px) and (max-width: 1279px) {
+		height: 21rem;
+	}
+	@media only screen and (min-width: 1280px) and (max-width: 1980px) {
+		height: 25rem;
 	}
 `;
 export const NothingWrap = styled.div`

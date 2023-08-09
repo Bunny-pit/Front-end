@@ -3,19 +3,33 @@ import styled from 'styled-components';
 export const Container = styled.div`
 	width: 50%;
 	margin: 0 auto;
+	box-sizing: border-box;
+	@media only screen and (min-width: 390px) and (max-width: 1279px) {
+		width: 100%;
+	}
+	@media only screen and (min-width: 1280px) and (max-width: 1980px) {
+		width: 25%;
+	}
 `;
 export const ProfileWrap = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	margin: 8rem 0 2rem;
+	@media only screen and (min-width: 390px) and (max-width: 1279px) {
+		margin: 2rem 0;
+	}
 `;
 export const Profile = styled.div`
 	display: flex;
 	align-items: center;
+	margin-left: 1rem;
 `;
 export const ProfileUserImage = styled.img`
 	width: 10rem;
+	@media only screen and (min-width: 390px) and (max-width: 1279px) {
+		width: 7rem;
+	}
 `;
 export const ProfileId = styled.p`
 	font-size: 2.7rem;
@@ -42,6 +56,9 @@ export const ContentWrap = styled.div`
 `;
 export const Content = styled.div`
 	color: ${({ theme }) => theme.colors.text};
+	@media only screen and (min-width: 390px) and (max-width: 1279px) {
+		margin-left: 1rem;
+	}
 `;
 
 export const ImgWrap = styled.div`
@@ -77,6 +94,9 @@ export const LikeCount = styled.p`
 export const PostTime = styled.p`
 	font-size: 1.8rem;
 	color: ${({ theme }) => theme.colors.gray600};
+	@media only screen and (min-width: 390px) and (max-width: 1279px) {
+		margin-right: 1rem;
+	}
 `;
 export const LikeButtonIcon = styled.img`
 	width: 3.6rem;
