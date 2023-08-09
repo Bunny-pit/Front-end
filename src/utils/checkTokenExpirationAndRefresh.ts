@@ -35,7 +35,7 @@ export const checkTokenExpirationAndRefresh = async () => {
             if (response.data.accessToken) {
                 setToken('accessToken', response.data.accessToken);
             } else {
-                await Swal.fire(alertList.infoMessage(`토큰이 존재하지 않습니다.
+                await Swal.fire(alertList.infoMessage(`유효하지 않은 로그인 상태입니다.
 
                 로그인 화면으로 이동합니다.
                 

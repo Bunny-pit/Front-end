@@ -18,6 +18,7 @@ import { useUser } from '../../../utils/swrFetcher';
 import { removeToken } from '../../../api/token';
 import alertList from '../../../utils/swal';
 import Swal from 'sweetalert2';
+import handleLogout from '../../../utils/logout';
 
 export default function UserEditPage() {
     const [email, setEmail] = useState<string>('')
@@ -33,21 +34,21 @@ export default function UserEditPage() {
     }, [formCheck])
 
 
-    const handleLogout = async () => {
-        try {
-            await post(API_USER_LOGOUT)
-            removeToken('accessToken');
-            removeToken('refreshToken');
-            Swal.fire(alertList.successMessage(`로그아웃 성공! 
+    // const handleLogout = async () => {
+    //     try {
+    //         await post(API_USER_LOGOUT)
+    //         removeToken('accessToken');
+    //         removeToken('refreshToken');
+    //         Swal.fire(alertList.successMessage(`로그아웃 성공! 
                 
-                홈 페이지로 이동합니다.
+    //             홈 페이지로 이동합니다.
 
-                `))
-                navigate('/');
-        } catch (error) {
-            console.error(error)
-        }
-    }
+    //             `))
+    //             navigate('/');
+    //     } catch (error) {
+    //         console.error(error)
+    //     }
+    // }
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 

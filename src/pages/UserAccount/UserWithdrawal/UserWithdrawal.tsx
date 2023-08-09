@@ -14,7 +14,8 @@ import { onChangeInputSetter } from '../../../utils/inputStateSetter';
 import { useNavigate } from 'react-router-dom';
 import { removeToken } from '../../../api/token';
 import { API_USER_DELETE } from '../../../utils/constant';
-import { del } from '../../../api/api';
+import { del, post } from '../../../api/api';
+import { API_USER_LOGOUT } from '../../../utils/constant';
 import { useUser } from '../../../utils/swrFetcher';
 import alertList from '../../../utils/swal';
 import Swal from 'sweetalert2';
@@ -46,13 +47,13 @@ export default function UserWithdrawalPage() {
                 withdrawalData,
                 headers: { 'Content-Type': 'application/json' },
             })
-
+            await post(API_USER_LOGOUT);
             removeToken('accessToken');
             removeToken('refreshToken');
-            Swal.fire(alertList.successMessage(`성공적으로 탈퇴 되었습니다.`))
+            await Swal.fire(alertList.successMessage(`성공적으로 탈퇴 되었습니다.`))
             navigate('/');
         } catch (error) {
-            Swal.fire(alertList.errorMessage(`입력하신 유저 정보가 올바르지 않습니다. 
+            await Swal.fire(alertList.errorMessage(`입력하신 유저 정보가 올바르지 않습니다. 
             다시 시도해주세요.`))
             console.error(error)
         }
@@ -99,12 +100,11 @@ export default function UserWithdrawalPage() {
                     />
                 </InputWrap>
                 <ButtonWrap>
-                    <BottomButton onClick={() => {
-                        Swal.fire(alertList.doubleCheckMessage(`이동함?`)).then((result) => {
-                            if (result.isConfirmed) {
-                                navigate('/')
-                            }
-                        })
+                    <BottomButton onClick={async () => {
+                        const result = await Swal.fire(alertList.doubleCheckMessage(`돌아가시겠어요?`))
+                        if (result.isConfirmed) {
+                            navigate('/')
+                        }
                     }}>돌아가기</BottomButton>
                     <BottomButton type='submit'>계정탈퇴</BottomButton>
                 </ButtonWrap>

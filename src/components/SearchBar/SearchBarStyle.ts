@@ -4,7 +4,7 @@ export const SearchBarForm = styled.form`
 	position: relative;
 	display: flex;
 	justify-content: center;
-	width: 100%;
+	width: 97%;
 	height: 4rem;
 	margin-top: 6.4rem;
 	display: flex;
@@ -14,9 +14,10 @@ export const SearchBarForm = styled.form`
 export const InputContainer = styled.div`
 	display: flex;
 	align-items: center;
-	padding: 3.5rem 0;
+	padding: 3rem 0;
 	border-radius: 2rem;
-	width: 25rem;
+	width: 24rem;
+	margin-left: 2rem;
 	border: 1px solid ${({ theme }) => theme.colors.gray300};
 `;
 
@@ -40,14 +41,13 @@ export const SearchBarBtn = styled.button`
 	align-items: center;
 	justify-content: center;
 	margin-left: 2rem;
-	padding: 3.5rem 0;
-	height: 2rem;
-	width: 6rem;
+	padding: 3rem 0;
+	width: 5.5rem;
 	background-color: ${({ theme }) => theme.colors.pointcolor};
 	border-radius: 1.2rem;
 	color: white;
 	font-weight: bold;
 	border: none;
 	cursor: pointer;
-	font-size: 2rem;
+	font-size: 1.5rem;
 `;

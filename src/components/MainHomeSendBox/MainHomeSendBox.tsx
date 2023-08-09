@@ -1,5 +1,5 @@
 import React from 'react';
-import useMainHomePost from '../../hooks/useMainHomePost';
+import useMainHomePost from '../../hooks/useMainHomeUnknownPost';
 import MainHomeSendBoxTextArea from './MainhomeSendBoxDetail/MainhomeSendBoxTextArea';
 import MainHomeSendBoxButton from './MainhomeSendBoxDetail/MainhomeSendBoxButton';
 

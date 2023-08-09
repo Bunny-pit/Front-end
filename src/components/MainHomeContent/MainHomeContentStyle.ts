@@ -83,7 +83,7 @@ export const Date = styled.div`
 	color: ${({ theme }) => theme.colors.gray500};
 `;
 
-export const Wrapper = styled.div`
+export const ButtonWrapper = styled.div`
 	position: absolute;
 	display: flex;
 	gap: 1.5rem;

@@ -110,7 +110,7 @@ export default function LoginPage() {
 				<InputWrap>
 					<InputBar
 						type='text'
-						placeholder="bunny001@gmail.com"
+						placeholder="bunny001@email.com"
 						value={email}
 						onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChangeInputSetter(setEmail)(e)}
 					/>

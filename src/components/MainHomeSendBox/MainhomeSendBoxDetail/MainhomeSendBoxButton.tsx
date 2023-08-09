@@ -1,4 +1,3 @@
-import React from 'react';
 import sendIcon from '../../../assets/icons/Sendicon.png';
 
 import { SendButton, SendIcon } from '../MainHomeSendBoxStyle';

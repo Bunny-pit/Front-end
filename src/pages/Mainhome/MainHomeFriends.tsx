@@ -2,15 +2,15 @@ import { useUser } from '../../utils/swrFetcher';
 
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
-import MainHomeContent from '../../components/MainHomeContent/MainHomeContent';
+import MainHomeFriendsContent from '../../components/MainHomeContent/MainHomeFriendsContent';
 import MainHomeSendBox from '../../components/MainHomeSendBox/MainHomeSendBox';
-import useMainHomePost from '../../hooks/useMainHomePost';
+import useMainHomeFriendsPost from '../../hooks/useMainHomeFriendsPost';
 
 import { Title } from './MainHomeStyle';
 
 const MainHomeFriends = () => {
 	const { userData, isError } = useUser();
-	const mainHomePost = useMainHomePost();
+	const mainHomePost = useMainHomeFriendsPost();
 
 	if (isError) {
 		console.log('유저 데이터를 불러오는데 실패했습니다.');
@@ -23,7 +23,7 @@ const MainHomeFriends = () => {
 			<Header />
 			<Title>Friend Bunnies</Title>
 
-			<MainHomeContent userData={userData} mainHomePost={mainHomePost} />
+			<MainHomeFriendsContent userData={userData} mainHomePost={mainHomePost} />
 
 			<MainHomeSendBox mainHomePost={mainHomePost} />
 

@@ -65,12 +65,12 @@ export default function RegisterPage() {
                     로그인 페이지로 이동합니다.
     
                     `))
-                    navigate('/login');
+                    // navigate('/login');
                 } 
             }
         } catch (error: any) {
-            await Swal.fire(alertList.errorMessage(`이미 존재하는 유저입니다.`))
-            console.log('회원가입 post 오류', error.response.data.error)
+            await Swal.fire(alertList.errorMessage(error.response.data.error))
+            console.log('회원가입 post 오류:', error.response.data.error)
             // console.error(error.response.data.error)
         }
 
@@ -99,7 +99,7 @@ export default function RegisterPage() {
                 <InputWrap>
                     <InputBar
                         type="text"
-                        placeholder="bunny001@gmail.com"
+                        placeholder="bunny001@email.com"
                         value={email}
                         onChange={onChangeInputSetter(setEmail)}
                     />
