@@ -29,7 +29,30 @@ function App() {
 
 	return (
 		<>
-			<UserMembers></UserMembers>
+			<Routes>
+				<Route path='/' element={<MainPage />} />
+				{!isLogin && ( //로그인 안되어 있을 경우 register, login으로.
+					<>
+						<Route path='/register' element={<RegisterPage />} />
+						<Route path='/login' element={<LoginPage />} />
+						<Route path='/user/edit' element={<UserEditPage />} />
+						<Route path='/user/withdrawal' element={<UserWithdrawalPage />} />
+					</>
+				)}
+				{/* {isLogin && ( // 로그인 했을 때만 렌더링
+                        <>
+                            <Route path='/useredit' element={<UserEditPage />} />
+                        </>
+                    )} */}
+				<Route path='/post' element={<UserMainPage />} />
+				<Route path='/post/user/:email' element={<UserMainPage />} />
+				<Route path='/post/:postId' element={<Detail />} />
+				<Route path='/post/upload' element={<UploadPost />} />
+				<Route path='/mainhome/unknown' element={<MainHomeUnknown />} />
+				<Route path='/mainhome/friends' element={<MainHomeFriends />} />
+				<Route path='/chatting/*' element={<Chatting />} />
+				<Route path='/friendchatting/*' element={<FriendChatting />} />
+			</Routes>
 		</>
 	);
 }
