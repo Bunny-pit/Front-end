@@ -6,6 +6,7 @@ export const Container = styled.div`
 	height: 100rem;
 	overflow-y: auto;
 	border-radius: 2rem;
+	overflow-x: hidden;
 `;
 
 export const ContentBox = styled.div`
