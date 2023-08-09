@@ -117,11 +117,12 @@ export const LeftImage = styled.img`
 export const DetailImage = styled.img`
 	width: 60%;
 	position: absolute;
+	z-index: -999;
 `;
 export const LeftDetailImage = styled.img`
 	width: 80%;
 	position: absolute;
-	top: 300px;
+	top: 30rem;
 `;
 export const RightSection = styled.div`
 	margin-left: auto;
@@ -141,13 +142,13 @@ export const RightSection = styled.div`
 export const RightImage = styled.img`
 	width: 80%;
 	position: absolute;
-	top: -100px;
+	top: -10rem;
 `;
 export const RightDetailImage = styled.img`
 	width: 90%;
 	position: absolute;
-	left: -350px;
-	top: 100px;
+	left: -35rem;
+	top: 10rem;
 `;
 export const RightContent = styled.div`
 	margin-left: auto;
