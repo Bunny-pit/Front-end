@@ -2,15 +2,13 @@ import styled from 'styled-components';
 
 export const Page = styled.div`
 position : absolute;
-top:0;
-bottom:0;
+top:10%;
+bottom:0%;
 width:100%;
 max-width : 60rem;
 padding : 0 2rem;
 left: 50%;
 transform : translate(-50%, 0);
-
-background-color : grey;
 
 display : flex;
 flex-direction : column;
@@ -31,10 +29,13 @@ color : #7954F8;
 `
 export const LogoWrap = styled.div`
 width : 100%;
-background-color : pink;
 display:flex;
+flex-direction : column;
 justify-content : center;
 align-items : center;
+>img{
+    scale : 0.9;
+}
 `
 export const FormWrap = styled.form`
 flex : 1;

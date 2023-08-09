@@ -2,33 +2,33 @@ import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import {
 	WorkSpaceWrapper,
-	Channels,
+	FriendChannels,
 	WorkspaceName,
 	PlaceHoldContent,
 } from './ChattingStyle';
-import DMList from '../DMList/DMList';
 import { Routes, Route } from 'react-router-dom';
-import Chat from '../../components/Chat/Chat';
+import FriendChat from '../../components/Chat/FriendChat';
 import { useLocation } from 'react-router-dom';
+import FriendDMList from '../DMList/FriendDMList';
 
-const Chatting = () => {
+const FriendChatting = () => {
 	const location = useLocation();
 
 	return (
 		<>
 			<Header />
 			<WorkSpaceWrapper>
-				<Channels isRoot={location.pathname === '/chatting/*'}>
+				<FriendChannels isRoot={location.pathname === '/friendchatting/*'}>
 					<WorkspaceName>다이렉트 메시지</WorkspaceName>
-					<DMList></DMList>
-				</Channels>
+					<FriendDMList></FriendDMList>
+				</FriendChannels>
 				<Routes>
-					<Route path='/dm/:nickname' element={<Chat />} />
+					<Route path='friendchatting/dm/:nickname' element={<FriendChat />} />
 					<Route
 						path='*'
 						element={
 							<PlaceHoldContent>
-								채팅할 버니를 골라 채팅을 시작하세요
+								채팅할 친구 버니를 골라 채팅을 시작하세요!
 							</PlaceHoldContent>
 						}
 					/>
@@ -38,4 +38,4 @@ const Chatting = () => {
 		</>
 	);
 };
-export default Chatting;
+export default FriendChatting;
