@@ -5,7 +5,7 @@ import {
 	ChatBoxConatiner,
 	MessageContainer,
 } from '../../components/Chat/ChatStyle';
-import ChatBox from '../ChatBox/ChatBox';
+import FriendChatBox from '../ChatBox/FriendChatBox';
 import { useState, useRef, useCallback, useEffect } from 'react';
 import MessageBubble from '../MessageBubble/MessageBubble';
 import { useAutoScroll } from '../../hooks/useAutoScroll';
@@ -96,10 +96,10 @@ const FriendChat = () => {
 						))}
 				</MessageContainer>
 				<ChatBoxConatiner>
-					<ChatBox
+					<FriendChatBox
 						chatId={chatId}
 						userId={userId}
-						onNewMessage={onNewMessage}></ChatBox>
+						onNewMessage={onNewMessage}></FriendChatBox>
 				</ChatBoxConatiner>
 			</Container>
 		</>
