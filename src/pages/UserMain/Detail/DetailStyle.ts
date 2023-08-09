@@ -8,7 +8,7 @@ export const Container = styled.div`
 		width: 100%;
 	}
 	@media only screen and (min-width: 1280px) and (max-width: 1980px) {
-		width: 25%;
+		width: 30%;
 	}
 `;
 export const ProfileWrap = styled.div`

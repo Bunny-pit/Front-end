@@ -18,14 +18,20 @@ export const Sec1 = styled.div`
 	padding: 10rem 0;
 `;
 export const ImageWrap = styled.div`
+
   width: 50%;
   orange;
   text-align: right;
   margin-right: 2rem;
 `;
 export const UserImage = styled.img`
-	width: 31rem;
 	border-radius: 200px;
+	@media only screen and (min-width: 390px) and (max-width: 550px) {
+		width: 20rem;
+	}
+	@media only screen and (min-width: 1280px) and (max-width: 1980px) {
+		width: 31rem;
+	}
 `;
 export const ProfileWrap = styled.div`
 	margin-left: 2rem;
@@ -33,20 +39,17 @@ export const ProfileWrap = styled.div`
 `;
 export const Wrapper1 = styled.div`
 	display: flex;
-	justify-content: space-between;
+	justify-content: flex-start;
 	align-items: center;
 `;
 export const UserId = styled.h4`
 	font-size: 2.6rem;
+	margin-right: 2rem;
 `;
 export const PlusIcon = styled.img`
 	width: 3.1rem;
 	cursor: pointer;
-`;
-export const Wrapper2 = styled.div`
-	margin-bottom: 2rem;
-	display: flex;
-	justify-content: start;
+	margin-right: 2rem;
 `;
 export const FriendButton = styled.button`
 	width: 10rem;
@@ -58,6 +61,11 @@ export const FriendButton = styled.button`
 	font-weight: 600;
 	cursor: pointer;
 	border: none;
+`;
+export const Wrapper2 = styled.div`
+	margin-bottom: 2rem;
+	display: flex;
+	justify-content: flex-start;
 `;
 export const EditButton = styled.button`
 	width: 10rem;

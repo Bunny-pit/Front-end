@@ -6,6 +6,7 @@ import userImage from '../../assets/images/userimage.png';
 import plusIcon from '../../assets/icons/UserPlus.png';
 import { Link, useParams } from 'react-router-dom';
 import { useUser } from '../../utils/swrFetcher';
+import { PostType } from '../../types/postType';
 import {
 	Container,
 	Sec1,
@@ -33,17 +34,8 @@ import {
 	PostUlEmpty,
 } from './UserMainStyle';
 
-interface Post {
-	_id: string;
-	userId: string;
-	profileImage: string;
-	images: string[];
-	content: string;
-	createdAt: Date;
-}
-
 const UserMain = () => {
-	const [posts, setPosts] = useState<Post[]>([]);
+	const [posts, setPosts] = useState<PostType[]>([]);
 	const [postCount, setPostCount] = useState(0);
 	const [userName, setUserName] = useState('');
 	const { email } = useParams();
@@ -160,7 +152,7 @@ const UserMain = () => {
 					<PostTitle>게시물</PostTitle>
 					{posts.length > 0 ? (
 						<PostUl>
-							{posts.map((post: Post, i: number) => (
+							{posts.map((post: PostType, i: number) => (
 								<PostLi key={post._id}>
 									<Link className='link' to={`/post/${post._id}`}>
 										<img key={i} src={post.images[0]} alt={`post ${i}`} />
