@@ -106,7 +106,9 @@ const MainPage = () => {
 					</RightContent>
 				</FourthSection>
 				<HalfCircle>
-					<ShareBtn>나만의 공간 만들러 가기</ShareBtn>
+					<Link to='/register'>
+						<ShareBtn>나만의 공간 만들러 가기</ShareBtn>
+					</Link>
 				</HalfCircle>
 			</Container>
 		</>

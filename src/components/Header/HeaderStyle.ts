@@ -33,4 +33,5 @@ export const MenuLi = styled.li`
 export const Option = styled.img`
 	width: 3.4rem;
 	height: 3.4rem;
+	cursor: pointer;
 `;
