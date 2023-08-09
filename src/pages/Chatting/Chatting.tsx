@@ -18,7 +18,7 @@ const Chatting = () => {
 		<>
 			<Header />
 			<WorkSpaceWrapper>
-				<Channels isRoot={location.pathname === '/chatting'}>
+				<Channels isRoot={location.pathname === '/chatting/*'}>
 					<WorkspaceName>다이렉트 메시지</WorkspaceName>
 					<DMList></DMList>
 				</Channels>
