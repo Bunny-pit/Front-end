@@ -13,39 +13,51 @@ import {
 import { onChangeInputSetter } from '../../../utils/inputStateSetter';
 import { useNavigate } from 'react-router-dom';
 import { removeToken } from '../../../api/token';
-import { API_USER_DELETE} from '../../../utils/constant';
-import {  del } from '../../../api/api';
+import { API_USER_DELETE } from '../../../utils/constant';
+import { del, post } from '../../../api/api';
+import { API_USER_LOGOUT } from '../../../utils/constant';
+import { useUser } from '../../../utils/swrFetcher';
+import alertList from '../../../utils/swal';
+import Swal from 'sweetalert2';
 
 export default function UserWithdrawalPage() {
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
     const [passwordCheck, setPasswordCheck] = useState<string>('')
-    const [formCheck, setFormCheck] = useState<boolean>(false)
+    const { userData, isError } = useUser();
     const navigate = useNavigate();
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        if (password && (password === passwordCheck)) {
-            setFormCheck(true);
+        if (email === '' || password === '' || !(password === passwordCheck)) {
+            Swal.fire(alertList.errorMessage(`양식을 준수해주세요!`))
+        } else if (userData?.email !== email) {
+            Swal.fire(alertList.errorMessage(`계정 이메일이 일치하지 않습니다.`))
         }
+
         try {
-            const userData = {
+
+            const withdrawalData = {
                 email,
                 password,
                 passwordCheck
             }
             await del(API_USER_DELETE, {
-                userData,
+                withdrawalData,
                 headers: { 'Content-Type': 'application/json' },
             })
+            await post(API_USER_LOGOUT);
             removeToken('accessToken');
             removeToken('refreshToken');
-            alert('성공적으로 탈퇴 되었습니다.')
+            await Swal.fire(alertList.successMessage(`성공적으로 탈퇴 되었습니다.`))
             navigate('/');
         } catch (error) {
-
+            await Swal.fire(alertList.errorMessage(`입력하신 유저 정보가 올바르지 않습니다. 
+            다시 시도해주세요.`))
+            console.error(error)
         }
+
     }
 
     return (
@@ -54,7 +66,7 @@ export default function UserWithdrawalPage() {
                 <TopButton onClick={() => { navigate('/user/edit') }}>
                     정보 수정
                 </TopButton>
-                <TopButton>
+                <TopButton style={{ borderBottom: 'none' }}>
                     회원 탈퇴
                 </TopButton>
             </TopButtonWrap>
@@ -88,8 +100,13 @@ export default function UserWithdrawalPage() {
                     />
                 </InputWrap>
                 <ButtonWrap>
-                    <BottomButton onClick={() => { navigate('/') }}>돌아가기</BottomButton>
-                    <BottomButton type='submit' style={formCheck ? { backgroundColor: '#E384FF' } : { backgroundColor: '#FFA3FD', opacity: 0.65 }}>계정탈퇴</BottomButton>
+                    <BottomButton onClick={async () => {
+                        const result = await Swal.fire(alertList.doubleCheckMessage(`돌아가시겠어요?`))
+                        if (result.isConfirmed) {
+                            navigate('/')
+                        }
+                    }}>돌아가기</BottomButton>
+                    <BottomButton type='submit'>계정탈퇴</BottomButton>
                 </ButtonWrap>
             </FormWrap>
         </Page >
