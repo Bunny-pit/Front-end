@@ -10,12 +10,11 @@ export const checkTokenExpirationAndRefresh = async () => {
     const accessToken = getToken('accessToken');
     const refreshToken = getToken('refreshToken');
     if (!accessToken || !refreshToken) {
-        await Swal.fire(alertList.infoMessage(`토큰이 존재하지 않습니다.
+        Swal.fire(alertList.infoMessage(`토큰이 존재하지 않습니다.
 
                 로그인 화면으로 이동합니다.
                 
-                `))
-        window.location.href = '/login'
+                `)).then(() => { window.location.href = '/login' })
         return;
     }
 
@@ -35,23 +34,21 @@ export const checkTokenExpirationAndRefresh = async () => {
             if (response.data.accessToken) {
                 setToken('accessToken', response.data.accessToken);
             } else {
-                await Swal.fire(alertList.infoMessage(`유효하지 않은 로그인 상태입니다.
+                Swal.fire(alertList.infoMessage(`유효하지 않은 로그인 상태입니다.
 
                 로그인 화면으로 이동합니다.
                 
-                `))
-                window.location.href = '/login'
+                `)).then(() => { window.location.href = '/login' })
             }
         } catch (error) {
             // refreshToken 갱신 에러 처리
-            await Swal.fire(alertList.infoMessage(`토큰 만료!
+            Swal.fire(alertList.infoMessage(`토큰 만료!
             
             토큰 갱신이 필요합니다.
 
             로그인 화면으로 이동합니다.
-            
-            `))
-            window.location.href = '/login'
+                
+            `)).then(() => { window.location.href = '/login' })
         }
     }
 };

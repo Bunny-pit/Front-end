@@ -28,19 +28,20 @@ export default function UserEditPage() {
     const [formCheck, setFormCheck] = useState<boolean>(false)
     const { userData, isError } = useUser();
     const navigate = useNavigate();
-
-    const formChecker = useMemo(()=>{
+    const formChecker = useMemo(() => {
 
     }, [formCheck])
-
-
+    // 아래로 테스트
+    const handleImageSelect=()=>{
+        console.log('이미ㅣㅈ실렉트')
+    }
     // const handleLogout = async () => {
     //     try {
     //         await post(API_USER_LOGOUT)
     //         removeToken('accessToken');
     //         removeToken('refreshToken');
     //         Swal.fire(alertList.successMessage(`로그아웃 성공! 
-                
+
     //             홈 페이지로 이동합니다.
 
     //             `))
@@ -78,7 +79,7 @@ export default function UserEditPage() {
     return (
         <Page>
             <TopButtonWrap>
-                <TopButton style={{borderBottom:'none'}}>
+                <TopButton style={{ borderBottom: 'none' }}>
                     정보 수정
                 </TopButton>
                 <TopButton onClick={() => { navigate('/user/withdrawal') }}>
