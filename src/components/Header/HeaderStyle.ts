@@ -35,3 +35,6 @@ export const Option = styled.img`
 	height: 3.4rem;
 	cursor: pointer;
 `;
+export const SearchImage = styled.img`
+	cursor: pointer;
+`;
