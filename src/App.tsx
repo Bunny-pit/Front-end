@@ -51,7 +51,12 @@ function App() {
 
 	// 특정 페이지 제외 토큰 확인
 	useEffect(() => {
-		const pathsWithoutTokenCheck = ['/login', '/register', '/'];
+		const pathsWithoutTokenCheck = [
+			'/login',
+			'/register',
+			'/',
+			'/mainhome/unknown',
+		];
 		if (!pathsWithoutTokenCheck.includes(location.pathname)) {
 			checkTokenExpirationAndRefresh();
 		}

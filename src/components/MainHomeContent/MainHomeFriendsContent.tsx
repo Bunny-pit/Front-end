@@ -3,18 +3,18 @@ import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 
-import useMainHomeFriendsPost from '../../hooks/useMainHomeUnknownPost';
+import useMainHomePost from '../../hooks/useMainHomeFriendsPost';
 import MainHomeContentImage from './MainHomeContentDetail/MainHomeContentImage';
 import MainHomeContentInnerContent from './MainHomeContentDetail/MainHomeContentInnerContent';
 
-import { Container, ContentBox } from './MainHomeContentStyle';
+import { Container, ContentBox, EmptyArea } from './MainHomeContentStyle';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
 interface FriendsProps {
 	userData: any;
-	mainHomePost: ReturnType<typeof useMainHomeFriendsPost>;
+	mainHomePost: ReturnType<typeof useMainHomePost>;
 }
 
 const MainHomeFriendsContent = ({ userData, mainHomePost }: FriendsProps) => {
@@ -23,7 +23,7 @@ const MainHomeFriendsContent = ({ userData, mainHomePost }: FriendsProps) => {
 	};
 
 	const {
-		posts,
+		posts = [],
 		editingPostId,
 		setEditingPostId,
 		updatedContent,
@@ -36,29 +36,32 @@ const MainHomeFriendsContent = ({ userData, mainHomePost }: FriendsProps) => {
 
 	return (
 		<Container>
-			{posts.map((post, index) => {
-				const email: string = post.email;
-				const avataUrl: string = `https://www.gravatar.com/avatar/${email}?d=identicon`;
-				return (
-					<ContentBox
-						key={post._id}
-						ref={index == posts.length - 1 ? lastPostElementRef : null}>
-						<MainHomeContentImage avataUrl={avataUrl} />
-						<MainHomeContentInnerContent
-							post={post}
-							userData={userData}
-							editingPostId={editingPostId}
-							updatedContent={updatedContent}
-							handleContentChange={handleContentChange}
-							moveToChatPage={moveToChatPage}
-							updatePost={updatePost}
-							setEditingPostId={setEditingPostId}
-							setUpdatedContent={setUpdatedContent}
-							deletePost={deletePost}
-						/>
-					</ContentBox>
-				);
-			})}
+			{posts.length === 0 ? (
+				<EmptyArea>친구들을 팔로우하고 글을 남겨보세요!</EmptyArea>
+			) : (
+				posts.map((post, index) => {
+					const email: string = post.email;
+					const avataUrl: string = `https://www.gravatar.com/avatar/${email}?d=identicon`;
+					return (
+						<ContentBox
+							key={post._id}
+							ref={index === posts.length - 1 ? lastPostElementRef : null}>
+							<MainHomeContentImage avataUrl={avataUrl} />
+							<MainHomeContentInnerContent
+								post={post}
+								userData={userData}
+								editingPostId={editingPostId}
+								updatedContent={updatedContent}
+								handleContentChange={handleContentChange}
+								moveToChatPage={moveToChatPage}
+								updatePost={updatePost}
+								setEditingPostId={setEditingPostId}
+								setUpdatedContent={setUpdatedContent}
+								deletePost={deletePost}></MainHomeContentInnerContent>
+						</ContentBox>
+					);
+				})
+			)}
 		</Container>
 	);
 };
