@@ -1,5 +1,15 @@
 import styled from 'styled-components';
 
+const size = {
+    mobileS: '320px',
+    mobileM: '375px',
+    mobileL: '425px',
+    tablet: '768px',
+    laptop: '1024px',
+    laptopL: '1440px',
+    desktop: '2560px'
+}
+
 export const Page = styled.div`
 position : absolute;
 top:10%;
@@ -13,6 +23,12 @@ transform : translate(-50%, 0);
 display : flex;
 flex-direction : column;
 overflow : hidden;
+
+@media all and (width: 500px) {
+   
+}
+
+
 `
 export const TitleAndLogoWrap = styled.div`
 display : flex;

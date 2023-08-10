@@ -2,7 +2,13 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
 	margin: 0 auto;
-	max-width: 50%;
+	box-sizing: border-box;
+	@media only screen and (min-width: 390px) and (max-width: 550px) {
+		width: 100%;
+	}
+	@media only screen and (min-width: 1280px) and (max-width: 1980px) {
+		width: 40%;
+	}
 `;
 export const Sec1 = styled.div`
 	display: flex;
@@ -12,14 +18,20 @@ export const Sec1 = styled.div`
 	padding: 10rem 0;
 `;
 export const ImageWrap = styled.div`
+
   width: 50%;
   orange;
   text-align: right;
   margin-right: 2rem;
 `;
 export const UserImage = styled.img`
-	width: 31rem;
 	border-radius: 200px;
+	@media only screen and (min-width: 390px) and (max-width: 550px) {
+		width: 20rem;
+	}
+	@media only screen and (min-width: 1280px) and (max-width: 1980px) {
+		width: 31rem;
+	}
 `;
 export const ProfileWrap = styled.div`
 	margin-left: 2rem;
@@ -27,20 +39,17 @@ export const ProfileWrap = styled.div`
 `;
 export const Wrapper1 = styled.div`
 	display: flex;
-	justify-content: space-between;
+	justify-content: flex-start;
 	align-items: center;
 `;
 export const UserId = styled.h4`
 	font-size: 2.6rem;
+	margin-right: 2rem;
 `;
 export const PlusIcon = styled.img`
 	width: 3.1rem;
 	cursor: pointer;
-`;
-export const Wrapper2 = styled.div`
-	margin-bottom: 2rem;
-	display: flex;
-	justify-content: start;
+	margin-right: 2rem;
 `;
 export const FriendButton = styled.button`
 	width: 10rem;
@@ -53,6 +62,11 @@ export const FriendButton = styled.button`
 	cursor: pointer;
 	border: none;
 `;
+export const Wrapper2 = styled.div`
+	margin-bottom: 2rem;
+	display: flex;
+	justify-content: flex-start;
+`;
 export const EditButton = styled.button`
 	width: 10rem;
 	cursor: pointer;
@@ -61,8 +75,11 @@ export const EditButton = styled.button`
 	border: none;
 	border-radius: 0.5rem;
 	background-color: ${({ theme }) => theme.colors.strongpurple};
-	color: ${({ theme }) => theme.colors.background};
-	font-weight: 600;
+	a {
+		color: ${({ theme }) => theme.colors.background};
+		font-weight: 600;
+		text-decoration: none;
+	}
 `;
 export const PostButton = styled.button`
 	width: 10rem;
@@ -138,12 +155,18 @@ export const PostUl = styled.ul`
 	gap: 3rem;
 	place-items: center;
 	position: relative;
+	@media only screen and (min-width: 390px) and (max-width: 1279px) {
+		gap: 0;
+	}
+	@media only screen and (min-width: 1280px) and (max-width: 1980px) {
+		gap: 1rem;
+	}
 `;
 export const PostUlEmpty = styled(PostUl)`
 	height: 70rem;
 `;
 export const PostLi = styled.li`
-	height: 22rem;
+	// height: 22rem;
 	overflow: hidden;
 	box-sizing: border-box;
 	.link {
@@ -154,8 +177,11 @@ export const PostLi = styled.li`
 			height: auto;
 		}
 	}
-	@media only screen and (min-width: 1280px) {
-		height: 33rem;
+	@media only screen and (min-width: 390px) and (max-width: 1279px) {
+		height: 21rem;
+	}
+	@media only screen and (min-width: 1280px) and (max-width: 1980px) {
+		height: 25rem;
 	}
 `;
 export const NothingWrap = styled.div`

@@ -1,5 +1,5 @@
 import React from 'react';
-import useMainHomePost from '../../hooks/useMainHomeUnknownPost';
+import useMainHomePost from '../../hooks/useMainHomeFriendsPost';
 import MainHomeSendBoxTextArea from './MainhomeSendBoxDetail/MainhomeSendBoxTextArea';
 import MainHomeSendBoxButton from './MainhomeSendBoxDetail/MainhomeSendBoxButton';
 
@@ -17,7 +17,7 @@ const MainHomeSendBox = ({ mainHomePost }: Props) => {
 		setNewPostContent(value);
 	};
 
-	const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+	const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
 		if (e.key === 'Enter') {
 			e.preventDefault();
 			const { value } = e.currentTarget;
@@ -33,7 +33,7 @@ const MainHomeSendBox = ({ mainHomePost }: Props) => {
 					placeholder='익명으로 글을 남기게 되면 프로필이 비공개 처리돼요!'
 					value={newPostContent}
 					onChange={handleInputChange}
-					onKeyDown={handleKeyDown}
+					onKeyUp={handleKeyUp}
 				/>
 				<MainHomeSendBoxButton createPost={createPost} />
 			</TextWrapper>
