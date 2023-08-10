@@ -38,6 +38,7 @@ const UserMain = () => {
 	const [posts, setPosts] = useState<PostType[]>([]);
 	const [postCount, setPostCount] = useState(0);
 	const [userName, setUserName] = useState('');
+	const [getEmail, setEmail] = useState('');
 	const { userId } = useParams();
 	const { userData, isError } = useUser();
 
@@ -81,8 +82,9 @@ const UserMain = () => {
 					config,
 				);
 				setPosts(response.data.posts);
-				setUserName(response.data.userName);
+				setUserName(response.data.user[0].userName);
 				setPostCount(response.data.posts.length);
+				setEmail(response.data.user[0].email);
 				// console.log('게시글 갯수 ㅎㅎ', response.data.posts.length);
 			} catch (error) {
 				console.error('Error fetching posts:', error);
@@ -143,7 +145,7 @@ const UserMain = () => {
 								<ProfileLi>#개발자</ProfileLi>
 								<ProfileLi>#소통</ProfileLi>
 							</ProfileUl>
-							<Email href='#'>{userData?.email}</Email>
+							<Email href='#'>{userId ? getEmail : userData?.email}</Email>
 						</Wrapper4>
 					</ProfileWrap>
 				</Sec1>
