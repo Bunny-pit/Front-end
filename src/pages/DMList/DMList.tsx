@@ -16,10 +16,12 @@ import alertList from '../../utils/swal';
 import Swal from 'sweetalert2';
 import useSWR, { mutate } from 'swr';
 import SearchBar from '../../components/SearchBar/SearchBar';
+import { useState } from 'react';
 
 const DMList = () => {
 	const { userData, isError } = useUser();
-
+	const [filteredDmList, setFilteredDmList] = useState<DmListType[]>([]);
+	const [searchQuery, setSearchQuery] = useState<string>('');
 	if (isError) {
 		console.log('유저 데이터를 불러오는데 실패했습니다.');
 	} else if (!userData) {
@@ -51,9 +53,24 @@ const DMList = () => {
 			mutate(`${process.env.REACT_APP_API_URL}/api/chat/${chatId}/messages`);
 		}
 	};
+	useEffect(() => {
+		if (dmList) {
+			const filteredList = dmList.filter((chatRoom: DmListType) => {
+				const otherUser = chatRoom.users.find((user) => user._id !== userId);
+				if (otherUser) {
+					return (
+						otherUser.secretName !== undefined &&
+						otherUser.secretName.includes(searchQuery)
+					);
+				}
+				return false;
+			});
+			setFilteredDmList(filteredList);
+		}
+	}, [dmList, searchQuery, userId]);
 
 	const handleSearch = (query: string) => {
-		console.log(query);
+		setSearchQuery(query);
 	};
 	return (
 		<>
@@ -61,7 +78,7 @@ const DMList = () => {
 				<SearchBar onSearch={handleSearch}></SearchBar>
 			</TopContainer>
 			<MemberList>
-				{dmList?.map((chatRoom: DmListType) => {
+				{filteredDmList?.map((chatRoom: DmListType) => {
 					const otherUser = chatRoom.users.find((user) => user._id !== userId);
 					if (otherUser) {
 						const otherUserEmail = otherUser.email;

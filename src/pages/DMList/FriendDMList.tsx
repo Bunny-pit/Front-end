@@ -16,8 +16,11 @@ import alertList from '../../utils/swal';
 import Swal from 'sweetalert2';
 import useSWR, { mutate } from 'swr';
 import SearchBar from '../../components/SearchBar/SearchBar';
+import { useState } from 'react';
 
 const FriendDMList = () => {
+	const [filteredDmList, setFilteredDmList] = useState<DmListType[]>([]);
+	const [searchQuery, setSearchQuery] = useState<string>('');
 	const { userData, isError } = useUser();
 
 	if (isError) {
@@ -53,9 +56,24 @@ const FriendDMList = () => {
 			);
 		}
 	};
-
+	useEffect(() => {
+		if (dmList) {
+			const filteredList = dmList.filter((chatRoom: DmListType) => {
+				const otherUser = chatRoom.users.find((user) => user._id !== userId);
+				if (otherUser) {
+					return (
+						otherUser.userName !== undefined &&
+						otherUser.userName.includes(searchQuery)
+					);
+				}
+				return false;
+			});
+			setFilteredDmList(filteredList);
+		}
+	}, [dmList, searchQuery, userId]);
+	console.log('here', filteredDmList);
 	const handleSearch = (query: string) => {
-		console.log(query);
+		setSearchQuery(query);
 	};
 	return (
 		<>
@@ -63,7 +81,7 @@ const FriendDMList = () => {
 				<SearchBar onSearch={handleSearch}></SearchBar>
 			</TopContainer>
 			<MemberList>
-				{dmList?.map((chatRoom: DmListType) => {
+				{filteredDmList?.map((chatRoom: DmListType) => {
 					const otherUser = chatRoom.users.find((user) => user._id !== userId);
 					if (otherUser) {
 						const otherUserEmail = otherUser.email;
