@@ -8,6 +8,7 @@ import {
 	ResultText,
 	ProfileImage,
 	NoResultText,
+	ResultContainer,
 } from '../SearchModal/SearchModalStyle';
 import exitmodal from '../../assets/icons/CommentDeleteIcon.png';
 import { get } from '../../api/api';
@@ -16,6 +17,7 @@ interface SearchModalProps {
 	onClose: () => void;
 }
 interface userSearchData {
+	map: any;
 	_id: string;
 	createdAt: string;
 	email: string;
@@ -44,9 +46,13 @@ const SearchModal: React.FC<SearchModalProps> = ({ onClose }) => {
 			const response = await get<SearchResponse>(
 				`/api/user/search?userName=${query}`,
 			);
-			const searchData = [response.data.user];
-			setSearchResults(searchData);
-			setNoResults(searchData.length === 0);
+			if (response.data.user) {
+				setSearchResults([response.data.user]);
+				setNoResults(false);
+			} else {
+				setSearchResults([]);
+				setNoResults(true);
+			}
 		} catch (error) {
 			console.error('검색실패', error);
 			setSearchResults([]);
@@ -56,7 +62,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ onClose }) => {
 	const closeModal = () => {
 		onClose();
 	};
-
+	console.log('here', searchResults);
 	return (
 		<ModalWrapper>
 			<ExitImage src={exitmodal} alt='exit' onClick={closeModal} />
@@ -67,11 +73,11 @@ const SearchModal: React.FC<SearchModalProps> = ({ onClose }) => {
 				{noResults ? (
 					<NoResultText>찾는 사용자가 없습니다.</NoResultText>
 				) : (
-					searchResults.map((result) => (
-						<React.Fragment key={result._id}>
-							<ProfileImage />
+					searchResults[0]?.map((result: any) => (
+						<ResultContainer key={result._id}>
+							<ProfileImage src={exitmodal} alt='profile' />
 							<ResultText>{result.userName}</ResultText>
-						</React.Fragment>
+						</ResultContainer>
 					))
 				)}
 			</SearchResult>

@@ -12,6 +12,8 @@ export const Channels = styled.nav<{ isRoot: boolean }>`
 	background: rgba(252, 155, 249, 0.29);
 	color: ${({ theme }) => theme.colors.text};
 	min-height: ${({ isRoot }) => (isRoot ? '1200px' : 'auto')};
+	max-height: 1200px;
+	overflow-y: auto;
 	vertical-align: top;
 	& a {
 		padding-left: 36px;
