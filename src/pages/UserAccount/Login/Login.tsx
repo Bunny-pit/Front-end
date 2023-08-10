@@ -60,13 +60,6 @@ export default function LoginPage() {
 		const isFormValid = isEmailValid && isPasswordValid;
 		if (isFormValid) {
 			try {
-				setLoginForm({
-					email,
-					password,
-					isEmailValid,
-					isPasswordValid,
-					isFormValid,
-				});
 				const response: AxiosResponse<{ accessToken: string, refreshToken: string }> = await post(
 					API_USER_LOGIN,
 					{
@@ -91,7 +84,6 @@ export default function LoginPage() {
 			}
 
 		} else {
-			// 유효하지 않은 입력에 대한 사용자 알림 등 추가 로직
 			await Swal.fire(alertList.errorMessage(`입력 정보를 확인해주세요!`))
 		}
 	};
