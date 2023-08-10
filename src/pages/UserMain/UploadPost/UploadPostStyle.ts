@@ -1,8 +1,12 @@
 import styled from 'styled-components';
 import UploadPost from '../../../assets/icons/UploadPost.png';
 export const Container = styled.div`
-	width: 50%;
 	margin: 0 auto;
+
+	@media only screen and (min-width: 1280px) and (max-width: 1980px) {
+		width: 40%;
+		height: auto;
+	}
 `;
 export const UploadWrap = styled.div`
 	width: 100%;
@@ -12,9 +16,25 @@ export const StyledForm = styled.form`
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	height: 100rem;
-	.Slider {
-		margin-bottom: 2rem;
+	align-items: center;
+	@media only screen and (min-width: 390px) and (max-width: 550px) {
+		height: 110rem;
+		.Slider {
+			img {
+				height: 75rem;
+				object-fit: fill;
+			}
+		}
+	}
+	@media only screen and (min-width: 1280px) and (max-width: 1980px) {
+		height: 120rem;
+		.Slider {
+			margin-bottom: 2rem;
+			img {
+				height: 80rem;
+				object-fit: fill;
+			}
+		}
 	}
 `;
 
@@ -50,4 +70,5 @@ export const SubmitButton = styled.input`
 	color: ${({ theme }) => theme.colors.background};
 	font-size: 3.2rem;
 	font-weigth: 600;
+	pointer: cursor;
 `;
