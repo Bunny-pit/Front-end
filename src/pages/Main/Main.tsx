@@ -47,7 +47,12 @@ import {
 	DetailImage,
 	MidImage,
 } from './MainStyle';
+import { useUser } from '../../utils/swrFetcher';
+import { useState } from 'react';
+
 const MainPage = () => {
+	const { userData, isError } = useUser();
+
 	return (
 		<>
 			<Container>
@@ -55,9 +60,15 @@ const MainPage = () => {
 					<Header>
 						<Logo src={MainLogo} alt='main-logo' />
 						<BtnContainer>
-							<Link to='/login'>
-								<LogIn>로그인</LogIn>
-							</Link>
+							{userData ? (
+								<Link to='/user/edit'>
+									<LogIn>로그아웃</LogIn>
+								</Link>
+							) : (
+								<Link to='/login'>
+									<LogIn>로그인</LogIn>
+								</Link>
+							)}
 							<Link to='/register'>
 								<SignUp>회원가입</SignUp>
 							</Link>

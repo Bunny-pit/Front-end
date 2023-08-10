@@ -79,7 +79,7 @@ function App() {
 						<Route path='/user/edit' element={<UserEditPage />} />
 						<Route path='/user/withdrawal' element={<UserWithdrawalPage />} />
 						<Route path='/post' element={<UserMainPage />} />
-						<Route path='/post/user/:email' element={<UserMainPage />} />
+						<Route path='/post/user/:userId' element={<UserMainPage />} />
 						<Route path='/post/:postId' element={<Detail />} />
 						<Route path='/post/upload' element={<UploadPost />} />
 						<Route path='/mainhome/unknown' element={<MainHomeUnknown />} />

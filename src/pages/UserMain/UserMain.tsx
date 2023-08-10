@@ -38,7 +38,7 @@ const UserMain = () => {
 	const [posts, setPosts] = useState<PostType[]>([]);
 	const [postCount, setPostCount] = useState(0);
 	const [userName, setUserName] = useState('');
-	const { email } = useParams();
+	const { userId } = useParams();
 	const { userData, isError } = useUser();
 
 	if (isError) {
@@ -46,7 +46,7 @@ const UserMain = () => {
 	} else if (!userData) {
 		console.log('유저 데이터를 불러오는 중...');
 	}
-	// console.log('userData!!!!!!!', userData?._id);
+
 	useEffect(() => {
 		const fetchPosts = async () => {
 			try {
@@ -77,24 +77,24 @@ const UserMain = () => {
 					},
 				};
 				const response = await axios.get(
-					`${process.env.REACT_APP_API_URL}/api/post/user/${email}`,
+					`${process.env.REACT_APP_API_URL}/api/post/user/${userId}`,
 					config,
 				);
 				setPosts(response.data.posts);
 				setUserName(response.data.userName);
 				setPostCount(response.data.posts.length);
-				console.log('게시글 갯수 ㅎㅎ', response.data.posts.length);
+				// console.log('게시글 갯수 ㅎㅎ', response.data.posts.length);
 			} catch (error) {
 				console.error('Error fetching posts:', error);
 			}
 		};
 
-		if (email) {
+		if (userId) {
 			fetchOtherUserPosts();
 		} else {
 			fetchPosts();
 		}
-	}, [email]);
+	}, [userId]);
 
 	return (
 		<>
