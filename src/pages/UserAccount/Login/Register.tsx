@@ -64,9 +64,9 @@ export default function RegisterPage() {
                 
                     로그인 페이지로 이동합니다.
     
-                    `))
-                    // navigate('/login');
-                } 
+                    `)).then(() => { navigate('/login'); })
+
+                }
             }
         } catch (error: any) {
             await Swal.fire(alertList.errorMessage(error.response.data.error))
