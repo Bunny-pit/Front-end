@@ -1,7 +1,4 @@
 import React from 'react';
-import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
-import timezone from 'dayjs/plugin/timezone';
 
 import useMainHomePost from '../../hooks/useMainHomeFriendsPost';
 import MainHomeContentImage from './MainHomeContentDetail/MainHomeContentImage';
@@ -9,15 +6,12 @@ import MainHomeContentInnerContent from './MainHomeContentDetail/MainHomeContent
 
 import { Container, ContentBox, EmptyArea } from './MainHomeContentStyle';
 
-dayjs.extend(utc);
-dayjs.extend(timezone);
-
-interface FriendsProps {
+interface MainHomeProps {
 	userData: any;
 	mainHomePost: ReturnType<typeof useMainHomePost>;
 }
 
-const MainHomeFriendsContent = ({ userData, mainHomePost }: FriendsProps) => {
+const MainHomeContent = ({ userData, mainHomePost }: MainHomeProps) => {
 	const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setUpdatedContent(e.target.value);
 	};
@@ -45,7 +39,7 @@ const MainHomeFriendsContent = ({ userData, mainHomePost }: FriendsProps) => {
 					return (
 						<ContentBox
 							key={post._id}
-							ref={index === posts.length - 1 ? lastPostElementRef : null}>
+							ref={index == posts.length - 1 ? lastPostElementRef : null}>
 							<MainHomeContentImage avataUrl={avataUrl} />
 							<MainHomeContentInnerContent
 								post={post}
@@ -57,7 +51,8 @@ const MainHomeFriendsContent = ({ userData, mainHomePost }: FriendsProps) => {
 								updatePost={updatePost}
 								setEditingPostId={setEditingPostId}
 								setUpdatedContent={setUpdatedContent}
-								deletePost={deletePost}></MainHomeContentInnerContent>
+								deletePost={deletePost}
+							/>
 						</ContentBox>
 					);
 				})
@@ -66,4 +61,4 @@ const MainHomeFriendsContent = ({ userData, mainHomePost }: FriendsProps) => {
 	);
 };
 
-export default MainHomeFriendsContent;
+export default MainHomeContent;

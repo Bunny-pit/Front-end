@@ -70,6 +70,7 @@ function App() {
 						<Route path='/' element={<MainPage />} />
 						<Route path='/register' element={<RegisterPage />} />
 						<Route path='/login' element={<LoginPage />} />
+						<Route path='/mainhome/unknown' element={<MainHomeUnknown />} />
 					</>
 				)}
 				{isLogin && ( // 로그인 했을 때만 렌더링
@@ -80,7 +81,6 @@ function App() {
 						<Route path='/post/user/:userId' element={<UserMainPage />} />
 						<Route path='/post/:postId' element={<Detail />} />
 						<Route path='/post/upload' element={<UploadPost />} />
-						<Route path='/mainhome/unknown' element={<MainHomeUnknown />} />
 						<Route path='/mainhome/friends' element={<MainHomeFriends />} />
 						<Route path='/chatting/*' element={<Chatting />} />
 						<Route path='/friendchatting/*' element={<FriendChatting />} />
