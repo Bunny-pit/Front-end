@@ -26,9 +26,9 @@ function App() {
 		} else {
 			setIsLogin(false);
 		}
-		console.log(location.pathname)
-		console.log('로그인 아닌 페이지', isLogin)
-	}, [location.pathname])
+		console.log(location.pathname);
+		console.log('로그인 아닌 페이지', isLogin);
+	}, [location.pathname]);
 
 	//초기 로그인 상태 설정 후 로컬 스토리지 변경시마다 로그인 상태 재설정
 	useEffect(() => {
@@ -38,20 +38,25 @@ function App() {
 			} else {
 				setIsLogin(false);
 			}
-		}
+		};
 		// 초기 로그인 상태 설정
 		checkLogin();
 
 		// localStorage 변경시마다 로그인 상태 재설정
 		window.addEventListener('storage', checkLogin);
 		return () => {
-			window.removeEventListener('storage', checkLogin)
+			window.removeEventListener('storage', checkLogin);
 		};
 	}, []);
 
 	// 특정 페이지 제외 토큰 확인
 	useEffect(() => {
-		const pathsWithoutTokenCheck = ['/login', '/register', '/'];
+		const pathsWithoutTokenCheck = [
+			'/login',
+			'/register',
+			'/',
+			'/mainhome/unknown',
+		];
 		if (!pathsWithoutTokenCheck.includes(location.pathname)) {
 			checkTokenExpirationAndRefresh();
 		}
@@ -60,12 +65,12 @@ function App() {
 	return (
 		<>
 			<Routes>
-
 				{!isLogin && ( //로그인 안되어 있을 경우 register, login만 접근 가능.
 					<>
 						<Route path='/' element={<MainPage />} />
 						<Route path='/register' element={<RegisterPage />} />
 						<Route path='/login' element={<LoginPage />} />
+						<Route path='/mainhome/unknown' element={<MainHomeUnknown />} />
 					</>
 				)}
 				{isLogin && ( // 로그인 했을 때만 렌더링
@@ -73,17 +78,16 @@ function App() {
 						<Route path='/user/edit' element={<UserEditPage />} />
 						<Route path='/user/withdrawal' element={<UserWithdrawalPage />} />
 						<Route path='/post' element={<UserMainPage />} />
-						<Route path='/post/user/:email' element={<UserMainPage />} />
+						<Route path='/post/user/:userId' element={<UserMainPage />} />
 						<Route path='/post/:postId' element={<Detail />} />
 						<Route path='/post/upload' element={<UploadPost />} />
-						<Route path='/mainhome/unknown' element={<MainHomeUnknown />} />
 						<Route path='/mainhome/friends' element={<MainHomeFriends />} />
 						<Route path='/chatting/*' element={<Chatting />} />
 						<Route path='/friendchatting/*' element={<FriendChatting />} />
 					</>
 				)}
 				{/* 유효하지 않은 페이지 접근시 메인페이지로 이동 */}
-				<Route path="*" element={<MainPage />} />
+				<Route path='*' element={<MainPage />} />
 			</Routes>
 		</>
 	);

@@ -2,8 +2,8 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { get, post, patch, del } from '../api/api';
-import { API_MAINHOME_UNKNOWN } from '../utils/constant';
-import { API_CHATTING_START } from '../utils/constant';
+import { API_MAINHOME_UNKNOWN, API_CHATTING_START } from '../utils/constant';
+
 import { UserDataType, Post } from '../types/dataType';
 import alertList from '../utils/swal';
 import dayjs from 'dayjs';

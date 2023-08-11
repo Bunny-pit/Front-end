@@ -5,6 +5,12 @@ import BlueHeart from '../../assets/images/blueheart.png';
 import PinkHeart from '../../assets/images/pinkheart.png';
 import Avatar from '../../assets/images/avatar.png';
 import { Link } from 'react-router-dom';
+import mainhomeImage from '../../assets/images/mainhome.png';
+import mainhomeDetail from '../../assets/images/mainhomedetail.png';
+import chattingImage from '../../assets/images/chatting.png';
+import friend from '../../assets/images/friend.png';
+import messagebubble from '../../assets/images/messagebubble.png';
+import link from '../../assets/images/link.png';
 
 import {
 	FirstSection,
@@ -34,8 +40,19 @@ import {
 	LeftContent,
 	HalfCircle,
 	ShareBtn,
+	LeftImage,
+	LeftDetailImage,
+	RightImage,
+	RightDetailImage,
+	DetailImage,
+	MidImage,
 } from './MainStyle';
+import { useUser } from '../../utils/swrFetcher';
+import { useState } from 'react';
+
 const MainPage = () => {
+	const { userData, isError } = useUser();
+
 	return (
 		<>
 			<Container>
@@ -43,9 +60,15 @@ const MainPage = () => {
 					<Header>
 						<Logo src={MainLogo} alt='main-logo' />
 						<BtnContainer>
-							<Link to='/login'>
-								<LogIn>로그인</LogIn>
-							</Link>
+							{userData ? (
+								<Link to='/user/edit'>
+									<LogIn>로그아웃</LogIn>
+								</Link>
+							) : (
+								<Link to='/login'>
+									<LogIn>로그인</LogIn>
+								</Link>
+							)}
 							<Link to='/register'>
 								<SignUp>회원가입</SignUp>
 							</Link>
@@ -68,12 +91,14 @@ const MainPage = () => {
 				</FirstSection>
 				<SecondSection>
 					<LeftSection>
-						<p>실시간 버니톡 움짤</p>
+						<LeftImage src={mainhomeImage} alt='mainhome-image' />
+						<LeftDetailImage src={mainhomeDetail} alt='mainhome-image' />
+						<DetailImage src={messagebubble} alt='message-image' />
 					</LeftSection>
 					<RightContent>
 						<MidContent>실시간 멘션 기능</MidContent>
 						<MidSecContent>
-							친구들의 생각을 실시간으로 확인하고 공유하는
+							익명의 사용자와 친구들의 생각을 실시간으로 확인하고 공유하는
 							<br />
 							실시간 멘션기능을 이용해보세요!
 						</MidSecContent>
@@ -82,6 +107,7 @@ const MainPage = () => {
 				<ThirdSection>
 					<LeftContent>
 						<MidContent>친구들과 채팅하기</MidContent>
+
 						<MidSecContent>
 							왠지 특별한 우리만의 공간에서
 							<br />
@@ -89,15 +115,18 @@ const MainPage = () => {
 						</MidSecContent>
 					</LeftContent>
 					<RightSection>
-						<p>서비스 채팅 움짤</p>
+						<RightImage src={chattingImage} alt='chatting-image' />
+						<RightDetailImage src={friend} alt='friend-image' />
 					</RightSection>
 				</ThirdSection>
 				<FourthSection>
 					<LeftSection>
-						<p>소환기능 움짤</p>
+						{' '}
+						<MidImage src={link} alt='link-image' />
 					</LeftSection>
 					<RightContent>
 						<MidContent>내가 보고싶은 친구 소환</MidContent>
+
 						<MidSecContent>
 							내 공간으로 초대하고 싶은 친구 소환하기
 							<br />
@@ -106,7 +135,9 @@ const MainPage = () => {
 					</RightContent>
 				</FourthSection>
 				<HalfCircle>
-					<ShareBtn>나만의 공간 만들러 가기</ShareBtn>
+					<Link to='/register'>
+						<ShareBtn>나만의 공간 만들러 가기</ShareBtn>
+					</Link>
 				</HalfCircle>
 			</Container>
 		</>

@@ -6,13 +6,23 @@ export const Container = styled.div`
 	height: 100rem;
 	overflow-y: auto;
 	border-radius: 2rem;
+	overflow-x: hidden;
+`;
+
+export const EmptyArea = styled.h1`
+	color: ${({ theme }) => theme.colors.gray600};
+	font-size: 3.5rem;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
 `;
 
 export const ContentBox = styled.div`
 	width: 100%;
 	height: 25rem;
 	display: flex;
-	padding: 1rem 5rem;
+	padding: 2rem 5rem 2rem 5rem;
 	box-sizing: border-box;
 	background-color: ${({ theme }) => theme.colors.gray100};
 	&:hover {
@@ -46,17 +56,30 @@ export const UserName = styled.h2`
 	font-size: 2.5rem;
 `;
 
-export const GoChat = styled.img`
+export const IconContainer = styled.div`
+	display: flex;
+	gap: 2rem;
 	margin-left: auto;
+`;
+
+export const GoChat = styled.img`
+	cursor: pointer;
+	margin-top: 0.4rem;
+	height: 4rem;
+`;
+
+export const GoProfile = styled.div`
+	margin-right: auto;
 	margin-top: auto;
 	margin-bottom: 1.5%;
-	cursor: pointer;
+	width: 30%;
+	height: 30%;
 `;
 
 export const InnerContent = styled.div`
 	flex: 2;
 	position: relative;
-	padding: 5% 2%;
+	padding: 1rem 3rem;
 `;
 
 export const ContentContainer = styled.div`
@@ -73,7 +96,7 @@ export const EditContentArea = styled.textarea`
 	border-radius: 1rem;
 	top: 0;
 	left: 0;
-	width: 98.5%;
+	width: 100%;
 	height: 7rem;
 	resize: none;
 `;

@@ -18,7 +18,7 @@ const FriendChatting = () => {
 		<>
 			<Header />
 			<WorkSpaceWrapper>
-				<FriendChannels isRoot={location.pathname === '/friendchatting'}>
+				<FriendChannels isRoot={location.pathname === '/friendchatting/*'}>
 					<WorkspaceName>다이렉트 메시지</WorkspaceName>
 					<FriendDMList></FriendDMList>
 				</FriendChannels>
