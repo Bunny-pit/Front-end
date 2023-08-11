@@ -1,10 +1,14 @@
 import React from 'react';
 import message from '../../../assets/icons/message.png';
+import { Link, useLocation } from 'react-router-dom';
+import Group from '../../../assets/icons/Group.png';
 
 import {
 	UserContainer,
 	UserName,
+	IconContainer,
 	GoChat,
+	GoProfile,
 	InnerContent,
 	ContentContainer,
 	Content,
@@ -40,18 +44,31 @@ const MainHomeContentInnerContent = ({
 	setUpdatedContent,
 	deletePost,
 }: InnerContentProps) => {
+	const isOnFriendsPage = useLocation().pathname === '/mainhome/friends';
 	return (
 		<InnerContent>
 			<UserContainer>
 				<UserName>{post.name}</UserName>
-				{userData && userData?._id !== post.userId && (
-					<GoChat
-						src={message}
-						alt='message Icon'
-						onClick={() => moveToChatPage(userData._id, post.userId, post.name)}
-					/>
-				)}
+				<IconContainer>
+					{isOnFriendsPage && (
+						<Link to={`/post/user/${post.name}`}>
+							<GoProfile>
+								<img src={Group} alt='해당 유저 프로필로 이동' />
+							</GoProfile>
+						</Link>
+					)}
+					{userData && userData?._id !== post.userId && (
+						<GoChat
+							src={message}
+							alt='message Icon'
+							onClick={() =>
+								moveToChatPage(userData._id, post.userId, post.name)
+							}
+						/>
+					)}
+				</IconContainer>
 			</UserContainer>
+
 			<ContentContainer>
 				{editingPostId === post._id ? (
 					<EditContentArea
