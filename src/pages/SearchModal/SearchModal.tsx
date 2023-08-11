@@ -12,7 +12,7 @@ import {
 } from '../SearchModal/SearchModalStyle';
 import exitmodal from '../../assets/icons/CommentDeleteIcon.png';
 import { get } from '../../api/api';
-
+import { Link } from 'react-router-dom';
 interface SearchModalProps {
 	onClose: () => void;
 }
@@ -76,7 +76,11 @@ const SearchModal: React.FC<SearchModalProps> = ({ onClose }) => {
 					searchResults[0]?.map((result: any) => (
 						<ResultContainer key={result._id}>
 							<ProfileImage src={exitmodal} alt='profile' />
-							<ResultText>{result.userName}</ResultText>
+							<Link
+								to={`/post/user/${result.userName}`}
+								style={{ textDecoration: 'none' }}>
+								<ResultText>{result.userName}</ResultText>
+							</Link>
 						</ResultContainer>
 					))
 				)}

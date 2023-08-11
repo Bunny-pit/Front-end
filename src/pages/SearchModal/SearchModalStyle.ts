@@ -18,6 +18,7 @@ export const ModalWrapper = styled.div`
 export const ExitImage = styled.img`
 	cursor: pointer;
 	position: absolute;
+	width: 2rem;
 	top: 5rem;
 	left: 75rem;
 `;
@@ -25,7 +26,6 @@ export const SearchBarContainer = styled.div`
 	position: absolute;
 	top: 0;
 	margin-top: 0;
-	margin-bottom: 8rem;
 `;
 export const SearchResult = styled.div`
 	z-index: 9999;
@@ -33,11 +33,14 @@ export const SearchResult = styled.div`
 	flex-direction: column;
 	max-height: 70vh;
 	overflow-y: auto;
+	margin-top: 10rem;
 `;
 
 export const ResultText = styled.p`
-	font-size: 2.5rem;
+	font-size: 2rem;
 	cursor: pointer;
+	text-decoration: none;
+	color: black;
 	&:hover {
 		background-color: #f5f5f5;
 	}
