@@ -4,6 +4,7 @@ import AdminHeader from '../../../components/AdminHeader/AdminHeader';
 import DefaultFooter from '../../../components/Footer/Footer';
 import { Link } from 'react-router-dom';
 
+import SearchBar from '../../../components/SearchBar/SearchBar';
 import { Post } from '../../../types/dataType';
 import { API_USER_LOGIN } from '../../../utils/constant';
 
@@ -15,11 +16,6 @@ import {
 	SearchBarInput,
 	SearchBarForm,
 	SearchBarDiv,
-	TableDiv,
-	Th,
-	Td,
-	Table,
-	Thead,
 } from './UserMembrsStyle';
 
 interface UserData {
@@ -32,6 +28,10 @@ interface UserData {
 const UserMembers: React.FC = () => {
 	const USER_DATA = 'http://localhost:3001/api/user/login';
 	const [userData, setUserData] = useState<UserData[]>([]);
+
+	const handleSearch = (searchText: string) => {
+		// Your search logic here
+	};
 
 	useEffect(() => {
 		axios
@@ -50,11 +50,13 @@ const UserMembers: React.FC = () => {
 			<AdminHeader />
 			<Container>
 				<Title>회원관리</Title>
-				<SearchBarDiv>
+
+				<SearchBar onSearch={handleSearch} />
+				{/* <SearchBarDiv>
 					<SearchBarForm>
 						<SearchBarInput placeholder='이메일을 입력해주세요'></SearchBarInput>
 					</SearchBarForm>
-				</SearchBarDiv>
+				</SearchBarDiv> */}
 
 				<UserTable data={userData} />
 			</Container>
