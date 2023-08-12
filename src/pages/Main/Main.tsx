@@ -48,7 +48,6 @@ import {
 	MidImage,
 } from './MainStyle';
 import { useUser } from '../../utils/swrFetcher';
-import { useState } from 'react';
 
 const MainPage = () => {
 	const { userData, isError } = useUser();

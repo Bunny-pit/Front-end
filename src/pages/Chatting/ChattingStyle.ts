@@ -11,8 +11,8 @@ export const Channels = styled.nav<{ isRoot: boolean }>`
 	flex-direction: column;
 	background: rgba(252, 155, 249, 0.29);
 	color: ${({ theme }) => theme.colors.text};
-	min-height: ${({ isRoot }) => (isRoot ? '1200px' : 'auto')};
-	max-height: 1200px;
+	min-height: ${({ isRoot }) => (isRoot ? '200rem' : 'auto')};
+	max-height: 200rem;
 	overflow-y: auto;
 	vertical-align: top;
 	& a {

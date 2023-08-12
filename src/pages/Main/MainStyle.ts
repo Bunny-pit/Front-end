@@ -67,9 +67,12 @@ export const MidText = styled.p`
 	line-height: 5rem;
 `;
 export const ImgContainer = styled.div`
-	margin-left: 110rem;
+	margin-left: 60%;
 	margin-top: -55rem;
 	position: relative;
+	@media (max-width: 768px) {
+		margin-left: 50%;
+	}
 `;
 export const GHeart = styled.img`
 	position: absolute;
@@ -89,7 +92,7 @@ export const PHeart = styled.img`
 	width: 12rem;
 `;
 export const MainAvatar = styled.img`
-	width: 50rem;
+	width: 80%;
 `;
 export const SecondSection = styled.div`
 	width: 100%;
