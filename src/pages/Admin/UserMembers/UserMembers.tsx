@@ -28,10 +28,8 @@ interface UserData {
 const UserMembers: React.FC = () => {
 	const USER_DATA = 'http://localhost:3001/api/user/login';
 	const [userData, setUserData] = useState<UserData[]>([]);
-
-	const handleSearch = (searchText: string) => {
-		// Your search logic here
-	};
+	const [filteredUserData, setFilteredUserData] = useState<UserData[]>([]); // 필터링된 데이터의 새 상태
+	const [searchQuery, setSearchQuery] = useState<string>('');
 
 	useEffect(() => {
 		axios
@@ -39,11 +37,26 @@ const UserMembers: React.FC = () => {
 			.then((response) => {
 				const fetchedData: UserData[] = response.data.data;
 				setUserData(fetchedData);
+				setFilteredUserData(fetchedData); // 모든 데이터로 FilteredUserData 초기화
 			})
 			.catch((error) => {
 				console.error('데이터를 가져오는 중 오류 발생:', error);
 			});
 	}, []);
+
+	const handleSearch = (query: string) => {
+		setSearchQuery(query);
+		const filteredData = userData.filter((user) =>
+			user.userName.toLowerCase().includes(query.toLowerCase()),
+		);
+
+		if (filteredData.length === 0) {
+			console.log('일치하는 닉네임이 없습니다.');
+		}
+
+		setFilteredUserData(filteredData);
+		console.log('성공', filteredData);
+	};
 
 	return (
 		<>
@@ -52,13 +65,8 @@ const UserMembers: React.FC = () => {
 				<Title>회원관리</Title>
 
 				<SearchBar onSearch={handleSearch} />
-				{/* <SearchBarDiv>
-					<SearchBarForm>
-						<SearchBarInput placeholder='이메일을 입력해주세요'></SearchBarInput>
-					</SearchBarForm>
-				</SearchBarDiv> */}
 
-				<UserTable data={userData} />
+				<UserTable data={filteredUserData} />
 			</Container>
 			<DefaultFooter />
 		</>
