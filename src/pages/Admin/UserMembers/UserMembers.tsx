@@ -1,19 +1,11 @@
-import { Routes, Route } from 'react-router-dom';
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import AdminHeader from '../../../components/AdminHeader/AdminHeader';
 import DefaultFooter from '../../../components/Footer/Footer';
 import { Link } from 'react-router-dom';
 
-import { post, get } from '../../../api/api';
-import { AxiosResponse } from 'axios';
 import { Post } from '../../../types/dataType';
 import { API_USER_LOGIN } from '../../../utils/constant';
-
-import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
-import timezone from 'dayjs/plugin/timezone';
 
 import UserTable from './UserMembersHooks';
 
