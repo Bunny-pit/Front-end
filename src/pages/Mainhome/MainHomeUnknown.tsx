@@ -2,7 +2,7 @@ import { useUser } from '../../utils/swrFetcher';
 
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
-import MainHomeUnKnownContent from '../../components/MainHomeContent/MainHomeUnknownContent';
+import MainHomeContent from '../../components/MainHomeContent/MainHomeContent';
 import MainHomeSendBox from '../../components/MainHomeSendBox/MainHomeSendBox';
 import useMainHomeUnkownPost from '../../hooks/useMainHomeUnknownPost';
 
@@ -23,7 +23,7 @@ const MainHomeUnknown = () => {
 			<Header />
 			<Title>Unknown Bunnies</Title>
 
-			<MainHomeUnKnownContent userData={userData} mainHomePost={mainHomePost} />
+			<MainHomeContent userData={userData} mainHomePost={mainHomePost} />
 
 			<MainHomeSendBox mainHomePost={mainHomePost} />
 

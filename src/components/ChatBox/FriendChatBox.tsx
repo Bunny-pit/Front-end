@@ -40,7 +40,7 @@ const FriendChatBox = ({ chatId, userId, onNewMessage }: ChatBoxProps) => {
 	const handleSendButtonClick = () => {
 		if (socket && inputArea.trim().length > 0) {
 			socket.emit(
-				'friendMessage',
+				'friendchatMessage',
 				{
 					senderId: userId,
 					chatId,

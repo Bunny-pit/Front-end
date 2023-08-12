@@ -15,8 +15,7 @@ export default async function handleLogout() {
                 
                 홈 페이지로 이동합니다.
     
-                `))
-            window.location.href = '/'
+                `)).then(() => { window.location.href = '/' })
         }
     } catch (error) {
         console.error(error)

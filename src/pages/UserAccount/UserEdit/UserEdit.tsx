@@ -31,10 +31,7 @@ export default function UserEditPage() {
     const formChecker = useMemo(() => {
 
     }, [formCheck])
-    // 아래로 테스트
-    const handleImageSelect=()=>{
-        console.log('이미ㅣㅈ실렉트')
-    }
+
     // const handleLogout = async () => {
     //     try {
     //         await post(API_USER_LOGOUT)
@@ -123,12 +120,9 @@ export default function UserEditPage() {
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChangeInputSetter(setNewPassWordCheck)(e)}
                     />
                 </InputWrap>
-
-                <ButtonWrap>
-                    <BottomButton onClick={() => { handleLogout() }}>로그아웃</BottomButton>
-                    <BottomButton type='submit'>수정완료</BottomButton>
-                </ButtonWrap>
+                <BottomButton type='submit'>수정완료</BottomButton>
             </FormWrap>
+            <BottomButton onClick={() => { handleLogout() }}>로그아웃</BottomButton>
         </Page >
 
     )

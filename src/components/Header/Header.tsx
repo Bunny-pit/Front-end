@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 import HeaderLogo from '../../assets/icons/HedearLogo.png';
 import HeaderOption from '../../assets/icons/HedearOption.png';
 import { useNavigate } from 'react-router-dom';
-import searchicon from '../../assets/icons/search.svg';
+import searchicon from '../../assets/icons/search.png';
 import SearchModal from '../../pages/SearchModal/SearchModal';
 import { useState } from 'react';
 
