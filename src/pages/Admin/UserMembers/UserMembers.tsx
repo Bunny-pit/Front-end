@@ -10,13 +10,7 @@ import { API_USER_LOGIN } from '../../../utils/constant';
 
 import UserTable from './UserMembersHooks';
 
-import {
-	Container,
-	Title,
-	SearchBarInput,
-	SearchBarForm,
-	SearchBarDiv,
-} from './UserMembrsStyle';
+import { Container, Title } from './UserMembrsStyle';
 
 interface UserData {
 	_id: string;

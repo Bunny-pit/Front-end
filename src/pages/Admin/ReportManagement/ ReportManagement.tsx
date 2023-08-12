@@ -37,7 +37,7 @@ const ReportManagement: React.FC = () => {
 		<>
 			<AdminHeader />
 			<Container>
-				<Title>회원관리</Title>
+				<Title>신고 관리</Title>
 
 				{/* <UserTable data={filteredUserData} /> */}
 			</Container>

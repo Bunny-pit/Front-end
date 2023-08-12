@@ -16,6 +16,7 @@ import FriendChatting from './pages/Chatting/FriendChatting';
 import { getToken } from './api/token';
 
 import UserMembers from './pages/Admin/UserMembers/UserMembers';
+import ReportManagement from './pages/Admin/ReportManagement/ ReportManagement';
 
 function App() {
 	const [isLogin, setIsLogin] = useState(false);

@@ -1,18 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { useState, useEffect, useRef, useCallback } from 'react';
-import {
-	Container,
-	Title,
-	SearchBarInput,
-	SearchBarForm,
-	SearchBarDiv,
-	TableDiv,
-	Th,
-	Td,
-	Table,
-	Thead,
-} from './UserMembrsStyle';
+import { Button, TableDiv, Th, Td, Table, Thead } from './UserMembrsStyle';
 
 interface UserData {
 	_id: string;
@@ -64,7 +53,7 @@ const UserTable: React.FC<Props> = ({ data }) => {
 								<Td>{user.userName}</Td>
 								<Td>{user.email}</Td>
 								<Td>
-									<button onClick={() => deleteUser(user.email)}>Delete</button>
+									<Button onClick={() => deleteUser(user.email)}>삭제</Button>
 								</Td>
 							</tr>
 						))}
