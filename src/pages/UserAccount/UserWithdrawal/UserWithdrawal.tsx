@@ -71,7 +71,7 @@ export default function UserWithdrawalPage() {
                 </TopButton>
             </TopButtonWrap>
             <InputTitle style={{ textAlign: 'center', margin: '4rem 0 1rem 0' }}>회원 탈퇴를 위해 정보를 입력해주세요</InputTitle>
-            <FormWrap onSubmit={handleSubmit}>
+            <FormWrap >
                 <InputTitle>이메일</InputTitle>
                 <InputWrap>
                     <InputBar
@@ -99,16 +99,14 @@ export default function UserWithdrawalPage() {
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChangeInputSetter(setPasswordCheck)(e)}
                     />
                 </InputWrap>
-                <ButtonWrap>
-                    <BottomButton onClick={async () => {
-                        const result = await Swal.fire(alertList.doubleCheckMessage(`돌아가시겠어요?`))
-                        if (result.isConfirmed) {
-                            navigate('/')
-                        }
-                    }}>돌아가기</BottomButton>
-                    <BottomButton type='submit'>계정탈퇴</BottomButton>
-                </ButtonWrap>
+                <BottomButton type='submit'>계정탈퇴</BottomButton>
             </FormWrap>
+            <BottomButton onClick={async () => {
+                const result = await Swal.fire(alertList.doubleCheckMessage(`돌아가시겠어요?`))
+                if (result.isConfirmed) {
+                    navigate('/')
+                }
+            }}>홈으로</BottomButton>
         </Page >
 
     )
