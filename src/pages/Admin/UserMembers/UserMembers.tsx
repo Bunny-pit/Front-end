@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
+import axios from 'axios';
 import AdminHeader from '../../../components/AdminHeader/AdminHeader';
 import DefaultFooter from '../../../components/Footer/Footer';
 import { Link } from 'react-router-dom';
@@ -8,7 +9,13 @@ import { Link } from 'react-router-dom';
 import { post, get } from '../../../api/api';
 import { AxiosResponse } from 'axios';
 import { Post } from '../../../types/dataType';
-import { API_USER_REGISTER } from '../../../utils/constant';
+import { API_USER_LOGIN } from '../../../utils/constant';
+
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+
+import UserTable from './UserMembersHooks';
 
 import {
 	Container,
@@ -23,23 +30,28 @@ import {
 	Thead,
 } from './UserMembrsStyle';
 
-const UserMembers = () => {
-	const [users, setUsers] = useState<Post[]>([]);
-	async function userList() {
-		try {
-			const res = await get<Post[]>(`${API_USER_REGISTER}`);
-			const updatedUsers = [
-				...users,
-				...res.data.map((post: Post) => ({
-					...post,
-				})),
-			];
-			setUsers(updatedUsers);
-			console.log('성공', updatedUsers);
-		} catch (err) {
-			console.error(err);
-		}
-	}
+interface UserData {
+	_id: string;
+	userName: string;
+	email: string;
+	createdAt: string;
+}
+
+const UserMembers: React.FC = () => {
+	const USER_DATA = 'http://localhost:3001/api/user/login';
+	const [userData, setUserData] = useState<UserData[]>([]);
+
+	useEffect(() => {
+		axios
+			.get(USER_DATA)
+			.then((response) => {
+				const fetchedData: UserData[] = response.data.data;
+				setUserData(fetchedData);
+			})
+			.catch((error) => {
+				console.error('데이터를 가져오는 중 오류 발생:', error);
+			});
+	}, []);
 
 	return (
 		<>
@@ -52,23 +64,7 @@ const UserMembers = () => {
 					</SearchBarForm>
 				</SearchBarDiv>
 
-				<TableDiv>
-					<Table>
-						<Thead>
-							<tr>
-								<Th>가입날짜</Th>
-								<Th>닉네임</Th>
-								<Th>이메일</Th>
-								<Th></Th>
-							</tr>
-						</Thead>
-						<tbody>
-							<Td>ㅇㅇㅇ</Td>
-							<Td>ㅇㅇㅇ</Td>
-							<Td>ㅇㅇㅇ</Td>
-						</tbody>
-					</Table>
-				</TableDiv>
+				<UserTable data={userData} />
 			</Container>
 			<DefaultFooter />
 		</>
