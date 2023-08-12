@@ -4,7 +4,6 @@ export const Page = styled.div`
 position : absolute;
 top:20%;
 height:auto;
-// bottom : 18%;
 width:100%;
 max-width : 60rem;
 padding : 0 2rem;
@@ -45,13 +44,13 @@ flex : 1;
 export const InputTitle = styled.div`
 font-size : 2rem;
 font-weight : 500;
-margin-top:2rem;
+margin-top : 2rem;
 `
 export const InputWrap = styled.div`
 display : flex;
 border-radius : 8px;
 padding : 1.6rem;
-margin-top : 1rem;
+margin : 0.5rem 0 0.5rem 0;
 background-color : white;
 border : 1px solid #e3e0e0;
 
@@ -73,13 +72,12 @@ flex-direction : row;
 justify-content : space-between
 `
 export const BottomButton = styled.button`
-width: 49.5%;
+width: 100%;
 height : 5rem;
 background-color: #E49AFB; 
 border : none;
 border-radius : 8px;
-margin-top : 0.5rem;
-margin-bottom : 0.5rem;
+margin : 0.5rem 0 0.5rem 0;
 color : white;
 cursor : pointer;
 &:hover{

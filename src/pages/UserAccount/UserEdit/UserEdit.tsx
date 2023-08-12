@@ -32,21 +32,21 @@ export default function UserEditPage() {
 
     }, [formCheck])
 
-    const handleLogout = async () => {
-        try {
-            await post(API_USER_LOGOUT)
-            removeToken('accessToken');
-            removeToken('refreshToken');
-            Swal.fire(alertList.successMessage(`로그아웃 성공! 
+    // const handleLogout = async () => {
+    //     try {
+    //         await post(API_USER_LOGOUT)
+    //         removeToken('accessToken');
+    //         removeToken('refreshToken');
+    //         Swal.fire(alertList.successMessage(`로그아웃 성공! 
 
-                홈 페이지로 이동합니다.
+    //             홈 페이지로 이동합니다.
 
-                `))
-                navigate('/');
-        } catch (error) {
-            console.error(error)
-        }
-    }
+    //             `))
+    //             navigate('/');
+    //     } catch (error) {
+    //         console.error(error)
+    //     }
+    // }
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
@@ -120,12 +120,9 @@ export default function UserEditPage() {
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChangeInputSetter(setNewPassWordCheck)(e)}
                     />
                 </InputWrap>
-
-                <ButtonWrap>
-                    <BottomButton onClick={() => { handleLogout() }}>로그아웃</BottomButton>
-                    <BottomButton type='submit'>수정완료</BottomButton>
-                </ButtonWrap>
+                <BottomButton type='submit'>수정완료</BottomButton>
             </FormWrap>
+            <BottomButton onClick={() => { handleLogout() }}>로그아웃</BottomButton>
         </Page >
 
     )
