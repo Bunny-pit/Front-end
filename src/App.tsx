@@ -67,10 +67,8 @@ function App() {
 			<Routes>
 				{!isLogin && ( //로그인 안되어 있을 경우 register, login만 접근 가능.
 					<>
-						<Route path='/' element={<MainPage />} />
 						<Route path='/register' element={<RegisterPage />} />
 						<Route path='/login' element={<LoginPage />} />
-						<Route path='/mainhome/unknown' element={<MainHomeUnknown />} />
 					</>
 				)}
 				{isLogin && ( // 로그인 했을 때만 렌더링
@@ -87,7 +85,10 @@ function App() {
 					</>
 				)}
 				{/* 유효하지 않은 페이지 접근시 메인페이지로 이동 */}
+				<Route path='/' element={<MainPage />} />
 				<Route path='*' element={<MainPage />} />
+				<Route path='/mainhome/unknown' element={<MainHomeUnknown />} />
+
 			</Routes>
 		</>
 	);
