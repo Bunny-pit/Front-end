@@ -21,7 +21,13 @@ export const Header = styled.div`
 	justify-content: space-between;
 `;
 export const Logo = styled.img`
-	width: 10%;
+	width: 15rem;
+	@media (max-width: 768px) {
+		width: 10rem;
+	}
+	@media (max-width: 390px) {
+		width: 8rem;
+	}
 `;
 export const BtnContainer = styled.div`
 	margin-top: 4rem;
@@ -34,6 +40,9 @@ export const LogIn = styled.button`
 	color: ${({ theme }) => theme.colors.background};
 	font-weight: 800;
 	font-size: 2rem;
+	@media (max-width: 390px) {
+		font-size: 1.5rem;
+	}
 `;
 
 export const SignUp = styled.button`
@@ -43,21 +52,41 @@ export const SignUp = styled.button`
 	color: ${({ theme }) => theme.colors.background};
 	font-weight: 800;
 	font-size: 2rem;
+	@media (max-width: 390px) {
+		font-size: 1.5rem;
+	}
 `;
 export const MainContent = styled.div`
 	margin-top: 13rem;
 	margin-left: 8rem;
+	@media (max-width: 390px) {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		margin-left: 0;
+	}
 `;
 export const BigText1 = styled.p`
 	color: ${({ theme }) => theme.colors.background};
 	font-size: 8rem;
 	font-weight: 900;
+
+	@media (max-width: 768px) {
+		font-size: 6rem;
+	}
+	@media (max-width: 390px) {
+		font-size: 3rem;
+	}
 `;
 export const BigText2 = styled.p`
 	color: ${({ theme }) => theme.colors.pointcolor};
 	font-size: 8rem;
 	font-weight: 900;
 	margin-top: -5.5rem;
+	@media (max-width: 390px) {
+		font-size: 6rem;
+		margin-top: 0rem;
+	}
 `;
 export const MidText = styled.p`
 	color: ${({ theme }) => theme.colors.text};
@@ -65,6 +94,13 @@ export const MidText = styled.p`
 	font-weight: 700;
 	letter-spacing: 0.2rem;
 	line-height: 5rem;
+	@media (max-width: 768px) {
+		font-size: 2.5rem;
+	}
+	@media (max-width: 390px) {
+		font-size: 1.5rem;
+		line-height: 2rem;
+	}
 `;
 export const ImgContainer = styled.div`
 	margin-left: 60%;
@@ -73,24 +109,12 @@ export const ImgContainer = styled.div`
 	@media (max-width: 768px) {
 		margin-left: 50%;
 	}
+	@media (max-width: 390px) {
+		margin-left: 20%;
+		margin-top: 4rem;
+	}
 `;
-export const GHeart = styled.img`
-	position: absolute;
-	top: 0;
-	left: 2rem;
-	width: 15rem;
-`;
-export const BHeart = styled.img`
-	position: absolute;
-	top: 30rem;
-	left: -10rem;
-`;
-export const PHeart = styled.img`
-	position: absolute;
-	top: 35rem;
-	left: 45rem;
-	width: 12rem;
-`;
+
 export const MainAvatar = styled.img`
 	width: 80%;
 `;
@@ -99,34 +123,38 @@ export const SecondSection = styled.div`
 	height: 71rem;
 	margin: 20rem auto;
 	display: flex;
+	@media (max-width: 390px) {
+		height: 130rem;
+	}
 `;
 export const LeftSection = styled.div`
 	margin-left: 8rem;
 	height: 37rem;
 	width: 70rem;
-	border-radius: 3.7rem;
 	position: relative;
-	& p {
-		color: white;
-		position: absolute;
-		top: 12rem;
-		left: 25rem;
-		font-size: 3rem;
+	@media (max-width: 390px) {
+		height: 40rem;
 	}
 `;
 export const LeftImage = styled.img`
 	width: 50%;
+	@media (max-width: 768px) {
+		width: 70%;
+	}
+	@media (max-width: 390px) {
+		width: 60%;
+		margin-top: 20rem;
+		margin-left: 0;
+	}
 `;
 export const DetailImage = styled.img`
 	width: 60%;
 	position: absolute;
-	z-index: -999;
+	@media (max-width: 768px) {
+		display: none;
+	}
 `;
-export const LeftDetailImage = styled.img`
-	width: 80%;
-	position: absolute;
-	top: 30rem;
-`;
+
 export const RightSection = styled.div`
 	margin-left: auto;
 	margin-right: 8rem;
@@ -134,56 +162,117 @@ export const RightSection = styled.div`
 	width: 70rem;
 	border-radius: 3.7rem;
 	position: relative;
-	& p {
-		color: white;
-		position: absolute;
-		top: 12rem;
-		left: 25rem;
-		font-size: 3rem;
+	@media (max-width: 390px) {
+		left: 20rem;
 	}
 `;
 export const RightImage = styled.img`
 	width: 80%;
 	position: absolute;
 	top: -10rem;
+	@media (max-width: 768px) {
+		top: -5rem;
+		left: 10rem;
+	}
+	@media (max-width: 390px) {
+		width: 60%;
+		left: 10rem;
+	}
 `;
 export const RightDetailImage = styled.img`
 	width: 90%;
 	position: absolute;
 	left: -35rem;
 	top: 10rem;
+	@media (max-width: 768px) {
+		width: 60%;
+		top: 20rem;
+		left: -10rem;
+	}
+	@media (max-width: 390px) {
+		width: 50%;
+		left: 10rem;
+	}
 `;
 export const RightContent = styled.div`
 	margin-left: auto;
 	margin-right: 15rem;
+	@media (max-width: 390px) {
+		margin-left: 0;
+		margin-right: 0;
+	}
+	@media (max-width: 390px) {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		margin-left: -73rem;
+		margin-top: 90rem;
+	}
+`;
+export const LastContent = styled.div`
+	margin-left: auto;
+	margin-right: 15rem;
+	@media (max-width: 390px) {
+		margin-left: 0;
+		margin-right: 0;
+	}
+	@media (max-width: 390px) {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		margin-left: -68rem;
+		margin-top: -10rem;
+	}
 `;
 export const LeftContent = styled.div`
 	margin-left: 8rem;
 	margin-right: 15rem;
+	@media (max-width: 390px) {
+		margin-top: 50rem;
+		margin-right: -80rem;
+		margin-left: 13rem;
+	}
 `;
 export const MidContent = styled.p`
 	font-size: 6rem;
 	font-weight: 700;
+	@media (max-width: 768px) {
+		font-size: 4rem;
+	}
+	@media (max-width: 390px) {
+	}
 `;
 export const MidSecContent = styled.p`
 	font-size: 3rem;
+	@media (max-width: 768px) {
+		font-size: 2rem;
+	}
 `;
 export const MidImage = styled.img`
 	width: 100%;
 	position: absolute;
 	left: -100px;
+	@media (max-width: 390px) {
+		display: none;
+	}
 `;
 export const ThirdSection = styled.div`
 	margin-top: -30rem;
 	display: flex;
 	background-color: #9ff984;
 	padding: 20rem 0;
+	@media (max-width: 390px) {
+		height: 75rem;
+	}
 `;
 export const FourthSection = styled.div`
 	margin-top: 0rem;
 	display: flex;
 	background-color: ${({ theme }) => theme.colors.background};
 	padding: 20rem 0;
+	@media (max-width: 390px) {
+		height: 0;
+	}
 `;
 export const HalfCircle = styled.div`
 	height: 62rem;
@@ -198,6 +287,11 @@ export const HalfCircle = styled.div`
 	margin-bottom: 20rem;
 	display: flex;
 	justify-content: center;
+
+	@media (max-width: 390px) {
+		border-bottom-left-radius: 70% 80%;
+		border-bottom-right-radius: 70% 80%;
+	}
 `;
 export const ShareBtn = styled.button`
 	width: 53rem;
@@ -213,5 +307,11 @@ export const ShareBtn = styled.button`
 	transition: transform 0.3s;
 	&:hover {
 		transform: scale(1.1);
+	}
+
+	@media (max-width: 390px) {
+		font-size: 2rem;
+		width: 25rem;
+		height: 8rem;
 	}
 `;
