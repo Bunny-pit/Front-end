@@ -1,17 +1,12 @@
 import React from 'react';
 import MainLogo from '../../assets/icons/MainLogo.png';
-import GreenHeart from '../../assets/images/greenheart.png';
-import BlueHeart from '../../assets/images/blueheart.png';
-import PinkHeart from '../../assets/images/pinkheart.png';
-import Avatar from '../../assets/images/avatar.png';
 import { Link } from 'react-router-dom';
 import mainhomeImage from '../../assets/images/mainhome.png';
-import mainhomeDetail from '../../assets/images/mainhomedetail.png';
 import chattingImage from '../../assets/images/chatting.png';
 import friend from '../../assets/images/friend.png';
 import messagebubble from '../../assets/images/messagebubble.png';
 import link from '../../assets/images/link.png';
-
+import mainImage from '../../assets/images/mainImage.png';
 import {
 	FirstSection,
 	Container,
@@ -24,9 +19,6 @@ import {
 	MidText,
 	BigText1,
 	BigText2,
-	GHeart,
-	BHeart,
-	PHeart,
 	ImgContainer,
 	MainAvatar,
 	MidContent,
@@ -41,11 +33,11 @@ import {
 	HalfCircle,
 	ShareBtn,
 	LeftImage,
-	LeftDetailImage,
 	RightImage,
 	RightDetailImage,
 	DetailImage,
 	MidImage,
+	LastContent,
 } from './MainStyle';
 import { useUser } from '../../utils/swrFetcher';
 
@@ -81,17 +73,13 @@ const MainPage = () => {
 							버니톡과 함께 만들어가요
 						</MidText>
 						<ImgContainer>
-							<MainAvatar src={Avatar} alt='avatar' />
-							<GHeart src={GreenHeart} alt='green-heart' />
-							<BHeart src={BlueHeart} alt='blue-heart' />
-							<PHeart src={PinkHeart} alt='pink-heart' />
+							<MainAvatar src={mainImage} alt='avatar' />
 						</ImgContainer>
 					</MainContent>
 				</FirstSection>
 				<SecondSection>
 					<LeftSection>
 						<LeftImage src={mainhomeImage} alt='mainhome-image' />
-						<LeftDetailImage src={mainhomeDetail} alt='mainhome-image' />
 						<DetailImage src={messagebubble} alt='message-image' />
 					</LeftSection>
 					<RightContent>
@@ -106,7 +94,6 @@ const MainPage = () => {
 				<ThirdSection>
 					<LeftContent>
 						<MidContent>친구들과 채팅하기</MidContent>
-
 						<MidSecContent>
 							왠지 특별한 우리만의 공간에서
 							<br />
@@ -123,7 +110,7 @@ const MainPage = () => {
 						{' '}
 						<MidImage src={link} alt='link-image' />
 					</LeftSection>
-					<RightContent>
+					<LastContent>
 						<MidContent>내가 보고싶은 친구 소환</MidContent>
 
 						<MidSecContent>
@@ -131,7 +118,7 @@ const MainPage = () => {
 							<br />
 							링크 하나로 이어지는 우리들의 마음
 						</MidSecContent>
-					</RightContent>
+					</LastContent>
 				</FourthSection>
 				<HalfCircle>
 					<Link to='/register'>
