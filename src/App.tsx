@@ -26,8 +26,6 @@ function App() {
 		} else {
 			setIsLogin(false);
 		}
-		console.log(location.pathname);
-		console.log('로그인 아닌 페이지', isLogin);
 	}, [location.pathname]);
 
 	//초기 로그인 상태 설정 후 로컬 스토리지 변경시마다 로그인 상태 재설정
@@ -49,7 +47,7 @@ function App() {
 		};
 	}, []);
 
-	// 특정 페이지 제외 토큰 확인
+	// pathsWithoutTokenCheck배열에 들어간 페이지는 토큰 확인에서 제외.
 	useEffect(() => {
 		const pathsWithoutTokenCheck = [
 			'/login',
@@ -65,13 +63,13 @@ function App() {
 	return (
 		<>
 			<Routes>
-				{!isLogin && ( //로그인 안되어 있을 경우 register, login만 접근 가능.
+				{!isLogin && ( //로그인 안되어 있을 경우에만 접근 가능한 페이지. 로그인 시 접근 불가.
 					<>
 						<Route path='/register' element={<RegisterPage />} />
 						<Route path='/login' element={<LoginPage />} />
 					</>
 				)}
-				{isLogin && ( // 로그인 했을 때만 렌더링
+				{isLogin && ( //로그인 되어 있을 경우에만 접근 가능한 페이지. 비로그인 시 접근 불가.
 					<>
 						<Route path='/user/edit' element={<UserEditPage />} />
 						<Route path='/user/withdrawal' element={<UserWithdrawalPage />} />
@@ -84,11 +82,11 @@ function App() {
 						<Route path='/friendchatting/*' element={<FriendChatting />} />
 					</>
 				)}
-				{/* 유효하지 않은 페이지 접근시 메인페이지로 이동 */}
+				{/* 로그인 유무에 상관없이 접근 가능 */}
 				<Route path='/' element={<MainPage />} />
-				<Route path='*' element={<MainPage />} />
 				<Route path='/mainhome/unknown' element={<MainHomeUnknown />} />
-
+				{/* 유효하지 않은 페이지 접근시 메인페이지로 이동 */}
+				<Route path='*' element={<MainPage />} />
 			</Routes>
 		</>
 	);
