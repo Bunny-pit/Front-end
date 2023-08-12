@@ -1,8 +1,14 @@
 import { Routes, Route } from 'react-router-dom';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import AdminHeader from '../../../components/AdminHeader/AdminHeader';
 import DefaultFooter from '../../../components/Footer/Footer';
 import { Link } from 'react-router-dom';
+
+import { post, get } from '../../../api/api';
+import { AxiosResponse } from 'axios';
+import { Post } from '../../../types/dataType';
+import { API_USER_REGISTER } from '../../../utils/constant';
 
 import {
 	Container,
@@ -16,7 +22,25 @@ import {
 	Table,
 	Thead,
 } from './UserMembrsStyle';
+
 const UserMembers = () => {
+	const [users, setUsers] = useState<Post[]>([]);
+	async function userList() {
+		try {
+			const res = await get<Post[]>(`${API_USER_REGISTER}`);
+			const updatedUsers = [
+				...users,
+				...res.data.map((post: Post) => ({
+					...post,
+				})),
+			];
+			setUsers(updatedUsers);
+			console.log('성공', updatedUsers);
+		} catch (err) {
+			console.error(err);
+		}
+	}
+
 	return (
 		<>
 			<AdminHeader />
