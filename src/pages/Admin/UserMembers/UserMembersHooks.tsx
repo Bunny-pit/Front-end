@@ -23,14 +23,17 @@ const UserTable: React.FC<Props> = ({ data }) => {
 			})
 			.then((response) => {
 				console.log(response.data);
-				// 데이터에서 삭제된 사용자를 필터링합니다.
-				const teatData: UserData[] = response.data.data;
-				const updatedData = teatData.filter((user) => user.email !== email);
-				setUsersData(updatedData);
+
+				if (response.status === 200) {
+					// 사용자가 성공적으로 삭제되었을때 상태 업데이트 추가하기
+					const updatedData = usersData.filter((user) => user.email !== email);
+					setUsersData(updatedData);
+				} else {
+					console.log('사용자 삭제를 실패하였습니다.');
+				}
 			})
 			.catch((error) => {
-				console.error('유저 정보 찾기 실패:', error);
-				console.log('실패:');
+				console.error('사용자 삭제를 실패하였습니다.:', error);
 			});
 	};
 

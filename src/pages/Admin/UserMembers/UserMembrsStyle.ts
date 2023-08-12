@@ -13,7 +13,7 @@ export const Title = styled.p`
 `;
 
 export const TableDiv = styled.div`
-	margin: 20px auto;
+	margin: 60px auto;
 	width: 80%;
 
 	box-sizing: border-box;

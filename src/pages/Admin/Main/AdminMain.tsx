@@ -4,6 +4,9 @@ import AdminHeader from '../../../components/AdminHeader/AdminHeader';
 import DefaultFooter from '../../../components/Footer/Footer';
 import { Link } from 'react-router-dom';
 
+import UserMembers from '../UserMembers/UserMembers';
+import ReportManagement from '../ReportManagement/ ReportManagement';
+
 import { Container, Title, Menu, H2, MenuFlex } from './AdminMainStyle';
 
 const AdminMain = () => {
@@ -19,7 +22,7 @@ const AdminMain = () => {
 						</Link>
 					</Menu>
 					<Menu>
-						<Link to=''>
+						<Link to='.'>
 							<H2>신고관리</H2>
 						</Link>
 					</Menu>

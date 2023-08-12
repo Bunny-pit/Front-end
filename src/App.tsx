@@ -17,6 +17,7 @@ import { getToken } from './api/token';
 
 import UserMembers from './pages/Admin/UserMembers/UserMembers';
 import ReportManagement from './pages/Admin/ReportManagement/ ReportManagement';
+import AdminMain from './pages/Admin/Main/AdminMain';
 
 function App() {
 	const [isLogin, setIsLogin] = useState(false);
