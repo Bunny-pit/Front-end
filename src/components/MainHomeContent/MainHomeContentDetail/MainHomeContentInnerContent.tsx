@@ -2,6 +2,7 @@ import React from 'react';
 import message from '../../../assets/icons/message.png';
 import { Link, useLocation } from 'react-router-dom';
 import Group from '../../../assets/icons/Group.png';
+import Swal from 'sweetalert2';
 
 import {
 	UserContainer,
@@ -17,6 +18,7 @@ import {
 	ButtonWrapper,
 	Edit,
 	Delete,
+	Report,
 } from '../MainHomeContentStyle';
 
 interface InnerContentProps {
@@ -30,7 +32,48 @@ interface InnerContentProps {
 	setEditingPostId: (id: string) => void;
 	setUpdatedContent: (content: string) => void;
 	deletePost: (id: string) => void;
+	sendReport: (postId: string, reason: string) => Promise<void>;
 }
+
+const handleReport = (
+	post: any,
+	userData: any,
+	sendReport: (postId: string, reason: string) => Promise<void>,
+) => {
+	// 이미 신고한 게시글인지 확인
+	const hasUserAlreadyReported = post.reports.some(
+		(report: { reporterId: string }) => report.reporterId === userData?._id,
+	);
+
+	console.log('Has user already reported:', hasUserAlreadyReported);
+
+	if (hasUserAlreadyReported) {
+		Swal.fire('알림', '이미 신고한 게시글입니다.', 'warning');
+		return;
+	}
+
+	Swal.fire({
+		title: '신고 사유 입력',
+		input: 'text',
+		inputPlaceholder: '신고 사유를 입력해주세요',
+		showCancelButton: true,
+		confirmButtonText: '신고하기',
+		showLoaderOnConfirm: true,
+		preConfirm: async (reason) => {
+			if (!reason) {
+				Swal.showValidationMessage('신고 사유를 입력해주세요');
+				return;
+			}
+			// 신고 함수 호출
+			try {
+				await sendReport(post._id, reason);
+				Swal.fire('성공', '신고가 접수되었습니다.', 'success');
+			} catch (error) {
+				Swal.fire('오류', '신고 접수 중 문제가 발생했습니다.', 'error');
+			}
+		},
+	});
+};
 
 const MainHomeContentInnerContent = ({
 	post,
@@ -43,6 +86,7 @@ const MainHomeContentInnerContent = ({
 	setEditingPostId,
 	setUpdatedContent,
 	deletePost,
+	sendReport,
 }: InnerContentProps) => {
 	const isOnFriendsPage = useLocation().pathname === '/mainhome/friends';
 	return (
@@ -67,6 +111,11 @@ const MainHomeContentInnerContent = ({
 						/>
 					)}
 				</IconContainer>
+				{userData && userData?._id !== post.userId && (
+					<Report onClick={() => handleReport(post, userData, sendReport)}>
+						신고
+					</Report>
+				)}
 			</UserContainer>
 
 			<ContentContainer>

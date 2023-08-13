@@ -1,6 +1,6 @@
 import React from 'react';
 
-import useMainHomePost from '../../hooks/useMainHomeFriendsPost';
+import useMainHomePost from '../../hooks/useMainHomeUnknownPost';
 import MainHomeContentImage from './MainHomeContentDetail/MainHomeContentImage';
 import MainHomeContentInnerContent from './MainHomeContentDetail/MainHomeContentInnerContent';
 
@@ -26,12 +26,13 @@ const MainHomeContent = ({ userData, mainHomePost }: MainHomeProps) => {
 		updatePost,
 		deletePost,
 		moveToChatPage,
+		sendReport,
 	} = mainHomePost;
 
 	return (
 		<Container>
 			{posts.length === 0 ? (
-				<EmptyArea>친구들을 팔로우하고 글을 남겨보세요!</EmptyArea>
+				<EmptyArea>게시글이 없어요!</EmptyArea>
 			) : (
 				posts.map((post, index) => {
 					const email: string = post.email;
@@ -52,6 +53,7 @@ const MainHomeContent = ({ userData, mainHomePost }: MainHomeProps) => {
 								setEditingPostId={setEditingPostId}
 								setUpdatedContent={setUpdatedContent}
 								deletePost={deletePost}
+								sendReport={sendReport}
 							/>
 						</ContentBox>
 					);

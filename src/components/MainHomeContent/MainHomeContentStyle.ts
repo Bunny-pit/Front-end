@@ -64,7 +64,7 @@ export const IconContainer = styled.div`
 
 export const GoChat = styled.img`
 	cursor: pointer;
-	margin-top: 0.4rem;
+	margin-top: 1.2rem;
 	height: 4rem;
 `;
 
@@ -128,6 +128,16 @@ export const Edit = styled.button`
 export const Delete = styled.button`
 	width: 7rem;
 	height: 3.5rem;
+	border: 0;
+	border-radius: 0.7rem;
+	background-color: ${({ theme }) => theme.colors.maincolor};
+	color: #fff;
+	cursor: pointer;
+`;
+
+export const Report = styled.button`
+	width: 5rem;
+	height: 3rem;
 	border: 0;
 	border-radius: 0.7rem;
 	background-color: ${({ theme }) => theme.colors.maincolor};
