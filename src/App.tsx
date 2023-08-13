@@ -66,7 +66,37 @@ function App() {
 
 	return (
 		<>
-			<UserMembers></UserMembers>
+			<Routes>
+				{!isLogin && ( //로그인 안되어 있을 경우에만 접근 가능한 페이지. 로그인 시 접근 불가.
+					<>
+						<Route path='/register' element={<RegisterPage />} />
+						<Route path='/login' element={<LoginPage />} />
+					</>
+				)}
+				{isLogin && ( //로그인 되어 있을 경우에만 접근 가능한 페이지. 비로그인 시 접근 불가.
+					<>
+						<Route path='/user/edit' element={<UserEditPage />} />
+						<Route path='/user/withdrawal' element={<UserWithdrawalPage />} />
+						<Route path='/post' element={<UserMainPage />} />
+						<Route path='/post/user/:userId' element={<UserMainPage />} />
+						<Route path='/post/:postId' element={<Detail />} />
+						<Route path='/post/upload' element={<UploadPost />} />
+						<Route path='/mainhome/friends' element={<MainHomeFriends />} />
+						<Route path='/chatting/*' element={<Chatting />} />
+						<Route path='/friendchatting/*' element={<FriendChatting />} />
+					</>
+				)}
+				{/* 로그인 유무에 상관없이 접근 가능 */}
+				<Route path='/' element={<MainPage />} />
+				<Route path='/mainhome/unknown' element={<MainHomeUnknown />} />
+
+				<Route path='/adminMain' element={<AdminMain />} />
+				<Route path='/reportManagement' element={<ReportManagement />} />
+				<Route path='/userMembers' element={<UserMembers />} />
+
+				{/* 유효하지 않은 페이지 접근시 메인페이지로 이동 */}
+				<Route path='*' element={<MainPage />} />
+			</Routes>
 		</>
 	);
 }

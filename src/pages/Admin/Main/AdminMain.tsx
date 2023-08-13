@@ -17,12 +17,12 @@ const AdminMain = () => {
 				<Title>관리자 페이지</Title>
 				<MenuFlex>
 					<Menu>
-						<Link to=''>
+						<Link to='/userMembers'>
 							<H2>회원관리</H2>
 						</Link>
 					</Menu>
 					<Menu>
-						<Link to='.'>
+						<Link to='/reportManagement'>
 							<H2>신고관리</H2>
 						</Link>
 					</Menu>
