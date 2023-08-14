@@ -24,6 +24,9 @@ export const Channels = styled.nav<{ isRoot: boolean }>`
 		display: flex;
 		align-items: center;
 	}
+	@media (max-width: 768px) {
+		max-width: 33rem;
+	}
 `;
 
 export const FriendChannels = styled.nav<{ isRoot: boolean }>`
@@ -42,6 +45,9 @@ export const FriendChannels = styled.nav<{ isRoot: boolean }>`
 		line-height: 28px;
 		display: flex;
 		align-items: center;
+	}
+	@media (max-width: 768px) {
+		max-width: 33rem;
 	}
 `;
 export const WorkspaceName = styled.button`
