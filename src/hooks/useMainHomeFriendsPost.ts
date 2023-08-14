@@ -144,6 +144,31 @@ const useMainHomePost = () => {
 		}
 	};
 
+	const sendReport = async (postId: string, reason: string) => {
+		const token = localStorage.getItem('accessToken');
+		if (!token) {
+			Swal.fire(
+				alertList.errorMessage('게시글 신고를 위해서는 로그인이 필요합니다.'),
+			);
+			return;
+		}
+		try {
+			await post<{ message: string }>(
+				`${API_MAINHOME_FRIENDS}/report/${postId}`,
+				{
+					reason: reason,
+				},
+				{
+					withCredentials: true,
+				},
+			);
+			Swal.fire(alertList.successMessage('게시글을 성공적으로 신고했습니다.'));
+		} catch (err) {
+			console.error(err);
+			Swal.fire(alertList.errorMessage('신고 접수 중 오류가 발생했습니다.'));
+		}
+	};
+
 	const navigate = useNavigate();
 
 	const moveToChatPage = async (_id: string, userId: string, name: string) => {
@@ -174,6 +199,7 @@ const useMainHomePost = () => {
 		setUpdatedContent,
 		editingPostId,
 		setEditingPostId,
+		sendReport,
 		moveToChatPage,
 	};
 };
