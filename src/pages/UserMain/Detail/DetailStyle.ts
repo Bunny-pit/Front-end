@@ -27,8 +27,12 @@ export const Profile = styled.div`
 `;
 export const ProfileUserImage = styled.img`
 	width: 10rem;
+	height: 10rem;
+	border-radius: 50rem;
 	@media only screen and (min-width: 390px) and (max-width: 1279px) {
 		width: 7rem;
+		height: 7rem;
+		border-radius: 50rem;
 	}
 `;
 export const ProfileId = styled.p`

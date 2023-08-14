@@ -69,6 +69,7 @@ const Detail = () => {
 	const [userName, setUserName] = useState(''); // userName 게시글 기준으로 추가해야됨
 	const [likeCount, setLikeCount] = useState<number>(0);
 	const [isLiked, setIsLiked] = useState<boolean>(false);
+	const [profileImage, setProfileImage] = useState('');
 	const { userData, isError } = useUser();
 	if (isError) {
 		console.log('유저 데이터를 불러오는데 실패했습니다.');
@@ -101,12 +102,14 @@ const Detail = () => {
 					// console.log('currentUser = ', currentUser);
 					// console.log('count = ', response.data.like.userId.length);
 					// console.log('liked = ', isUserLiked);
-					// console.log(response.data);
+					// console.log(response.data.user.profileImg);
 					setUserName(response.data.post.userName);
+					setProfileImage(response.data.user.profileImg);
 				} else {
 					setLikeCount(0);
 					setIsLiked(false);
 					setUserName(response.data.post.userName);
+					setProfileImage(response.data.user.profileImg);
 				}
 				// console.log(response.data.post);
 			} catch (error) {
@@ -242,14 +245,18 @@ const Detail = () => {
 			<Container>
 				<ProfileWrap>
 					<Profile>
-						<ProfileUserImage src={ProfileImg} alt='userImg' />
+						<ProfileUserImage src={profileImage} alt='userImg' />
 						<ProfileId>{userName}</ProfileId>
 					</Profile>
-					<DeleteButtonWrap>
-						<DeleteButton onClick={deletePost}>
-							<DeleteButtonIcon src={DeleteIcon} alt='삭제버튼' />
-						</DeleteButton>
-					</DeleteButtonWrap>
+					{userData?.userName == userName ? (
+						<DeleteButtonWrap>
+							<DeleteButton onClick={deletePost}>
+								<DeleteButtonIcon src={DeleteIcon} alt='삭제버튼' />
+							</DeleteButton>
+						</DeleteButtonWrap>
+					) : (
+						<span></span>
+					)}
 				</ProfileWrap>
 				<PostWrap>
 					{/* 게시글 큰 wrap */}

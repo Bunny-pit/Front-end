@@ -92,7 +92,6 @@ const UserMain = () => {
 					`${process.env.REACT_APP_API_URL}/api/post`,
 					config,
 				);
-				console.log('!!!!!', response.data);
 				setPosts(response.data.posts);
 				setUserName(response.data.userName);
 				setProfileImage(userData?.profileImg || '');
@@ -118,12 +117,10 @@ const UserMain = () => {
 				);
 
 				setPosts(response.data.posts);
-				console.log('????????', response.data);
 				setUserName(response.data.user[0].userName);
 				setPostCount(response.data.posts.length);
 				setEmail(response.data.user[0].email);
 				setProfileImage(response.data.user[0].profileImg);
-				// console.log('게시글 갯수 ㅎㅎ', response.data.posts.length);
 				getFollowers(response.data.user[0].userName);
 				getFollowings(userData?.userName);
 			} catch (error) {
