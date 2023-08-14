@@ -62,7 +62,6 @@ const SearchModal: React.FC<SearchModalProps> = ({ onClose }) => {
 	const closeModal = () => {
 		onClose();
 	};
-	console.log('here', searchResults);
 	return (
 		<ModalWrapper>
 			<ExitImage src={exitmodal} alt='exit' onClick={closeModal} />

@@ -63,18 +63,18 @@ function App() {
 	}, [location.pathname]);
 
 	// 브라우저 닫으면 로컬 스토리지 비우기
-	useEffect(() => {
-		const clearLocalStorage = () => {
-			localStorage.clear();
-		};
+	// useEffect(() => {
+	// 	const clearLocalStorage = () => {
+	// 		localStorage.clear();
+	// 	};
 
-		window.addEventListener('beforeunload', clearLocalStorage);
+	// 	window.addEventListener('beforeunload', clearLocalStorage);
 
-		return () => {
-			post(API_USER_LOGOUT);
-			window.removeEventListener('beforeunload', clearLocalStorage);
-		};
-	}, []);
+	// 	return () => {
+	// 		post(API_USER_LOGOUT);
+	// 		window.removeEventListener('beforeunload', clearLocalStorage);
+	// 	};
+	// }, []);
 	return (
 		<>
 			<Routes>

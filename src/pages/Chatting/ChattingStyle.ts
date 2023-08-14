@@ -27,6 +27,9 @@ export const Channels = styled.nav<{ isRoot: boolean }>`
 	@media (max-width: 768px) {
 		max-width: 33rem;
 	}
+	@media (max-width: 628px) {
+		min-height: 1200px;
+	}
 `;
 
 export const FriendChannels = styled.nav<{ isRoot: boolean }>`
@@ -35,7 +38,7 @@ export const FriendChannels = styled.nav<{ isRoot: boolean }>`
 	flex-direction: column;
 	background: ${({ theme }) => theme.colors.gray200};
 	color: ${({ theme }) => theme.colors.text};
-	min-height: ${({ isRoot }) => (isRoot ? '1200px' : 'auto')};
+	min-height: ${({ isRoot }) => (isRoot ? '200rem' : 'auto')};
 	vertical-align: top;
 	& a {
 		padding-left: 36px;
@@ -74,4 +77,44 @@ export const PlaceHoldContent = styled.div`
 	font-size: 2.5rem;
 	margin-left: 5rem;
 	color: ${({ theme }) => theme.colors.gray500};
+`;
+export const ButtonWrapper = styled.div``;
+
+export const DMButton = styled.button`
+	padding: 1rem 2rem;
+	font-size: 1.6rem;
+	background-color: ${({ theme }) => theme.colors.strongpurple};
+	color: white;
+	border: none;
+	cursor: pointer;
+	border-radius: 0.5rem;
+	position: absolute;
+	top: 10rem;
+	right: 0;
+`;
+
+export const ModalBackground = styled.div`
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+`;
+
+export const ModalContent = styled.div`
+	background-color: white;
+	padding: 2rem;
+	border-radius: 0.5rem;
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+	max-width: 90%;
+	max-height: 90vh;
+	overflow-y: auto;
+	width: 40rem;
+`;
+export const ExitButton = styled.img`
+	margin-left: 35rem;
 `;

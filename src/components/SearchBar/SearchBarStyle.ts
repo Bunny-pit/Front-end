@@ -19,6 +19,9 @@ export const InputContainer = styled.div`
 	width: 24rem;
 	margin-left: 2rem;
 	border: 1px solid ${({ theme }) => theme.colors.gray300};
+	@media (max-width: 390px) {
+		width: 20rem;
+	}
 `;
 
 export const SearchBarInput = styled.input`

@@ -17,6 +17,9 @@ export const InputBar = styled.textarea`
 	padding-left: 2rem;
 	padding-top: 2rem;
 	resize: none;
+	@media (max-width: 628px) {
+		width: 100%;
+	}
 `;
 export const SendButton = styled.img`
 	margin-left: 2rem;
