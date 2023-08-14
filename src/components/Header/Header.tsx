@@ -13,7 +13,11 @@ import HeaderOption from '../../assets/icons/HedearOption.png';
 import { useNavigate } from 'react-router-dom';
 import searchicon from '../../assets/icons/search.png';
 import SearchModal from '../../pages/SearchModal/SearchModal';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import unknown from '../../assets/icons/Unknown.png';
+import unknownChatting from '../../assets/icons/unknown-chatting.png';
+import friends from '../../assets/icons/friends.png';
+import friendsChatting from '../../assets/icons/friend-chatting.png';
 
 const DefaultHeader = () => {
 	const navigate = useNavigate();
@@ -24,6 +28,19 @@ const DefaultHeader = () => {
 	const closeSearchModal = () => {
 		setSearchModalOpen(false);
 	};
+	const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+	useEffect(() => {
+		const handleResize = () => {
+			setWindowWidth(window.innerWidth);
+		};
+
+		window.addEventListener('resize', handleResize);
+
+		return () => {
+			window.removeEventListener('resize', handleResize);
+		};
+	}, []);
 
 	const handleModalClick = (event: React.MouseEvent<HTMLDivElement>) => {
 		if (event.target === event.currentTarget) {
@@ -36,27 +53,80 @@ const DefaultHeader = () => {
 				<Link to='/post'>
 					<Logo src={HeaderLogo} alt='로고' />
 				</Link>
-				<MenuUl>
-					<MenuLi>
-						<Link to='/mainhome/unknown'>익명의 한마디</Link>
-					</MenuLi>
-					<MenuLi>
-						<Link to='/chatting/*'>익명 버니톡</Link>
-					</MenuLi>
-					<MenuLi>
-						<Link to='/mainhome/friends'>친구의 한마디</Link>
-					</MenuLi>
-					<MenuLi>
-						<Link to='/friendchatting/*'>친구 버니톡</Link>
-					</MenuLi>
-					<MenuLi>
-						<SearchImage
-							src={searchicon}
-							alt='search'
-							onClick={openSearchModal}
-						/>
-					</MenuLi>
-				</MenuUl>
+				{windowWidth > 450 ? (
+					<MenuUl>
+						<MenuLi>
+							<Link to='/mainhome/unknown'>익명의 한마디</Link>
+						</MenuLi>
+						<MenuLi>
+							<Link to='/chatting/*'>익명 버니톡</Link>
+						</MenuLi>
+						<MenuLi>
+							<Link to='/mainhome/friends'>친구의 한마디</Link>
+						</MenuLi>
+						<MenuLi>
+							<Link to='/friendchatting/*'>친구 버니톡</Link>
+						</MenuLi>
+						<MenuLi>
+							<SearchImage
+								src={searchicon}
+								alt='search'
+								onClick={openSearchModal}
+							/>
+						</MenuLi>
+					</MenuUl>
+				) : (
+					<MenuUl>
+						<MenuLi>
+							<img
+								src={unknown}
+								onClick={() => {
+									navigate('/mainhome/unknown');
+								}}
+								alt={'익명의 한마디'}
+							/>
+							{/* <Link to='/mainhome/unknown'></Link> */}
+						</MenuLi>
+						<MenuLi>
+							<img
+								src={unknownChatting}
+								onClick={() => {
+									navigate('/chatting/*');
+								}}
+								alt={'익명채팅'}
+							/>
+							{/* <Link to='/chatting/*'></Link> */}
+						</MenuLi>
+						<MenuLi>
+							<img
+								src={friends}
+								onClick={() => {
+									navigate('/mainhome/friends');
+								}}
+								alt={'친구의 한마디'}
+							/>
+							{/* <Link to='/mainhome/friends'></Link> */}
+						</MenuLi>
+						<MenuLi>
+							<img
+								src={friendsChatting}
+								onClick={() => {
+									navigate('/friendchatting/*');
+								}}
+								alt={'친구 채팅'}
+							/>
+							{/* <Link to='/friendchatting/*'></Link> */}
+						</MenuLi>
+						<MenuLi>
+							<SearchImage
+								src={searchicon}
+								alt='search'
+								onClick={openSearchModal}
+							/>
+						</MenuLi>
+					</MenuUl>
+				)}
+
 				{/* 아래 navigate 현재 정보수정 및 탈퇴 페이지(마이 페이지 하위 기능)로 넘어감. */}
 				<Option
 					onClick={() => {

@@ -14,6 +14,8 @@ import UserWithdrawalPage from './pages/UserAccount/UserWithdrawal/UserWithdrawa
 import UploadPost from './pages/UserMain/UploadPost/UploadPost';
 import FriendChatting from './pages/Chatting/FriendChatting';
 import { getToken } from './api/token';
+import { post } from './api/api';
+import { API_USER_LOGOUT } from './utils/constant';
 
 function App() {
 	const [isLogin, setIsLogin] = useState(false);
