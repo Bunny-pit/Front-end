@@ -13,6 +13,7 @@ import Swal from 'sweetalert2';
 import useSWR, { mutate } from 'swr';
 import { post } from '../../api/api';
 import UserProfile from '../../components/ProfileUpdateModal/ProfileUpdateModal';
+import Modal from 'react-modal';
 import {
 	Container,
 	Sec1,
@@ -56,6 +57,21 @@ const UserMain = () => {
 	const [isFollowed, setIsFollowed] = useState(false);
 	const { userId } = useParams();
 	const { userData, isError } = useUser();
+	const [isModalOpen, setIsModalOpen] = useState(false);
+
+	const openModal = () => {
+		setIsModalOpen(true);
+	};
+
+	const closeModal = () => {
+		setIsModalOpen(false);
+	};
+
+	const handleModalClose = () => {
+		if (window.confirm('이미지 수정을 취소하시겠습니까?')) {
+			closeModal();
+		}
+	};
 
 	if (isError) {
 		console.log('유저 데이터를 불러오는데 실패했습니다.');
@@ -79,6 +95,7 @@ const UserMain = () => {
 				console.log('!!!!!', response.data);
 				setPosts(response.data.posts);
 				setUserName(response.data.userName);
+				setProfileImage(userData?.profileImg || '');
 				setPostCount(response.data.posts.length);
 				getFollowers(response.data.userName);
 				getFollowings(userData?.userName);
@@ -105,6 +122,7 @@ const UserMain = () => {
 				setUserName(response.data.user[0].userName);
 				setPostCount(response.data.posts.length);
 				setEmail(response.data.user[0].email);
+				setProfileImage(response.data.user[0].profileImg);
 				// console.log('게시글 갯수 ㅎㅎ', response.data.posts.length);
 				getFollowers(response.data.user[0].userName);
 				getFollowings(userData?.userName);
@@ -179,8 +197,16 @@ const UserMain = () => {
 			<Container>
 				<Sec1>
 					<ImageWrap>
-						<UserProfile />
-						<UserImage src={userImage}></UserImage>
+						<UserImage src={profileImage} onClick={openModal}></UserImage>
+						{userData?.userName == userName ? (
+							<UserProfile
+								isModalOpen={isModalOpen}
+								closeModal={closeModal}
+								handleModalClose={handleModalClose}
+							/>
+						) : (
+							<span></span>
+						)}
 					</ImageWrap>
 					<ProfileWrap>
 						<Wrapper1>

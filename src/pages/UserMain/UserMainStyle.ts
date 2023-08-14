@@ -26,6 +26,10 @@ export const ImageWrap = styled.div`
 `;
 export const UserImage = styled.img`
 	border-radius: 200px;
+	width: 31rem;
+	height: 31rem;
+	object-fit: cover;
+	background-color: #fff;
 	@media only screen and (min-width: 390px) and (max-width: 550px) {
 		width: 20rem;
 	}
