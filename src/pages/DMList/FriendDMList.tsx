@@ -90,7 +90,8 @@ const FriendDMList = () => {
 						return (
 							<NavLink
 								key={chatRoom._id}
-								to={`friendchatting/dm/${chatRoom._id}`}>
+								to={`friendchatting/dm/${chatRoom._id}`}
+								style={{ textDecoration: 'none' }}>
 								{profile && <Profile src={profile} alt={otherUserName} />}
 								<Nickname>{otherUserName}</Nickname>
 								<Exiticon
