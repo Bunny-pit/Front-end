@@ -93,6 +93,7 @@ function App() {
 						<Route path='/post/user/:userId' element={<UserMainPage />} />
 						<Route path='/post/:postId' element={<Detail />} />
 						<Route path='/post/upload' element={<UploadPost />} />
+						<Route path='/mainhome/unknown' element={<MainHomeUnknown />} />
 						<Route path='/mainhome/friends' element={<MainHomeFriends />} />
 						<Route path='/chatting/*' element={<Chatting />} />
 						<Route path='/friendchatting/*' element={<FriendChatting />} />
