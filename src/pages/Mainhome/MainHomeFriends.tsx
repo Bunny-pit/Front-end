@@ -23,7 +23,7 @@ const MainHomeFriends = () => {
 			<Header />
 			<Title>Friend Bunnies</Title>
 
-			{/* <MainHomeContent userData={userData} mainHomePost={mainHomePost} />4 */}
+			<MainHomeContent userData={userData} mainHomePost={mainHomePost} />
 
 			<MainHomeSendBox mainHomePost={mainHomePost} />
 

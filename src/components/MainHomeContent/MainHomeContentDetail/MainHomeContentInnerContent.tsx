@@ -20,6 +20,7 @@ import {
 	Delete,
 	Report,
 } from '../MainHomeContentStyle';
+import { report } from 'process';
 
 interface InnerContentProps {
 	post: any;
@@ -42,10 +43,8 @@ const handleReport = (
 ) => {
 	// 이미 신고한 게시글인지 확인
 	const hasUserAlreadyReported = post.reports.some(
-		(report: { reporterId: string }) => report.reporterId === userData?._id,
+		(report: { userId: string }) => report.userId === userData?._id,
 	);
-
-	console.log('Has user already reported:', hasUserAlreadyReported);
 
 	if (hasUserAlreadyReported) {
 		Swal.fire('알림', '이미 신고한 게시글입니다.', 'warning');
@@ -58,6 +57,7 @@ const handleReport = (
 		inputPlaceholder: '신고 사유를 입력해주세요',
 		showCancelButton: true,
 		confirmButtonText: '신고하기',
+		cancelButtonText: '취소하기',
 		showLoaderOnConfirm: true,
 		preConfirm: async (reason) => {
 			if (!reason) {

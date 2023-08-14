@@ -1,5 +1,4 @@
 import React from 'react';
-
 import useMainHomePost from '../../hooks/useMainHomeUnknownPost';
 import MainHomeContentImage from './MainHomeContentDetail/MainHomeContentImage';
 import MainHomeContentInnerContent from './MainHomeContentDetail/MainHomeContentInnerContent';
