@@ -71,10 +71,10 @@ const FriendDMList = () => {
 			setFilteredDmList(filteredList);
 		}
 	}, [dmList, searchQuery, userId]);
-	console.log('here', filteredDmList);
 	const handleSearch = (query: string) => {
 		setSearchQuery(query);
 	};
+
 	return (
 		<>
 			<TopContainer>
@@ -84,20 +84,14 @@ const FriendDMList = () => {
 				{filteredDmList?.map((chatRoom: DmListType) => {
 					const otherUser = chatRoom.users.find((user) => user._id !== userId);
 					if (otherUser) {
-						const otherUserEmail = otherUser.email;
 						const otherUserName = otherUser.userName;
-						const profileSrc = otherUserEmail
-							? gravatar.url(otherUserEmail, {
-									s: '24px',
-									d: 'identicon',
-							  })
-							: undefined;
+						const profile = otherUser.profileImg;
 
 						return (
 							<NavLink
 								key={chatRoom._id}
 								to={`friendchatting/dm/${chatRoom._id}`}>
-								{profileSrc && <Profile src={profileSrc} alt={otherUserName} />}
+								{profile && <Profile src={profile} alt={otherUserName} />}
 								<Nickname>{otherUserName}</Nickname>
 								<Exiticon
 									src={deleteicon}

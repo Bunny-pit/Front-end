@@ -72,6 +72,7 @@ const DMList = () => {
 	const handleSearch = (query: string) => {
 		setSearchQuery(query);
 	};
+
 	return (
 		<>
 			<TopContainer>

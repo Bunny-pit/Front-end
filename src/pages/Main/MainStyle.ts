@@ -72,7 +72,7 @@ export const BigText1 = styled.p`
 	font-weight: 900;
 
 	@media (max-width: 768px) {
-		font-size: 6rem;
+		font-size: 4rem;
 	}
 	@media (max-width: 390px) {
 		font-size: 3rem;
@@ -83,6 +83,10 @@ export const BigText2 = styled.p`
 	font-size: 8rem;
 	font-weight: 900;
 	margin-top: -5.5rem;
+	@media (max-width: 768px) {
+		font-size: 5rem;
+		margin-top: 0.5rem;
+	}
 	@media (max-width: 390px) {
 		font-size: 6rem;
 		margin-top: 0rem;
@@ -95,7 +99,7 @@ export const MidText = styled.p`
 	letter-spacing: 0.2rem;
 	line-height: 5rem;
 	@media (max-width: 768px) {
-		font-size: 2.5rem;
+		font-size: 2rem;
 	}
 	@media (max-width: 390px) {
 		font-size: 1.5rem;
@@ -107,7 +111,8 @@ export const ImgContainer = styled.div`
 	margin-top: -55rem;
 	position: relative;
 	@media (max-width: 768px) {
-		margin-left: 50%;
+		margin-left: 60%;
+		margin-top: -40rem;
 	}
 	@media (max-width: 390px) {
 		margin-left: 20%;
@@ -117,6 +122,9 @@ export const ImgContainer = styled.div`
 
 export const MainAvatar = styled.img`
 	width: 80%;
+	@media (max-width: 768px) {
+		width: 70%;
+	}
 `;
 export const SecondSection = styled.div`
 	width: 100%;
@@ -134,6 +142,7 @@ export const LeftSection = styled.div`
 	position: relative;
 	@media (max-width: 390px) {
 		height: 40rem;
+		margin-left: auto 0;
 	}
 `;
 export const LeftImage = styled.img`
@@ -142,14 +151,14 @@ export const LeftImage = styled.img`
 		width: 70%;
 	}
 	@media (max-width: 390px) {
-		width: 60%;
+		width: 50%;
 		margin-top: 20rem;
-		margin-left: 0;
 	}
 `;
 export const DetailImage = styled.img`
 	width: 60%;
 	position: absolute;
+	margin-left: -2rem;
 	@media (max-width: 768px) {
 		display: none;
 	}
@@ -180,10 +189,10 @@ export const RightImage = styled.img`
 	}
 `;
 export const RightDetailImage = styled.img`
-	width: 90%;
+	width: 80%;
 	position: absolute;
-	left: -35rem;
-	top: 10rem;
+	left: -15rem;
+	top: 20rem;
 	@media (max-width: 768px) {
 		width: 60%;
 		top: 20rem;
@@ -221,7 +230,7 @@ export const LastContent = styled.div`
 		flex-direction: column;
 		align-items: center;
 		margin-left: -68rem;
-		margin-top: -10rem;
+		margin-top: 35rem;
 	}
 `;
 export const LeftContent = styled.div`
@@ -250,10 +259,8 @@ export const MidSecContent = styled.p`
 `;
 export const MidImage = styled.img`
 	width: 100%;
-	position: absolute;
-	left: -100px;
 	@media (max-width: 390px) {
-		display: none;
+		width: 50%;
 	}
 `;
 export const ThirdSection = styled.div`
@@ -271,7 +278,7 @@ export const FourthSection = styled.div`
 	background-color: ${({ theme }) => theme.colors.background};
 	padding: 20rem 0;
 	@media (max-width: 390px) {
-		height: 0;
+		height: 50rem;
 	}
 `;
 export const HalfCircle = styled.div`

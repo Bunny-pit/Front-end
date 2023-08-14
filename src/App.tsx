@@ -65,7 +65,7 @@ function App() {
 	// 브라우저 닫으면 로컬 스토리지 비우기
 	useEffect(() => {
 		const clearLocalStorage = () => {
-			localStorage.clear(); 
+			localStorage.clear();
 		};
 
 		window.addEventListener('beforeunload', clearLocalStorage);
@@ -73,7 +73,6 @@ function App() {
 		return () => {
 			post(API_USER_LOGOUT);
 			window.removeEventListener('beforeunload', clearLocalStorage);
-			
 		};
 	}, []);
 	return (
