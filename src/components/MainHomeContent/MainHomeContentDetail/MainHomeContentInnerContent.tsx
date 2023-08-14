@@ -20,7 +20,6 @@ import {
 	Delete,
 	Report,
 } from '../MainHomeContentStyle';
-import { report } from 'process';
 
 interface InnerContentProps {
 	post: any;
@@ -103,19 +102,18 @@ const MainHomeContentInnerContent = ({
 					)}
 					{userData && userData?._id !== post.userId && (
 						<GoChat
-							src={message}
-							alt='message Icon'
 							onClick={() =>
 								moveToChatPage(userData._id, post.userId, post.name)
-							}
-						/>
+							}>
+							<img src={message} alt='해당 유저와 1대1 채팅' />
+						</GoChat>
+					)}
+					{userData && userData?._id !== post.userId && (
+						<Report onClick={() => handleReport(post, userData, sendReport)}>
+							신고
+						</Report>
 					)}
 				</IconContainer>
-				{userData && userData?._id !== post.userId && (
-					<Report onClick={() => handleReport(post, userData, sendReport)}>
-						신고
-					</Report>
-				)}
 			</UserContainer>
 
 			<ContentContainer>
