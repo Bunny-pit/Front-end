@@ -213,12 +213,12 @@ const UserMain = () => {
 							) : (
 								<PlusIcon src={plusIcon} onClick={followToggle} />
 							)}
-							<FriendButton
+							{/* <FriendButton
 								onClick={() => {
 									alert('친구초대하기');
 								}}>
 								친구초대하기
-							</FriendButton>
+							</FriendButton> */}
 						</Wrapper1>
 						<Wrapper2>
 							<PostButton>
