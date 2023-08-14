@@ -78,7 +78,11 @@ export const PlaceHoldContent = styled.div`
 	margin-left: 5rem;
 	color: ${({ theme }) => theme.colors.gray500};
 `;
-export const ButtonWrapper = styled.div``;
+export const ButtonWrapper = styled.div`
+	@media (max-width: 628px) {
+		min-height: 200rem;
+	}
+`;
 
 export const DMButton = styled.button`
 	padding: 1rem 2rem;
