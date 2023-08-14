@@ -12,6 +12,7 @@ import alertList from '../../utils/swal';
 import Swal from 'sweetalert2';
 import useSWR, { mutate } from 'swr';
 import { post } from '../../api/api';
+import UserProfile from '../../components/ProfileUpdateModal/ProfileUpdateModal';
 import {
 	Container,
 	Sec1,
@@ -48,6 +49,7 @@ const UserMain = () => {
 	const [posts, setPosts] = useState<PostType[]>([]);
 	const [postCount, setPostCount] = useState(0);
 	const [userName, setUserName] = useState('');
+	const [profileImage, setProfileImage] = useState('');
 	const [getEmail, setEmail] = useState('');
 	const [follower, setFollower] = useState('');
 	const [following, setFollowing] = useState('');
@@ -74,6 +76,7 @@ const UserMain = () => {
 					`${process.env.REACT_APP_API_URL}/api/post`,
 					config,
 				);
+				console.log('!!!!!', response.data);
 				setPosts(response.data.posts);
 				setUserName(response.data.userName);
 				setPostCount(response.data.posts.length);
@@ -98,6 +101,7 @@ const UserMain = () => {
 				);
 
 				setPosts(response.data.posts);
+				console.log('????????', response.data);
 				setUserName(response.data.user[0].userName);
 				setPostCount(response.data.posts.length);
 				setEmail(response.data.user[0].email);
@@ -114,7 +118,7 @@ const UserMain = () => {
 		} else {
 			fetchPosts();
 		}
-	}, []);
+	}, [userId, follower]);
 	//-----------------팔로우 기능------------------
 	const followToggle = async () => {
 		try {
@@ -175,6 +179,7 @@ const UserMain = () => {
 			<Container>
 				<Sec1>
 					<ImageWrap>
+						<UserProfile />
 						<UserImage src={userImage}></UserImage>
 					</ImageWrap>
 					<ProfileWrap>
