@@ -1,6 +1,7 @@
 export interface DmListType {
 	_id: string;
 	users: Array<{
+		profileImg: string;
 		_id: string;
 		userName?: string;
 		secretName?: string;

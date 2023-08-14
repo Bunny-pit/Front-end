@@ -15,6 +15,7 @@ const Bubble = styled.div<{ width: string; currentUser: boolean }>`
 	width: ${(props) => props.width}rem;
 	max-width: 40%;
 	white-space: pre-wrap;
+	word-break: break-all;
 	font-size: 2rem;
 	justify-content: center;
 	align-self: ${(props) => (props.currentUser ? 'flex-end' : 'flex-start')};

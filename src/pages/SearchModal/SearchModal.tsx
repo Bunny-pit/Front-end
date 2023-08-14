@@ -75,7 +75,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ onClose }) => {
 				) : (
 					searchResults[0]?.map((result: any) => (
 						<ResultContainer key={result._id}>
-							<ProfileImage src={exitmodal} alt='profile' />
+							<ProfileImage src={result.profileImg} alt='profile' />
 							<Link
 								to={`/post/user/${result.userName}`}
 								style={{ textDecoration: 'none' }}>

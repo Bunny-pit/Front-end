@@ -5,7 +5,7 @@ import mainhomeImage from '../../assets/images/mainhome.png';
 import chattingImage from '../../assets/images/chatting.png';
 import friend from '../../assets/images/friend.png';
 import messagebubble from '../../assets/images/messagebubble.png';
-import link from '../../assets/images/link.png';
+import link from '../../assets/images/link.jpg';
 import mainImage from '../../assets/images/mainImage.png';
 import {
 	FirstSection,
