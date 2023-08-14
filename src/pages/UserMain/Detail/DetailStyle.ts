@@ -4,11 +4,15 @@ export const Container = styled.div`
 	width: 50%;
 	margin: 0 auto;
 	box-sizing: border-box;
-	@media only screen and (min-width: 390px) and (max-width: 1279px) {
-		width: 100%;
+
+	@media only screen and (min-width: 769px) and (max-width: 1980px) {
+		width: 50%;
 	}
-	@media only screen and (min-width: 1280px) and (max-width: 1980px) {
-		width: 30%;
+	@media only screen and (min-width: 391px) and (max-width: 768px) {
+		width: 60%;
+	}
+	@media only screen and (min-width: 0px) and (max-width: 390px) {
+		width: 100%;
 	}
 `;
 export const ProfileWrap = styled.div`
@@ -16,7 +20,7 @@ export const ProfileWrap = styled.div`
 	align-items: center;
 	justify-content: space-between;
 	margin: 8rem 0 2rem;
-	@media only screen and (min-width: 390px) and (max-width: 1279px) {
+	@media only screen and (min-width: 0px) and (max-width: 390px) {
 		margin: 2rem 0;
 	}
 `;
@@ -29,7 +33,7 @@ export const ProfileUserImage = styled.img`
 	width: 10rem;
 	height: 10rem;
 	border-radius: 50rem;
-	@media only screen and (min-width: 390px) and (max-width: 1279px) {
+	@media only screen and (min-width: 391px) and (max-width: 768px) {
 		width: 7rem;
 		height: 7rem;
 		border-radius: 50rem;
@@ -60,7 +64,8 @@ export const ContentWrap = styled.div`
 `;
 export const Content = styled.div`
 	color: ${({ theme }) => theme.colors.text};
-	@media only screen and (min-width: 390px) and (max-width: 1279px) {
+
+	@media only screen and (min-width: 0px) and (max-width: 390px) {
 		margin-left: 1rem;
 	}
 `;
@@ -98,7 +103,7 @@ export const LikeCount = styled.p`
 export const PostTime = styled.p`
 	font-size: 1.8rem;
 	color: ${({ theme }) => theme.colors.gray600};
-	@media only screen and (min-width: 390px) and (max-width: 1279px) {
+	@media only screen and (min-width: 0px) and (max-width: 390px) {
 		margin-right: 1rem;
 	}
 `;
