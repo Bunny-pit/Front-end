@@ -1,4 +1,3 @@
-import React from 'react';
 import MainLogo from '../../assets/icons/MainLogo.png';
 import { Link } from 'react-router-dom';
 import mainhomeImage from '../../assets/images/mainhome.png';
@@ -39,10 +38,19 @@ import {
 	MidImage,
 	LastContent,
 } from './MainStyle';
-import { useUser } from '../../utils/swrFetcher';
+import { useEffect, useState } from 'react';
+import { getToken } from '../../api/token';
 
 const MainPage = () => {
-	const { userData, isError } = useUser();
+	const [isLogin, setIsLogin] = useState(false);
+
+	useEffect(() => {
+		if (getToken(`accessToken`)) {
+			setIsLogin(true);
+		} else {
+			setIsLogin(false);
+		}
+	}, []);
 
 	return (
 		<>
@@ -51,7 +59,7 @@ const MainPage = () => {
 					<Header>
 						<Logo src={MainLogo} alt='main-logo' />
 						<BtnContainer>
-							{userData ? (
+							{isLogin ? (
 								<Link to='/user/edit'>
 									<LogIn>로그아웃</LogIn>
 								</Link>
