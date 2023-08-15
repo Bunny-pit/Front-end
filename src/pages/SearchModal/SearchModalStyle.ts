@@ -14,13 +14,14 @@ export const ModalWrapper = styled.div`
 	z-index: 999;
 	top: 10%;
 	left: 25%;
+	@media (max-width: 390px) {
+	}
 `;
 export const ExitImage = styled.img`
 	cursor: pointer;
 	position: absolute;
-	width: 2rem;
-	top: 5rem;
-	left: 75rem;
+	top: 20px;
+	right: 20px;
 `;
 export const SearchBarContainer = styled.div`
 	position: absolute;

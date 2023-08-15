@@ -3,8 +3,16 @@ import UploadPost from '../../../assets/icons/UploadPost.png';
 export const Container = styled.div`
 	margin: 0 auto;
 
-	@media only screen and (min-width: 1280px) and (max-width: 1980px) {
-		width: 40%;
+	@media only screen and (min-width: 769px) and (max-width: 1980px) {
+		width: 50%;
+		height: auto;
+	}
+	@media only screen and (min-width: 391px) and (max-width: 768px) {
+		width: 60%;
+		height: auto;
+	}
+	@media only screen and (min-width: 0px) and (max-width: 390px) {
+		width: 100%;
 		height: auto;
 	}
 `;
@@ -17,18 +25,30 @@ export const StyledForm = styled.form`
 	flex-direction: column;
 	justify-content: space-between;
 	align-items: center;
-	@media only screen and (min-width: 390px) and (max-width: 550px) {
-		height: 110rem;
+	@media only screen and (min-width: 0px) and (max-width: 390px) {
+		height: 100rem;
 		.Slider {
+			width: 100%;
 			img {
 				height: 75rem;
 				object-fit: fill;
 			}
 		}
 	}
-	@media only screen and (min-width: 1280px) and (max-width: 1980px) {
+	@media only screen and (min-width: 390px) and (max-width: 768px) {
+		height: 110rem;
+		.Slider {
+			width: 100%;
+			img {
+				height: 75rem;
+				object-fit: fill;
+			}
+		}
+	}
+	@media only screen and (min-width: 769px) and (max-width: 1980px) {
 		height: 120rem;
 		.Slider {
+			width: 100%;
 			margin-bottom: 2rem;
 			img {
 				height: 80rem;

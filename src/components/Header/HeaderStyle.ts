@@ -15,7 +15,24 @@ export const HeaderWrapper = styled.div`
 	justify-content: space-between;
 	align-items: center;
 	box-sizing: border-box;
+	.iconWrap {
+		width: 10rem;
+		display: flex;
+		justify-content: space-between;
+	}
 	@media only screen and (min-width: 391px) and (max-width: 768px) {
+		margin: 0 1rem;
+		padding: 0;
+
+		ul {
+			flex-wrap: wrap;
+			align-content: space-evenly;
+			li {
+				flex: 1 1 40%;
+				margin: 0.5rem 0;
+				text-align: center;
+			}
+		}
 	}
 	@media only screen and (min-width: 0px) and (max-width: 390px) {
 		margin: 0;
@@ -24,16 +41,14 @@ export const HeaderWrapper = styled.div`
 		ul {
 			padding: 0;
 			align-items: center;
+			align-content: center;
 			li {
 				padding: 0;
 				margin: 0 2rem;
-				// a {
-				// 	padding: 0;
-				// 	margin: 0;
+
 				img {
 					width: 3rem;
 				}
-				// }
 			}
 		}
 	}

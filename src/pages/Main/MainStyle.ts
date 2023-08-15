@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { keyframes } from 'styled-components';
 
 export const Container = styled.div`
 	margin: 0;
@@ -20,8 +21,26 @@ export const Header = styled.div`
 	align-item: center;
 	justify-content: space-between;
 `;
+
+const shakeAnimation = keyframes`
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-5px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(5px);
+  }
+`;
 export const Logo = styled.img`
 	width: 15rem;
+	cursor: pointer;
+	transition: transform 0.3s ease-in-out;
+
+	&:hover {
+		animation: ${shakeAnimation} 0.5s ease infinite;
+	}
 	@media (max-width: 768px) {
 		width: 10rem;
 	}

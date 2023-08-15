@@ -18,6 +18,7 @@ interface UserData {
 	userId: string;
 	userName: string;
 	_id: string;
+	profileImg: string;
 }
 
 export function useUser(): {

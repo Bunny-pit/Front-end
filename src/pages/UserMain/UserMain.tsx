@@ -13,6 +13,7 @@ import Swal from 'sweetalert2';
 import useSWR, { mutate } from 'swr';
 import { post } from '../../api/api';
 import UserProfile from '../../components/ProfileUpdateModal/ProfileUpdateModal';
+import Modal from 'react-modal';
 import {
 	Container,
 	Sec1,
@@ -56,6 +57,21 @@ const UserMain = () => {
 	const [isFollowed, setIsFollowed] = useState(false);
 	const { userId } = useParams();
 	const { userData, isError } = useUser();
+	const [isModalOpen, setIsModalOpen] = useState(false);
+
+	const openModal = () => {
+		setIsModalOpen(true);
+	};
+
+	const closeModal = () => {
+		setIsModalOpen(false);
+	};
+
+	const handleModalClose = () => {
+		if (window.confirm('이미지 수정을 취소하시겠습니까?')) {
+			closeModal();
+		}
+	};
 
 	if (isError) {
 		console.log('유저 데이터를 불러오는데 실패했습니다.');
@@ -76,9 +92,9 @@ const UserMain = () => {
 					`${process.env.REACT_APP_API_URL}/api/post`,
 					config,
 				);
-				console.log('!!!!!', response.data);
 				setPosts(response.data.posts);
 				setUserName(response.data.userName);
+				setProfileImage(userData?.profileImg || '');
 				setPostCount(response.data.posts.length);
 				getFollowers(response.data.userName);
 				getFollowings(userData?.userName);
@@ -101,11 +117,10 @@ const UserMain = () => {
 				);
 
 				setPosts(response.data.posts);
-				console.log('????????', response.data);
 				setUserName(response.data.user[0].userName);
 				setPostCount(response.data.posts.length);
 				setEmail(response.data.user[0].email);
-				// console.log('게시글 갯수 ㅎㅎ', response.data.posts.length);
+				setProfileImage(response.data.user[0].profileImg);
 				getFollowers(response.data.user[0].userName);
 				getFollowings(userData?.userName);
 			} catch (error) {
@@ -179,8 +194,16 @@ const UserMain = () => {
 			<Container>
 				<Sec1>
 					<ImageWrap>
-						<UserProfile />
-						<UserImage src={userImage}></UserImage>
+						<UserImage src={profileImage} onClick={openModal}></UserImage>
+						{userData?.userName == userName ? (
+							<UserProfile
+								isModalOpen={isModalOpen}
+								closeModal={closeModal}
+								handleModalClose={handleModalClose}
+							/>
+						) : (
+							<span></span>
+						)}
 					</ImageWrap>
 					<ProfileWrap>
 						<Wrapper1>
@@ -190,12 +213,12 @@ const UserMain = () => {
 							) : (
 								<PlusIcon src={plusIcon} onClick={followToggle} />
 							)}
-							<FriendButton
+							{/* <FriendButton
 								onClick={() => {
 									alert('친구초대하기');
 								}}>
 								친구초대하기
-							</FriendButton>
+							</FriendButton> */}
 						</Wrapper1>
 						<Wrapper2>
 							<PostButton>
