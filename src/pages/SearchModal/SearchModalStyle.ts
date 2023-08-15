@@ -22,6 +22,7 @@ export const ExitImage = styled.img`
 	position: absolute;
 	top: 20px;
 	right: 20px;
+	z-index: 999;
 `;
 export const SearchBarContainer = styled.div`
 	position: absolute;
