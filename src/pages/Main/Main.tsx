@@ -57,12 +57,16 @@ const MainPage = () => {
 			<Container>
 				<FirstSection>
 					<Header>
-						<Logo src={MainLogo} alt='main-logo' />
+						<Link to='/mainhome/unknown'>
+							<Logo src={MainLogo} alt='main-logo' />
+						</Link>
 						<BtnContainer>
 							{isLogin ? (
-								<Link to='/user/edit'>
-									<LogIn>로그아웃</LogIn>
-								</Link>
+								<>
+									<Link to='/user/edit'>
+										<LogIn>로그아웃</LogIn>
+									</Link>
+								</>
 							) : (
 								<Link to='/login'>
 									<LogIn>로그인</LogIn>
