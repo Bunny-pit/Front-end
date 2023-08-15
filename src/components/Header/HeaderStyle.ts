@@ -3,9 +3,6 @@ import styled from 'styled-components';
 export const HedearStyle = styled.div`
 	border-bottom: 0.1rem solid ${({ theme }) => theme.colors.logocolor};
 	width: 100%;
-
-	@media only screen and (min-width: 0px) and (max-width: 390px) {
-	}
 `;
 export const HeaderWrapper = styled.div`
 	margin: 0 4rem;
@@ -20,7 +17,7 @@ export const HeaderWrapper = styled.div`
 		display: flex;
 		justify-content: space-between;
 	}
-	@media only screen and (min-width: 391px) and (max-width: 768px) {
+	@media only screen and (min-width: 392px) and (max-width: 768px) {
 		margin: 0 1rem;
 		padding: 0;
 
@@ -34,7 +31,7 @@ export const HeaderWrapper = styled.div`
 			}
 		}
 	}
-	@media only screen and (min-width: 0px) and (max-width: 390px) {
+	@media only screen and (min-width: 0px) and (max-width: 391px) {
 		margin: 0;
 		width: 100%;
 		justify-content: space-evenly;
