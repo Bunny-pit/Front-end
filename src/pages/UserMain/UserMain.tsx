@@ -2,10 +2,9 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
-import userImage from '../../assets/images/userimage.png';
 import plusIcon from '../../assets/icons/UserPlus.png';
 import FollowingIcon from '../../assets/icons/FollowingIcon.png';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { useUser } from '../../utils/swrFetcher';
 import { PostType } from '../../types/postType';
 import alertList from '../../utils/swal';
@@ -14,6 +13,7 @@ import useSWR, { mutate } from 'swr';
 import { post } from '../../api/api';
 import UserProfile from '../../components/ProfileUpdateModal/ProfileUpdateModal';
 import Modal from 'react-modal';
+
 import {
 	Container,
 	Sec1,
@@ -58,6 +58,7 @@ const UserMain = () => {
 	const { userId } = useParams();
 	const { userData, isError } = useUser();
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	const navigate = useNavigate();
 
 	const openModal = () => {
 		setIsModalOpen(true);
@@ -133,7 +134,7 @@ const UserMain = () => {
 		} else {
 			fetchPosts();
 		}
-	}, [userId, follower]);
+	}, [userId, follower, isFollowed]);
 	//-----------------팔로우 기능------------------
 	const followToggle = async () => {
 		try {
@@ -143,12 +144,15 @@ const UserMain = () => {
 				{ followeeName: userId },
 				getToken(),
 			);
-			setIsFollowed(response.data.followed);
-			mutate(`${process.env.REACT_APP_API_URL}/api/user/followings`);
+			mutate(
+				`${process.env.REACT_APP_API_URL}/api/user/followers?userName=${userName}`,
+			);
 			if (!isFollowed) {
 				await Swal.fire(alertList.successMessage('팔로우 하였습니다.'));
+				setIsFollowed(response.data.followed);
 			} else {
 				await Swal.fire(alertList.infoMessage('팔로우를 취소하였습니다.'));
+				setIsFollowed(response.data.followed);
 			}
 		} catch (error) {
 			console.error('Error updating follow:', error);
@@ -169,12 +173,19 @@ const UserMain = () => {
 	//--------------------팔로잉 가져오기------------------
 	const getFollowings = async (nickName: string | undefined) => {
 		try {
-			const response = await axios.get(
-				`${process.env.REACT_APP_API_URL}/api/user/followings?userName=${nickName}`,
-			);
-			setFollowing(response.data);
-			const hasUserName = response.data.some((user: any) => user === userName);
-			setIsFollowed(hasUserName);
+			if (nickName !== undefined) {
+				const response = await axios.get(
+					`${process.env.REACT_APP_API_URL}/api/user/followings?userName=${nickName}`,
+					getToken(),
+				);
+				setFollowing(response.data);
+				const hasUserName = response.data.some(
+					(user: any) => user === userName,
+				);
+				setIsFollowed(hasUserName);
+			} else {
+				console.log('nickName = undefined');
+			}
 		} catch (error) {
 			console.error('Error fetching getFollowers:', error);
 		}
