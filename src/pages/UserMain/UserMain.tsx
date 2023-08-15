@@ -39,6 +39,7 @@ import {
 	NothingPost,
 	PostButton,
 	PostUlEmpty,
+	OtherUserImage,
 } from './UserMainStyle';
 
 type ApiResponse = {
@@ -204,26 +205,32 @@ const UserMain = () => {
 			<Header />
 			<Container>
 				<Sec1>
-					<ImageWrap>
-						<UserImage src={profileImage} onClick={openModal}></UserImage>
-						{userData?.userName == userName ? (
+					{userData?.userName == userName ? (
+						<ImageWrap>
+							<UserImage src={profileImage} onClick={openModal}></UserImage>
 							<UserProfile
 								isModalOpen={isModalOpen}
 								closeModal={closeModal}
 								handleModalClose={handleModalClose}
 							/>
-						) : (
-							<span></span>
-						)}
-					</ImageWrap>
+						</ImageWrap>
+					) : (
+						<ImageWrap>
+							<OtherUserImage src={profileImage}></OtherUserImage>
+						</ImageWrap>
+					)}
+
 					<ProfileWrap>
 						<Wrapper1>
 							<UserId>{userName}</UserId>
-							{isFollowed ? (
+							{userData?.userName === userName ? (
+								<span></span>
+							) : isFollowed ? (
 								<PlusIcon src={FollowingIcon} onClick={followToggle} />
 							) : (
 								<PlusIcon src={plusIcon} onClick={followToggle} />
 							)}
+
 							{/* <FriendButton
 								onClick={() => {
 									alert('친구초대하기');
