@@ -38,6 +38,7 @@ export interface Post {
 	content: string;
 	createdAt: string;
 	updatedAt: string;
+	profileImage: string;
 	reports: Report[];
 	__v: number;
 }
