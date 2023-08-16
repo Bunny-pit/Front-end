@@ -16,6 +16,14 @@ export const TextWrapper = styled.div`
 	align-items: center;
 	background-color: ${({ theme }) => theme.colors.gray200};
 	border-radius: 2rem;
+
+	@media (max-width: 768px) {
+		width: 80%;
+	}
+
+	@media (max-width: 390px) {
+		width: 95%;
+	}
 `;
 
 export const TextArea = styled.input`
@@ -31,12 +39,10 @@ export const TextArea = styled.input`
 	}
 
 	@media (max-width: 768px) {
-		width: 80%;
 		font-size: 2.1rem;
 	}
 
 	@media (max-width: 390px) {
-		width: 95%;
 		font-size: 2rem;
 	}
 `;

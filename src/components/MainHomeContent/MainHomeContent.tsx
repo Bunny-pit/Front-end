@@ -4,9 +4,10 @@ import MainHomeContentImage from './MainHomeContentDetail/MainHomeContentImage';
 import MainHomeContentInnerContent from './MainHomeContentDetail/MainHomeContentInnerContent';
 
 import { Container, ContentBox, EmptyArea } from './MainHomeContentStyle';
+import { Post, UserDataType } from '../../types/dataType';
 
 interface MainHomeProps {
-	userData: any;
+	userData: UserDataType | null;
 	mainHomePost: ReturnType<typeof useMainHomePost>;
 }
 
@@ -33,14 +34,12 @@ const MainHomeContent = ({ userData, mainHomePost }: MainHomeProps) => {
 			{posts.length === 0 ? (
 				<EmptyArea>게시글이 없어요!</EmptyArea>
 			) : (
-				posts.map((post, index) => {
-					const email: string = post.email;
-					const avataUrl: string = `https://www.gravatar.com/avatar/${email}?d=identicon`;
+				posts.map((post: Post, index: number) => {
 					return (
 						<ContentBox
 							key={post._id}
 							ref={index == posts.length - 1 ? lastPostElementRef : null}>
-							<MainHomeContentImage avataUrl={avataUrl} />
+							<MainHomeContentImage post={post} userData={userData} />
 							<MainHomeContentInnerContent
 								post={post}
 								userData={userData}

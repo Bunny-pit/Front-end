@@ -49,8 +49,8 @@ export const ImageWrap = styled.div`
 	align-items: center;
 `;
 
-export const UserRandomImage = styled.img`
-	max-width: 100%;
+export const UserImage = styled.img`
+	max-width: 50%;
 	margin: 0 auto;
 	border-radius: 50%;
 `;
@@ -74,8 +74,6 @@ export const IconContainer = styled.div`
 
 export const GoChat = styled.div`
 	cursor: pointer;
-	// align-self: flex-end;
-	height: 4rem;
 `;
 
 export const GoProfile = styled.div`
