@@ -13,7 +13,7 @@ const MainHomeContentImage = ({ userData, post }: ImageProps) => {
 	let userImage: string;
 
 	if (location.pathname === '/mainhome/friends' && userData?.profileImg) {
-		userImage = userData.profileImg;
+		userImage = post.profileImage;
 	} else {
 		userImage = `https://www.gravatar.com/avatar/${email}?d=identicon`;
 	}

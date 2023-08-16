@@ -50,7 +50,9 @@ export const ImageWrap = styled.div`
 `;
 
 export const UserImage = styled.img`
-	max-width: 50%;
+	width: 8rem;
+	height: 8rem;
+	object-fit: cover;
 	margin: 0 auto;
 	border-radius: 50%;
 `;
