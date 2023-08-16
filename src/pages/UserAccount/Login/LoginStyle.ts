@@ -2,15 +2,13 @@ import styled from 'styled-components';
 
 export const Page = styled.div`
 position : absolute;
-top:0;
-bottom:0;
+top:10%;
+bottom:0%;
 width:100%;
 max-width : 60rem;
 padding : 0 2rem;
 left: 50%;
 transform : translate(-50%, 0);
-
-background-color : grey;
 
 display : flex;
 flex-direction : column;
@@ -31,19 +29,21 @@ color : #7954F8;
 `
 export const LogoWrap = styled.div`
 width : 100%;
-background-color : pink;
 display:flex;
+flex-direction : column;
 justify-content : center;
 align-items : center;
+>img{
+    scale : 0.9;
+}
 `
 export const FormWrap = styled.form`
-margin-top : 2.6rem;
 flex : 1;
 `
 export const InputTitle = styled.div`
 font-size : 2rem;
 font-weight : 500;
-margin-top:2.6rem;
+margin-top:2rem;
 `
 export const InputWrap = styled.div`
 display : flex;
@@ -72,8 +72,8 @@ height : 5rem;
 background-color: #E49AFB; 
 border : none;
 border-radius : 8px;
-margin-top : 1rem;
-margin-bottom : 1rem;
+margin-top : 0.5rem;
+margin-bottom : 0.5rem;
 color : white;
 cursor : pointer;
 &:hover{

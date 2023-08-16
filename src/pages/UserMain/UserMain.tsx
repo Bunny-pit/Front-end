@@ -2,9 +2,18 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
-import userImage from '../../assets/images/userimage.png';
 import plusIcon from '../../assets/icons/UserPlus.png';
-import { Link } from 'react-router-dom';
+import FollowingIcon from '../../assets/icons/FollowingIcon.png';
+import { Link, useParams, useNavigate } from 'react-router-dom';
+import { useUser } from '../../utils/swrFetcher';
+import { PostType } from '../../types/postType';
+import alertList from '../../utils/swal';
+import Swal from 'sweetalert2';
+import useSWR, { mutate } from 'swr';
+import { post } from '../../api/api';
+import UserProfile from '../../components/ProfileUpdateModal/ProfileUpdateModal';
+import Modal from 'react-modal';
+
 import {
 	Container,
 	Sec1,
@@ -26,85 +35,224 @@ import {
 	PostTitle,
 	PostUl,
 	PostLi,
+	NothingWrap,
+	NothingPost,
+	PostButton,
+	PostUlEmpty,
+	OtherUserImage,
 } from './UserMainStyle';
 
-interface Post {
-	_id: string;
-	userId: string;
-	profileImage: string;
-	images: string[];
-	content: string;
-	createdAt: Date;
-}
-const backUrl = 'https://port-0-back-end-kvmh2mljxnw03c.sel4.cloudtype.app/api';
+type ApiResponse = {
+	message: string;
+	followed: boolean;
+};
 
 const UserMain = () => {
-	const [posts, setPosts] = useState<Post[]>([]);
+	const [posts, setPosts] = useState<PostType[]>([]);
+	const [postCount, setPostCount] = useState(0);
+	const [userName, setUserName] = useState('');
+	const [profileImage, setProfileImage] = useState('');
+	const [getEmail, setEmail] = useState('');
+	const [follower, setFollower] = useState('');
+	const [following, setFollowing] = useState('');
+	const [isFollowed, setIsFollowed] = useState(false);
+	const { userId } = useParams();
+	const { userData, isError } = useUser();
+	const [isModalOpen, setIsModalOpen] = useState(false);
+	const navigate = useNavigate();
+
+	const openModal = () => {
+		setIsModalOpen(true);
+	};
+
+	const closeModal = () => {
+		setIsModalOpen(false);
+	};
+
+	const handleModalClose = () => {
+		if (window.confirm('이미지 수정을 취소하시겠습니까?')) {
+			closeModal();
+		}
+	};
+
+	if (isError) {
+		console.log('유저 데이터를 불러오는데 실패했습니다.');
+	} else if (!userData) {
+		console.log('유저 데이터를 불러오는 중...');
+	}
+
 	useEffect(() => {
-		// MongoDB에서 데이터 가져오는 함수
 		const fetchPosts = async () => {
 			try {
-				const response = await axios.get(`http://localhost:4000/api/post`);
-				setPosts(response.data);
+				const token = localStorage.getItem('accessToken');
+				const config = {
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				};
+				const response = await axios.get(
+					`${process.env.REACT_APP_API_URL}/api/post`,
+					config,
+				);
+				setPosts(response.data.posts);
+				setUserName(response.data.userName);
+				setProfileImage(userData?.profileImg || '');
+				setPostCount(response.data.posts.length);
+				getFollowers(response.data.userName);
+				getFollowings(userData?.userName);
 			} catch (error) {
 				console.error('Error fetching posts:', error);
 			}
 		};
 
-		fetchPosts();
-	}, []);
-	// 가짜데이터
-	const userdata = {
-		userId: 'pretty_bunny_kim',
-		postCount: 50,
-		followerCount: 5000,
-		email: 'prtty_bunny@naver.com',
-	};
-	// 게시글 최신순으로 정렬
-	const sortedPosts = posts.sort(
-		(a: Post, b: Post) =>
-			new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
-	);
+		const fetchOtherUserPosts = async () => {
+			try {
+				const token = localStorage.getItem('accessToken');
+				const config = {
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				};
+				const response = await axios.get(
+					`${process.env.REACT_APP_API_URL}/api/post/user/${userId}`,
+					config,
+				);
 
+				setPosts(response.data.posts);
+				setUserName(response.data.user[0].userName);
+				setPostCount(response.data.posts.length);
+				setEmail(response.data.user[0].email);
+				setProfileImage(response.data.user[0].profileImg);
+				getFollowers(response.data.user[0].userName);
+				getFollowings(userData?.userName);
+			} catch (error) {
+				console.error('Error fetching posts:', error);
+			}
+		};
+
+		if (userId) {
+			fetchOtherUserPosts();
+		} else {
+			fetchPosts();
+		}
+	}, [userId, follower, isFollowed]);
+	//-----------------팔로우 기능------------------
+	const followToggle = async () => {
+		try {
+			getFollowings(userName);
+			const response = await post<ApiResponse>(
+				`${process.env.REACT_APP_API_URL}/api/user/toggleFollow`,
+				{ followeeName: userId },
+				getToken(),
+			);
+			mutate(
+				`${process.env.REACT_APP_API_URL}/api/user/followers?userName=${userName}`,
+			);
+			if (!isFollowed) {
+				await Swal.fire(alertList.successMessage('팔로우 하였습니다.'));
+				setIsFollowed(response.data.followed);
+			} else {
+				await Swal.fire(alertList.infoMessage('팔로우를 취소하였습니다.'));
+				setIsFollowed(response.data.followed);
+			}
+		} catch (error) {
+			console.error('Error updating follow:', error);
+			await Swal.fire(alertList.errorMessage('팔로우 실패하였습니다.'));
+		}
+	};
+	//--------------------팔로워 가져오기------------------
+	const getFollowers = async (userName: string) => {
+		try {
+			const response = await axios.get(
+				`${process.env.REACT_APP_API_URL}/api/user/followers?userName=${userName}`,
+			);
+			setFollower(response.data.length);
+		} catch (error) {
+			console.error('Error fetching getFollowers:', error);
+		}
+	};
+	//--------------------팔로잉 가져오기------------------
+	const getFollowings = async (nickName: string | undefined) => {
+		try {
+			if (nickName !== undefined) {
+				const response = await axios.get(
+					`${process.env.REACT_APP_API_URL}/api/user/followings?userName=${nickName}`,
+					getToken(),
+				);
+				setFollowing(response.data);
+				const hasUserName = response.data.some(
+					(user: any) => user === userName,
+				);
+				setIsFollowed(hasUserName);
+			} else {
+				console.log('nickName = undefined');
+			}
+		} catch (error) {
+			console.error('Error fetching getFollowers:', error);
+		}
+	};
+	const getToken = () => {
+		const token = localStorage.getItem('accessToken');
+		const config = {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		};
+		return config;
+	};
 	return (
 		<>
 			<Header />
 			<Container>
 				<Sec1>
-					<ImageWrap>
-						<UserImage src={userImage}></UserImage>
-					</ImageWrap>
+					{userData?.userName == userName ? (
+						<ImageWrap>
+							<UserImage src={profileImage} onClick={openModal}></UserImage>
+							<UserProfile
+								isModalOpen={isModalOpen}
+								closeModal={closeModal}
+								handleModalClose={handleModalClose}
+							/>
+						</ImageWrap>
+					) : (
+						<ImageWrap>
+							<OtherUserImage src={profileImage}></OtherUserImage>
+						</ImageWrap>
+					)}
+
 					<ProfileWrap>
 						<Wrapper1>
-							<UserId>{userdata.userId}</UserId>
-							<PlusIcon
-								src={plusIcon}
-								onClick={() => {
-									alert('친구 추가하기 버튼!');
-								}}
-							/>
-						</Wrapper1>
-						<Wrapper2>
-							<FriendButton
+							<UserId>{userName}</UserId>
+							{userData?.userName === userName ? (
+								<span></span>
+							) : isFollowed ? (
+								<PlusIcon src={FollowingIcon} onClick={followToggle} />
+							) : (
+								<PlusIcon src={plusIcon} onClick={followToggle} />
+							)}
+
+							{/* <FriendButton
 								onClick={() => {
 									alert('친구초대하기');
 								}}>
 								친구초대하기
-							</FriendButton>
-							<EditButton
-								onClick={() => {
-									alert('프로필 편집하기');
-								}}>
-								프로필 편집
+							</FriendButton> */}
+						</Wrapper1>
+						<Wrapper2>
+							<PostButton>
+								<Link to={`/post/upload`}>게시글 등록</Link>
+							</PostButton>
+							<EditButton>
+								<Link to={'/user/edit'}>프로필 편집</Link>
 							</EditButton>
 						</Wrapper2>
 						<Wrapper3>
 							<p>
-								게시물 <span>{userdata.postCount}</span>
+								게시물 <span>{postCount}</span>
 							</p>
 
 							<p>
-								나를 좋아하는 버니들 <span>{userdata.followerCount}</span>
+								나를 좋아하는 버니들 <span>{follower ? follower : 0}</span>
 							</p>
 						</Wrapper3>
 						<Wrapper4>
@@ -113,22 +261,30 @@ const UserMain = () => {
 								<ProfileLi>#개발자</ProfileLi>
 								<ProfileLi>#소통</ProfileLi>
 							</ProfileUl>
-							<Email href='#'>{userdata.email}</Email>
+							<Email href='#'>{userId ? getEmail : userData?.email}</Email>
 						</Wrapper4>
 					</ProfileWrap>
 				</Sec1>
 				<hr />
 				<PostContainer>
 					<PostTitle>게시물</PostTitle>
-					<PostUl>
-						{sortedPosts.map((post: Post, i: number) => (
-							<PostLi key={post._id}>
-								<Link className='link' to={`/post/${post._id}`}>
-									<img key={i} src={post.images[0]} alt={`post ${i}`} />
-								</Link>
-							</PostLi>
-						))}
-					</PostUl>
+					{posts.length > 0 ? (
+						<PostUl>
+							{posts.map((post: PostType, i: number) => (
+								<PostLi key={post._id}>
+									<Link className='link' to={`/post/${post._id}`}>
+										<img key={i} src={post.images[0]} alt={`post ${i}`} />
+									</Link>
+								</PostLi>
+							))}
+						</PostUl>
+					) : (
+						<PostUlEmpty>
+							<NothingWrap>
+								<NothingPost>게시글이 없습니다</NothingPost>
+							</NothingWrap>
+						</PostUlEmpty>
+					)}
 				</PostContainer>
 			</Container>
 			<Footer />

@@ -1,8 +1,17 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-	width: 75%;
 	margin: 0 auto;
+	box-sizing: border-box;
+	@media only screen and (min-width: 769px) and (max-width: 1980px) {
+		width: 50%;
+	}
+	@media only screen and (min-width: 391px) and (max-width: 768px) {
+		width: 70%;
+	}
+	@media only screen and (min-width: 0px) and (max-width: 390px) {
+		width: 100%;
+	}
 `;
 export const Sec1 = styled.div`
 	display: flex;
@@ -12,14 +21,42 @@ export const Sec1 = styled.div`
 	padding: 10rem 0;
 `;
 export const ImageWrap = styled.div`
+
   width: 50%;
   orange;
   text-align: right;
   margin-right: 2rem;
 `;
 export const UserImage = styled.img`
-	width: 31rem;
 	border-radius: 200px;
+	width: 31rem;
+	height: 31rem;
+	object-fit: cover;
+	background-color: #fff;
+	cursor: pointer;
+	@media only screen and (min-width: 391px) and (max-width: 768px) {
+		width: 18rem;
+		height: 18rem;
+	}
+	@media only screen and (min-width: 0px) and (max-width: 390px) {
+		width: 15rem;
+		height: 15rem;
+	}
+`;
+export const OtherUserImage = styled.img`
+	border-radius: 200px;
+	width: 31rem;
+	height: 31rem;
+	object-fit: cover;
+	background-color: #fff;
+	@media only screen and (min-width: 391px) and (max-width: 768px) {
+		width: 18rem;
+		height: 18rem;
+	}
+	@media only screen and (min-width: 0px) and (max-width: 390px) {
+		width: 15rem;
+		height: 15rem;
+	}
 `;
 export const ProfileWrap = styled.div`
 	margin-left: 2rem;
@@ -27,42 +64,62 @@ export const ProfileWrap = styled.div`
 `;
 export const Wrapper1 = styled.div`
 	display: flex;
+	justify-content: flex-start;
 	align-items: center;
 `;
 export const UserId = styled.h4`
 	font-size: 2.6rem;
+	margin-right: 2rem;
 `;
 export const PlusIcon = styled.img`
 	width: 3.1rem;
-	margin-left: 2rem;
 	cursor: pointer;
-`;
-export const Wrapper2 = styled.div`
-	margin-bottom: 2rem;
+	margin-right: 2rem;
 `;
 export const FriendButton = styled.button`
-	width: 11.4rem;
+	width: 10rem;
 	height: 3.9rem;
 	font-size: 1.4rem;
 	border-radius: 0.5rem;
 	background-color: ${({ theme }) => theme.colors.lightpurple};
 	color: ${({ theme }) => theme.colors.background};
 	font-weight: 600;
-	margin-right: 2rem;
 	cursor: pointer;
 	border: none;
 `;
+export const Wrapper2 = styled.div`
+	margin-bottom: 2rem;
+	display: flex;
+	justify-content: flex-start;
+`;
 export const EditButton = styled.button`
-	width: 11.4rem;
+	width: 10rem;
 	cursor: pointer;
 	height: 3.9rem;
 	font-size: 1.4rem;
 	border: none;
 	border-radius: 0.5rem;
 	background-color: ${({ theme }) => theme.colors.strongpurple};
-	color: ${({ theme }) => theme.colors.background};
+	a {
+		color: ${({ theme }) => theme.colors.background};
+		font-weight: 600;
+		text-decoration: none;
+	}
+`;
+export const PostButton = styled.button`
+	width: 10rem;
+	cursor: pointer;
+	height: 3.9rem;
+	font-size: 1.4rem;
+	border: none;
+	border-radius: 0.5rem;
+	background-color: ${({ theme }) => theme.colors.lightpurple};
 	font-weight: 600;
 	margin-right: 2rem;
+	a {
+		text-decoration: none;
+		color: ${({ theme }) => theme.colors.background};
+	}
 `;
 
 export const Wrapper3 = styled.div`
@@ -98,6 +155,7 @@ export const ProfileUl = styled.ul`
 export const ProfileLi = styled.li`
 	font-size: 1.8rem;
 `;
+
 export const Email = styled.a`
 	text-decoration: none;
 	color: #000;
@@ -114,21 +172,54 @@ export const PostTitle = styled.h3`
 `;
 export const PostUl = styled.ul`
 	list-style: none;
+	box-sizing: border-box;
 	padding: 0;
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
 	grid-template-rows: 1fr 1fr 1fr;
 	gap: 3rem;
 	place-items: center;
+	position: relative;
+	@media only screen and (min-width: 769px) and (max-width: 1980px) {
+		gap: 1rem;
+	}
+	@media only screen and (min-width: 391px) and (max-width: 768px) {
+		gap: 1;
+	}
+	@media only screen and (min-width: 0px) and (max-width: 390px) {
+		gap: 0;
+	}
+`;
+export const PostUlEmpty = styled(PostUl)`
+	height: 70rem;
 `;
 export const PostLi = styled.li`
-	height: 22rem;
+	// height: 22rem;
 	overflow: hidden;
+	box-sizing: border-box;
 	.link {
 		width: 100%;
 		height: auto;
 		img {
 			width: 100%;
+			height: auto;
 		}
 	}
+	@media only screen and (min-width: 1280px) and (max-width: 1980px) {
+		height: 25rem;
+	}
+	@media only screen and (min-width: 391px) and (max-width: 768px) {
+		height: 22rem;
+	}
+	@media only screen and (min-width: 0px) and (max-width: 390px) {
+		gap: 0;
+	}
+`;
+export const NothingWrap = styled.div`
+	width: 100%;
+	position: absolute;
+`;
+export const NothingPost = styled.p`
+	font-size: 2rem;
+	font-weight: 600;
 `;

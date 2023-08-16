@@ -1,10 +1,11 @@
-import React from 'react';
 import MainLogo from '../../assets/icons/MainLogo.png';
-import GreenHeart from '../../assets/images/greenheart.png';
-import BlueHeart from '../../assets/images/blueheart.png';
-import PinkHeart from '../../assets/images/pinkheart.png';
-import Avatar from '../../assets/images/avatar.png';
-
+import { Link } from 'react-router-dom';
+import mainhomeImage from '../../assets/images/mainhome.png';
+import chattingImage from '../../assets/images/chatting.png';
+import friend from '../../assets/images/friend.png';
+import messagebubble from '../../assets/images/messagebubble.png';
+import link from '../../assets/images/link.jpg';
+import mainImage from '../../assets/images/mainImage.png';
 import {
 	FirstSection,
 	Container,
@@ -17,9 +18,6 @@ import {
 	MidText,
 	BigText1,
 	BigText2,
-	GHeart,
-	BHeart,
-	PHeart,
 	ImgContainer,
 	MainAvatar,
 	MidContent,
@@ -33,17 +31,50 @@ import {
 	LeftContent,
 	HalfCircle,
 	ShareBtn,
+	LeftImage,
+	RightImage,
+	RightDetailImage,
+	DetailImage,
+	MidImage,
+	LastContent,
 } from './MainStyle';
+import { useEffect, useState } from 'react';
+import { getToken } from '../../api/token';
+
 const MainPage = () => {
+	const [isLogin, setIsLogin] = useState(false);
+
+	useEffect(() => {
+		if (getToken(`accessToken`)) {
+			setIsLogin(true);
+		} else {
+			setIsLogin(false);
+		}
+	}, []);
+
 	return (
 		<>
 			<Container>
 				<FirstSection>
 					<Header>
-						<Logo src={MainLogo} alt='main-logo' />
+						<Link to='/mainhome/unknown'>
+							<Logo src={MainLogo} alt='main-logo' />
+						</Link>
 						<BtnContainer>
-							<LogIn>로그인</LogIn>
-							<SignUp>회원가입</SignUp>
+							{isLogin ? (
+								<>
+									<Link to='/user/edit'>
+										<LogIn>로그아웃</LogIn>
+									</Link>
+								</>
+							) : (
+								<Link to='/login'>
+									<LogIn>로그인</LogIn>
+								</Link>
+							)}
+							<Link to='/register'>
+								<SignUp>회원가입</SignUp>
+							</Link>
 						</BtnContainer>
 					</Header>
 					<MainContent>
@@ -54,21 +85,19 @@ const MainPage = () => {
 							버니톡과 함께 만들어가요
 						</MidText>
 						<ImgContainer>
-							<MainAvatar src={Avatar} alt='avatar' />
-							<GHeart src={GreenHeart} alt='green-heart' />
-							<BHeart src={BlueHeart} alt='blue-heart' />
-							<PHeart src={PinkHeart} alt='pink-heart' />
+							<MainAvatar src={mainImage} alt='avatar' />
 						</ImgContainer>
 					</MainContent>
 				</FirstSection>
 				<SecondSection>
 					<LeftSection>
-						<p>실시간 버니톡 움짤</p>
+						<LeftImage src={mainhomeImage} alt='mainhome-image' />
+						<DetailImage src={messagebubble} alt='message-image' />
 					</LeftSection>
 					<RightContent>
 						<MidContent>실시간 멘션 기능</MidContent>
 						<MidSecContent>
-							친구들의 생각을 실시간으로 확인하고 공유하는
+							익명의 사용자와 친구들의 생각을 실시간으로 확인하고 공유하는
 							<br />
 							실시간 멘션기능을 이용해보세요!
 						</MidSecContent>
@@ -84,24 +113,29 @@ const MainPage = () => {
 						</MidSecContent>
 					</LeftContent>
 					<RightSection>
-						<p>서비스 채팅 움짤</p>
+						<RightImage src={chattingImage} alt='chatting-image' />
+						<RightDetailImage src={friend} alt='friend-image' />
 					</RightSection>
 				</ThirdSection>
 				<FourthSection>
 					<LeftSection>
-						<p>소환기능 움짤</p>
+						{' '}
+						<MidImage src={link} alt='link-image' />
 					</LeftSection>
-					<RightContent>
+					<LastContent>
 						<MidContent>내가 보고싶은 친구 소환</MidContent>
+
 						<MidSecContent>
 							내 공간으로 초대하고 싶은 친구 소환하기
 							<br />
 							링크 하나로 이어지는 우리들의 마음
 						</MidSecContent>
-					</RightContent>
+					</LastContent>
 				</FourthSection>
 				<HalfCircle>
-					<ShareBtn>나만의 공간 만들러 가기</ShareBtn>
+					<Link to='/register'>
+						<ShareBtn>나만의 공간 만들러 가기</ShareBtn>
+					</Link>
 				</HalfCircle>
 			</Container>
 		</>

@@ -6,11 +6,16 @@ import 'slick-carousel/slick/slick-theme.css';
 import Slider from 'react-slick';
 import DetailHeader from '../../../components/Header/DetailHeader/DetailHeader';
 import Footer from '../../../components/Footer/Footer';
-import ProfileImg from '../../../assets/images/userimagesmall.png';
 import DeleteIcon from '../../../assets/icons/DeleteIcon.png';
 import likeIcon from '../../../assets/icons/like.png';
 import likedIcon from '../../../assets/icons/liked.png';
 import CommentDeleteIcon from '../../../assets/icons/CommentDeleteIcon.png';
+import { useUser } from '../../../utils/swrFetcher';
+import alertList from '../../../utils/swal';
+import { del } from '../../../api/api';
+import { PostDetailType, PostType, CommentType } from '../../../types/postType';
+import Swal from 'sweetalert2';
+import useSWR, { mutate } from 'swr';
 import dayjs from 'dayjs';
 import {
 	Container,
@@ -45,27 +50,6 @@ import {
 	CommentDeleteImg,
 } from './DetailStyle';
 
-const backUrl = 'https://port-0-back-end-kvmh2mljxnw03c.sel4.cloudtype.app/api';
-
-interface Post {
-	_id: string;
-	userId: string;
-	profileImage: string;
-	images: string[];
-	content: string;
-	createdAt: string;
-	likeCount: number; // 추가된 부분
-}
-interface Comment {
-	comment: string;
-	_id: string;
-	postId: string;
-	userId: string;
-	userName: string;
-	createdAt: Date;
-	updatedAt: Date;
-}
-
 const settings = {
 	dots: true, // dot navigation을 보여줄지에 대한 여부
 	infinite: true, // 무한으로 슬라이드가 돌아가는지에 대한 여부
@@ -77,31 +61,47 @@ const settings = {
 const Detail = () => {
 	const navigate = useNavigate();
 	const { postId } = useParams();
-	const [post, setPost] = useState<Post | null>(null); // 초기 상태를 null로 설정
-	const [comments, setComments] = useState<Comment[]>([]); // 댓글 상태를 추가
-	const [commentInput, setCommentInput] = useState(''); // Add this line
+	const [post, setPost] = useState<PostDetailType | null>(null); // 초기 상태를 null로 설정
+	const [comments, setComments] = useState<CommentType[]>([]); // 댓글 상태를 추가
+	const [commentInput, setCommentInput] = useState('');
+	const [userName, setUserName] = useState(''); // userName 게시글 기준으로 추가해야됨
 	const [likeCount, setLikeCount] = useState<number>(0);
 	const [isLiked, setIsLiked] = useState<boolean>(false);
+	const [profileImage, setProfileImage] = useState('');
+	const { userData, isError } = useUser();
+	if (isError) {
+		console.log('유저 데이터를 불러오는데 실패했습니다.');
+	} else if (!userData) {
+		console.log('유저 데이터를 불러오는 중...');
+	}
 	useEffect(() => {
+		const token = localStorage.getItem('accessToken');
+		// 헤더에 토큰을 추가하는 config 객체를 만듭니다.
+		const config = {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		};
 		// MongoDB에서 데이터 가져오는 함수
 		//게시글 가져옴
 		const fetchPosts = async () => {
 			try {
 				const response = await axios.get(
-					`http://localhost:4000/api/post/${postId}`,
+					`${process.env.REACT_APP_API_URL}/api/post/${postId}`,
+					config,
 				);
 				setPost(response.data.post);
+				setProfileImage(response.data.user.profileImg);
 				if (response.data.like && response.data.like.userId) {
 					setLikeCount(response.data.like.userId.length);
-					const currentUser = 'frontTest'; // temporary id
+					const currentUser = userData?._id;
 					const isUserLiked = response.data.like.userId.includes(currentUser);
 					setIsLiked(isUserLiked);
-					// console.log('userId = ', response.data.like.userId);
-					// console.log('count = ', response.data.like.userId.length);
-					// console.log('liked = ', isUserLiked);
+					setUserName(response.data.post.userName);
 				} else {
 					setLikeCount(0);
 					setIsLiked(false);
+					setUserName(response.data.post.userName);
 				}
 				// console.log(response.data.post);
 			} catch (error) {
@@ -113,7 +113,7 @@ const Detail = () => {
 			// 댓글을 가져오는 함수
 			try {
 				const response = await axios.get(
-					`http://localhost:4000/api/comment/${postId}`,
+					`${process.env.REACT_APP_API_URL}/api/comment/${postId}`,
 				);
 				setComments(response.data);
 			} catch (error) {
@@ -124,17 +124,31 @@ const Detail = () => {
 		fetchPosts();
 		fetchComments();
 	}, [postId, isLiked]);
-	//----------게시글 삭제------------
-	const handleDeletePostButton = async () => {
-		const confirmed = window.confirm('정말로 삭제하시겠습니까?');
+	// --------토큰 받아오는 함수 ---------
+	const getToken = () => {
+		const token = localStorage.getItem('accessToken');
+		const config = {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		};
+		return config;
+	};
 
-		if (confirmed) {
-			try {
-				await axios.delete(`http://localhost:4000/api/post/${postId}`);
+	//----------게시글 삭제------------
+	const deletePost = async () => {
+		try {
+			const result = await Swal.fire(
+				alertList.doubleCheckMessage('게시글을 삭제하시겠습니까?'),
+			);
+			if (result.isConfirmed) {
+				await del<PostType[]>(`/api/post/${postId}`);
+				mutate(`${process.env.REACT_APP_API_URL}/api/post/${postId}`);
 				navigate('/post');
-			} catch (error) {
-				console.error('Error deleting post:', error);
 			}
+		} catch (error) {
+			console.log('게시글 삭제 실패', error);
+			await Swal.fire(alertList.errorMessage('게시글 삭제에 실패하였습니다.'));
 		}
 	};
 
@@ -148,54 +162,64 @@ const Detail = () => {
 		event: React.FormEvent<HTMLFormElement>,
 	) => {
 		event.preventDefault();
-
 		if (commentInput.trim() === '') {
 			alert('댓글을 입력해주세요.');
 			return;
 		}
-
 		try {
 			const response = await axios.post(
-				`http://localhost:4000/api/comment/${postId}`,
+				`${process.env.REACT_APP_API_URL}/api/comment/${postId}`,
 				{
 					comment: commentInput,
-					// You should also send the user id and username here, for example:
-					userId: 'frontTest',
-					userName: 'frontTest',
-					// userId: currentUser.id,
-					// userName: currentUser.name,
+					userId: userData?.userId,
+					userName: userData?.userName,
 				},
+				getToken(),
 			);
-
 			setComments((prevComments) => [...prevComments, response.data]);
 			setCommentInput('');
 		} catch (error) {
 			console.error('Error posting comment:', error);
 		}
 	};
-	//-----댓글 삭제 코드 -----
-	const deleteComment = async (postId: string, commentId: string) => {
+	//----------댓글 삭제------------
+	const deleteComment = async (
+		postId: string,
+		commentId: string,
+		userId: string,
+	) => {
 		try {
-			await axios.delete(
-				`http://localhost:4000/api/comment/${postId}/${commentId}`,
+			if (userData?._id !== userId) {
+				await Swal.fire(
+					alertList.errorMessage('댓글 아이디가 일치하지 않습니다.'),
+				);
+				return;
+			}
+			const result = await Swal.fire(
+				alertList.doubleCheckMessage('댓글을 삭제하시겠습니까?'),
 			);
-
-			// 삭제된 댓글을 제외한 댓글들로 상태를 업데이트합니다.
-			setComments(comments.filter((comment) => comment._id !== commentId));
+			if (result.isConfirmed) {
+				await del<CommentType[]>(`/api/comment/${postId}/${commentId}`);
+				mutate(
+					`${process.env.REACT_APP_API_URL}/apicomment/${postId}/${commentId}`,
+				);
+				// 삭제된 댓글을 제외한 댓글들로 상태를 업데이트합니다.
+				setComments(comments.filter((comment) => comment._id !== commentId));
+			}
 		} catch (error) {
-			console.error('Error deleting comment:', error);
+			console.log('댓글 삭제에 실패했습니다.', error);
+			await Swal.fire(alertList.errorMessage('댓글 삭제에 실패하였습니다.'));
 		}
 	};
+
 	// --------좋아요 기능 ----------
 	const handleLikeButton = async () => {
 		try {
 			const response = await axios.post(
-				`http://localhost:4000/api/like/${postId}`,
-				{
-					userId: 'frontTest',
-				},
+				`${process.env.REACT_APP_API_URL}/api/like/${postId}`,
+				{},
+				getToken(),
 			);
-
 			const { liked, count } = response.data;
 			setIsLiked(liked);
 			setLikeCount(count);
@@ -203,25 +227,36 @@ const Detail = () => {
 			console.error('Error updating like:', error);
 		}
 	};
+	//------------댓글 이름 클릭 시 그 사람 프로필로 이동------------
+	const moveToUser = async (userName: string) => {
+		try {
+			navigate(`/post/user/${userName}`);
+		} catch (error) {
+			console.log(error);
+		}
+	};
 	if (post === null) {
 		// post가 null일 때 로딩 상태로 처리
 		return <div>Loading...</div>;
 	}
-
 	return (
 		<>
 			<DetailHeader />
 			<Container>
 				<ProfileWrap>
 					<Profile>
-						<ProfileUserImage src={ProfileImg} alt='userImg' />
-						<ProfileId>유저 아이디</ProfileId>
+						<ProfileUserImage src={profileImage} alt='userImg' />
+						<ProfileId>{userName}</ProfileId>
 					</Profile>
-					<DeleteButtonWrap>
-						<DeleteButton onClick={handleDeletePostButton}>
-							<DeleteButtonIcon src={DeleteIcon} alt='삭제버튼' />
-						</DeleteButton>
-					</DeleteButtonWrap>
+					{userData?.userName == userName ? (
+						<DeleteButtonWrap>
+							<DeleteButton onClick={deletePost}>
+								<DeleteButtonIcon src={DeleteIcon} alt='삭제버튼' />
+							</DeleteButton>
+						</DeleteButtonWrap>
+					) : (
+						<span></span>
+					)}
 				</ProfileWrap>
 				<PostWrap>
 					{/* 게시글 큰 wrap */}
@@ -262,15 +297,24 @@ const Detail = () => {
 						{comments.map((comment, index) => (
 							<Commentli key={index}>
 								<CommentContentWrap>
-									<CommentUserId>{comment.userName}</CommentUserId>
+									<CommentUserId
+										onClick={() => {
+											moveToUser(comment.userName);
+										}}>
+										{comment.userName}
+									</CommentUserId>
 									<CommentContent>{comment.comment}</CommentContent>
 								</CommentContentWrap>
-								<CommentDeleteButton
-									onClick={() => deleteComment(comment.postId, comment._id)}>
-									<CommentDeleteImg
-										src={CommentDeleteIcon}
-										alt='댓글 삭제 버튼'></CommentDeleteImg>
-								</CommentDeleteButton>
+								{userData?._id === comment.userId && (
+									<CommentDeleteButton
+										onClick={() =>
+											deleteComment(comment.postId, comment._id, comment.userId)
+										}>
+										<CommentDeleteImg
+											src={CommentDeleteIcon}
+											alt='댓글 삭제 버튼'></CommentDeleteImg>
+									</CommentDeleteButton>
+								)}
 							</Commentli>
 						))}
 					</CommentUl>

@@ -2,9 +2,13 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
 	margin-top: 5rem;
-	width: 100%;
+	width: 77%;
 	display: flex;
 	flex-direction: column;
+	@media (max-width: 628px) {
+		width: 100%;
+		padding: 0 5rem;
+	}
 `;
 export const Content = styled.div`
 	font-size: 2.5rem;
@@ -18,8 +22,10 @@ export const ChatBoxConatiner = styled.div`
 export const MessageContainer = styled.div`
 	display: flex;
 	flex-direction: column;
-	align-items: flex-end;
 	overflow-y: auto;
 	height: 70vh;
 	padding: 10rem;
+	@media (max-width: 628px) {
+		padding: 3rem;
+	}
 `;
