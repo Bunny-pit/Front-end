@@ -3,6 +3,7 @@ import message from '../../../assets/icons/message.png';
 import { Link, useLocation } from 'react-router-dom';
 import Group from '../../../assets/icons/Group.png';
 import Swal from 'sweetalert2';
+import { Post, UserDataType } from '../../../types/dataType';
 
 import {
 	UserContainer,
@@ -22,8 +23,8 @@ import {
 } from '../MainHomeContentStyle';
 
 interface InnerContentProps {
-	post: any;
-	userData: any;
+	post: Post;
+	userData: UserDataType | null;
 	editingPostId: string;
 	updatedContent: string;
 	handleContentChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
@@ -36,11 +37,10 @@ interface InnerContentProps {
 }
 
 const handleReport = (
-	post: any,
-	userData: any,
+	post: Post,
+	userData: UserDataType | null,
 	sendReport: (postId: string, reason: string) => Promise<void>,
 ) => {
-	// 이미 신고한 게시글인지 확인
 	const hasUserAlreadyReported = post.reports.some(
 		(report: { userId: string }) => report.userId === userData?._id,
 	);
@@ -63,7 +63,6 @@ const handleReport = (
 				Swal.showValidationMessage('신고 사유를 입력해주세요');
 				return;
 			}
-			// 신고 함수 호출
 			try {
 				await sendReport(post._id, reason);
 				Swal.fire('성공', '신고가 접수되었습니다.', 'success');

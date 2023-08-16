@@ -1,6 +1,7 @@
 import useSWR, { SWRResponse } from 'swr';
 import { swrApi } from '../api/axiosInstance';
 import { API_USER_ACCESS_TOKEN } from './constant';
+import { UserDataType } from '../types/dataType';
 
 export const fetcher = (url: string) =>
 	swrApi.get(url).then((res) => {
@@ -8,21 +9,8 @@ export const fetcher = (url: string) =>
 		return res.data;
 	});
 
-interface UserData {
-	createdAt: string;
-	email: string;
-	password: string;
-	role: number;
-	secretName: string;
-	updatedAt: string;
-	userId: string;
-	userName: string;
-	_id: string;
-	profileImg: string;
-}
-
 export function useUser(): {
-	userData: UserData | null;
+	userData: UserDataType | null;
 	isError: boolean;
 } {
 	const fetchingURL = `${process.env.REACT_APP_API_URL}${API_USER_ACCESS_TOKEN}`;

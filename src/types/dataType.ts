@@ -1,4 +1,5 @@
 export interface UserDataType {
+	_id: string;
 	userId: string;
 	userName: string;
 	secretName: string;
@@ -6,12 +7,26 @@ export interface UserDataType {
 	password: string;
 	role: number;
 	error: any;
+	createdAt: string;
+	updatedAt: string;
+	profileImg: string;
 }
 
 export interface LoginDataType {
 	email: string;
 	password: string;
 	loginData?: string;
+}
+
+interface Report {
+	reportedBy: {
+		type: string;
+		ref: 'User';
+		required: true;
+	};
+	userId: string;
+	reason: string;
+	createdAt: Date;
 }
 
 export interface Post {
@@ -23,6 +38,7 @@ export interface Post {
 	content: string;
 	createdAt: string;
 	updatedAt: string;
+	reports: Report[];
 	__v: number;
 }
 
