@@ -22,11 +22,20 @@ const useMainHomePost = () => {
 
 	const fetchWithPagination = async (url: string): Promise<Post[]> => {
 		const newPosts = await fetcher(url);
+
 		if (newPosts.length === 0) {
 			// 빈 배열이면 이전 데이터만 반환
 			return posts || [];
 		}
-		console.log(newPosts.length);
+
+		newPosts.forEach((post: Post) => {
+			post.createdAt = dayjs(post.createdAt)
+				.tz('Asia/Seoul')
+				.format('YYYY-MM-DD HH:mm');
+			post.updatedAt = dayjs(post.updatedAt)
+				.tz('Asia/Seoul')
+				.format('YYYY-MM-DD HH:mm');
+		});
 
 		if (newPosts.length === 0 && observer.current) {
 			observer.current.disconnect();

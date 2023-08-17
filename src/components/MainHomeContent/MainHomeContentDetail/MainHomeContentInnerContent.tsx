@@ -2,7 +2,6 @@ import React from 'react';
 import message from '../../../assets/icons/message.png';
 import { Link, useLocation } from 'react-router-dom';
 import Group from '../../../assets/icons/Group.png';
-import Swal from 'sweetalert2';
 import { Post, UserDataType } from '../../../types/dataType';
 
 import {
