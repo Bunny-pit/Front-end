@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { post, patch, del } from '../api/api';
@@ -22,11 +22,6 @@ const useMainHomePost = () => {
 
 	const fetchWithPagination = async (url: string): Promise<Post[]> => {
 		const newPosts = await fetcher(url);
-
-		if (newPosts.length === 0) {
-			// 빈 배열이면 이전 데이터만 반환
-			return posts || [];
-		}
 
 		newPosts.forEach((post: Post) => {
 			post.createdAt = dayjs(post.createdAt)
@@ -63,13 +58,19 @@ const useMainHomePost = () => {
 		(element: HTMLDivElement | null) => {
 			if (observer.current) observer.current.disconnect();
 			observer.current = new IntersectionObserver((entries) => {
-				if (entries[0].isIntersecting) {
+				if (entries[0].isIntersecting && (posts?.length ?? 0) % 10 === 0) {
 					setPage((prevPage) => prevPage + 1);
-					mutate(
-						`${process.env.REACT_APP_API_URL}${API_MAINHOME_UNKNOWN}?page=${
-							page + 1
-						}&limit=10`,
-					);
+					const newURL = `${
+						process.env.REACT_APP_API_URL
+					}${API_MAINHOME_UNKNOWN}?page=${page + 1}&limit=10`;
+					fetchWithPagination(newURL).then((newData) => {
+						if (posts) {
+							const mergedData = [...posts, ...newData];
+							mutate(newURL, mergedData, false);
+						} else {
+							mutate(newURL, newData, false);
+						}
+					});
 				}
 			});
 			if (element) observer.current.observe(element);
@@ -178,6 +179,7 @@ const useMainHomePost = () => {
 			console.log(err);
 		}
 	};
+
 	const sendReport = async (
 		currentpost: Post,
 		userData: UserDataType | null,
