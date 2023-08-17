@@ -66,6 +66,9 @@ export const ModalMain = styled.div`
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	input {
+		cursor: pointer;
+	}
 `;
 
 export const ModalUploadFile = styled.div`
@@ -88,4 +91,5 @@ export const ModalPostButton = styled.button`
 	width: 50%;
 	border: 1px solid;
 	margin-top: 20px;
+	cursor: pointer;
 `;

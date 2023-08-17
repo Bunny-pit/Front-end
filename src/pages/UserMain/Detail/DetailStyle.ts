@@ -157,6 +157,7 @@ export const CommentDeleteImg = styled.img`
 export const CommentUserId = styled.h4`
 	font-size: 1.8rem;
 	margin: 0 2rem 0 0;
+	cursor: pointer;
 `;
 export const CommentContent = styled.p`
 	font-size: 1.8rem;
