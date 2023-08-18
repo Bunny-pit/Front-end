@@ -57,7 +57,7 @@ export const ChangeButtonDiv = styled.div`
 	margin: 0 auto;
 `;
 
-export const ButtonUser = styled.button`
+export const ButtonAnonymous = styled.button`
 	/* 일반 버튼 스타일 */
 	border: none;
 
@@ -81,7 +81,7 @@ export const ButtonUser = styled.button`
 	}
 `;
 
-export const ButtonHospital = styled.button`
+export const Buttonfriends = styled.button`
 	/* 일반 버튼 스타일 */
 	border: none;
 
@@ -105,4 +105,63 @@ export const ButtonHospital = styled.button`
 		cursor: pointer;
 		padding: 5%;
 	}
+`;
+
+// 팝업창 스타일
+
+export const PopupOverlay = styled.div`
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 1000;
+`;
+export const PopupContent = styled.div`
+	background-color: white;
+	padding: 20px;
+	border-radius: 8px;
+	box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
+	width: 300px;
+	max-width: 90%;
+	text-align: center;
+`;
+export const CloseButton = styled.button`
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 0 auto;
+	margin-top: 3rem;
+	padding: 1.5rem 0;
+	width: 10rem;
+	background-color: ${({ theme }) => theme.colors.pointcolor};
+	border-radius: 1.2rem;
+	color: white;
+	font-weight: bold;
+	border: none;
+	cursor: pointer;
+	font-size: 1.8rem;
+`;
+
+export const PopupH1 = styled.p`
+	font-size: 3.6rem;
+	font-weight: 900;
+	color: ${({ theme }) => theme.colors.pointcolor};
+`;
+export const PopupUL = styled.ul`
+	list-style: none;
+	padding-left: 0;
+`;
+export const PopupLI = styled.li`
+	font-size: 2.3rem;
+	margin: 2rem;
+	padding: 0;
+`;
+export const PopupSpan = styled.span`
+	font-size: 2.6rem;
+	font-weight: 600;
 `;

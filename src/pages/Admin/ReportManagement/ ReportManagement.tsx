@@ -7,21 +7,31 @@ import {
 	Container,
 	Title,
 	ChangeButtonDiv,
-	ButtonUser,
-	ButtonHospital,
+	ButtonAnonymous,
+	Buttonfriends,
 } from './ReportManagementStyle';
 
 import UserTable from './ReportManagementHooks';
 
 interface ApiData {
+	_id: string;
 	userId: string;
+	email: string;
 	name: string;
 	content: string;
+	reports: Report[];
 	createdAt: string;
-
-	reportedBy: string;
-	reason: string;
+	updatedAt: string;
+	__v: number;
 }
+
+type Report = {
+	reportedBy: string;
+	userId: string;
+	reason: string;
+	_id: string;
+	createdAt: string;
+};
 
 const ReportManagement: React.FC = () => {
 	const USER_DATA = 'http://localhost:3001/api/mainhome/unknown/reported';
@@ -48,8 +58,8 @@ const ReportManagement: React.FC = () => {
 			<Container>
 				<Title>신고 관리</Title>
 				<ChangeButtonDiv>
-					<ButtonUser>친구 한마디</ButtonUser>
-					<ButtonHospital>익명 한마디</ButtonHospital>
+					<ButtonAnonymous>익명 한마디</ButtonAnonymous>
+					<Buttonfriends>친구 한마디</Buttonfriends>
 				</ChangeButtonDiv>
 				<UserTable data={filteredUserData} />
 			</Container>
