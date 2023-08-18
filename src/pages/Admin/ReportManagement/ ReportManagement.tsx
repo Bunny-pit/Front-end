@@ -24,23 +24,22 @@ interface ApiData {
 }
 
 const ReportManagement: React.FC = () => {
-	const Report_DATA = 'http://localhost:3001/api/mainhome/friends/reported';
-	const [apiData, setApiData] = useState<ApiData[]>([]);
-
-	const fetchData = async () => {
-		try {
-			const response = await axios.get<ApiData[]>(Report_DATA);
-			const fetchedData: ApiData[] = response.data;
-			setApiData(fetchedData);
-			console.log('성공:');
-		} catch (error) {
-			console.error('Error fetching data:', error);
-			console.log('실패');
-		}
-	};
+	const USER_DATA = 'http://localhost:3001/api/mainhome/unknown/reported';
+	const [userData, setUserData] = useState<ApiData[]>([]);
+	const [filteredUserData, setFilteredUserData] = useState<ApiData[]>([]); // 필터링된 데이터의 새 상태
 
 	useEffect(() => {
-		fetchData();
+		axios
+			.get(USER_DATA)
+			.then((response) => {
+				const fetchedData: ApiData[] = response.data;
+				setUserData(fetchedData);
+				setFilteredUserData(fetchedData); // 모든 데이터로 FilteredUserData 초기화
+				console.log('성공', fetchedData);
+			})
+			.catch((error) => {
+				console.error('데이터를 가져오는 중 오류 발생:', error);
+			});
 	}, []);
 
 	return (
@@ -52,7 +51,7 @@ const ReportManagement: React.FC = () => {
 					<ButtonUser>친구 한마디</ButtonUser>
 					<ButtonHospital>익명 한마디</ButtonHospital>
 				</ChangeButtonDiv>
-				<UserTable data={apiData} />
+				<UserTable data={filteredUserData} />
 			</Container>
 			<DefaultFooter />
 		</>

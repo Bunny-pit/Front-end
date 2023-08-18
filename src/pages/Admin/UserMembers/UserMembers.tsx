@@ -32,6 +32,7 @@ const UserMembers: React.FC = () => {
 				const fetchedData: UserData[] = response.data.data;
 				setUserData(fetchedData);
 				setFilteredUserData(fetchedData); // 모든 데이터로 FilteredUserData 초기화
+				console.log('성공', fetchedData);
 			})
 			.catch((error) => {
 				console.error('데이터를 가져오는 중 오류 발생:', error);

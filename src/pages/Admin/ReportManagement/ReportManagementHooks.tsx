@@ -25,6 +25,7 @@ interface Props {
 }
 
 const UserTable: React.FC<Props> = ({ data }) => {
+	const [usersData, setUsersData] = useState<ApiData[]>(data);
 	return (
 		<>
 			<TableDiv>
