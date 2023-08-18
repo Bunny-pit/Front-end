@@ -14,6 +14,8 @@ import UserWithdrawalPage from './pages/UserAccount/UserWithdrawal/UserWithdrawa
 import UploadPost from './pages/UserMain/UploadPost/UploadPost';
 import FriendChatting from './pages/Chatting/FriendChatting';
 import { getToken } from './api/token';
+import { post } from './api/api';
+import { API_USER_LOGOUT } from './utils/constant';
 
 import UserMembers from './pages/Admin/UserMembers/UserMembers';
 import ReportManagement from './pages/Admin/ReportManagement/ ReportManagement';
@@ -81,6 +83,7 @@ function App() {
 						<Route path='/post/user/:userId' element={<UserMainPage />} />
 						<Route path='/post/:postId' element={<Detail />} />
 						<Route path='/post/upload' element={<UploadPost />} />
+						<Route path='/mainhome/unknown' element={<MainHomeUnknown />} />
 						<Route path='/mainhome/friends' element={<MainHomeFriends />} />
 						<Route path='/chatting/*' element={<Chatting />} />
 						<Route path='/friendchatting/*' element={<FriendChatting />} />

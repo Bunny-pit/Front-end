@@ -14,13 +14,15 @@ export const ModalWrapper = styled.div`
 	z-index: 999;
 	top: 10%;
 	left: 25%;
+	@media (max-width: 390px) {
+	}
 `;
 export const ExitImage = styled.img`
 	cursor: pointer;
 	position: absolute;
-	width: 2rem;
-	top: 5rem;
-	left: 75rem;
+	top: 20px;
+	right: 20px;
+	z-index: 999;
 `;
 export const SearchBarContainer = styled.div`
 	position: absolute;
@@ -33,7 +35,7 @@ export const SearchResult = styled.div`
 	flex-direction: column;
 	max-height: 70vh;
 	overflow-y: auto;
-	margin-top: 10rem;
+	margin-top: 20rem;
 `;
 
 export const ResultText = styled.p`
@@ -46,8 +48,8 @@ export const ResultText = styled.p`
 	}
 `;
 export const ProfileImage = styled.img`
-	width: 7rem;
-	height: 7rem;
+	width: 5rem;
+	height: 5rem;
 	border-radius: 50%;
 	margin-right: 2rem;
 `;
@@ -57,4 +59,5 @@ export const NoResultText = styled.p`
 `;
 export const ResultContainer = styled.div`
 	display: flex;
+	align-items: center;
 `;

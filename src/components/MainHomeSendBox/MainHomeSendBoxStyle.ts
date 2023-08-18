@@ -16,6 +16,14 @@ export const TextWrapper = styled.div`
 	align-items: center;
 	background-color: ${({ theme }) => theme.colors.gray200};
 	border-radius: 2rem;
+
+	@media (max-width: 768px) {
+		width: 80%;
+	}
+
+	@media (max-width: 390px) {
+		width: 95%;
+	}
 `;
 
 export const TextArea = styled.input`
@@ -26,6 +34,17 @@ export const TextArea = styled.input`
 	background-color: transparent;
 	font-size: 2rem;
 	outline: none;
+	&::placeholder {
+		text-align: center;
+	}
+
+	@media (max-width: 768px) {
+		font-size: 2.1rem;
+	}
+
+	@media (max-width: 390px) {
+		font-size: 2rem;
+	}
 `;
 
 export const SendButton = styled.button`

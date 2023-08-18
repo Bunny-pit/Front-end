@@ -72,6 +72,7 @@ const DMList = () => {
 	const handleSearch = (query: string) => {
 		setSearchQuery(query);
 	};
+
 	return (
 		<>
 			<TopContainer>
@@ -91,7 +92,10 @@ const DMList = () => {
 							: undefined;
 
 						return (
-							<NavLink key={chatRoom._id} to={`/chatting/dm/${chatRoom._id}`}>
+							<NavLink
+								key={chatRoom._id}
+								to={`/chatting/dm/${chatRoom._id}`}
+								style={{ textDecoration: 'none' }}>
 								{profileSrc && <Profile src={profileSrc} alt={otherUserName} />}
 								<Nickname>{otherUserName}</Nickname>
 								<Exiticon

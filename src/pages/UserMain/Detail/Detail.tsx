@@ -6,7 +6,6 @@ import 'slick-carousel/slick/slick-theme.css';
 import Slider from 'react-slick';
 import DetailHeader from '../../../components/Header/DetailHeader/DetailHeader';
 import Footer from '../../../components/Footer/Footer';
-import ProfileImg from '../../../assets/images/userimagesmall.png';
 import DeleteIcon from '../../../assets/icons/DeleteIcon.png';
 import likeIcon from '../../../assets/icons/like.png';
 import likedIcon from '../../../assets/icons/liked.png';
@@ -14,10 +13,9 @@ import CommentDeleteIcon from '../../../assets/icons/CommentDeleteIcon.png';
 import { useUser } from '../../../utils/swrFetcher';
 import alertList from '../../../utils/swal';
 import { del } from '../../../api/api';
-import { PostDetailType, PostType } from '../../../types/postType';
+import { PostDetailType, PostType, CommentType } from '../../../types/postType';
 import Swal from 'sweetalert2';
 import useSWR, { mutate } from 'swr';
-import { CommentType } from '../../../types/postType';
 import dayjs from 'dayjs';
 import {
 	Container,
@@ -69,6 +67,7 @@ const Detail = () => {
 	const [userName, setUserName] = useState(''); // userName 게시글 기준으로 추가해야됨
 	const [likeCount, setLikeCount] = useState<number>(0);
 	const [isLiked, setIsLiked] = useState<boolean>(false);
+	const [profileImage, setProfileImage] = useState('');
 	const { userData, isError } = useUser();
 	if (isError) {
 		console.log('유저 데이터를 불러오는데 실패했습니다.');
@@ -92,16 +91,12 @@ const Detail = () => {
 					config,
 				);
 				setPost(response.data.post);
+				setProfileImage(response.data.user.profileImg);
 				if (response.data.like && response.data.like.userId) {
 					setLikeCount(response.data.like.userId.length);
 					const currentUser = userData?._id;
 					const isUserLiked = response.data.like.userId.includes(currentUser);
 					setIsLiked(isUserLiked);
-					// console.log('userId = ', response.data.like.userId);
-					// console.log('currentUser = ', currentUser);
-					// console.log('count = ', response.data.like.userId.length);
-					// console.log('liked = ', isUserLiked);
-					// console.log(response.data);
 					setUserName(response.data.post.userName);
 				} else {
 					setLikeCount(0);
@@ -232,6 +227,14 @@ const Detail = () => {
 			console.error('Error updating like:', error);
 		}
 	};
+	//------------댓글 이름 클릭 시 그 사람 프로필로 이동------------
+	const moveToUser = async (userName: string) => {
+		try {
+			navigate(`/post/user/${userName}`);
+		} catch (error) {
+			console.log(error);
+		}
+	};
 	if (post === null) {
 		// post가 null일 때 로딩 상태로 처리
 		return <div>Loading...</div>;
@@ -242,14 +245,18 @@ const Detail = () => {
 			<Container>
 				<ProfileWrap>
 					<Profile>
-						<ProfileUserImage src={ProfileImg} alt='userImg' />
+						<ProfileUserImage src={profileImage} alt='userImg' />
 						<ProfileId>{userName}</ProfileId>
 					</Profile>
-					<DeleteButtonWrap>
-						<DeleteButton onClick={deletePost}>
-							<DeleteButtonIcon src={DeleteIcon} alt='삭제버튼' />
-						</DeleteButton>
-					</DeleteButtonWrap>
+					{userData?.userName == userName ? (
+						<DeleteButtonWrap>
+							<DeleteButton onClick={deletePost}>
+								<DeleteButtonIcon src={DeleteIcon} alt='삭제버튼' />
+							</DeleteButton>
+						</DeleteButtonWrap>
+					) : (
+						<span></span>
+					)}
 				</ProfileWrap>
 				<PostWrap>
 					{/* 게시글 큰 wrap */}
@@ -290,7 +297,12 @@ const Detail = () => {
 						{comments.map((comment, index) => (
 							<Commentli key={index}>
 								<CommentContentWrap>
-									<CommentUserId>{comment.userName}</CommentUserId>
+									<CommentUserId
+										onClick={() => {
+											moveToUser(comment.userName);
+										}}>
+										{comment.userName}
+									</CommentUserId>
 									<CommentContent>{comment.comment}</CommentContent>
 								</CommentContentWrap>
 								{userData?._id === comment.userId && (

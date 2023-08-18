@@ -2,16 +2,18 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
-import userImage from '../../assets/images/userimage.png';
 import plusIcon from '../../assets/icons/UserPlus.png';
 import FollowingIcon from '../../assets/icons/FollowingIcon.png';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { useUser } from '../../utils/swrFetcher';
 import { PostType } from '../../types/postType';
 import alertList from '../../utils/swal';
 import Swal from 'sweetalert2';
 import useSWR, { mutate } from 'swr';
 import { post } from '../../api/api';
+import UserProfile from '../../components/ProfileUpdateModal/ProfileUpdateModal';
+import Modal from 'react-modal';
+
 import {
 	Container,
 	Sec1,
@@ -37,6 +39,7 @@ import {
 	NothingPost,
 	PostButton,
 	PostUlEmpty,
+	OtherUserImage,
 } from './UserMainStyle';
 
 type ApiResponse = {
@@ -48,12 +51,29 @@ const UserMain = () => {
 	const [posts, setPosts] = useState<PostType[]>([]);
 	const [postCount, setPostCount] = useState(0);
 	const [userName, setUserName] = useState('');
+	const [profileImage, setProfileImage] = useState('');
 	const [getEmail, setEmail] = useState('');
 	const [follower, setFollower] = useState('');
 	const [following, setFollowing] = useState('');
 	const [isFollowed, setIsFollowed] = useState(false);
 	const { userId } = useParams();
 	const { userData, isError } = useUser();
+	const [isModalOpen, setIsModalOpen] = useState(false);
+	const navigate = useNavigate();
+
+	const openModal = () => {
+		setIsModalOpen(true);
+	};
+
+	const closeModal = () => {
+		setIsModalOpen(false);
+	};
+
+	const handleModalClose = () => {
+		if (window.confirm('이미지 수정을 취소하시겠습니까?')) {
+			closeModal();
+		}
+	};
 
 	if (isError) {
 		console.log('유저 데이터를 불러오는데 실패했습니다.');
@@ -76,6 +96,7 @@ const UserMain = () => {
 				);
 				setPosts(response.data.posts);
 				setUserName(response.data.userName);
+				setProfileImage(userData?.profileImg || '');
 				setPostCount(response.data.posts.length);
 				getFollowers(response.data.userName);
 				getFollowings(userData?.userName);
@@ -101,7 +122,7 @@ const UserMain = () => {
 				setUserName(response.data.user[0].userName);
 				setPostCount(response.data.posts.length);
 				setEmail(response.data.user[0].email);
-				// console.log('게시글 갯수 ㅎㅎ', response.data.posts.length);
+				setProfileImage(response.data.user[0].profileImg);
 				getFollowers(response.data.user[0].userName);
 				getFollowings(userData?.userName);
 			} catch (error) {
@@ -114,7 +135,7 @@ const UserMain = () => {
 		} else {
 			fetchPosts();
 		}
-	}, []);
+	}, [userId, follower, isFollowed]);
 	//-----------------팔로우 기능------------------
 	const followToggle = async () => {
 		try {
@@ -124,12 +145,15 @@ const UserMain = () => {
 				{ followeeName: userId },
 				getToken(),
 			);
-			setIsFollowed(response.data.followed);
-			mutate(`${process.env.REACT_APP_API_URL}/api/user/followings`);
+			mutate(
+				`${process.env.REACT_APP_API_URL}/api/user/followers?userName=${userName}`,
+			);
 			if (!isFollowed) {
 				await Swal.fire(alertList.successMessage('팔로우 하였습니다.'));
+				setIsFollowed(response.data.followed);
 			} else {
 				await Swal.fire(alertList.infoMessage('팔로우를 취소하였습니다.'));
+				setIsFollowed(response.data.followed);
 			}
 		} catch (error) {
 			console.error('Error updating follow:', error);
@@ -150,12 +174,19 @@ const UserMain = () => {
 	//--------------------팔로잉 가져오기------------------
 	const getFollowings = async (nickName: string | undefined) => {
 		try {
-			const response = await axios.get(
-				`${process.env.REACT_APP_API_URL}/api/user/followings?userName=${nickName}`,
-			);
-			setFollowing(response.data);
-			const hasUserName = response.data.some((user: any) => user === userName);
-			setIsFollowed(hasUserName);
+			if (nickName !== undefined) {
+				const response = await axios.get(
+					`${process.env.REACT_APP_API_URL}/api/user/followings?userName=${nickName}`,
+					getToken(),
+				);
+				setFollowing(response.data);
+				const hasUserName = response.data.some(
+					(user: any) => user === userName,
+				);
+				setIsFollowed(hasUserName);
+			} else {
+				console.log('nickName = undefined');
+			}
 		} catch (error) {
 			console.error('Error fetching getFollowers:', error);
 		}
@@ -174,23 +205,38 @@ const UserMain = () => {
 			<Header />
 			<Container>
 				<Sec1>
-					<ImageWrap>
-						<UserImage src={userImage}></UserImage>
-					</ImageWrap>
+					{userData?.userName == userName ? (
+						<ImageWrap>
+							<UserImage src={profileImage} onClick={openModal}></UserImage>
+							<UserProfile
+								isModalOpen={isModalOpen}
+								closeModal={closeModal}
+								handleModalClose={handleModalClose}
+							/>
+						</ImageWrap>
+					) : (
+						<ImageWrap>
+							<OtherUserImage src={profileImage}></OtherUserImage>
+						</ImageWrap>
+					)}
+
 					<ProfileWrap>
 						<Wrapper1>
 							<UserId>{userName}</UserId>
-							{isFollowed ? (
+							{userData?.userName === userName ? (
+								<span></span>
+							) : isFollowed ? (
 								<PlusIcon src={FollowingIcon} onClick={followToggle} />
 							) : (
 								<PlusIcon src={plusIcon} onClick={followToggle} />
 							)}
-							<FriendButton
+
+							{/* <FriendButton
 								onClick={() => {
 									alert('친구초대하기');
 								}}>
 								친구초대하기
-							</FriendButton>
+							</FriendButton> */}
 						</Wrapper1>
 						<Wrapper2>
 							<PostButton>

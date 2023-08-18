@@ -7,6 +7,14 @@ export const Container = styled.div`
 	overflow-y: auto;
 	border-radius: 2rem;
 	overflow-x: hidden;
+
+	@media (max-width: 768px) {
+		width: 80%;
+	}
+
+	@media (max-width: 390px) {
+		width: 95%;
+	}
 `;
 
 export const EmptyArea = styled.h1`
@@ -41,8 +49,10 @@ export const ImageWrap = styled.div`
 	align-items: center;
 `;
 
-export const UserRandomImage = styled.img`
-	max-width: 100%;
+export const UserImage = styled.img`
+	width: 8rem;
+	height: 8rem;
+	object-fit: cover;
 	margin: 0 auto;
 	border-radius: 50%;
 `;
@@ -58,22 +68,31 @@ export const UserName = styled.h2`
 
 export const IconContainer = styled.div`
 	display: flex;
+	justify-content: center;
+	align-items: flex-start;
 	gap: 2rem;
 	margin-left: auto;
 `;
 
-export const GoChat = styled.img`
+export const GoChat = styled.div`
 	cursor: pointer;
-	margin-top: 0.4rem;
-	height: 4rem;
 `;
 
 export const GoProfile = styled.div`
-	margin-right: auto;
-	margin-top: auto;
-	margin-bottom: 1.5%;
-	width: 30%;
-	height: 30%;
+
+	> img {
+		max-height: 4.2rem; 
+		width: auto;
+`;
+
+export const Report = styled.button`
+	width: 5rem;
+	height: 3rem;
+	border: 0;
+	border-radius: 0.7rem;
+	background-color: ${({ theme }) => theme.colors.maincolor};
+	color: #fff;
+	cursor: pointer;
 `;
 
 export const InnerContent = styled.div`

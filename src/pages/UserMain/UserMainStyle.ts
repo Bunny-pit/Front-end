@@ -3,11 +3,14 @@ import styled from 'styled-components';
 export const Container = styled.div`
 	margin: 0 auto;
 	box-sizing: border-box;
-	@media only screen and (min-width: 390px) and (max-width: 550px) {
-		width: 100%;
+	@media only screen and (min-width: 769px) and (max-width: 1980px) {
+		width: 50%;
 	}
-	@media only screen and (min-width: 1280px) and (max-width: 1980px) {
-		width: 40%;
+	@media only screen and (min-width: 391px) and (max-width: 768px) {
+		width: 70%;
+	}
+	@media only screen and (min-width: 0px) and (max-width: 390px) {
+		width: 100%;
 	}
 `;
 export const Sec1 = styled.div`
@@ -26,11 +29,33 @@ export const ImageWrap = styled.div`
 `;
 export const UserImage = styled.img`
 	border-radius: 200px;
-	@media only screen and (min-width: 390px) and (max-width: 550px) {
-		width: 20rem;
+	width: 31rem;
+	height: 31rem;
+	object-fit: cover;
+	background-color: #fff;
+	cursor: pointer;
+	@media only screen and (min-width: 391px) and (max-width: 768px) {
+		width: 18rem;
+		height: 18rem;
 	}
-	@media only screen and (min-width: 1280px) and (max-width: 1980px) {
-		width: 31rem;
+	@media only screen and (min-width: 0px) and (max-width: 390px) {
+		width: 15rem;
+		height: 15rem;
+	}
+`;
+export const OtherUserImage = styled.img`
+	border-radius: 200px;
+	width: 31rem;
+	height: 31rem;
+	object-fit: cover;
+	background-color: #fff;
+	@media only screen and (min-width: 391px) and (max-width: 768px) {
+		width: 18rem;
+		height: 18rem;
+	}
+	@media only screen and (min-width: 0px) and (max-width: 390px) {
+		width: 15rem;
+		height: 15rem;
 	}
 `;
 export const ProfileWrap = styled.div`
@@ -155,11 +180,14 @@ export const PostUl = styled.ul`
 	gap: 3rem;
 	place-items: center;
 	position: relative;
-	@media only screen and (min-width: 390px) and (max-width: 1279px) {
-		gap: 0;
-	}
-	@media only screen and (min-width: 1280px) and (max-width: 1980px) {
+	@media only screen and (min-width: 769px) and (max-width: 1980px) {
 		gap: 1rem;
+	}
+	@media only screen and (min-width: 391px) and (max-width: 768px) {
+		gap: 1;
+	}
+	@media only screen and (min-width: 0px) and (max-width: 390px) {
+		gap: 0;
 	}
 `;
 export const PostUlEmpty = styled(PostUl)`
@@ -177,11 +205,14 @@ export const PostLi = styled.li`
 			height: auto;
 		}
 	}
-	@media only screen and (min-width: 390px) and (max-width: 1279px) {
-		height: 21rem;
-	}
 	@media only screen and (min-width: 1280px) and (max-width: 1980px) {
 		height: 25rem;
+	}
+	@media only screen and (min-width: 391px) and (max-width: 768px) {
+		height: 22rem;
+	}
+	@media only screen and (min-width: 0px) and (max-width: 390px) {
+		gap: 0;
 	}
 `;
 export const NothingWrap = styled.div`

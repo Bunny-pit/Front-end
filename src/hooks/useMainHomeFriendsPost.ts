@@ -139,9 +139,71 @@ const useMainHomePost = () => {
 			);
 			setNewPostContent('');
 			setPosts([response.data, ...posts]);
+			Swal.fire(
+				alertList.successMessage('게시글이 성공적으로 업로드 되었습니다.'),
+			);
 		} catch (err) {
 			console.log(err);
 		}
+	};
+
+	const sendReport = async (
+		currentpost: Post,
+		userData: UserDataType | null,
+	) => {
+		const hasUserAlreadyReported = currentpost.reports.some(
+			(report: { userId: string }) => report.userId === userData?._id,
+		);
+
+		if (hasUserAlreadyReported) {
+			Swal.fire('알림', '이미 신고한 게시글입니다.', 'warning');
+			return;
+		}
+
+		Swal.fire({
+			title: '신고 사유 입력',
+			input: 'text',
+			inputPlaceholder: '신고 사유를 입력해주세요',
+			showCancelButton: true,
+			confirmButtonText: '신고하기',
+			cancelButtonText: '취소하기',
+			showLoaderOnConfirm: true,
+			preConfirm: async (reason) => {
+				if (!reason) {
+					Swal.showValidationMessage('신고 사유를 입력해주세요');
+					return;
+				}
+
+				const token = localStorage.getItem('accessToken');
+				if (!token) {
+					Swal.fire(
+						alertList.errorMessage(
+							'게시글 신고를 위해서는 로그인이 필요합니다.',
+						),
+					);
+					return;
+				}
+				try {
+					await post<{ message: string }>(
+						`${API_MAINHOME_FRIENDS}/report/${currentpost._id}`,
+						{
+							reason: reason,
+						},
+						{
+							withCredentials: true,
+						},
+					);
+					Swal.fire(
+						alertList.successMessage('게시글을 성공적으로 신고했습니다.'),
+					);
+				} catch (err) {
+					console.error(err);
+					Swal.fire(
+						alertList.errorMessage('신고 접수 중 오류가 발생했습니다.'),
+					);
+				}
+			},
+		});
 	};
 
 	const navigate = useNavigate();
@@ -174,6 +236,7 @@ const useMainHomePost = () => {
 		setUpdatedContent,
 		editingPostId,
 		setEditingPostId,
+		sendReport,
 		moveToChatPage,
 	};
 };

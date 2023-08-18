@@ -2,6 +2,7 @@ import React from 'react';
 import message from '../../../assets/icons/message.png';
 import { Link, useLocation } from 'react-router-dom';
 import Group from '../../../assets/icons/Group.png';
+import { Post, UserDataType } from '../../../types/dataType';
 
 import {
 	UserContainer,
@@ -17,11 +18,12 @@ import {
 	ButtonWrapper,
 	Edit,
 	Delete,
+	Report,
 } from '../MainHomeContentStyle';
 
 interface InnerContentProps {
-	post: any;
-	userData: any;
+	post: Post;
+	userData: UserDataType | null;
 	editingPostId: string;
 	updatedContent: string;
 	handleContentChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
@@ -30,6 +32,10 @@ interface InnerContentProps {
 	setEditingPostId: (id: string) => void;
 	setUpdatedContent: (content: string) => void;
 	deletePost: (id: string) => void;
+	sendReport: (
+		currentpost: Post,
+		userData: UserDataType | null,
+	) => Promise<void>;
 }
 
 const MainHomeContentInnerContent = ({
@@ -43,6 +49,7 @@ const MainHomeContentInnerContent = ({
 	setEditingPostId,
 	setUpdatedContent,
 	deletePost,
+	sendReport,
 }: InnerContentProps) => {
 	const isOnFriendsPage = useLocation().pathname === '/mainhome/friends';
 	return (
@@ -59,12 +66,14 @@ const MainHomeContentInnerContent = ({
 					)}
 					{userData && userData?._id !== post.userId && (
 						<GoChat
-							src={message}
-							alt='message Icon'
 							onClick={() =>
 								moveToChatPage(userData._id, post.userId, post.name)
-							}
-						/>
+							}>
+							<img src={message} alt='해당 유저와 1대1 채팅' />
+						</GoChat>
+					)}
+					{userData && userData?._id !== post.userId && (
+						<Report onClick={() => sendReport(post, userData)}>신고</Report>
 					)}
 				</IconContainer>
 			</UserContainer>
