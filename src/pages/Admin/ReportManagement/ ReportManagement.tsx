@@ -34,17 +34,47 @@ type Report = {
 };
 
 const ReportManagement: React.FC = () => {
-	const USER_DATA = 'http://localhost:3001/api/mainhome/unknown/reported';
-	const [userData, setUserData] = useState<ApiData[]>([]);
-	const [filteredUserData, setFilteredUserData] = useState<ApiData[]>([]); // 필터링된 데이터의 새 상태
+	const UNKNOWN_DATA = 'http://localhost:3001/api/mainhome/unknown/reported';
+	const FRIEND_DATA = 'http://localhost:3001/api/mainhome/friends/reported';
 
+	const [activeButton, setActiveButton] = useState<'anonymous' | 'friends'>(
+		'anonymous',
+	);
+	const [showUnknownUserTable, setShowUnknownUserTable] = useState(true);
+
+	const handleButtonClick = (buttonType: 'anonymous' | 'friends') => {
+		setActiveButton(buttonType);
+		setShowUnknownUserTable(true);
+	};
+
+	const toggleTables = () => {
+		setShowUnknownUserTable(!showUnknownUserTable);
+	};
+
+	const [userData, setUserData] = useState<ApiData[]>([]);
+	const [unknownUserData, setunknownUserDat] = useState<ApiData[]>([]);
+	const [filteredUserData, setFilteredUserData] = useState<ApiData[]>([]);
 	useEffect(() => {
 		axios
-			.get(USER_DATA)
+			.get(UNKNOWN_DATA)
 			.then((response) => {
 				const fetchedData: ApiData[] = response.data;
 				setUserData(fetchedData);
-				setFilteredUserData(fetchedData); // 모든 데이터로 FilteredUserData 초기화
+				setunknownUserDat(fetchedData);
+				console.log('성공', fetchedData);
+			})
+			.catch((error) => {
+				console.error('데이터를 가져오는 중 오류 발생:', error);
+			});
+	}, []);
+
+	useEffect(() => {
+		axios
+			.get(FRIEND_DATA)
+			.then((response) => {
+				const fetchedData: ApiData[] = response.data;
+				setUserData(fetchedData);
+				setFilteredUserData(fetchedData);
 				console.log('성공', fetchedData);
 			})
 			.catch((error) => {
@@ -58,10 +88,22 @@ const ReportManagement: React.FC = () => {
 			<Container>
 				<Title>신고 관리</Title>
 				<ChangeButtonDiv>
-					<ButtonAnonymous>익명 한마디</ButtonAnonymous>
-					<Buttonfriends>친구 한마디</Buttonfriends>
+					<ButtonAnonymous
+						className={activeButton === 'anonymous' ? 'active' : ''}
+						onClick={() => handleButtonClick('anonymous')}>
+						익명 한마디 신고내역
+					</ButtonAnonymous>
+					<Buttonfriends
+						className={activeButton === 'friends' ? 'active' : ''}
+						onClick={() => handleButtonClick('friends')}>
+						친구 한마디 신고내역
+					</Buttonfriends>
 				</ChangeButtonDiv>
-				<UserTable data={filteredUserData} />
+				{activeButton === 'anonymous' ? (
+					showUnknownUserTable && <UserTable data={unknownUserData} />
+				) : (
+					<UserTable data={filteredUserData} />
+				)}
 			</Container>
 			<DefaultFooter />
 		</>

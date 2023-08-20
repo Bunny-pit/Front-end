@@ -42,7 +42,7 @@ type Report = {
 };
 
 const UserTable: React.FC<Props> = ({ data }) => {
-	const [usersData, setUsersData] = useState<ApiData[]>(data);
+	const [unknownData, setUnknownData] = useState<ApiData[]>(data);
 	const [popupVisible, setPopupVisible] = useState<boolean>(false);
 	const [selectedUser, setSelectedUser] = useState<ApiData | null>(null);
 
@@ -54,6 +54,18 @@ const UserTable: React.FC<Props> = ({ data }) => {
 	const closePopup = () => {
 		setPopupVisible(false);
 	};
+
+	const deleteUnknown = (userId: string) => {
+		axios
+			.delete(`http://localhost:3001/api/mainhome/unknown/${userId}`)
+			.then((response) => {
+				console.log('삭제완료');
+			})
+			.catch((error) => {
+				console.error(' 삭제를 실패하였습니다.:', error);
+			});
+	};
+
 	return (
 		<>
 			<TableDiv>
@@ -75,6 +87,11 @@ const UserTable: React.FC<Props> = ({ data }) => {
 								<Td>{user.content}</Td>
 								<Td>
 									<Button onClick={() => openPopup(user)}>신고내역</Button>
+								</Td>
+								<Td>
+									<Button onClick={() => deleteUnknown(user.userId)}>
+										삭제
+									</Button>
 								</Td>
 							</tr>
 						))}

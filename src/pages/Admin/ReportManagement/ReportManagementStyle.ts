@@ -60,7 +60,6 @@ export const ChangeButtonDiv = styled.div`
 export const ButtonAnonymous = styled.button`
 	/* 일반 버튼 스타일 */
 	border: none;
-
 	font-size: 2.8rem;
 	background-color: #fff;
 	font-weight: 600;
@@ -68,7 +67,6 @@ export const ButtonAnonymous = styled.button`
 	width: 50%;
 	cursor: pointer;
 	padding: 5%;
-	border-bottom: 4px solid #7954f8;
 
 	/* 활성 버튼 스타일 */
 	&.active {
@@ -78,13 +76,13 @@ export const ButtonAnonymous = styled.button`
 		width: 50%;
 		cursor: pointer;
 		padding: 5%;
+		border-bottom: 4px solid #7954f8;
 	}
 `;
 
 export const Buttonfriends = styled.button`
 	/* 일반 버튼 스타일 */
 	border: none;
-
 	font-size: 2.8rem;
 	font-weight: 600;
 	color: #121212;
@@ -97,13 +95,11 @@ export const Buttonfriends = styled.button`
 	&.active {
 		font-size: 2.8rem;
 		font-weight: 600;
-		color: white;
+		color: #2d2d2d;
 		width: 50%;
-		border: 1px solid #2d2d2d;
-		border-bottom: none;
-		background-color: #222222;
 		cursor: pointer;
 		padding: 5%;
+		border-bottom: 4px solid #7954f8;
 	}
 `;
 
