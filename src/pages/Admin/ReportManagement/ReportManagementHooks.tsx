@@ -1,6 +1,17 @@
 import React from 'react';
 import axios from 'axios';
 import { useState, useEffect, useRef, useCallback } from 'react';
+
+import Swal from 'sweetalert2';
+import { get, post, patch, del } from '../../../api/api';
+import alertList from '../../../utils/swal';
+import { UserDataType, Post } from '../../../types/dataType';
+
+import {
+	API_ADMIN_DELETE_TALK,
+	API_MAINHOME_UNKNOWN,
+} from '../../../utils/constant';
+
 import {
 	Button,
 	TableDiv,
@@ -46,24 +57,51 @@ const UserTable: React.FC<Props> = ({ data }) => {
 	const [popupVisible, setPopupVisible] = useState<boolean>(false);
 	const [selectedUser, setSelectedUser] = useState<ApiData | null>(null);
 
+	const [posts, setPosts] = useState<Post[]>([]);
+
 	const openPopup = (user: ApiData) => {
 		setSelectedUser(user);
 		setPopupVisible(true);
 	};
 
 	const closePopup = () => {
+		setSelectedUser(null); // Clear selectedUser when closing the popup
 		setPopupVisible(false);
 	};
 
-	const deleteUnknown = (userId: string) => {
-		axios
-			.delete(`http://localhost:3001/api/mainhome/unknown/${userId}`)
-			.then((response) => {
-				console.log('삭제완료');
-			})
-			.catch((error) => {
-				console.error(' 삭제를 실패하였습니다.:', error);
-			});
+	// const deleteUnknown = (postId: string) => {
+	// 	axios
+	// 		.delete(`http://localhost:3001/api/mainhome/unknown/${postId}`)
+	// 		.then((response) => {
+	// 			console.log('삭제완료');
+	// 			setUnknownData((prevData) =>
+	// 				prevData.filter((user) => user._id !== postId),
+	// 			);
+	// 		})
+	// 		.catch((error) => {
+	// 			console.error(' 삭제를 실패하였습니다.:', error);
+	// 		});
+	// };
+
+	const deletePost = async (postId: string) => {
+		const result = await Swal.fire(
+			alertList.doubleCheckTitkeMsg(
+				'게시글을 삭제하시겠습니까?',
+				'한번 삭제한 게시글은 복구할 수 없습니다.',
+			),
+		);
+		if (result.isConfirmed) {
+			try {
+				await del<UserDataType>(`${API_ADMIN_DELETE_TALK}/${postId}`, {
+					withCredentials: true,
+				});
+
+				setPosts(posts.filter((post) => post._id !== postId));
+			} catch (err) {
+				Swal.fire(alertList.errorMessage('삭제를 실패하였습니다.'));
+				return;
+			}
+		}
 	};
 
 	return (
@@ -89,9 +127,7 @@ const UserTable: React.FC<Props> = ({ data }) => {
 									<Button onClick={() => openPopup(user)}>신고내역</Button>
 								</Td>
 								<Td>
-									<Button onClick={() => deleteUnknown(user.userId)}>
-										삭제
-									</Button>
+									<Button onClick={() => deletePost(user._id)}>삭제</Button>
 								</Td>
 							</tr>
 						))}
