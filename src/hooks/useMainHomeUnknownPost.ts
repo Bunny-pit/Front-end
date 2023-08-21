@@ -151,8 +151,8 @@ const useMainHomePost = () => {
 				},
 			);
 			setNewPostContent('');
-
 			mutate([response.data, ...posts!], false);
+			console.log('AAA', posts);
 
 			Swal.fire(
 				alertList.successMessage('게시글이 성공적으로 업로드 되었습니다.'),
