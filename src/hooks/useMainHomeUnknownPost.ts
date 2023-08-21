@@ -1,82 +1,71 @@
-import { useState, useRef, useCallback, useEffect } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Swal from 'sweetalert2';
-import { post, patch, del } from '../api/api';
-import { API_MAINHOME_UNKNOWN, API_CHATTING_START } from '../utils/constant';
-import { useUser, fetcher } from '../utils/swrFetcher';
-import useSWR, { mutate } from 'swr';
 
+import { mutate } from 'swr';
+import useSWRInfinite from 'swr/infinite';
+import { fetcher } from '../utils/swrFetcher';
+
+import { post, patch, del } from '../api/api';
+import {
+	API_MAINHOME_UNKNOWN,
+	API_FRIENDCHATTING_START,
+} from '../utils/constant';
 import { UserDataType, Post } from '../types/dataType';
+
+import Swal from 'sweetalert2';
 import alertList from '../utils/swal';
+
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
-dayjs.tz.setDefault('Asia/Seoul');
+
+const PAGE_SIZE = 10;
+
+const getKey = (pageIndex: number, previousPageData: Post[] | null) => {
+	if (previousPageData && !previousPageData.length) return null;
+	return `${process.env.REACT_APP_API_URL}${API_MAINHOME_UNKNOWN}?page=${
+		pageIndex + 1
+	}&limit=${PAGE_SIZE}`;
+};
+
+const toKST = (utcDate: string) => {
+	return dayjs(utcDate).tz('Asia/Seoul').format('YYYY-MM-DD HH:mm');
+};
 
 const useMainHomePost = () => {
-	const { userData, isError } = useUser();
-	const [page, setPage] = useState(1);
-
-	const fetchWithPagination = async (url: string): Promise<Post[]> => {
-		const newPosts = await fetcher(url);
-
-		newPosts.forEach((post: Post) => {
-			post.createdAt = dayjs(post.createdAt)
-				.tz('Asia/Seoul')
-				.format('YYYY-MM-DD HH:mm');
-			post.updatedAt = dayjs(post.updatedAt)
-				.tz('Asia/Seoul')
-				.format('YYYY-MM-DD HH:mm');
-		});
-
-		if (newPosts.length === 0 && observer.current) {
-			observer.current.disconnect();
-		}
-
-		return [...(posts || []), ...newPosts];
-	};
-
-	const { data: posts, error: postsError } = useSWR<Post[]>(
-		() =>
-			`${process.env.REACT_APP_API_URL}${API_MAINHOME_UNKNOWN}?page=${page}&limit=10`,
-		fetchWithPagination,
-		{
-			revalidateOnFocus: false,
-			revalidateOnReconnect: false,
-		},
-	);
-
 	const [newPostContent, setNewPostContent] = useState<string>('');
 	const [updatedContent, setUpdatedContent] = useState<string>('');
 	const [editingPostId, setEditingPostId] = useState<string>('');
 
+	const { data, error, setSize } = useSWRInfinite(getKey, fetcher);
+
+	const posts: Post[] = data
+		? ([] as Post[]).concat(...data).map((post: Post) => ({
+				...post,
+				createdAt: toKST(post.createdAt),
+				updatedAt: toKST(post.updatedAt),
+		  }))
+		: [];
+
+	if (error) {
+		console.error(error);
+	}
+
 	const observer = useRef<IntersectionObserver | null>(null);
-	const lastPostElementRef = useCallback(
-		(element: HTMLDivElement | null) => {
-			if (observer.current) observer.current.disconnect();
-			observer.current = new IntersectionObserver((entries) => {
-				if (entries[0].isIntersecting && (posts?.length ?? 0) % 10 === 0) {
-					setPage((prevPage) => prevPage + 1);
-					const newURL = `${
-						process.env.REACT_APP_API_URL
-					}${API_MAINHOME_UNKNOWN}?page=${page + 1}&limit=10`;
-					fetchWithPagination(newURL).then((newData) => {
-						if (posts) {
-							const mergedData = [...posts, ...newData];
-							mutate(newURL, mergedData, false);
-						} else {
-							mutate(newURL, newData, false);
-						}
-					});
-				}
-			});
-			if (element) observer.current.observe(element);
-		},
-		[posts],
-	);
+	const lastPostElementRef = useCallback((element: HTMLDivElement | null) => {
+		if (observer.current) observer.current.disconnect();
+		if (!element) return;
+		observer.current = new IntersectionObserver((entries) => {
+			if (entries[0].isIntersecting) {
+				setSize((size) => size + 1);
+			}
+		});
+
+		observer.current.observe(element);
+	}, []);
 
 	const updatePost = async (postId: string) => {
 		try {
@@ -91,21 +80,20 @@ const useMainHomePost = () => {
 				);
 				return;
 			}
+
 			await patch<UserDataType>(
 				`${API_MAINHOME_UNKNOWN}/${postId}`,
-				{
-					content: updatedContent,
-				},
+				{ content: updatedContent },
 				{ withCredentials: true },
 			);
-			const updatedPosts = (posts || []).map((post) =>
-				post._id === postId ? { ...post, content: updatedContent } : post,
-			);
+
 			mutate(
-				`${process.env.REACT_APP_API_URL}${API_MAINHOME_UNKNOWN}?page=${page}&limit=10`,
-				updatedPosts,
+				posts?.map((post) =>
+					post._id === postId ? { ...post, content: updatedContent } : post,
+				),
 				false,
 			);
+
 			setEditingPostId('');
 			setUpdatedContent('');
 		} catch (err) {
@@ -127,12 +115,8 @@ const useMainHomePost = () => {
 					withCredentials: true,
 				});
 
-				const updatedPosts = (posts || []).filter(
-					(post) => post._id !== postId,
-				);
 				mutate(
-					`${process.env.REACT_APP_API_URL}${API_MAINHOME_UNKNOWN}?page=${page}&limit=10`,
-					updatedPosts,
+					posts?.filter((post) => post._id !== postId),
 					false,
 				);
 			} catch (err) {
@@ -143,7 +127,8 @@ const useMainHomePost = () => {
 	};
 
 	const createPost = async () => {
-		if (!userData) {
+		const token = localStorage.getItem('accessToken');
+		if (!token) {
 			Swal.fire(
 				alertList.errorMessage('게시글 작성을 위해서는 로그인이 필요합니다.'),
 			);
@@ -165,13 +150,10 @@ const useMainHomePost = () => {
 					withCredentials: true,
 				},
 			);
-			const updatedPosts = [response.data, ...(posts || [])];
-			mutate(
-				`${process.env.REACT_APP_API_URL}${API_MAINHOME_UNKNOWN}?page=${page}&limit=10`,
-				updatedPosts,
-				false,
-			);
 			setNewPostContent('');
+
+			mutate([response.data, ...posts!], false);
+
 			Swal.fire(
 				alertList.successMessage('게시글이 성공적으로 업로드 되었습니다.'),
 			);
@@ -244,13 +226,13 @@ const useMainHomePost = () => {
 	const moveToChatPage = async (_id: string, userId: string, name: string) => {
 		try {
 			await post<UserDataType>(
-				API_CHATTING_START,
+				API_FRIENDCHATTING_START,
 				{ userId: _id, anonymousUserId: userId, anonymousUserName: name },
 				{
 					withCredentials: true,
 				},
 			);
-			navigate(`/chatting`);
+			navigate(`/friendchatting`);
 		} catch (error) {
 			console.error(error);
 		}

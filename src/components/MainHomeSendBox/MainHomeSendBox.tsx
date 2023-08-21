@@ -21,9 +21,8 @@ const MainHomeSendBox = ({ mainHomePost }: Props) => {
 	const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
 		if (e.key === 'Enter') {
 			e.preventDefault();
-			const { value } = e.currentTarget;
-			setNewPostContent(value);
 			createPost();
+			setNewPostContent('');
 		}
 	};
 

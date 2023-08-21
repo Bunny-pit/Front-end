@@ -46,7 +46,7 @@ export const ImageWrap = styled.div`
 	margin: auto;
 	display: flex;
 	justify-content: left;
-	align-items: center;
+	align-items: center;' 
 `;
 
 export const UserImage = styled.img`
@@ -68,26 +68,22 @@ export const UserName = styled.h2`
 
 export const IconContainer = styled.div`
 	display: flex;
-	justify-content: center;
-	align-items: flex-start;
 	gap: 2rem;
 	margin-left: auto;
 `;
 
 export const GoChat = styled.div`
+	margin-top: 0.5rem;
 	cursor: pointer;
 `;
 
 export const GoProfile = styled.div`
-
-	> img {
-		max-height: 4.2rem; 
-		width: auto;
+	cursor: pointer;
 `;
 
 export const Report = styled.button`
-	width: 5rem;
-	height: 3rem;
+	width: 50px;
+	height: 30px;
 	border: 0;
 	border-radius: 0.7rem;
 	background-color: ${({ theme }) => theme.colors.maincolor};
