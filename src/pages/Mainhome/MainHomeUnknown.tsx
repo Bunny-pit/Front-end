@@ -9,8 +9,8 @@ import { Title } from './MainHomeStyle';
 
 const MainHomeUnknown = () => {
 	const { userData, isError } = useUser();
-	const mainHomePost = useMainHomeUnknownPost();
 
+	const mainHomePost = useMainHomeUnknownPost();
 	if (isError) {
 		console.log('유저 데이터를 불러오는데 실패했습니다.');
 	} else if (!userData) {
