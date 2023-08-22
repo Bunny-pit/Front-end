@@ -1,14 +1,15 @@
 import { ImageWrap, UserImage } from '../MainHomeContentStyle';
-import { Post, UserDataType } from '../../../types/dataType';
+import { Post } from '../../../types/dataType';
 import { useLocation } from 'react-router-dom';
+import { useUser } from '../../../utils/swrFetcher';
 
 interface ImageProps {
-	userData: UserDataType | null;
 	post: Post;
 }
 
-const MainHomeContentImage = ({ userData, post }: ImageProps) => {
+const MainHomeContentImage = ({ post }: ImageProps) => {
 	const location = useLocation();
+	const { userData } = useUser();
 	const email: string = post.email;
 	let userImage: string;
 

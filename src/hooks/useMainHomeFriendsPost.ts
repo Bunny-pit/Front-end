@@ -35,7 +35,7 @@ const toKST = (utcDate: string) => {
 	return dayjs(utcDate).tz('Asia/Seoul').format('YYYY-MM-DD HH:mm');
 };
 
-const useMainHomePost = () => {
+const useMainHomeFriendsPost = () => {
 	const [newPostContent, setNewPostContent] = useState<string>('');
 	const [updatedContent, setUpdatedContent] = useState<string>('');
 	const [editingPostId, setEditingPostId] = useState<string>('');
@@ -255,4 +255,4 @@ const useMainHomePost = () => {
 	};
 };
 
-export default useMainHomePost;
+export default useMainHomeFriendsPost;

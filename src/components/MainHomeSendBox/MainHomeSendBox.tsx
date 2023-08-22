@@ -1,30 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import useMainHomePost from '../../hooks/useMainHomeUnknownPost';
-import MainHomeSendBoxTextArea from './MainhomeSendBoxDetail/MainhomeSendBoxTextArea';
+import MainHomeSendBoxInput from './MainhomeSendBoxDetail/MainhomeSendBoxInput';
 import MainHomeSendBoxButton from './MainhomeSendBoxDetail/MainhomeSendBoxButton';
 
 import { TextBox, TextWrapper } from './MainHomeSendBoxStyle';
 
-interface Props {
-	mainHomePost: ReturnType<typeof useMainHomePost>;
-}
-
-const MainHomeSendBox = ({ mainHomePost }: Props) => {
-	const { newPostContent, setNewPostContent, createPost } = mainHomePost;
+const MainHomeSendBox = () => {
 	const [placeholderText, setPlaceholderText] = useState<string>('');
-
-	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const { value } = e.target;
-		setNewPostContent(value);
-	};
-
-	const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
-		if (e.key === 'Enter') {
-			e.preventDefault();
-			createPost();
-			setNewPostContent('');
-		}
-	};
 
 	useEffect(() => {
 		const updatePlaceholder = () => {
@@ -46,13 +27,8 @@ const MainHomeSendBox = ({ mainHomePost }: Props) => {
 	return (
 		<TextBox>
 			<TextWrapper>
-				<MainHomeSendBoxTextArea
-					placeholder={placeholderText}
-					value={newPostContent}
-					onChange={handleInputChange}
-					onKeyUp={handleKeyUp}
-				/>
-				<MainHomeSendBoxButton createPost={createPost} />
+				<MainHomeSendBoxInput placeholder={placeholderText} />
+				<MainHomeSendBoxButton />
 			</TextWrapper>
 		</TextBox>
 	);
