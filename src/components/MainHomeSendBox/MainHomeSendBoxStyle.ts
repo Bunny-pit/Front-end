@@ -26,7 +26,7 @@ export const TextWrapper = styled.div`
 	}
 `;
 
-export const TextArea = styled.input`
+export const TextInput = styled.input`
 	flex-grow: 9.5;
 	border: 0px;
 	margin-left: 3rem;

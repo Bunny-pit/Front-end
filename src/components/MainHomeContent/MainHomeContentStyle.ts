@@ -79,7 +79,7 @@ export const IconContainer = styled.div`
 `;
 
 export const GoChat = styled.div`
-	margin-top: 0.5rem;
+	margin-top: 0.3rem;
 	cursor: pointer;
 
 	@media (max-width: 768px) {
@@ -107,7 +107,7 @@ export const GoProfile = styled.div`
 
 export const Report = styled.button`
 	width: 50px;
-	height: 30px;
+	height: 3.5rem;
 	border: 0;
 	border-radius: 0.7rem;
 	background-color: ${({ theme }) => theme.colors.maincolor};
