@@ -26,6 +26,7 @@ import {
 	PopupUL,
 	PopupLI,
 	PopupSpan,
+	Tbody,
 } from './ReportManagementStyle';
 
 interface ApiData {
@@ -117,7 +118,7 @@ const UserTable: React.FC<Props> = ({ data }) => {
 							<Th></Th>
 						</tr>
 					</Thead>
-					<tbody>
+					<Tbody>
 						{data.map((user) => (
 							<tr key={user.userId}>
 								<Td>{user.name}</Td>
@@ -131,7 +132,7 @@ const UserTable: React.FC<Props> = ({ data }) => {
 								</Td>
 							</tr>
 						))}
-					</tbody>
+					</Tbody>
 				</Table>
 			</TableDiv>
 

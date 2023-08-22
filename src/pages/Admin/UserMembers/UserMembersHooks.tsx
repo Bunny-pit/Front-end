@@ -1,7 +1,15 @@
 import React from 'react';
 import axios from 'axios';
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { Button, TableDiv, Th, Td, Table, Thead } from './UserMembrsStyle';
+import {
+	Button,
+	TableDiv,
+	Th,
+	Td,
+	Table,
+	Thead,
+	Tbody,
+} from './UserMembrsStyle';
 
 interface UserData {
 	_id: string;
@@ -49,7 +57,7 @@ const UserTable: React.FC<Props> = ({ data }) => {
 							<Th></Th>
 						</tr>
 					</Thead>
-					<tbody>
+					<Tbody>
 						{data.map((user) => (
 							<tr key={user._id}>
 								<Td>{user.createdAt.slice(0, 10)}</Td>
@@ -60,7 +68,7 @@ const UserTable: React.FC<Props> = ({ data }) => {
 								</Td>
 							</tr>
 						))}
-					</tbody>
+					</Tbody>
 				</Table>
 			</TableDiv>
 		</>

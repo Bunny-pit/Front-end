@@ -6,10 +6,27 @@ export const Container = styled.div`
 	margin: 0 auto;
 	text-align: center;
 	box-sizing: border-box;
+
+	@media (max-width: 390px) {
+		margin: 0;
+		padding: 0;
+`;
+
+export const TableContainer = styled.div`
+	@media (max-width: 390px) {
+		width: 0;
+	}
 `;
 export const Title = styled.p`
 	font-size: 5rem;
 	font-weight: 700;
+
+	@media (max-width: 768px) {
+		font-size: 4rem;
+	}
+	@media (max-width: 390px) {
+		font-size: 3rem;
+	}
 `;
 
 export const TableDiv = styled.div`
@@ -22,6 +39,23 @@ export const Thead = styled.thead`
 	background-color: #7954f8;
 	color: #fff;
 	font-size: 2.6rem;
+
+	@media (max-width: 768px) {
+		font-size: 2.3rem;
+	}
+	@media (max-width: 390px) {
+		font-size: 1.5rem;
+	}
+`;
+export const Tbody = styled.tbody`
+	font-size: 2.5rem;
+
+	@media (max-width: 768px) {
+		font-size: 2.2rem;
+	}
+	@media (max-width: 390px) {
+		font-size: 1.4rem;
+	}
 `;
 export const Table = styled.table`
 	border-collapse: collapse;
@@ -34,7 +68,6 @@ export const Th = styled.th`
 export const Td = styled.td`
 	text-align: center;
 	padding: 20px;
-	font-size: 2.5rem;
 `;
 export const Button = styled.button`
 	display: flex;
@@ -50,6 +83,15 @@ export const Button = styled.button`
 	border: none;
 	cursor: pointer;
 	font-size: 1.8rem;
+
+	@media (max-width: 768px) {
+		font-size: 1.5rem;
+	}
+	@media (max-width: 390px) {
+		font-size: 1rem;
+		padding: 1.2rem 0;
+		width: 6rem;
+	}
 `;
 
 export const ChangeButtonDiv = styled.div`
@@ -68,6 +110,13 @@ export const ButtonAnonymous = styled.button`
 	cursor: pointer;
 	padding: 5%;
 
+	@media (max-width: 768px) {
+		font-size: 2.4rem;
+	}
+	@media (max-width: 390px) {
+		font-size: 1.5rem;
+	}
+
 	/* 활성 버튼 스타일 */
 	&.active {
 		font-size: 2.8rem;
@@ -77,6 +126,13 @@ export const ButtonAnonymous = styled.button`
 		cursor: pointer;
 		padding: 5%;
 		border-bottom: 4px solid #7954f8;
+
+		@media (max-width: 768px) {
+			font-size: 2.4rem;
+		}
+		@media (max-width: 390px) {
+			font-size: 1.5rem;
+		}
 	}
 `;
 
@@ -90,6 +146,12 @@ export const Buttonfriends = styled.button`
 	background-color: white;
 	cursor: pointer;
 	padding: 5%;
+	@media (max-width: 768px) {
+		font-size: 2.4rem;
+	}
+	@media (max-width: 390px) {
+		font-size: 1.5rem;
+	}
 
 	/* 활성 버튼 스타일 */
 	&.active {
@@ -100,6 +162,13 @@ export const Buttonfriends = styled.button`
 		cursor: pointer;
 		padding: 5%;
 		border-bottom: 4px solid #7954f8;
+
+		@media (max-width: 768px) {
+			font-size: 2.4rem;
+		}
+		@media (max-width: 390px) {
+			font-size: 1.5rem;
+		}
 	}
 `;
 

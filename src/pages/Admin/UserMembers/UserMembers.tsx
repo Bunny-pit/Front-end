@@ -10,7 +10,7 @@ import { API_USER_LOGIN } from '../../../utils/constant';
 
 import UserTable from './UserMembersHooks';
 
-import { Container, Title } from './UserMembrsStyle';
+import { Container, Title, TableContainer } from './UserMembrsStyle';
 
 interface UserData {
 	_id: string;
@@ -60,9 +60,10 @@ const UserMembers: React.FC = () => {
 				<Title>회원관리</Title>
 
 				<SearchBar onSearch={handleSearch} />
-
-				<UserTable data={filteredUserData} />
 			</Container>
+			<TableContainer>
+				<UserTable data={filteredUserData} />
+			</TableContainer>
 			<DefaultFooter />
 		</>
 	);

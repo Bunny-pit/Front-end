@@ -11,14 +11,32 @@ export const Container = styled.div`
 export const Title = styled.p`
 	font-size: 5rem;
 	font-weight: 700;
+
+	@media (max-width: 768px) {
+		font-size: 4rem;
+	}
+
+	@media (max-width: 390px) {
+		font-size: 3rem;
+	}
 `;
 
 export const MenuFlex = styled.div`
 	display: flex;
 	padding: 1%;
-	flex-wrap: wrap;
-	width: 600px;
+	width: 70rem;
 	margin: 8% auto;
+
+	@media (max-width: 768px) {
+		width: 45rem;
+		margin: 6% auto;
+	}
+
+	@media (max-width: 390px) {
+		width: 30rem;
+		padding: 10%;
+		margin: 6% auto;
+	}
 `;
 export const Menu = styled.div`
 	border: 1px solid #7954f8;
@@ -32,7 +50,15 @@ export const Menu = styled.div`
 `;
 
 export const H2 = styled.p`
-	font-size: 24px;
+	font-size: 3.4rem;
 	color: #7954f8;
 	font-weight: 700;
+
+	@media (max-width: 768px) {
+		font-size: 2.6rem;
+	}
+
+	@media (max-width: 390px) {
+		font-size: 2.3rem;
+	}
 `;

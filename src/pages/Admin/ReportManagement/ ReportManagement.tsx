@@ -9,6 +9,7 @@ import {
 	ChangeButtonDiv,
 	ButtonAnonymous,
 	Buttonfriends,
+	TableContainer,
 } from './ReportManagementStyle';
 
 import UserTable from './ReportManagementHooks';
@@ -99,12 +100,15 @@ const ReportManagement: React.FC = () => {
 						친구 한마디 신고내역
 					</Buttonfriends>
 				</ChangeButtonDiv>
+			</Container>
+			<TableContainer>
 				{activeButton === 'anonymous' ? (
 					showUnknownUserTable && <UserTable data={unknownUserData} />
 				) : (
 					<UserTable data={filteredUserData} />
 				)}
-			</Container>
+			</TableContainer>
+
 			<DefaultFooter />
 		</>
 	);
