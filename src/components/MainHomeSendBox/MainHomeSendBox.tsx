@@ -1,31 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import useMainHomePost from '../../hooks/useMainHomeUnknownPost';
-import MainHomeSendBoxTextArea from './MainhomeSendBoxDetail/MainhomeSendBoxTextArea';
-import MainHomeSendBoxButton from './MainhomeSendBoxDetail/MainhomeSendBoxButton';
+import { useLocation } from 'react-router-dom';
+import useMainHomePost from '../../hooks/useMainHomePost';
+import {
+	TextBox,
+	TextWrapper,
+	TextInput,
+	SendButton,
+	SendIcon,
+} from './MainHomeSendBoxStyle';
+import sendIcon from '../../assets/icons/Sendicon.png';
 
-import { TextBox, TextWrapper } from './MainHomeSendBoxStyle';
-
-interface Props {
-	mainHomePost: ReturnType<typeof useMainHomePost>;
-}
-
-const MainHomeSendBox = ({ mainHomePost }: Props) => {
-	const { newPostContent, setNewPostContent, createPost } = mainHomePost;
+const MainHomeSendBox = () => {
 	const [placeholderText, setPlaceholderText] = useState<string>('');
-
-	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const { value } = e.target;
-		setNewPostContent(value);
-	};
-
-	const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
-		if (e.key === 'Enter') {
-			e.preventDefault();
-			const { value } = e.currentTarget;
-			setNewPostContent(value);
-			createPost();
-		}
-	};
+	const location = useLocation();
+	const { createPost, newPostContent, setNewPostContent } = useMainHomePost(
+		location.pathname,
+	);
 
 	useEffect(() => {
 		const updatePlaceholder = () => {
@@ -44,16 +34,34 @@ const MainHomeSendBox = ({ mainHomePost }: Props) => {
 		};
 	}, []);
 
+	const handleSubmit = (e: React.FormEvent) => {
+		e.preventDefault();
+		createPost();
+	};
+
+	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const { value } = e.target;
+		setNewPostContent(value);
+	};
+
+	const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
+		if (e.key === 'Enter') {
+			e.preventDefault();
+		}
+	};
+
 	return (
 		<TextBox>
-			<TextWrapper>
-				<MainHomeSendBoxTextArea
+			<TextWrapper onSubmit={handleSubmit}>
+				<TextInput
 					placeholder={placeholderText}
 					value={newPostContent}
 					onChange={handleInputChange}
 					onKeyUp={handleKeyUp}
 				/>
-				<MainHomeSendBoxButton createPost={createPost} />
+				<SendButton type='submit'>
+					<SendIcon src={sendIcon} alt='Send Icon' />
+				</SendButton>
 			</TextWrapper>
 		</TextBox>
 	);

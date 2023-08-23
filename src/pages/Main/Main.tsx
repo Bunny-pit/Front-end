@@ -2,9 +2,9 @@ import MainLogo from '../../assets/icons/MainLogo.png';
 import { Link } from 'react-router-dom';
 import mainhomeImage from '../../assets/images/mainhome.png';
 import chattingImage from '../../assets/images/chatting.png';
-import friend from '../../assets/images/friend.png';
-import messagebubble from '../../assets/images/messagebubble.png';
-import link from '../../assets/images/link.jpg';
+import friend from '../../assets/images/friend.webp';
+import messagebubble from '../../assets/images/messagebubble.webp';
+import link from '../../assets/images/link.webp';
 import mainImage from '../../assets/images/mainImage.png';
 import {
 	FirstSection,

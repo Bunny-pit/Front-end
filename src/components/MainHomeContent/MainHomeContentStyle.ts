@@ -45,12 +45,12 @@ export const ImageWrap = styled.div`
 	flex: 0.5;
 	margin: auto;
 	display: flex;
-	justify-content: left;
-	align-items: center;
 `;
 
 export const UserImage = styled.img`
-	max-width: 50%;
+	width: 8rem;
+	height: 8rem;
+	object-fit: cover;
 	margin: 0 auto;
 	border-radius: 50%;
 `;
@@ -66,31 +66,65 @@ export const UserName = styled.h2`
 
 export const IconContainer = styled.div`
 	display: flex;
-	justify-content: center;
-	align-items: flex-start;
 	gap: 2rem;
 	margin-left: auto;
+
+	@media (max-width: 768px) {
+		gap: 1rem;
+	}
+
+	@media (max-width: 390px) {
+		gap: 0.1rem;
+	}
 `;
 
 export const GoChat = styled.div`
+	margin-top: 0.3rem;
 	cursor: pointer;
+
+	@media (max-width: 768px) {
+		margin-top: 0.3rem;
+		width: 6.3rem;
+	}
+
+	@media (max-width: 390px) {
+		margin-top: 0.3rem;
+		width: 6rem;
+	}
 `;
 
 export const GoProfile = styled.div`
+	cursor: pointer;
 
-	> img {
-		max-height: 4.2rem; 
-		width: auto;
+	@media (max-width: 768px) {
+		width: 6.5rem;
+	}
+
+	@media (max-width: 390px) {
+		width: 6rem;
+	}
 `;
 
 export const Report = styled.button`
-	width: 5rem;
-	height: 3rem;
+	width: 50px;
+	height: 3.5rem;
 	border: 0;
 	border-radius: 0.7rem;
 	background-color: ${({ theme }) => theme.colors.maincolor};
 	color: #fff;
 	cursor: pointer;
+
+	@media (max-width: 768px) {
+		margin-top: 0.1rem;
+		width: 45px;
+		height: 3.5rem;
+	}
+
+	@media (max-width: 390px) {
+		margin-top: 0.1rem;
+		width: 40px;
+		height: 25px;
+	}
 `;
 
 export const InnerContent = styled.div`

@@ -10,6 +10,7 @@ export interface UserDataType {
 	createdAt: string;
 	updatedAt: string;
 	profileImg: string;
+	introduction: string;
 }
 
 export interface LoginDataType {
@@ -38,6 +39,7 @@ export interface Post {
 	content: string;
 	createdAt: string;
 	updatedAt: string;
+	profileImage: string;
 	reports: Report[];
 	__v: number;
 }

@@ -2,8 +2,9 @@ import React from 'react';
 import message from '../../../assets/icons/message.png';
 import { Link, useLocation } from 'react-router-dom';
 import Group from '../../../assets/icons/Group.png';
-import Swal from 'sweetalert2';
-import { Post, UserDataType } from '../../../types/dataType';
+import { Post } from '../../../types/dataType';
+import useMainHomePost from '../../../hooks/useMainHomePost';
+import { useUser } from '../../../utils/swrFetcher';
 
 import {
 	UserContainer,
@@ -24,35 +25,28 @@ import {
 
 interface InnerContentProps {
 	post: Post;
-	userData: UserDataType | null;
-	editingPostId: string;
-	updatedContent: string;
-	handleContentChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
-	moveToChatPage: (id1: string, id2: string, name: string) => void;
-	updatePost: (id: string) => void;
-	setEditingPostId: (id: string) => void;
-	setUpdatedContent: (content: string) => void;
-	deletePost: (id: string) => void;
-	sendReport: (
-		currentpost: Post,
-		userData: UserDataType | null,
-	) => Promise<void>;
 }
 
-const MainHomeContentInnerContent = ({
-	post,
-	userData,
-	editingPostId,
-	updatedContent,
-	handleContentChange,
-	moveToChatPage,
-	updatePost,
-	setEditingPostId,
-	setUpdatedContent,
-	deletePost,
-	sendReport,
-}: InnerContentProps) => {
+const MainHomeContentInnerContent = ({ post }: InnerContentProps) => {
+	const { userData } = useUser();
+	const location = useLocation();
+	const {
+		editingPostId,
+		setEditingPostId,
+		updatedContent,
+		setUpdatedContent,
+		moveToChatPage,
+		updatePost,
+		deletePost,
+		sendReport,
+	} = useMainHomePost(location.pathname);
+
+	const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+		setUpdatedContent(e.target.value);
+	};
+
 	const isOnFriendsPage = useLocation().pathname === '/mainhome/friends';
+
 	return (
 		<InnerContent>
 			<UserContainer>
@@ -93,7 +87,6 @@ const MainHomeContentInnerContent = ({
 				<p>{post.createdAt}</p>
 			</Date>
 			<ButtonWrapper>
-				{/* 수정하기 */}
 				{userData?._id === post.userId &&
 					(editingPostId === post._id ? (
 						<>
@@ -115,7 +108,6 @@ const MainHomeContentInnerContent = ({
 								}}>
 								수정
 							</Edit>
-							{/* 삭제하기 */}
 							<Delete onClick={() => deletePost(post._id)}>삭제</Delete>
 						</>
 					))}

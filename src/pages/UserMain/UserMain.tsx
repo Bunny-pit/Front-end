@@ -49,16 +49,17 @@ type ApiResponse = {
 
 const UserMain = () => {
 	const [posts, setPosts] = useState<PostType[]>([]);
-	const [postCount, setPostCount] = useState(0);
-	const [userName, setUserName] = useState('');
-	const [profileImage, setProfileImage] = useState('');
-	const [getEmail, setEmail] = useState('');
-	const [follower, setFollower] = useState('');
-	const [following, setFollowing] = useState('');
-	const [isFollowed, setIsFollowed] = useState(false);
+	const [postCount, setPostCount] = useState<number>(0);
+	const [userName, setUserName] = useState<string>('');
+	const [profileImage, setProfileImage] = useState<string>('');
+	const [getEmail, setEmail] = useState<string>('');
+	const [follower, setFollower] = useState<string>('');
+	const [following, setFollowing] = useState<string>('');
+	const [isFollowed, setIsFollowed] = useState<boolean>(false);
 	const { userId } = useParams();
 	const { userData, isError } = useUser();
-	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+	const [introduction, setIntroduction] = useState<string>('');
 	const navigate = useNavigate();
 
 	const openModal = () => {
@@ -100,6 +101,7 @@ const UserMain = () => {
 				setPostCount(response.data.posts.length);
 				getFollowers(response.data.userName);
 				getFollowings(userData?.userName);
+				setIntroduction(userData?.introduction || '');
 			} catch (error) {
 				console.error('Error fetching posts:', error);
 			}
@@ -125,6 +127,7 @@ const UserMain = () => {
 				setProfileImage(response.data.user[0].profileImg);
 				getFollowers(response.data.user[0].userName);
 				getFollowings(userData?.userName);
+				setIntroduction(response.data.user[0].introduction || '');
 			} catch (error) {
 				console.error('Error fetching posts:', error);
 			}
@@ -135,7 +138,7 @@ const UserMain = () => {
 		} else {
 			fetchPosts();
 		}
-	}, [userId, follower, isFollowed]);
+	}, [userId, follower, isFollowed, introduction]);
 	//-----------------팔로우 기능------------------
 	const followToggle = async () => {
 		try {
@@ -257,9 +260,7 @@ const UserMain = () => {
 						</Wrapper3>
 						<Wrapper4>
 							<ProfileUl>
-								<ProfileLi>#블랙덕후</ProfileLi>
-								<ProfileLi>#개발자</ProfileLi>
-								<ProfileLi>#소통</ProfileLi>
+								<ProfileLi>{introduction}</ProfileLi>
 							</ProfileUl>
 							<Email href='#'>{userId ? getEmail : userData?.email}</Email>
 						</Wrapper4>
