@@ -1,14 +1,20 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Swal from 'sweetalert2';
-import { get, post, patch, del } from '../api/api';
+
+import useSWRInfinite from 'swr/infinite';
+import { fetcher } from '../utils/swrFetcher';
+
+import { post, patch, del } from '../api/api';
 import {
 	API_MAINHOME_FRIENDS,
+	API_MAINHOME_UNKNOWN,
 	API_FRIENDCHATTING_START,
 } from '../utils/constant';
-
 import { UserDataType, Post } from '../types/dataType';
+
+import Swal from 'sweetalert2';
 import alertList from '../utils/swal';
+
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
@@ -16,52 +22,58 @@ import timezone from 'dayjs/plugin/timezone';
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
-const useMainHomePost = () => {
-	const [posts, setPosts] = useState<Post[]>([]);
-	const [page, setPage] = useState(1);
+const PAGE_SIZE = 10;
+
+const toKST = (utcDate: string) => {
+	return dayjs(utcDate).tz('Asia/Seoul').format('YYYY-MM-DD HH:mm');
+};
+
+const useMainHomePost = (pathname: string) => {
+	const API_ENDPOINT =
+		pathname.includes('unknown') === true
+			? API_MAINHOME_UNKNOWN
+			: API_MAINHOME_FRIENDS;
+
+	const getKey = (pageIndex: number, previousPageData: Post[] | null) => {
+		if (previousPageData && !previousPageData.length) return null;
+		return `${process.env.REACT_APP_API_URL}${API_ENDPOINT}?page=${
+			pageIndex + 1
+		}&limit=${PAGE_SIZE}`;
+	};
+
 	const [newPostContent, setNewPostContent] = useState<string>('');
 	const [updatedContent, setUpdatedContent] = useState<string>('');
 	const [editingPostId, setEditingPostId] = useState<string>('');
 
+	const { data, error, setSize, mutate } = useSWRInfinite(getKey, fetcher);
+
+	const posts: Post[] = data
+		? ([] as Post[]).concat(...data).map((post: Post) => ({
+				...post,
+				createdAt: toKST(post.createdAt),
+				updatedAt: toKST(post.updatedAt),
+		  }))
+		: [];
+
+	if (error) {
+		console.error(error);
+	}
+
 	const observer = useRef<IntersectionObserver | null>(null);
 	const lastPostElementRef = useCallback((element: HTMLDivElement | null) => {
 		if (observer.current) observer.current.disconnect();
+		if (!element) return;
 		observer.current = new IntersectionObserver((entries) => {
 			if (entries[0].isIntersecting) {
-				setPage((prevPage) => prevPage + 1);
+				setSize((size) => size + 1);
 			}
 		});
-		if (element) observer.current.observe(element);
+
+		observer.current.observe(element);
 	}, []);
-
-	useEffect(() => {
-		fetchPosts();
-	}, [page]);
-
-	async function fetchPosts() {
-		try {
-			const res = await get<Post[]>(
-				`${API_MAINHOME_FRIENDS}?page=${page}&limit=10`,
-			);
-			const updatedPosts = [
-				...posts,
-				...res.data.map((post: Post) => ({
-					...post,
-					createdAt: dayjs(post.createdAt)
-						.utc()
-						.tz('Asia/Seoul')
-						.format('YYYY-MM-DD HH:mm'),
-				})),
-			];
-			setPosts(updatedPosts);
-		} catch (err) {
-			console.error(err);
-		}
-	}
 
 	const updatePost = async (postId: string) => {
 		try {
-			// 글자가 1 글자 미만일 때
 			if (updatedContent.trim().length < 1) {
 				Swal.fire(alertList.errorMessage('최소 1글자 이상 작성해주세요.'));
 				return;
@@ -73,20 +85,20 @@ const useMainHomePost = () => {
 				);
 				return;
 			}
+
 			await patch<UserDataType>(
-				`${API_MAINHOME_FRIENDS}/${postId}`,
-				{
-					content: updatedContent,
-				},
+				`${API_ENDPOINT}/${postId}`,
+				{ content: updatedContent },
 				{ withCredentials: true },
 			);
-			setPosts(
-				posts.map((post) =>
-					post._id === postId ? { ...post, content: updatedContent } : post,
-				),
-			);
+
+			mutate();
 			setEditingPostId('');
 			setUpdatedContent('');
+
+			Swal.fire(
+				alertList.successMessage('게시글이 성공적으로 수정 되었습니다.'),
+			);
 		} catch (err) {
 			Swal.fire(alertList.errorMessage('수정 권한이 없습니다.'));
 			return;
@@ -102,10 +114,14 @@ const useMainHomePost = () => {
 		);
 		if (result.isConfirmed) {
 			try {
-				await del<UserDataType>(`${API_MAINHOME_FRIENDS}/${postId}`, {
+				await del<UserDataType>(`${API_ENDPOINT}/${postId}`, {
 					withCredentials: true,
 				});
-				setPosts(posts.filter((post) => post._id !== postId));
+
+				mutate();
+				Swal.fire(
+					alertList.successMessage('게시글이 성공적으로 삭제 되었습니다.'),
+				);
 			} catch (err) {
 				Swal.fire(alertList.errorMessage('삭제 권한이 없습니다.'));
 				return;
@@ -128,8 +144,8 @@ const useMainHomePost = () => {
 			return;
 		}
 		try {
-			const response = await post<Post>(
-				API_MAINHOME_FRIENDS,
+			await post<Post>(
+				API_ENDPOINT,
 				{
 					content: newPostContent,
 				},
@@ -138,7 +154,9 @@ const useMainHomePost = () => {
 				},
 			);
 			setNewPostContent('');
-			setPosts([response.data, ...posts]);
+
+			mutate();
+
 			Swal.fire(
 				alertList.successMessage('게시글이 성공적으로 업로드 되었습니다.'),
 			);
@@ -185,7 +203,7 @@ const useMainHomePost = () => {
 				}
 				try {
 					await post<{ message: string }>(
-						`${API_MAINHOME_FRIENDS}/report/${currentpost._id}`,
+						`${API_ENDPOINT}/report/${currentpost._id}`,
 						{
 							reason: reason,
 						},
@@ -193,6 +211,7 @@ const useMainHomePost = () => {
 							withCredentials: true,
 						},
 					);
+					mutate();
 					Swal.fire(
 						alertList.successMessage('게시글을 성공적으로 신고했습니다.'),
 					);
@@ -225,7 +244,6 @@ const useMainHomePost = () => {
 
 	return {
 		posts,
-		fetchPosts,
 		updatePost,
 		deletePost,
 		createPost,

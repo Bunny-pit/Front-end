@@ -1,14 +1,11 @@
-import sendIcon from '../../../assets/icons/Sendicon.png';
+import React from 'react';
 
+import sendIcon from '../../../assets/icons/Sendicon.png';
 import { SendButton, SendIcon } from '../MainHomeSendBoxStyle';
 
-interface SendButtonProps {
-	createPost: () => void;
-}
-
-const MainHomeSendBoxButton = ({ createPost }: SendButtonProps) => {
+const MainHomeSendBoxButton = ({ onSubmit }: { onSubmit: () => void }) => {
 	return (
-		<SendButton onClick={createPost}>
+		<SendButton type='button' onClick={onSubmit}>
 			<SendIcon src={sendIcon} alt='Send Icon' />
 		</SendButton>
 	);

@@ -76,4 +76,6 @@ export const Option = styled.img`
 `;
 export const SearchImage = styled.img`
 	cursor: pointer;
+	width: 3.4rem;
+	height: 3.4rem;
 `;
