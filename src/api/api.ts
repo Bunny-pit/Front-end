@@ -2,16 +2,13 @@ import { AxiosRequestConfig } from 'axios';
 import { api } from './axiosInstance';
 
 // axios.get
-export const get = async <T>(url: string,
-	config?: AxiosRequestConfig
-) => {
+export const get = async <T>(url: string, config?: AxiosRequestConfig) => {
 	try {
 		const response = await api.get<T>(url, { ...config });
 
 		return response;
-
 	} catch (error: any) {
-		throw error
+		throw error;
 	}
 };
 
@@ -25,9 +22,8 @@ export const post = async <T>(
 		const response = await api.post<T>(url, data, { ...config });
 
 		return response;
-
 	} catch (error: any) {
-		throw error
+		throw error;
 	}
 };
 
@@ -41,9 +37,8 @@ export const patch = async <T>(
 		const response = await api.patch<T>(url, data, { ...config });
 
 		return response;
-
 	} catch (error: any) {
-		throw error
+		throw error;
 	}
 };
 
@@ -51,12 +46,24 @@ export const patch = async <T>(
 export const del = async <T>(
 	url: string,
 	data?: any,
-	config?: AxiosRequestConfig
+	config?: AxiosRequestConfig,
 ) => {
 	try {
 		await api.delete<T>(url, { data, ...config });
-
 	} catch (error: any) {
-		throw error
+		throw error;
+	}
+};
+
+// 관리자용 axios.delete
+export const delAd = async (
+	url: string,
+	data?: any,
+	config?: AxiosRequestConfig,
+): Promise<void> => {
+	try {
+		await api.delete(url, { data, ...config });
+	} catch (error: any) {
+		throw error;
 	}
 };
