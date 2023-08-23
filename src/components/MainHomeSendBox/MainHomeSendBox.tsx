@@ -1,11 +1,21 @@
-import { useState, useEffect } from 'react';
-import MainHomeSendBoxInput from './MainhomeSendBoxDetail/MainhomeSendBoxInput';
-import MainHomeSendBoxButton from './MainhomeSendBoxDetail/MainhomeSendBoxButton';
-
-import { TextBox, TextWrapper } from './MainHomeSendBoxStyle';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import useMainHomePost from '../../hooks/useMainHomePost';
+import {
+	TextBox,
+	TextWrapper,
+	TextInput,
+	SendButton,
+	SendIcon,
+} from './MainHomeSendBoxStyle';
+import sendIcon from '../../assets/icons/Sendicon.png';
 
 const MainHomeSendBox = () => {
 	const [placeholderText, setPlaceholderText] = useState<string>('');
+	const location = useLocation();
+	const { createPost, newPostContent, setNewPostContent } = useMainHomePost(
+		location.pathname,
+	);
 
 	useEffect(() => {
 		const updatePlaceholder = () => {
@@ -24,11 +34,34 @@ const MainHomeSendBox = () => {
 		};
 	}, []);
 
+	const handleSubmit = (e: React.FormEvent) => {
+		e.preventDefault();
+		createPost();
+	};
+
+	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const { value } = e.target;
+		setNewPostContent(value);
+	};
+
+	const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
+		if (e.key === 'Enter') {
+			e.preventDefault();
+		}
+	};
+
 	return (
 		<TextBox>
-			<TextWrapper>
-				<MainHomeSendBoxInput placeholder={placeholderText} />
-				<MainHomeSendBoxButton />
+			<TextWrapper onSubmit={handleSubmit}>
+				<TextInput
+					placeholder={placeholderText}
+					value={newPostContent}
+					onChange={handleInputChange}
+					onKeyUp={handleKeyUp}
+				/>
+				<SendButton type='submit'>
+					<SendIcon src={sendIcon} alt='Send Icon' />
+				</SendButton>
 			</TextWrapper>
 		</TextBox>
 	);

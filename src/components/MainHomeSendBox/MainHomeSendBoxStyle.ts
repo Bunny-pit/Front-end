@@ -9,7 +9,7 @@ export const TextBox = styled.div`
 	align-items: center;
 `;
 
-export const TextWrapper = styled.div`
+export const TextWrapper = styled.form`
 	width: 50%;
 	height: 7rem;
 	display: flex;
