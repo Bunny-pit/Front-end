@@ -1,6 +1,11 @@
 import React from 'react';
 import axios from 'axios';
 import { useState, useEffect, useRef, useCallback } from 'react';
+import Swal from 'sweetalert2';
+import { get, post, patch, del, delAd } from '../../../api/api';
+import alertList from '../../../utils/swal';
+import { UserDataType, Post } from '../../../types/dataType';
+import { API_ADMIN_DELETE_USER } from '../../../utils/constant';
 import {
 	Button,
 	TableDiv,
@@ -11,20 +16,14 @@ import {
 	Tbody,
 } from './UserMembrsStyle';
 
-interface UserData {
-	_id: string;
-	userName: string;
-	email: string;
-	createdAt: string;
-}
-
 interface Props {
-	data: UserData[];
+	data: UserDataType[];
 }
 
 const UserTable: React.FC<Props> = ({ data }) => {
-	const [usersData, setUsersData] = useState<UserData[]>(data);
-	const deleteUser = (email: string) => {
+	const [usersData, setUsersData] = useState<UserDataType[]>(data);
+
+	const deleteUser1 = (email: string) => {
 		axios
 			.delete(`http://localhost:3001/api/user/admin/deleteUser/`, {
 				data: { email: email },
@@ -43,6 +42,29 @@ const UserTable: React.FC<Props> = ({ data }) => {
 			.catch((error) => {
 				console.error('사용자 삭제를 실패하였습니다.:', error);
 			});
+	};
+
+	const deleteUser2 = async (email: string) => {
+		const result = await Swal.fire(
+			alertList.doubleCheckTitkeMsg(
+				'해당 유저를 삭제하시겠습니까?',
+				'한번 삭제한 유저는 복구할 수 없습니다.',
+			),
+		);
+		if (result.isConfirmed) {
+			try {
+				await del<UserDataType>(`${API_ADMIN_DELETE_USER}`, {
+					data: { email: email },
+					withCredentials: true,
+				});
+
+				const updatedData = usersData.filter((user) => user.email !== email);
+				setUsersData(updatedData);
+			} catch (err) {
+				Swal.fire(alertList.errorMessage('삭제를 실패하였습니다.'));
+				return;
+			}
+		}
 	};
 
 	return (
@@ -64,7 +86,7 @@ const UserTable: React.FC<Props> = ({ data }) => {
 								<Td>{user.userName}</Td>
 								<Td>{user.email}</Td>
 								<Td>
-									<Button onClick={() => deleteUser(user.email)}>삭제</Button>
+									<Button onClick={() => deleteUser1(user.email)}>삭제</Button>
 								</Td>
 							</tr>
 						))}
