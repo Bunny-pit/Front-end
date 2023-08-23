@@ -18,7 +18,6 @@ const MainhomeSendBoxInput = ({ placeholder }: { placeholder: string }) => {
 		if (e.key === 'Enter') {
 			e.preventDefault();
 			createPost();
-			setNewPostContent('');
 		}
 	};
 

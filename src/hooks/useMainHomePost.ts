@@ -1,7 +1,6 @@
 import { useState, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { mutate } from 'swr';
 import useSWRInfinite from 'swr/infinite';
 import { fetcher } from '../utils/swrFetcher';
 
@@ -30,13 +29,10 @@ const toKST = (utcDate: string) => {
 };
 
 const useMainHomePost = (pathname: string) => {
-	let API_ENDPOINT: string;
-
-	if (pathname.includes('unknown')) {
-		API_ENDPOINT = API_MAINHOME_UNKNOWN;
-	} else {
-		API_ENDPOINT = API_MAINHOME_FRIENDS;
-	}
+	const API_ENDPOINT =
+		pathname.includes('unknown') === true
+			? API_MAINHOME_UNKNOWN
+			: API_MAINHOME_FRIENDS;
 
 	const getKey = (pageIndex: number, previousPageData: Post[] | null) => {
 		if (previousPageData && !previousPageData.length) return null;
@@ -49,7 +45,7 @@ const useMainHomePost = (pathname: string) => {
 	const [updatedContent, setUpdatedContent] = useState<string>('');
 	const [editingPostId, setEditingPostId] = useState<string>('');
 
-	const { data, error, setSize } = useSWRInfinite(getKey, fetcher);
+	const { data, error, setSize, mutate } = useSWRInfinite(getKey, fetcher);
 
 	const posts: Post[] = data
 		? ([] as Post[]).concat(...data).map((post: Post) => ({
@@ -96,15 +92,13 @@ const useMainHomePost = (pathname: string) => {
 				{ withCredentials: true },
 			);
 
-			mutate(
-				posts?.map((post) =>
-					post._id === postId ? { ...post, content: updatedContent } : post,
-				),
-				false,
-			);
-
+			mutate();
 			setEditingPostId('');
 			setUpdatedContent('');
+
+			Swal.fire(
+				alertList.successMessage('게시글이 성공적으로 수정 되었습니다.'),
+			);
 		} catch (err) {
 			Swal.fire(alertList.errorMessage('수정 권한이 없습니다.'));
 			return;
@@ -124,9 +118,9 @@ const useMainHomePost = (pathname: string) => {
 					withCredentials: true,
 				});
 
-				mutate(
-					posts?.filter((post) => post._id !== postId),
-					false,
+				mutate();
+				Swal.fire(
+					alertList.successMessage('게시글이 성공적으로 삭제 되었습니다.'),
 				);
 			} catch (err) {
 				Swal.fire(alertList.errorMessage('삭제 권한이 없습니다.'));
@@ -150,7 +144,7 @@ const useMainHomePost = (pathname: string) => {
 			return;
 		}
 		try {
-			const response = await post<Post>(
+			await post<Post>(
 				API_ENDPOINT,
 				{
 					content: newPostContent,
@@ -160,8 +154,8 @@ const useMainHomePost = (pathname: string) => {
 				},
 			);
 			setNewPostContent('');
-			mutate([response.data, ...posts!], false);
-			console.log('AAA', posts);
+
+			mutate();
 
 			Swal.fire(
 				alertList.successMessage('게시글이 성공적으로 업로드 되었습니다.'),
@@ -217,6 +211,7 @@ const useMainHomePost = (pathname: string) => {
 							withCredentials: true,
 						},
 					);
+					mutate();
 					Swal.fire(
 						alertList.successMessage('게시글을 성공적으로 신고했습니다.'),
 					);
