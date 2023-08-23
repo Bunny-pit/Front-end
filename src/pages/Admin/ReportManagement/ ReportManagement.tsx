@@ -12,7 +12,8 @@ import {
 	TableContainer,
 } from './ReportManagementStyle';
 
-import UserTable from './ReportManagementHooks';
+import UserTableFriends from './FriendsHooks';
+import UserTableUnknown from './UnknownHooks';
 
 interface ApiData {
 	_id: string;
@@ -55,6 +56,7 @@ const ReportManagement: React.FC = () => {
 	const [userData, setUserData] = useState<ApiData[]>([]);
 	const [unknownUserData, setunknownUserDat] = useState<ApiData[]>([]);
 	const [filteredUserData, setFilteredUserData] = useState<ApiData[]>([]);
+
 	useEffect(() => {
 		axios
 			.get(UNKNOWN_DATA)
@@ -103,9 +105,9 @@ const ReportManagement: React.FC = () => {
 			</Container>
 			<TableContainer>
 				{activeButton === 'anonymous' ? (
-					showUnknownUserTable && <UserTable data={unknownUserData} />
+					showUnknownUserTable && <UserTableUnknown data={unknownUserData} />
 				) : (
-					<UserTable data={filteredUserData} />
+					<UserTableFriends data={filteredUserData} />
 				)}
 			</TableContainer>
 

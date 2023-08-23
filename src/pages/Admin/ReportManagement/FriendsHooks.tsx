@@ -7,10 +7,7 @@ import { get, post, patch, del } from '../../../api/api';
 import alertList from '../../../utils/swal';
 import { UserDataType, Post } from '../../../types/dataType';
 
-import {
-	API_ADMIN_DELETE_TALK,
-	API_MAINHOME_UNKNOWN,
-} from '../../../utils/constant';
+import { API_ADMIN_DELETE_TALK_FRIENDS } from '../../../utils/constant';
 
 import {
 	Button,
@@ -53,7 +50,7 @@ type Report = {
 	createdAt: string;
 };
 
-const UserTable: React.FC<Props> = ({ data }) => {
+const UserTableFriends: React.FC<Props> = ({ data }) => {
 	const [unknownData, setUnknownData] = useState<ApiData[]>(data);
 	const [popupVisible, setPopupVisible] = useState<boolean>(false);
 	const [selectedUser, setSelectedUser] = useState<ApiData | null>(null);
@@ -66,23 +63,9 @@ const UserTable: React.FC<Props> = ({ data }) => {
 	};
 
 	const closePopup = () => {
-		setSelectedUser(null); // Clear selectedUser when closing the popup
+		setSelectedUser(null);
 		setPopupVisible(false);
 	};
-
-	// const deleteUnknown = (postId: string) => {
-	// 	axios
-	// 		.delete(`http://localhost:3001/api/mainhome/unknown/${postId}`)
-	// 		.then((response) => {
-	// 			console.log('삭제완료');
-	// 			setUnknownData((prevData) =>
-	// 				prevData.filter((user) => user._id !== postId),
-	// 			);
-	// 		})
-	// 		.catch((error) => {
-	// 			console.error(' 삭제를 실패하였습니다.:', error);
-	// 		});
-	// };
 
 	const deletePost = async (postId: string) => {
 		const result = await Swal.fire(
@@ -93,7 +76,7 @@ const UserTable: React.FC<Props> = ({ data }) => {
 		);
 		if (result.isConfirmed) {
 			try {
-				await del<UserDataType>(`${API_ADMIN_DELETE_TALK}/${postId}`, {
+				await del<UserDataType>(`${API_ADMIN_DELETE_TALK_FRIENDS}/${postId}`, {
 					withCredentials: true,
 				});
 
@@ -160,4 +143,4 @@ const UserTable: React.FC<Props> = ({ data }) => {
 	);
 };
 
-export default UserTable;
+export default UserTableFriends;
