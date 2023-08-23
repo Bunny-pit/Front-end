@@ -2,14 +2,13 @@ import React from 'react';
 import MainHomeContentImage from './MainHomeContentDetail/MainHomeContentImage';
 import MainHomeContentInnerContent from './MainHomeContentDetail/MainHomeContentInnerContent';
 import { Container, ContentBox, EmptyArea } from './MainHomeContentStyle';
-import useMainHomeFriendsPost from '../../hooks/useMainHomeFriendsPost';
+import useMainHomePost from '../../hooks/useMainHomePost';
+import { useLocation } from 'react-router-dom';
 
-interface MainHomeContentProps {
-	mainHomePost: ReturnType<typeof useMainHomeFriendsPost>;
-}
-
-const MainHomeContent = ({ mainHomePost }: MainHomeContentProps) => {
-	const { posts = [], lastPostElementRef } = mainHomePost;
+const MainHomeContent = () => {
+	const location = useLocation();
+	const mainHomePost = useMainHomePost(location.pathname);
+	const { posts, lastPostElementRef } = mainHomePost;
 
 	return (
 		<Container>

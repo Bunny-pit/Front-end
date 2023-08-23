@@ -8,6 +8,7 @@ import { fetcher } from '../utils/swrFetcher';
 import { post, patch, del } from '../api/api';
 import {
 	API_MAINHOME_FRIENDS,
+	API_MAINHOME_UNKNOWN,
 	API_FRIENDCHATTING_START,
 } from '../utils/constant';
 import { UserDataType, Post } from '../types/dataType';
@@ -24,18 +25,26 @@ dayjs.extend(timezone);
 
 const PAGE_SIZE = 10;
 
-const getKey = (pageIndex: number, previousPageData: Post[] | null) => {
-	if (previousPageData && !previousPageData.length) return null;
-	return `${process.env.REACT_APP_API_URL}${API_MAINHOME_FRIENDS}?page=${
-		pageIndex + 1
-	}&limit=${PAGE_SIZE}`;
-};
-
 const toKST = (utcDate: string) => {
 	return dayjs(utcDate).tz('Asia/Seoul').format('YYYY-MM-DD HH:mm');
 };
 
-const useMainHomeFriendsPost = () => {
+const useMainHomePost = (pathname: string) => {
+	let API_ENDPOINT: string;
+
+	if (pathname.includes('unknown')) {
+		API_ENDPOINT = API_MAINHOME_UNKNOWN;
+	} else {
+		API_ENDPOINT = API_MAINHOME_FRIENDS;
+	}
+
+	const getKey = (pageIndex: number, previousPageData: Post[] | null) => {
+		if (previousPageData && !previousPageData.length) return null;
+		return `${process.env.REACT_APP_API_URL}${API_ENDPOINT}?page=${
+			pageIndex + 1
+		}&limit=${PAGE_SIZE}`;
+	};
+
 	const [newPostContent, setNewPostContent] = useState<string>('');
 	const [updatedContent, setUpdatedContent] = useState<string>('');
 	const [editingPostId, setEditingPostId] = useState<string>('');
@@ -82,7 +91,7 @@ const useMainHomeFriendsPost = () => {
 			}
 
 			await patch<UserDataType>(
-				`${API_MAINHOME_FRIENDS}/${postId}`,
+				`${API_ENDPOINT}/${postId}`,
 				{ content: updatedContent },
 				{ withCredentials: true },
 			);
@@ -111,7 +120,7 @@ const useMainHomeFriendsPost = () => {
 		);
 		if (result.isConfirmed) {
 			try {
-				await del<UserDataType>(`${API_MAINHOME_FRIENDS}/${postId}`, {
+				await del<UserDataType>(`${API_ENDPOINT}/${postId}`, {
 					withCredentials: true,
 				});
 
@@ -142,7 +151,7 @@ const useMainHomeFriendsPost = () => {
 		}
 		try {
 			const response = await post<Post>(
-				API_MAINHOME_FRIENDS,
+				API_ENDPOINT,
 				{
 					content: newPostContent,
 				},
@@ -200,7 +209,7 @@ const useMainHomeFriendsPost = () => {
 				}
 				try {
 					await post<{ message: string }>(
-						`${API_MAINHOME_FRIENDS}/report/${currentpost._id}`,
+						`${API_ENDPOINT}/report/${currentpost._id}`,
 						{
 							reason: reason,
 						},
@@ -255,4 +264,4 @@ const useMainHomeFriendsPost = () => {
 	};
 };
 
-export default useMainHomeFriendsPost;
+export default useMainHomePost;

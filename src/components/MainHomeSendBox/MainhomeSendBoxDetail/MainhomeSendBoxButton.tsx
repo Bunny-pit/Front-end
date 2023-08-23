@@ -1,11 +1,13 @@
 import React from 'react';
-import sendIcon from '../../../assets/icons/Sendicon.png';
-import useMainHomeUnknownPost from '../../../hooks/useMainHomeUnknownPost';
+import { useLocation } from 'react-router-dom';
+import useMainHomePost from '../../../hooks/useMainHomePost';
 
+import sendIcon from '../../../assets/icons/Sendicon.png';
 import { SendButton, SendIcon } from '../MainHomeSendBoxStyle';
 
 const MainHomeSendBoxButton = () => {
-	const { createPost } = useMainHomeUnknownPost();
+	const location = useLocation();
+	const { createPost } = useMainHomePost(location.pathname);
 
 	return (
 		<SendButton onClick={createPost}>
