@@ -1,10 +1,13 @@
 import React, { KeyboardEvent } from 'react';
-import useMainHomeUnknownPost from '../../../hooks/useMainHomeUnknownPost';
+import { useLocation } from 'react-router-dom';
+import useMainHomePost from '../../../hooks/useMainHomePost';
 import { TextInput } from '../MainHomeSendBoxStyle';
 
 const MainhomeSendBoxInput = ({ placeholder }: { placeholder: string }) => {
-	const { newPostContent, setNewPostContent, createPost } =
-		useMainHomeUnknownPost();
+	const location = useLocation();
+	const { newPostContent, setNewPostContent, createPost } = useMainHomePost(
+		location.pathname,
+	);
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { value } = e.target;

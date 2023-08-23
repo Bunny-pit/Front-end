@@ -2,8 +2,8 @@ import React from 'react';
 import message from '../../../assets/icons/message.png';
 import { Link, useLocation } from 'react-router-dom';
 import Group from '../../../assets/icons/Group.png';
-import { Post, UserDataType } from '../../../types/dataType';
-import useMainHomeUnknownPost from '../../../hooks/useMainHomeUnknownPost';
+import { Post } from '../../../types/dataType';
+import useMainHomePost from '../../../hooks/useMainHomePost';
 import { useUser } from '../../../utils/swrFetcher';
 
 import {
@@ -29,6 +29,7 @@ interface InnerContentProps {
 
 const MainHomeContentInnerContent = ({ post }: InnerContentProps) => {
 	const { userData } = useUser();
+	const location = useLocation();
 	const {
 		editingPostId,
 		setEditingPostId,
@@ -38,7 +39,7 @@ const MainHomeContentInnerContent = ({ post }: InnerContentProps) => {
 		updatePost,
 		deletePost,
 		sendReport,
-	} = useMainHomeUnknownPost();
+	} = useMainHomePost(location.pathname);
 
 	const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setUpdatedContent(e.target.value);
