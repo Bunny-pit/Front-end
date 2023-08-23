@@ -10,6 +10,7 @@ export interface UserDataType {
 	createdAt: string;
 	updatedAt: string;
 	profileImg: string;
+	introduction: string;
 }
 
 export interface LoginDataType {
