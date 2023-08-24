@@ -6,6 +6,7 @@ import axios from 'axios';
 import alertList from '../../utils/swal';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
+import { onChangeInputSetter } from '../../utils/inputStateSetter';
 import {
 	customModalStyles,
 	Box,
@@ -16,6 +17,9 @@ import {
 	ModalUploadFile,
 	ModalUploadImg,
 	ModalPostButton,
+	InputTitle,
+	InputWrap,
+	InputBar,
 } from './ProfileUpdateModalStyle';
 
 type UserProfileProps = {
@@ -26,12 +30,13 @@ type UserProfileProps = {
 function UserProfile({
 	isModalOpen,
 	closeModal,
-	handleModalClose,
-}: UserProfileProps) {
+}: // handleModalClose,
+UserProfileProps) {
 	const [imgFile, setImgFile] = useState<string | ArrayBuffer | null>('');
 	const [selectedImg, setSelectedImg] = useState<string | ArrayBuffer | null>(
 		'',
 	);
+	const [newIntroduction, setNewIntroduction] = useState<string>('');
 
 	const imgRef = useRef<HTMLInputElement>(null);
 	// const [isModalOpen, setIsModalOpen] = useState(false);
@@ -44,11 +49,13 @@ function UserProfile({
 	// 	setIsModalOpen(false);
 	// };
 
-	// const handleModalClose = () => {
-	// 	if (window.confirm('이미지 수정을 취소하시겠습니까?')) {
-	// 		closeModal();
-	// 	}
-	// };
+	const handleModalClose = async () => {
+		if (
+			await Swal.fire(alertList.doubleCheckMessage(`수정을 취소하시겠습니까?`))
+		) {
+			closeModal();
+		}
+	};
 
 	const saveImgFile = () => {
 		const fileInput = imgRef.current;
@@ -62,42 +69,89 @@ function UserProfile({
 			};
 		}
 	};
+	// const handleSelect = async (e: FormEvent) => {
+	// 	e.preventDefault();
+	// 	const fileInput = imgRef.current;
+	// 	const token = localStorage.getItem('accessToken');
+
+	// 	if (
+	// 		fileInput &&
+	// 		fileInput.files &&
+	// 		fileInput.files[0] &&
+	// 		imgFile &&
+	// 		selectedImg
+	// 	) {
+	// 		const file = fileInput.files[0];
+	// 		const formData = new FormData();
+	// 		formData.append('file', file);
+	// 		try {
+	// 			await axios.patch(
+	// 				`${process.env.REACT_APP_API_URL}/api/user/profile/edit`,
+	// 				formData,
+	// 				{
+	// 					headers: {
+	// 						Authorization: `Bearer ${token}`, // attach the token as a bearer token
+	// 					},
+	// 				},
+	// 			);
+	// 			await Swal.fire(alertList.successMessage(`정보 변경 성공!`));
+	// 			// navigate('/post');
+	// 		} catch (error) {
+	// 			console.error('Error creating post:', error);
+	// 			await Swal.fire(alertList.errorMessage('정보 변경에 실패하였습니다.'));
+	// 		}
+	// 		closeModal();
+	// 	} else {
+	// 		alert('이미지를 등록해 주세요.');
+	// 	}
+	// };
 	const handleSelect = async (e: FormEvent) => {
 		e.preventDefault();
 		const fileInput = imgRef.current;
 		const token = localStorage.getItem('accessToken');
 
+		// 둘 다 없을 때의 검증
 		if (
-			fileInput &&
-			fileInput.files &&
-			fileInput.files[0] &&
-			imgFile &&
-			selectedImg
+			!newIntroduction &&
+			(!fileInput || !(fileInput.files && fileInput.files[0]))
 		) {
+			await Swal.fire(alertList.errorMessage('정보를 입력해주세요.'));
+			return;
+		}
+
+		const formData = new FormData();
+
+		if (fileInput && fileInput.files && fileInput.files[0]) {
 			const file = fileInput.files[0];
-			const formData = new FormData();
 			formData.append('file', file);
-			try {
-				await axios.patch(
-					`${process.env.REACT_APP_API_URL}/api/user/profile/img`,
-					formData,
-					{
-						headers: {
-							Authorization: `Bearer ${token}`, // attach the token as a bearer token
-						},
+		}
+
+		if (newIntroduction) {
+			formData.append('introduction', newIntroduction);
+		}
+
+		try {
+			await axios.patch(
+				`${process.env.REACT_APP_API_URL}/api/user/profile/edit`,
+				formData,
+				{
+					headers: {
+						Authorization: `Bearer ${token}`,
 					},
-				);
-				await Swal.fire(alertList.successMessage(`프로필 사진 등록!`));
-				// navigate('/post');
-			} catch (error) {
-				console.error('Error creating post:', error);
-				await Swal.fire(
-					alertList.errorMessage('프로필 사진 등록에 실패하였습니다.'),
-				);
-			}
-			closeModal();
-		} else {
-			alert('이미지를 등록해 주세요.');
+				},
+			);
+			await Swal.fire(alertList.successMessage(`정보 변경 성공!`));
+		} catch (error) {
+			console.error('Error updating profile:', error);
+			await Swal.fire(alertList.errorMessage('정보 변경에 실패하였습니다.'));
+		}
+
+		closeModal();
+	};
+
+	const triggerFileInput = () => {
+		if (imgRef.current) {
+			imgRef.current.click();
 		}
 	};
 
@@ -111,10 +165,10 @@ function UserProfile({
 					<ModalCloseButton onClick={handleModalClose}>
 						<img width='22px' height='22px' src={arrowBack} alt='닫기' />
 					</ModalCloseButton>
-					<ModalTitle>이미지 올리기</ModalTitle>
+					<ModalTitle>정보 수정</ModalTitle>
 				</ModalHeader>
 				<ModalMain>
-					<ModalUploadFile>
+					<ModalUploadFile onClick={triggerFileInput}>
 						<ModalUploadImg
 							src={imgFile ? imgFile.toString() : media}
 							width={imgFile ? `100%` : `50%`}
@@ -123,14 +177,24 @@ function UserProfile({
 						/>
 					</ModalUploadFile>
 					<input
+						className='dspl-none'
 						type='file'
 						accept='image/*'
 						ref={imgRef}
 						onChange={saveImgFile}
 					/>
-					<ModalPostButton onClick={handleSelect}>
-						이미지 선택 완료
-					</ModalPostButton>
+					<InputTitle>한 줄 소개</InputTitle>
+					<InputWrap>
+						<InputBar
+							type='text'
+							placeholder='안녕하세요. 버니핏입니다.'
+							value={newIntroduction}
+							onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+								onChangeInputSetter(setNewIntroduction)(e)
+							}
+						/>
+					</InputWrap>
+					<ModalPostButton onClick={handleSelect}>수정완료</ModalPostButton>
 				</ModalMain>
 			</Box>
 		</Modal>
