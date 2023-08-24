@@ -68,7 +68,8 @@ export const ModalMain = styled.div`
 	justify-content: center;
 	align-items: center;
 	cursor: pointer;
-	input {
+	.dspl-none {
+		display: none;
 	}
 `;
 
@@ -100,4 +101,28 @@ export const ModalPostButton = styled.button`
 	font-weigth: 600;
 	pointer: cursor;
 	margin-top: 20px;
+`;
+
+export const InputTitle = styled.div`
+	font-size: 2rem;
+	font-weight: 500;
+	margin-top: 2rem;
+`;
+export const InputWrap = styled.div`
+	display: flex;
+	border-radius: 8px;
+	padding: 1.6rem;
+	margin: 0.5rem 0 0.5rem 0;
+	background-color: white;
+	border: 1px solid #e3e0e0;
+
+	&:focus-within {
+		border: 1px solid #db7bf9;
+	}
+`;
+export const InputBar = styled.input`
+	width: 100%;
+	border: none;
+	outline: none;
+	height: 2rem;
 `;
