@@ -180,6 +180,7 @@ export const PostUl = styled.ul`
 	gap: 3rem;
 	place-items: center;
 	position: relative;
+	border: 1px solid black;
 	@media only screen and (min-width: 769px) and (max-width: 1980px) {
 		gap: 1rem;
 	}
@@ -195,14 +196,16 @@ export const PostUlEmpty = styled(PostUl)`
 `;
 export const PostLi = styled.li`
 	// height: 22rem;
+	width: 100%;
 	overflow: hidden;
 	box-sizing: border-box;
+	border: 1px solid red;
 	.link {
 		width: 100%;
 		height: auto;
 		img {
 			width: 100%;
-			height: auto;
+			height: 26rem;
 		}
 	}
 	@media only screen and (min-width: 1280px) and (max-width: 1980px) {
