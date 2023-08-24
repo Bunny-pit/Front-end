@@ -17,6 +17,10 @@ import { getToken } from './api/token';
 import { post } from './api/api';
 import { API_USER_LOGOUT } from './utils/constant';
 
+import UserMembers from './pages/Admin/UserMembers/UserMembers';
+import ReportManagement from './pages/Admin/ReportManagement/ ReportManagement';
+import AdminMain from './pages/Admin/Main/AdminMain';
+
 function App() {
 	const [isLogin, setIsLogin] = useState(false);
 	const location = useLocation();
@@ -88,6 +92,11 @@ function App() {
 				{/* 로그인 유무에 상관없이 접근 가능 */}
 				<Route path='/' element={<MainPage />} />
 				<Route path='/mainhome/unknown' element={<MainHomeUnknown />} />
+
+				<Route path='/adminMain' element={<AdminMain />} />
+				<Route path='/reportManagement' element={<ReportManagement />} />
+				<Route path='/userMembers' element={<UserMembers />} />
+
 				{/* 유효하지 않은 페이지 접근시 메인페이지로 이동 */}
 				<Route path='*' element={<MainPage />} />
 			</Routes>

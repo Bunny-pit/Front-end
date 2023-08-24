@@ -15,3 +15,10 @@ export const API_MAINHOME_FRIENDS: string = '/api/mainhome/friends';
 export const API_CHATTING_START: string = '/api/chat/start';
 export const API_FRIENDCHATTING_START: string = '/api/chat/friend/start';
 export const API_CHATTING_MESSAGE: string = '/api/message';
+
+//admin api url
+export const API_ADMIN_DELETE_TALK_FRIENDS: string =
+	'/api/mainhome/report/friends';
+export const API_ADMIN_DELETE_TALK_UNKNOWN: string =
+	'/api/mainhome/report/unknown';
+export const API_ADMIN_DELETE_USER: string = '/api/user/admin/deleteUser';

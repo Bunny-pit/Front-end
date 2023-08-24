@@ -17,21 +17,7 @@ export const HeaderWrapper = styled.div`
 		display: flex;
 		justify-content: space-between;
 	}
-	@media only screen and (min-width: 392px) and (max-width: 768px) {
-		margin: 0 1rem;
-		padding: 0;
-
-		ul {
-			flex-wrap: wrap;
-			align-content: space-evenly;
-			li {
-				flex: 1 1 40%;
-				margin: 0.5rem 0;
-				text-align: center;
-			}
-		}
-	}
-	@media only screen and (min-width: 0px) and (max-width: 391px) {
+	@media (min-width: 0px) and (max-width: 391px) {
 		margin: 0;
 		width: 100%;
 		justify-content: space-evenly;
@@ -46,6 +32,20 @@ export const HeaderWrapper = styled.div`
 				img {
 					width: 3rem;
 				}
+			}
+		}
+	}
+	@media (min-width: 391px) and (max-width: 768px) {
+		margin: 0 1rem;
+		padding: 0;
+
+		ul {
+			flex-wrap: wrap;
+			align-content: space-evenly;
+			li {
+				flex: 1 1 40%;
+				margin: 0.5rem 0;
+				text-align: center;
 			}
 		}
 	}

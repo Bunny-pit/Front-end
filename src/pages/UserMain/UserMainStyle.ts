@@ -195,6 +195,7 @@ export const PostUlEmpty = styled(PostUl)`
 `;
 export const PostLi = styled.li`
 	// height: 22rem;
+	width: 100%;
 	overflow: hidden;
 	box-sizing: border-box;
 	.link {
@@ -202,7 +203,7 @@ export const PostLi = styled.li`
 		height: auto;
 		img {
 			width: 100%;
-			height: auto;
+			height: 26rem;
 		}
 	}
 	@media only screen and (min-width: 1280px) and (max-width: 1980px) {
