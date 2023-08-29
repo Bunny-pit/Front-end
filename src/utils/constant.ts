@@ -8,7 +8,7 @@ export const API_USER_ACCESS_TOKEN: string = '/api/user/accessToken';
 export const API_USER_REFRESH_TOKEN: string = '/api/user/refreshToken';
 
 //mainhome api url
-export const API_MAINHOME_UNKNOWN: string = '/api/mainhome/unknown';
+export const API_MAINHOME_SECRET: string = '/api/mainhome/secret';
 export const API_MAINHOME_FRIENDS: string = '/api/mainhome/friends';
 
 //chatting api url

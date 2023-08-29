@@ -1,13 +1,13 @@
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import useSWRInfinite from 'swr/infinite';
-import { fetcher } from '../utils/swrFetcher';
+import { fetcher, useUser } from '../utils/swrFetcher';
 
 import { post, patch, del } from '../api/api';
 import {
+	API_MAINHOME_SECRET,
 	API_MAINHOME_FRIENDS,
-	API_MAINHOME_UNKNOWN,
 	API_FRIENDCHATTING_START,
 } from '../utils/constant';
 import { UserDataType, Post } from '../types/dataType';
@@ -29,10 +29,9 @@ const toKST = (utcDate: string) => {
 };
 
 const useMainHomePost = (pathname: string) => {
-	const API_ENDPOINT =
-		pathname.includes('unknown') === true
-			? API_MAINHOME_UNKNOWN
-			: API_MAINHOME_FRIENDS;
+	const API_ENDPOINT = pathname.includes('secret')
+		? API_MAINHOME_SECRET
+		: API_MAINHOME_FRIENDS;
 
 	const getKey = (pageIndex: number, previousPageData: Post[] | null) => {
 		if (previousPageData && !previousPageData.length) return null;

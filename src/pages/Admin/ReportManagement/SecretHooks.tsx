@@ -50,8 +50,8 @@ type Report = {
 	createdAt: string;
 };
 
-const UserTableUnknown: React.FC<Props> = ({ data }) => {
-	const [unknownData, setUnknownData] = useState<ApiData[]>(data);
+const UserTableSecret: React.FC<Props> = ({ data }) => {
+	const [secretData, setSecretData] = useState<ApiData[]>(data);
 	const [popupVisible, setPopupVisible] = useState<boolean>(false);
 	const [selectedUser, setSelectedUser] = useState<ApiData | null>(null);
 
@@ -143,4 +143,4 @@ const UserTableUnknown: React.FC<Props> = ({ data }) => {
 	);
 };
 
-export default UserTableUnknown;
+export default UserTableSecret;

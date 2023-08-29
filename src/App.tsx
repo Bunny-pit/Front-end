@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { checkTokenExpirationAndRefresh } from './utils/checkTokenExpirationAndRefresh';
 import MainPage from './pages/Main/Main';
-import MainHomeUnknown from './pages/Mainhome/MainHomeUnknown';
+import MainHomeSecret from './pages/Mainhome/MainHomeSecret';
 import MainHomeFriends from './pages/Mainhome/MainHomeFriends';
 import UserMainPage from './pages/UserMain/UserMain';
 import Chatting from './pages/Chatting/Chatting';
@@ -59,7 +59,7 @@ function App() {
 			'/login',
 			'/register',
 			'/',
-			'/mainhome/unknown',
+			'/mainhome/secret',
 		];
 		if (!pathsWithoutTokenCheck.includes(location.pathname)) {
 			checkTokenExpirationAndRefresh();
@@ -83,7 +83,7 @@ function App() {
 						<Route path='/post/user/:userId' element={<UserMainPage />} />
 						<Route path='/post/:postId' element={<Detail />} />
 						<Route path='/post/upload' element={<UploadPost />} />
-						<Route path='/mainhome/unknown' element={<MainHomeUnknown />} />
+						<Route path='/mainhome/secret' element={<MainHomeSecret />} />
 						<Route path='/mainhome/friends' element={<MainHomeFriends />} />
 						<Route path='/chatting/*' element={<Chatting />} />
 						<Route path='/friendchatting/*' element={<FriendChatting />} />
@@ -91,7 +91,7 @@ function App() {
 				)}
 				{/* 로그인 유무에 상관없이 접근 가능 */}
 				<Route path='/' element={<MainPage />} />
-				<Route path='/mainhome/unknown' element={<MainHomeUnknown />} />
+				<Route path='/mainhome/secret' element={<MainHomeSecret />} />
 
 				<Route path='/adminMain' element={<AdminMain />} />
 				<Route path='/reportManagement' element={<ReportManagement />} />

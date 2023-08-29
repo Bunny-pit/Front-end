@@ -13,7 +13,7 @@ import {
 } from './ReportManagementStyle';
 
 import UserTableFriends from './FriendsHooks';
-import UserTableUnknown from './UnknownHooks';
+import UserTableSecret from './SecretHooks';
 
 interface ApiData {
 	_id: string;
@@ -36,34 +36,34 @@ type Report = {
 };
 
 const ReportManagement: React.FC = () => {
-	const UNKNOWN_DATA = 'http://localhost:3001/api/mainhome/unknown/reported';
+	const SECRET_DATA = 'http://localhost:3001/api/mainhome/secret/reported';
 	const FRIEND_DATA = 'http://localhost:3001/api/mainhome/friends/reported';
 
 	const [activeButton, setActiveButton] = useState<'anonymous' | 'friends'>(
 		'anonymous',
 	);
-	const [showUnknownUserTable, setShowUnknownUserTable] = useState(true);
+	const [showSecretUserTable, setShowSecretUserTable] = useState(true);
 
 	const handleButtonClick = (buttonType: 'anonymous' | 'friends') => {
 		setActiveButton(buttonType);
-		setShowUnknownUserTable(true);
+		setShowSecretUserTable(true);
 	};
 
 	const toggleTables = () => {
-		setShowUnknownUserTable(!showUnknownUserTable);
+		setShowSecretUserTable(!showSecretUserTable);
 	};
 
 	const [userData, setUserData] = useState<ApiData[]>([]);
-	const [unknownUserData, setunknownUserDat] = useState<ApiData[]>([]);
+	const [secretUserData, setSecretUserData] = useState<ApiData[]>([]);
 	const [filteredUserData, setFilteredUserData] = useState<ApiData[]>([]);
 
 	useEffect(() => {
 		axios
-			.get(UNKNOWN_DATA)
+			.get(SECRET_DATA)
 			.then((response) => {
 				const fetchedData: ApiData[] = response.data;
 				setUserData(fetchedData);
-				setunknownUserDat(fetchedData);
+				setSecretUserData(fetchedData);
 				console.log('성공', fetchedData);
 			})
 			.catch((error) => {
@@ -105,7 +105,7 @@ const ReportManagement: React.FC = () => {
 			</Container>
 			<TableContainer>
 				{activeButton === 'anonymous' ? (
-					showUnknownUserTable && <UserTableUnknown data={unknownUserData} />
+					showSecretUserTable && <UserTableSecret data={secretUserData} />
 				) : (
 					<UserTableFriends data={filteredUserData} />
 				)}
