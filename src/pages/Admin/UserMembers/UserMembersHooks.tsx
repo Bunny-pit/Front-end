@@ -25,7 +25,7 @@ const UserTable: React.FC<Props> = ({ data }) => {
 
 	const deleteUser1 = (email: string) => {
 		axios
-			.delete(`http://localhost:3001/api/user/admin/deleteUser/`, {
+			.delete(`${process.env.REACT_APP_API_URL}/api/user/admin/deleteUser/`, {
 				data: { email: email },
 			})
 			.then((response) => {
