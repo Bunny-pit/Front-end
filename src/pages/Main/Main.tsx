@@ -57,7 +57,7 @@ const MainPage = () => {
 			<Container>
 				<FirstSection>
 					<Header>
-						<Link to='/mainhome/unknown'>
+						<Link to='/mainhome/secret'>
 							<Logo src={MainLogo} alt='main-logo' />
 						</Link>
 						<BtnContainer>

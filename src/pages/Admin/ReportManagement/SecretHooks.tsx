@@ -7,7 +7,7 @@ import { get, post, patch, del } from '../../../api/api';
 import alertList from '../../../utils/swal';
 import { UserDataType, Post } from '../../../types/dataType';
 
-import { API_ADMIN_DELETE_TALK_UNKNOWN } from '../../../utils/constant';
+import { API_ADMIN_DELETE_TALK_SECRET } from '../../../utils/constant';
 
 import {
 	Button,
@@ -50,8 +50,8 @@ type Report = {
 	createdAt: string;
 };
 
-const UserTableUnknown: React.FC<Props> = ({ data }) => {
-	const [unknownData, setUnknownData] = useState<ApiData[]>(data);
+const UserTableSecret: React.FC<Props> = ({ data }) => {
+	const [secretData, setSecretData] = useState<ApiData[]>(data);
 	const [popupVisible, setPopupVisible] = useState<boolean>(false);
 	const [selectedUser, setSelectedUser] = useState<ApiData | null>(null);
 
@@ -76,7 +76,7 @@ const UserTableUnknown: React.FC<Props> = ({ data }) => {
 		);
 		if (result.isConfirmed) {
 			try {
-				await del<UserDataType>(`${API_ADMIN_DELETE_TALK_UNKNOWN}/${postId}`, {
+				await del<UserDataType>(`${API_ADMIN_DELETE_TALK_SECRET}/${postId}`, {
 					withCredentials: true,
 				});
 
@@ -143,4 +143,4 @@ const UserTableUnknown: React.FC<Props> = ({ data }) => {
 	);
 };
 
-export default UserTableUnknown;
+export default UserTableSecret;

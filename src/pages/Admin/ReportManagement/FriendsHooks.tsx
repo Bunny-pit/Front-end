@@ -51,7 +51,7 @@ type Report = {
 };
 
 const UserTableFriends: React.FC<Props> = ({ data }) => {
-	const [unknownData, setUnknownData] = useState<ApiData[]>(data);
+	const [secretData, setSecretData] = useState<ApiData[]>(data);
 	const [popupVisible, setPopupVisible] = useState<boolean>(false);
 	const [selectedUser, setSelectedUser] = useState<ApiData | null>(null);
 
