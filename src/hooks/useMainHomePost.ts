@@ -9,6 +9,7 @@ import {
 	API_MAINHOME_SECRET,
 	API_MAINHOME_FRIENDS,
 	API_FRIENDCHATTING_START,
+	API_CHATTING_START,
 } from '../utils/constant';
 import { UserDataType, Post } from '../types/dataType';
 
@@ -231,9 +232,13 @@ const useMainHomePost = (pathname: string) => {
 			? '/chatting'
 			: '/friendchatting';
 
+		const API_CHTTING_ENDPOINT = pathname.includes('secret')
+			? API_CHATTING_START
+			: API_FRIENDCHATTING_START;
+
 		try {
 			await post<UserDataType>(
-				API_FRIENDCHATTING_START,
+				API_CHTTING_ENDPOINT,
 				{ userId: _id, anonymousUserId: userId, anonymousUserName: name },
 				{
 					withCredentials: true,
