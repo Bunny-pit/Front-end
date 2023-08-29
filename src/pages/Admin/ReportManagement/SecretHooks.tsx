@@ -103,7 +103,7 @@ const UserTableSecret: React.FC<Props> = ({ data }) => {
 					</Thead>
 					<Tbody>
 						{data.map((user) => (
-							<tr key={user.userId}>
+							<tr key={user._id}>
 								<Td>{user.name}</Td>
 								<Td>{user.email}</Td>
 								<Td>{user.content}</Td>
