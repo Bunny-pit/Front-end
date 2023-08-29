@@ -227,6 +227,10 @@ const useMainHomePost = (pathname: string) => {
 	const navigate = useNavigate();
 
 	const moveToChatPage = async (_id: string, userId: string, name: string) => {
+		const CHAT_NAVIGATE_PATH = pathname.includes('secret')
+			? '/chatting'
+			: '/friendchatting';
+
 		try {
 			await post<UserDataType>(
 				API_FRIENDCHATTING_START,
@@ -235,7 +239,7 @@ const useMainHomePost = (pathname: string) => {
 					withCredentials: true,
 				},
 			);
-			navigate(`/friendchatting`);
+			navigate(CHAT_NAVIGATE_PATH);
 		} catch (error) {
 			console.error(error);
 		}
