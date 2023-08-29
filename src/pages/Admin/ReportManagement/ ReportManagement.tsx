@@ -36,8 +36,8 @@ type Report = {
 };
 
 const ReportManagement: React.FC = () => {
-	const SECRET_DATA = 'http://localhost:3001/api/mainhome/secret/reported';
-	const FRIEND_DATA = 'http://localhost:3001/api/mainhome/friends/reported';
+	const SECRET_DATA = `${process.env.REACT_APP_API_URL}/api/mainhome/secret/reported`;
+	const FRIEND_DATA = `${process.env.REACT_APP_API_URL}/api/mainhome/friends/reported`;
 
 	const [activeButton, setActiveButton] = useState<'anonymous' | 'friends'>(
 		'anonymous',
@@ -46,43 +46,41 @@ const ReportManagement: React.FC = () => {
 
 	const handleButtonClick = (buttonType: 'anonymous' | 'friends') => {
 		setActiveButton(buttonType);
-		setShowSecretUserTable(true);
+		if (buttonType === 'anonymous') {
+			setShowSecretUserTable(true);
+		} else {
+			setShowSecretUserTable(false);
+		}
 	};
 
-	const toggleTables = () => {
-		setShowSecretUserTable(!showSecretUserTable);
-	};
-
-	const [userData, setUserData] = useState<ApiData[]>([]);
 	const [secretUserData, setSecretUserData] = useState<ApiData[]>([]);
 	const [filteredUserData, setFilteredUserData] = useState<ApiData[]>([]);
 
 	useEffect(() => {
-		axios
-			.get(SECRET_DATA)
-			.then((response) => {
+		const fetchSecretData = async () => {
+			try {
+				const response = await axios.get(SECRET_DATA);
 				const fetchedData: ApiData[] = response.data;
-				setUserData(fetchedData);
 				setSecretUserData(fetchedData);
-				console.log('성공', fetchedData);
-			})
-			.catch((error) => {
-				console.error('데이터를 가져오는 중 오류 발생:', error);
-			});
-	}, []);
+				console.log('익명 데이터 가져오기 성공', fetchedData);
+			} catch (error) {
+				console.error('익명 데이터를 가져오는 중 오류 발생:', error);
+			}
+		};
 
-	useEffect(() => {
-		axios
-			.get(FRIEND_DATA)
-			.then((response) => {
+		const fetchFriendData = async () => {
+			try {
+				const response = await axios.get(FRIEND_DATA);
 				const fetchedData: ApiData[] = response.data;
-				setUserData(fetchedData);
 				setFilteredUserData(fetchedData);
-				console.log('성공', fetchedData);
-			})
-			.catch((error) => {
-				console.error('데이터를 가져오는 중 오류 발생:', error);
-			});
+				console.log('친구 데이터 가져오기 성공', fetchedData);
+			} catch (error) {
+				console.error('친구 데이터를 가져오는 중 오류 발생:', error);
+			}
+		};
+
+		fetchSecretData();
+		fetchFriendData();
 	}, []);
 
 	return (

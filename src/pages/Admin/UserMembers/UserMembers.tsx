@@ -12,7 +12,7 @@ import UserTable from './UserMembersHooks';
 import { Container, Title, TableContainer } from './UserMembrsStyle';
 
 const UserMembers: React.FC = () => {
-	const USER_DATA = 'http://localhost:3001/api/user/login';
+	const USER_DATA = `${process.env.REACT_APP_API_URL}/api/user/login`;
 	const [userData, setUserData] = useState<UserDataType[]>([]);
 	const [filteredUserData, setFilteredUserData] = useState<UserDataType[]>([]); // 필터링된 데이터의 새 상태
 	const [searchQuery, setSearchQuery] = useState<string>('');
