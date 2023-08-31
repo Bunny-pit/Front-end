@@ -51,7 +51,6 @@ type Report = {
 };
 
 const UserTableFriends: React.FC<Props> = ({ data }) => {
-	const [secretData, setSecretData] = useState<ApiData[]>(data);
 	const [popupVisible, setPopupVisible] = useState<boolean>(false);
 	const [selectedUser, setSelectedUser] = useState<ApiData | null>(null);
 
@@ -103,7 +102,7 @@ const UserTableFriends: React.FC<Props> = ({ data }) => {
 					</Thead>
 					<Tbody>
 						{data.map((user) => (
-							<tr key={user.userId}>
+							<tr key={user._id}>
 								<Td>{user.name}</Td>
 								<Td>{user.email}</Td>
 								<Td>{user.content}</Td>
