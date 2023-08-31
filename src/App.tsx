@@ -33,36 +33,36 @@ function App() {
 	}, [location.pathname]);
 
 	//초기 로그인 상태 설정 후 로컬 스토리지 변경시마다 로그인 상태 재설정
-	useEffect(() => {
-		const checkLogin = () => {
-			if (getToken(`accessToken`)) {
-				setIsLogin(true);
-			} else {
-				setIsLogin(false);
-			}
-		};
-		// 초기 로그인 상태 설정
-		checkLogin();
+	// useEffect(() => {
+	// 	const checkLogin = () => {
+	// 		if (getToken(`accessToken`)) {
+	// 			setIsLogin(true);
+	// 		} else {
+	// 			setIsLogin(false);
+	// 		}
+	// 	};
+	// 	// 초기 로그인 상태 설정
+	// 	checkLogin();
 
-		// localStorage 변경시마다 로그인 상태 재설정
-		window.addEventListener('storage', checkLogin);
-		return () => {
-			window.removeEventListener('storage', checkLogin);
-		};
-	}, []);
+	// 	// localStorage 변경시마다 로그인 상태 재설정
+	// 	window.addEventListener('storage', checkLogin);
+	// 	return () => {
+	// 		window.removeEventListener('storage', checkLogin);
+	// 	};
+	// }, []);
 
 	// pathsWithoutTokenCheck배열에 들어간 페이지는 토큰 확인에서 제외.
-	useEffect(() => {
-		const pathsWithoutTokenCheck = [
-			'/login',
-			'/register',
-			'/',
-			'/mainhome/secret',
-		];
-		if (!pathsWithoutTokenCheck.includes(location.pathname)) {
-			checkTokenExpirationAndRefresh();
-		}
-	}, [location.pathname]);
+	// useEffect(() => {
+	// 	const pathsWithoutTokenCheck = [
+	// 		'/login',
+	// 		'/register',
+	// 		'/',
+	// 		'/mainhome/secret',
+	// 	];
+	// 	if (!pathsWithoutTokenCheck.includes(location.pathname)) {
+	// 		checkTokenExpirationAndRefresh();
+	// 	}
+	// }, [location.pathname]);
 
 	return (
 		<>

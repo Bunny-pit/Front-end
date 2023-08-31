@@ -28,7 +28,7 @@ interface InnerContentProps {
 }
 
 const MainHomeContentInnerContent = ({ post }: InnerContentProps) => {
-	const { userData } = useUser();
+	const { userData, isError, error } = useUser();
 	const location = useLocation();
 	const {
 		editingPostId,
@@ -41,11 +41,19 @@ const MainHomeContentInnerContent = ({ post }: InnerContentProps) => {
 		sendReport,
 	} = useMainHomePost(location.pathname);
 
+	if (isError && error) {
+		const errorMessage =
+			typeof error === 'object' && 'message' in error
+				? error.message
+				: String(error);
+		console.error(errorMessage);
+	}
+
 	const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setUpdatedContent(e.target.value);
 	};
 
-	const isOnFriendsPage = useLocation().pathname === '/mainhome/friends';
+	const isOnFriendsPage = location.pathname === '/mainhome/friends';
 
 	return (
 		<InnerContent>

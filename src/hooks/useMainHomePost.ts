@@ -1,8 +1,8 @@
-import { useState, useRef, useCallback, useEffect } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import useSWRInfinite from 'swr/infinite';
-import { fetcher, useUser } from '../utils/swrFetcher';
+import { fetcher } from '../utils/swrFetcher';
 
 import { post, patch, del } from '../api/api';
 import {
