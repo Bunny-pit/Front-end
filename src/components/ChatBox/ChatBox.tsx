@@ -71,7 +71,11 @@ const ChatBox = ({ chatId, userId, onNewMessage }: ChatBoxProps) => {
 					onKeyUp={handleKeyUp}
 					placeholder='메시지 보내기'
 				/>
-				<SendButton src={sendBtn} alt='send-button' />
+				<SendButton
+					src={sendBtn}
+					alt='send-button'
+					onClick={handleSendButtonClick}
+				/>
 			</Container>
 		</>
 	);
