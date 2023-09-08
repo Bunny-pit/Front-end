@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { checkTokenExpirationAndRefresh } from './utils/checkTokenExpirationAndRefresh';
 import MainPage from './pages/Main/Main';
-import MainHomeUnknown from './pages/Mainhome/MainHomeUnknown';
+import MainHomeSecret from './pages/Mainhome/MainHomeSecret';
 import MainHomeFriends from './pages/Mainhome/MainHomeFriends';
 import UserMainPage from './pages/UserMain/UserMain';
 import Chatting from './pages/Chatting/Chatting';
@@ -14,8 +14,10 @@ import UserWithdrawalPage from './pages/UserAccount/UserWithdrawal/UserWithdrawa
 import UploadPost from './pages/UserMain/UploadPost/UploadPost';
 import FriendChatting from './pages/Chatting/FriendChatting';
 import { getToken } from './api/token';
-import { post } from './api/api';
-import { API_USER_LOGOUT } from './utils/constant';
+
+import UserMembers from './pages/Admin/UserMembers/UserMembers';
+import ReportManagement from './pages/Admin/ReportManagement/ ReportManagement';
+import AdminMain from './pages/Admin/Main/AdminMain';
 
 function App() {
 	const [isLogin, setIsLogin] = useState(false);
@@ -31,36 +33,36 @@ function App() {
 	}, [location.pathname]);
 
 	//초기 로그인 상태 설정 후 로컬 스토리지 변경시마다 로그인 상태 재설정
-	useEffect(() => {
-		const checkLogin = () => {
-			if (getToken(`accessToken`)) {
-				setIsLogin(true);
-			} else {
-				setIsLogin(false);
-			}
-		};
-		// 초기 로그인 상태 설정
-		checkLogin();
+	// useEffect(() => {
+	// 	const checkLogin = () => {
+	// 		if (getToken(`accessToken`)) {
+	// 			setIsLogin(true);
+	// 		} else {
+	// 			setIsLogin(false);
+	// 		}
+	// 	};
+	// 	// 초기 로그인 상태 설정
+	// 	checkLogin();
 
-		// localStorage 변경시마다 로그인 상태 재설정
-		window.addEventListener('storage', checkLogin);
-		return () => {
-			window.removeEventListener('storage', checkLogin);
-		};
-	}, []);
+	// 	// localStorage 변경시마다 로그인 상태 재설정
+	// 	window.addEventListener('storage', checkLogin);
+	// 	return () => {
+	// 		window.removeEventListener('storage', checkLogin);
+	// 	};
+	// }, []);
 
 	// pathsWithoutTokenCheck배열에 들어간 페이지는 토큰 확인에서 제외.
-	useEffect(() => {
-		const pathsWithoutTokenCheck = [
-			'/login',
-			'/register',
-			'/',
-			'/mainhome/unknown',
-		];
-		if (!pathsWithoutTokenCheck.includes(location.pathname)) {
-			checkTokenExpirationAndRefresh();
-		}
-	}, [location.pathname]);
+	// useEffect(() => {
+	// 	const pathsWithoutTokenCheck = [
+	// 		'/login',
+	// 		'/register',
+	// 		'/',
+	// 		'/mainhome/secret',
+	// 	];
+	// 	if (!pathsWithoutTokenCheck.includes(location.pathname)) {
+	// 		checkTokenExpirationAndRefresh();
+	// 	}
+	// }, [location.pathname]);
 
 	return (
 		<>
@@ -79,7 +81,7 @@ function App() {
 						<Route path='/post/user/:userId' element={<UserMainPage />} />
 						<Route path='/post/:postId' element={<Detail />} />
 						<Route path='/post/upload' element={<UploadPost />} />
-						<Route path='/mainhome/unknown' element={<MainHomeUnknown />} />
+						<Route path='/mainhome/secret' element={<MainHomeSecret />} />
 						<Route path='/mainhome/friends' element={<MainHomeFriends />} />
 						<Route path='/chatting/*' element={<Chatting />} />
 						<Route path='/friendchatting/*' element={<FriendChatting />} />
@@ -87,7 +89,12 @@ function App() {
 				)}
 				{/* 로그인 유무에 상관없이 접근 가능 */}
 				<Route path='/' element={<MainPage />} />
-				<Route path='/mainhome/unknown' element={<MainHomeUnknown />} />
+				<Route path='/mainhome/secret' element={<MainHomeSecret />} />
+
+				<Route path='/adminMain' element={<AdminMain />} />
+				<Route path='/reportManagement' element={<ReportManagement />} />
+				<Route path='/userMembers' element={<UserMembers />} />
+
 				{/* 유효하지 않은 페이지 접근시 메인페이지로 이동 */}
 				<Route path='*' element={<MainPage />} />
 			</Routes>

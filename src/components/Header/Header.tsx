@@ -56,7 +56,7 @@ const DefaultHeader = () => {
 				{windowWidth > 391 ? (
 					<MenuUl>
 						<MenuLi>
-							<Link to='/mainhome/unknown'>익명의 한마디</Link>
+							<Link to='/mainhome/secret'>익명의 한마디</Link>
 						</MenuLi>
 						<MenuLi>
 							<Link to='/chatting/*'>익명 버니톡</Link>
@@ -74,7 +74,7 @@ const DefaultHeader = () => {
 							<img
 								src={unknown}
 								onClick={() => {
-									navigate('/mainhome/unknown');
+									navigate('/mainhome/secret');
 								}}
 								alt={'익명의 한마디'}
 							/>

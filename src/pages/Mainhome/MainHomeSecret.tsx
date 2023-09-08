@@ -5,11 +5,11 @@ import MainHomeSendBox from '../../components/MainHomeSendBox/MainHomeSendBox';
 
 import { Title } from './MainHomeStyle';
 
-const MainHomeUnknown = () => {
+const MainHomeSecret = () => {
 	return (
 		<>
 			<Header />
-			<Title>Unknown Bunnies</Title>
+			<Title>Secret Bunnies</Title>
 
 			<MainHomeContent />
 
@@ -20,4 +20,4 @@ const MainHomeUnknown = () => {
 	);
 };
 
-export default MainHomeUnknown;
+export default MainHomeSecret;

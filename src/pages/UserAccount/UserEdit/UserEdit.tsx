@@ -25,7 +25,7 @@ export default function UserEditPage() {
 	const [prevPassword, setPrevPassword] = useState<string>('');
 	const [newPassword, setNewPassword] = useState<string>('');
 	const [newPasswordCheck, setNewPassWordCheck] = useState<string>('');
-	const [newIntroduction, setNewIntroduction] = useState<string>('');
+
 	const [formCheck, setFormCheck] = useState<boolean>(false);
 	const { userData, isError } = useUser();
 	const navigate = useNavigate();
@@ -64,7 +64,6 @@ export default function UserEditPage() {
 						prevPassword,
 						newPassword,
 						newPasswordCheck,
-						newIntroduction,
 					},
 					{ headers: { 'Content-Type': 'application/json' } },
 				);
@@ -135,17 +134,7 @@ export default function UserEditPage() {
 						}
 					/>
 				</InputWrap>
-				<InputTitle>한 줄 소개</InputTitle>
-				<InputWrap>
-					<InputBar
-						type='text'
-						placeholder='안녕하세요. 버니핏입니다.'
-						value={newIntroduction}
-						onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-							onChangeInputSetter(setNewIntroduction)(e)
-						}
-					/>
-				</InputWrap>
+
 				<BottomButton type='submit'>수정완료</BottomButton>
 			</FormWrap>
 			<BottomButton

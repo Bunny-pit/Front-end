@@ -2,7 +2,10 @@ import React, { useState, useEffect } from 'react';
 import BunnyTalkTitle from '../../../assets/icons/BunnyTalkTitle.png';
 import BunnyTalkLogo from '../../../assets/icons/BunnyTalkLogo.png';
 import { useNavigate } from 'react-router-dom';
-import { emailValidation, passwordValidation } from '../../../utils/registerValidation';
+import {
+	emailValidation,
+	passwordValidation,
+} from '../../../utils/registerValidation';
 import { post } from '../../../api/api';
 import { setToken } from '../../../api/token';
 import {
@@ -17,7 +20,7 @@ import {
 	ButtonWrap,
 	BottomButton,
 } from './LoginStyle';
-import { AxiosResponse } from 'axios'
+import { AxiosResponse } from 'axios';
 import { onChangeInputSetter } from '../../../utils/inputStateSetter';
 import { API_USER_LOGIN } from '../../../utils/constant';
 import alertList from '../../../utils/swal';
@@ -42,7 +45,9 @@ const initialLoginFormState: LoginFormState = {
 export default function LoginPage() {
 	const [email, setEmail] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
-	const [loginForm, setLoginForm] = useState<LoginFormState>(initialLoginFormState);
+	const [loginForm, setLoginForm] = useState<LoginFormState>(
+		initialLoginFormState,
+	);
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -52,7 +57,6 @@ export default function LoginPage() {
 		};
 	}, []);
 
-
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		const isEmailValid = emailValidation(email);
@@ -60,13 +64,16 @@ export default function LoginPage() {
 		const isFormValid = isEmailValid && isPasswordValid;
 		if (isFormValid) {
 			try {
-				const response: AxiosResponse<{ accessToken: string, refreshToken: string }> = await post(
+				const response: AxiosResponse<{
+					accessToken: string;
+					refreshToken: string;
+				}> = await post(
 					API_USER_LOGIN,
 					{
 						email,
-						password
+						password,
 					},
-					{ headers: { 'Content-Type': 'application/json' } }
+					{ headers: { 'Content-Type': 'application/json' } },
 				);
 
 				const accessToken: string = response.data.accessToken;
@@ -74,17 +81,19 @@ export default function LoginPage() {
 
 				setToken('accessToken', accessToken);
 				setToken('refreshToken', refreshToken);
-				await Swal.fire(alertList.successMessage(`환영해요 버니!`))
-				navigate("/post");
+				await Swal.fire(alertList.successMessage(`환영해요 버니!`));
+
+				navigate('/post');
 			} catch (error: any) {
 				if (error.response.data.fullError) {
-					await Swal.fire(alertList.errorMessage(error.response.data.fullError))
+					await Swal.fire(
+						alertList.errorMessage(error.response.data.fullError),
+					);
 				}
-				console.log('로그인 post 오류', error.response.data.fullError)
+				console.log('로그인 post 오류', error.response.data.fullError);
 			}
-
 		} else {
-			await Swal.fire(alertList.errorMessage(`입력 정보를 확인해주세요!`))
+			await Swal.fire(alertList.errorMessage(`입력 정보를 확인해주세요!`));
 		}
 	};
 
@@ -92,8 +101,8 @@ export default function LoginPage() {
 		<Page>
 			<TitleAndLogoWrap>
 				<LogoWrap>
-					<img src={BunnyTalkLogo} alt="logo" />
-					<img src={BunnyTalkTitle} alt="title" />
+					<img src={BunnyTalkLogo} alt='logo' />
+					<img src={BunnyTalkTitle} alt='title' />
 				</LogoWrap>
 				<TitleWrap>환영해요 버니!</TitleWrap>
 			</TitleAndLogoWrap>
@@ -102,9 +111,11 @@ export default function LoginPage() {
 				<InputWrap>
 					<InputBar
 						type='text'
-						placeholder="bunny001@email.com"
+						placeholder='bunny001@email.com'
 						value={email}
-						onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChangeInputSetter(setEmail)(e)}
+						onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+							onChangeInputSetter(setEmail)(e)
+						}
 					/>
 				</InputWrap>
 				<InputTitle>비밀번호</InputTitle>
@@ -114,7 +125,9 @@ export default function LoginPage() {
 						placeholder='영문, 숫자, 특수문자 포함 8자 이상'
 						value={password}
 						minLength={8}
-						onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChangeInputSetter(setPassword)(e)}
+						onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+							onChangeInputSetter(setPassword)(e)
+						}
 					/>
 				</InputWrap>
 				<ButtonWrap>

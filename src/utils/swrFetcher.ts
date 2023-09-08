@@ -1,10 +1,10 @@
 import useSWR, { SWRResponse } from 'swr';
-import { swrApi } from '../api/axiosInstance';
+import { api, swrApi } from '../api/axiosInstance';
 import { API_USER_ACCESS_TOKEN } from './constant';
 import { UserDataType } from '../types/dataType';
 
 export const fetcher = (url: string) =>
-	swrApi.get(url).then((res) => {
+	api.get(url).then((res) => {
 		console.log(res);
 		return res.data;
 	});
@@ -12,21 +12,21 @@ export const fetcher = (url: string) =>
 export function useUser(): {
 	userData: UserDataType | null;
 	isError: boolean;
+	error: { message: string } | null;
 } {
 	const fetchingURL = `${process.env.REACT_APP_API_URL}${API_USER_ACCESS_TOKEN}`;
-	const { data, error } = useSWR(fetchingURL, fetcher, {
-		dedupingInterval: 1000000,
-		errorRetryInterval: 5000,
-	});
+
+	const { data, error } = useSWR(fetchingURL, fetcher);
 
 	if (error && data === undefined) {
-		// 데이터가 없을 때만 에러 출력
 		console.error('Error fetching user data :', error.message);
+		return { userData: null, isError: true, error };
 	}
+
 	if (data) {
-		// console.log('data.userData 가져옴', data.userData);
-		// const userData = data.userData;
-		return { userData: data.userData, isError: false };
+		return { userData: data.userData, isError: false, error: null };
 	}
-	return { userData: null, isError: true };
+
+	// 데이터가 없고, 에러도 발생하지 않았을 때의 기본 반환
+	return { userData: null, isError: false, error: null };
 }

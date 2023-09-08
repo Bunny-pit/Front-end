@@ -8,10 +8,17 @@ export const API_USER_ACCESS_TOKEN: string = '/api/user/accessToken';
 export const API_USER_REFRESH_TOKEN: string = '/api/user/refreshToken';
 
 //mainhome api url
-export const API_MAINHOME_UNKNOWN: string = '/api/mainhome/unknown';
+export const API_MAINHOME_SECRET: string = '/api/mainhome/secret';
 export const API_MAINHOME_FRIENDS: string = '/api/mainhome/friends';
 
 //chatting api url
 export const API_CHATTING_START: string = '/api/chat/start';
 export const API_FRIENDCHATTING_START: string = '/api/chat/friend/start';
 export const API_CHATTING_MESSAGE: string = '/api/message';
+
+//admin api url
+export const API_ADMIN_DELETE_TALK_FRIENDS: string =
+	'/api/mainhome/report/friends';
+export const API_ADMIN_DELETE_TALK_SECRET: string =
+	'/api/mainhome/report/secret';
+export const API_ADMIN_DELETE_USER: string = '/api/user/admin/deleteUser';

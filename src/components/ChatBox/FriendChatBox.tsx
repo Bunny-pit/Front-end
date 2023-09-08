@@ -12,10 +12,7 @@ interface ChatBoxProps {
 
 const FriendChatBox = ({ chatId, userId, onNewMessage }: ChatBoxProps) => {
 	const [inputArea, setInputArea] = useState('');
-	const socket = useSocket(
-		// 'https://port-0-back-end-kvmh2mljxnw03c.sel4.cloudtype.app',
-		`${process.env.REACT_APP_API_URL}`,
-	);
+	const socket = useSocket(`${process.env.REACT_APP_API_URL}`);
 
 	useEffect(() => {
 		if (socket) {
@@ -71,7 +68,11 @@ const FriendChatBox = ({ chatId, userId, onNewMessage }: ChatBoxProps) => {
 					onKeyUp={handleKeyUp}
 					placeholder='메시지 보내기'
 				/>
-				<SendButton src={sendBtn} alt='send-button' />
+				<SendButton
+					src={sendBtn}
+					alt='send-button'
+					onClick={handleSendButtonClick}
+				/>
 			</Container>
 		</>
 	);
