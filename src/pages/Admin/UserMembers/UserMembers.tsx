@@ -9,7 +9,7 @@ import { UserDataType, Post } from '../../../types/dataType';
 
 import UserTable from './UserMembersHooks';
 
-import { Container, Title, TableContainer } from './UserMembrsStyle';
+import { Container, Title, TableContainer } from './UserMembersStyle';
 
 const UserMembers: React.FC = () => {
 	const USER_DATA = `${process.env.REACT_APP_API_URL}/api/user/login`;

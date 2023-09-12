@@ -79,9 +79,7 @@ const useMainHomePost = (pathname: string) => {
 				return;
 			} else if (updatedContent.trim().length > 100) {
 				Swal.fire(
-					alertList.errorMessage(
-						'게시글은 최대 100글자 미만으로 작성해주세요.',
-					),
+					alertList.errorMessage('게시글은 최대 100자 미만으로 작성해주세요.'),
 				);
 				return;
 			}
@@ -139,7 +137,7 @@ const useMainHomePost = (pathname: string) => {
 			return;
 		} else if (newPostContent.length > 100) {
 			Swal.fire(
-				alertList.errorMessage('게시글은 최대 100글자 미만으로 작성해주세요.'),
+				alertList.errorMessage('게시글은 최대 100자 미만으로 작성해주세요.'),
 			);
 			return;
 		}

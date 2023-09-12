@@ -14,7 +14,7 @@ import {
 	Table,
 	Thead,
 	Tbody,
-} from './UserMembrsStyle';
+} from './UserMembersStyle';
 
 interface Props {
 	data: UserDataType[];

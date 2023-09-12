@@ -1,4 +1,5 @@
 import React, { useState, useRef, FormEvent } from 'react';
+import useSWR, { mutate } from 'swr';
 import Modal from 'react-modal';
 import arrowBack from './arrow_back_icon.svg';
 import media from './media_icon.svg';
@@ -39,15 +40,6 @@ UserProfileProps) {
 	const [newIntroduction, setNewIntroduction] = useState<string>('');
 
 	const imgRef = useRef<HTMLInputElement>(null);
-	// const [isModalOpen, setIsModalOpen] = useState(false);
-
-	// const openModal = () => {
-	// 	setIsModalOpen(true);
-	// };
-
-	// const closeModal = () => {
-	// 	setIsModalOpen(false);
-	// };
 
 	const handleModalClose = async () => {
 		if (
@@ -69,42 +61,7 @@ UserProfileProps) {
 			};
 		}
 	};
-	// const handleSelect = async (e: FormEvent) => {
-	// 	e.preventDefault();
-	// 	const fileInput = imgRef.current;
-	// 	const token = localStorage.getItem('accessToken');
 
-	// 	if (
-	// 		fileInput &&
-	// 		fileInput.files &&
-	// 		fileInput.files[0] &&
-	// 		imgFile &&
-	// 		selectedImg
-	// 	) {
-	// 		const file = fileInput.files[0];
-	// 		const formData = new FormData();
-	// 		formData.append('file', file);
-	// 		try {
-	// 			await axios.patch(
-	// 				`${process.env.REACT_APP_API_URL}/api/user/profile/edit`,
-	// 				formData,
-	// 				{
-	// 					headers: {
-	// 						Authorization: `Bearer ${token}`, // attach the token as a bearer token
-	// 					},
-	// 				},
-	// 			);
-	// 			await Swal.fire(alertList.successMessage(`정보 변경 성공!`));
-	// 			// navigate('/post');
-	// 		} catch (error) {
-	// 			console.error('Error creating post:', error);
-	// 			await Swal.fire(alertList.errorMessage('정보 변경에 실패하였습니다.'));
-	// 		}
-	// 		closeModal();
-	// 	} else {
-	// 		alert('이미지를 등록해 주세요.');
-	// 	}
-	// };
 	const handleSelect = async (e: FormEvent) => {
 		e.preventDefault();
 		const fileInput = imgRef.current;
