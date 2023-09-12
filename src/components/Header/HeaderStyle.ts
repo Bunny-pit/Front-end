@@ -17,7 +17,7 @@ export const HeaderWrapper = styled.div`
 		display: flex;
 		justify-content: space-between;
 	}
-	@media (min-width: 0px) and (max-width: 391px) {
+	@media (min-width: 0px) and (max-width: 390px) {
 		margin: 0;
 		width: 100%;
 		justify-content: space-evenly;
