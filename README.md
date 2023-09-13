@@ -35,7 +35,7 @@
 
 ## 📌 시연 영상
 
-### [▶️ 시연 영상 바로가기](https://www.youtube.com/watch?v=h2iczOem6c8)
+### [▶️ 시연 영상 바로가기](https://www.youtube.com/watch?v=JBBsylREzyc)
 
 <br />
 <br />
