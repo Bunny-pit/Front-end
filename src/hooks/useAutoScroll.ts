@@ -24,5 +24,5 @@ export const useAutoScroll = (
 		};
 
 		scrollToBottom();
-	}, [messageCount]);
+	}, [messageListRef, messageCount]);
 };

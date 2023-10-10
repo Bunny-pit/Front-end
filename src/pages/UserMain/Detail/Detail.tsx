@@ -123,7 +123,7 @@ const Detail = () => {
 
 		fetchPosts();
 		fetchComments();
-	}, [postId, isLiked]);
+	}, [postId, isLiked, userData?._id]);
 	// --------토큰 받아오는 함수 ---------
 	const getToken = () => {
 		const token = localStorage.getItem('accessToken');

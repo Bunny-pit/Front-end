@@ -22,10 +22,8 @@ export default function UserEditPage() {
 	const [newPassword, setNewPassword] = useState<string>('');
 	const [newPasswordCheck, setNewPassWordCheck] = useState<string>('');
 
-	const [formCheck, setFormCheck] = useState<boolean>(false);
 	const { userData } = useUser();
 	const navigate = useNavigate();
-	const formChecker = useMemo(() => {}, [formCheck]);
 
 	// const handleLogout = async () => {
 	//     try {
@@ -44,12 +42,6 @@ export default function UserEditPage() {
 	// }
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-
-		if (prevPassword && newPassword === newPasswordCheck) {
-			setFormCheck(true);
-		} else {
-			setFormCheck(false);
-		}
 
 		if (userData?.email === email) {
 			try {

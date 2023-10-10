@@ -115,9 +115,7 @@ export default function LoginPage() {
 					<BottomButton type='submit'>로그인</BottomButton>
 					<BottomButton
 						onClick={() => {
-							{
-								navigate('/register');
-							}
+							navigate('/register');
 						}}>
 						회원가입
 					</BottomButton>

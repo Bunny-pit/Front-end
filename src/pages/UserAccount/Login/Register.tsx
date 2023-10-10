@@ -135,14 +135,7 @@ export default function RegisterPage() {
 
 				<ButtonWrap>
 					<BottomButton type='submit'>회원가입완료</BottomButton>
-					<BottomButton
-						onClick={() => {
-							{
-								navigate('/login');
-							}
-						}}>
-						로그인
-					</BottomButton>
+					<BottomButton onClick={() => navigate('/login')}>로그인</BottomButton>
 				</ButtonWrap>
 			</FormWrap>
 		</Page>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
@@ -171,7 +171,7 @@ const UserMain = () => {
 		}
 	};
 	//--------------------팔로잉 가져오기------------------
-	const getFollowings = async (nickName: string | undefined) => {
+	const getFollowings = useCallback(async (nickName: string | undefined) => {
 		try {
 			if (nickName !== undefined) {
 				const response = await axios.get(
@@ -188,7 +188,7 @@ const UserMain = () => {
 		} catch (error) {
 			console.error('Error fetching getFollowers:', error);
 		}
-	};
+	}, []);
 	const getToken = () => {
 		const token = localStorage.getItem('accessToken');
 		const config = {

@@ -73,7 +73,7 @@ export default function UserWithdrawalPage() {
 			<InputTitle style={{ textAlign: 'center', margin: '4rem 0 1rem 0' }}>
 				회원 탈퇴를 위해 정보를 입력해주세요
 			</InputTitle>
-			<FormWrap>
+			<FormWrap onSubmit={handleSubmit}>
 				<InputTitle>이메일</InputTitle>
 				<InputWrap>
 					<InputBar
