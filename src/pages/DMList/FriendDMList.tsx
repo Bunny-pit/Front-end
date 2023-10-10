@@ -7,7 +7,6 @@ import {
 } from './DMListStyle';
 import { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import gravatar from 'gravatar';
 import { useUser, fetcher } from '../../utils/swrFetcher';
 import { del } from '../../api/api';
 import { DmListType } from '../../types/chatType';

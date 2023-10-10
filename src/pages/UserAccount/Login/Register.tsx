@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import BunnyTalkTitle from '../../../assets/icons/BunnyTalkTitle.png';
-import BunnyTalkLogo from '../../../assets/icons/BunnyTalkLogo.png';
 import { useNavigate } from 'react-router-dom';
 import { post } from '../../../api/api';
 import {
@@ -14,7 +12,6 @@ import {
 	Page,
 	TitleAndLogoWrap,
 	TitleWrap,
-	LogoWrap,
 	FormWrap,
 	InputTitle,
 	InputWrap,

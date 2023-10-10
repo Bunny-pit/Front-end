@@ -7,17 +7,13 @@ import {
 	InputTitle,
 	InputWrap,
 	InputBar,
-	ButtonWrap,
 	BottomButton,
 } from './UserEditStyle';
 import { onChangeInputSetter } from '../../../utils/inputStateSetter';
 import { useNavigate } from 'react-router-dom';
-import { post, patch } from '../../../api/api';
-import { API_USER_EDIT, API_USER_LOGOUT } from '../../../utils/constant';
+import { patch } from '../../../api/api';
+import { API_USER_EDIT } from '../../../utils/constant';
 import { useUser } from '../../../utils/swrFetcher';
-import { removeToken } from '../../../api/token';
-import alertList from '../../../utils/swal';
-import Swal from 'sweetalert2';
 import handleLogout from '../../../utils/logout';
 
 export default function UserEditPage() {
@@ -27,7 +23,7 @@ export default function UserEditPage() {
 	const [newPasswordCheck, setNewPassWordCheck] = useState<string>('');
 
 	const [formCheck, setFormCheck] = useState<boolean>(false);
-	const { userData, isError } = useUser();
+	const { userData } = useUser();
 	const navigate = useNavigate();
 	const formChecker = useMemo(() => {}, [formCheck]);
 

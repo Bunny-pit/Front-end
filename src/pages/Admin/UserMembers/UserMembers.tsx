@@ -1,11 +1,10 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import AdminHeader from '../../../components/AdminHeader/AdminHeader';
 import DefaultFooter from '../../../components/Footer/Footer';
-import { Link } from 'react-router-dom';
 
 import SearchBar from '../../../components/SearchBar/SearchBar';
-import { UserDataType, Post } from '../../../types/dataType';
+import { UserDataType } from '../../../types/dataType';
 
 import UserTable from './UserMembersHooks';
 

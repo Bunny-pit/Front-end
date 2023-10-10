@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
-import { checkTokenExpirationAndRefresh } from './utils/checkTokenExpirationAndRefresh';
 import MainPage from './pages/Main/Main';
 import MainHomeSecret from './pages/Mainhome/MainHomeSecret';
 import MainHomeFriends from './pages/Mainhome/MainHomeFriends';

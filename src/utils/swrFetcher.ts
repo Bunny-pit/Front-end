@@ -1,5 +1,5 @@
-import useSWR, { SWRResponse } from 'swr';
-import { api, swrApi } from '../api/axiosInstance';
+import useSWR from 'swr';
+import { api } from '../api/axiosInstance';
 import { API_USER_ACCESS_TOKEN } from './constant';
 import { UserDataType } from '../types/dataType';
 

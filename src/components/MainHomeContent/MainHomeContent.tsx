@@ -1,4 +1,3 @@
-import React from 'react';
 import MainHomeContentImage from './MainHomeContentDetail/MainHomeContentImage';
 import MainHomeContentInnerContent from './MainHomeContentDetail/MainHomeContentInnerContent';
 import { Container, ContentBox, EmptyArea } from './MainHomeContentStyle';

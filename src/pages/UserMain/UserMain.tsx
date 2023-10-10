@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
@@ -9,10 +9,9 @@ import { useUser } from '../../utils/swrFetcher';
 import { PostType } from '../../types/postType';
 import alertList from '../../utils/swal';
 import Swal from 'sweetalert2';
-import useSWR, { mutate } from 'swr';
+import { mutate } from 'swr';
 import { post } from '../../api/api';
 import UserProfile from '../../components/ProfileUpdateModal/ProfileUpdateModal';
-import Modal from 'react-modal';
 
 import {
 	Container,
@@ -24,7 +23,6 @@ import {
 	Wrapper2,
 	Wrapper3,
 	Wrapper4,
-	FriendButton,
 	EditButton,
 	ProfileUl,
 	ProfileLi,

@@ -1,6 +1,6 @@
 import sendBtn from '../../assets/icons/Sendicon.png';
 import { Container, InputBar, SendButton } from './ChatBoxStyle';
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState } from 'react';
 import { useSocket } from '../../hooks/useSocket';
 import { MessageType } from '../../types/chatType';
 

@@ -15,7 +15,7 @@ import alertList from '../../../utils/swal';
 import { del } from '../../../api/api';
 import { PostDetailType, PostType, CommentType } from '../../../types/postType';
 import Swal from 'sweetalert2';
-import useSWR, { mutate } from 'swr';
+import { mutate } from 'swr';
 import dayjs from 'dayjs';
 import {
 	Container,

@@ -1,10 +1,10 @@
 import React from 'react';
 import axios from 'axios';
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState } from 'react';
 import Swal from 'sweetalert2';
-import { get, post, patch, del, delAd } from '../../../api/api';
+import { del } from '../../../api/api';
 import alertList from '../../../utils/swal';
-import { UserDataType, Post } from '../../../types/dataType';
+import { UserDataType } from '../../../types/dataType';
 import { API_ADMIN_DELETE_USER } from '../../../utils/constant';
 import {
 	Button,

@@ -1,12 +1,10 @@
 import React, { useState, useRef, FormEvent } from 'react';
-import useSWR, { mutate } from 'swr';
 import Modal from 'react-modal';
 import arrowBack from './arrow_back_icon.svg';
 import media from './media_icon.svg';
 import axios from 'axios';
 import alertList from '../../utils/swal';
 import Swal from 'sweetalert2';
-import { useNavigate } from 'react-router-dom';
 import { onChangeInputSetter } from '../../utils/inputStateSetter';
 import {
 	customModalStyles,

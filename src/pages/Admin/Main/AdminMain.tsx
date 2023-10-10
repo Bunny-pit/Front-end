@@ -1,11 +1,6 @@
-import { Routes, Route } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
 import AdminHeader from '../../../components/AdminHeader/AdminHeader';
 import DefaultFooter from '../../../components/Footer/Footer';
 import { Link } from 'react-router-dom';
-
-import UserMembers from '../UserMembers/UserMembers';
-import ReportManagement from '../ReportManagement/ ReportManagement';
 
 import { Container, Title, Menu, H2, MenuFlex } from './AdminMainStyle';
 
