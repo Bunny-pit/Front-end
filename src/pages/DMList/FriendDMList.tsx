@@ -100,6 +100,7 @@ const FriendDMList = () => {
 							</NavLink>
 						);
 					}
+					return null;
 				})}
 			</MemberList>
 		</>

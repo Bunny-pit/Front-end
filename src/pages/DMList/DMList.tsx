@@ -105,6 +105,7 @@ const DMList = () => {
 							</NavLink>
 						);
 					}
+					return null;
 				})}
 			</MemberList>
 		</>

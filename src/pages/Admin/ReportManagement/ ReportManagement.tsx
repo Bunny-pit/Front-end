@@ -81,7 +81,7 @@ const ReportManagement: React.FC = () => {
 
 		fetchSecretData();
 		fetchFriendData();
-	}, []);
+	}, [FRIEND_DATA, SECRET_DATA]);
 
 	return (
 		<>

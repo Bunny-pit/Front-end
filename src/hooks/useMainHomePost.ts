@@ -60,17 +60,20 @@ const useMainHomePost = (pathname: string) => {
 	}
 
 	const observer = useRef<IntersectionObserver | null>(null);
-	const lastPostElementRef = useCallback((element: HTMLDivElement | null) => {
-		if (observer.current) observer.current.disconnect();
-		if (!element) return;
-		observer.current = new IntersectionObserver((entries) => {
-			if (entries[0].isIntersecting) {
-				setSize((size) => size + 1);
-			}
-		});
+	const lastPostElementRef = useCallback(
+		(element: HTMLDivElement | null) => {
+			if (observer.current) observer.current.disconnect();
+			if (!element) return;
+			observer.current = new IntersectionObserver((entries) => {
+				if (entries[0].isIntersecting) {
+					setSize((size) => size + 1);
+				}
+			});
 
-		observer.current.observe(element);
-	}, []);
+			observer.current.observe(element);
+		},
+		[setSize],
+	);
 
 	const updatePost = async (postId: string) => {
 		try {

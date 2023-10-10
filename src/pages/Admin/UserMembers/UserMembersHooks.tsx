@@ -1,11 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { useState } from 'react';
-import Swal from 'sweetalert2';
-import { del } from '../../../api/api';
-import alertList from '../../../utils/swal';
 import { UserDataType } from '../../../types/dataType';
-import { API_ADMIN_DELETE_USER } from '../../../utils/constant';
 import {
 	Button,
 	TableDiv,
@@ -42,29 +38,6 @@ const UserTable: React.FC<Props> = ({ data }) => {
 			.catch((error) => {
 				console.error('사용자 삭제를 실패하였습니다.:', error);
 			});
-	};
-
-	const deleteUser2 = async (email: string) => {
-		const result = await Swal.fire(
-			alertList.doubleCheckTitkeMsg(
-				'해당 유저를 삭제하시겠습니까?',
-				'한번 삭제한 유저는 복구할 수 없습니다.',
-			),
-		);
-		if (result.isConfirmed) {
-			try {
-				await del<UserDataType>(`${API_ADMIN_DELETE_USER}`, {
-					data: { email: email },
-					withCredentials: true,
-				});
-
-				const updatedData = usersData.filter((user) => user.email !== email);
-				setUsersData(updatedData);
-			} catch (err) {
-				Swal.fire(alertList.errorMessage('삭제를 실패하였습니다.'));
-				return;
-			}
-		}
 	};
 
 	return (

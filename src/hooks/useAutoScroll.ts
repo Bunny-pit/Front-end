@@ -16,11 +16,13 @@ export const useAutoScroll = (
 	messageListRef: MutableRefObject<HTMLDivElement | null>,
 	messageCount: number,
 ) => {
-	const scrollToBottom = () => {
-		if (messageListRef.current) {
-			messageListRef.current.scrollTop = messageListRef.current.scrollHeight;
-		}
-	};
+	useEffect(() => {
+		const scrollToBottom = () => {
+			if (messageListRef.current) {
+				messageListRef.current.scrollTop = messageListRef.current.scrollHeight;
+			}
+		};
 
-	useEffect(scrollToBottom, [messageCount]);
+		scrollToBottom();
+	}, [messageCount]);
 };

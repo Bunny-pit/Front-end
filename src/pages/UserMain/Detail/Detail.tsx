@@ -248,7 +248,7 @@ const Detail = () => {
 						<ProfileUserImage src={profileImage} alt='userImg' />
 						<ProfileId>{userName}</ProfileId>
 					</Profile>
-					{userData?.userName == userName ? (
+					{userData?.userName === userName ? (
 						<DeleteButtonWrap>
 							<DeleteButton onClick={deletePost}>
 								<DeleteButtonIcon src={DeleteIcon} alt='삭제버튼' />

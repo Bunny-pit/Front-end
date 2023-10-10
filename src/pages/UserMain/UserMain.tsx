@@ -4,7 +4,7 @@ import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import plusIcon from '../../assets/icons/UserPlus.png';
 import FollowingIcon from '../../assets/icons/FollowingIcon.png';
-import { Link, useParams, useNavigate } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useUser } from '../../utils/swrFetcher';
 import { PostType } from '../../types/postType';
 import alertList from '../../utils/swal';
@@ -52,13 +52,11 @@ const UserMain = () => {
 	const [profileImage, setProfileImage] = useState<string>('');
 	const [getEmail, setEmail] = useState<string>('');
 	const [follower, setFollower] = useState<string>('');
-	const [following, setFollowing] = useState<string>('');
 	const [isFollowed, setIsFollowed] = useState<boolean>(false);
 	const { userId } = useParams();
 	const { userData, isError } = useUser();
 	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 	const [introduction, setIntroduction] = useState<string>('');
-	const navigate = useNavigate();
 
 	const openModal = () => {
 		setIsModalOpen(true);
@@ -180,7 +178,6 @@ const UserMain = () => {
 					`${process.env.REACT_APP_API_URL}/api/user/followings?userName=${nickName}`,
 					getToken(),
 				);
-				setFollowing(response.data);
 				const hasUserName = response.data.some(
 					(user: any) => user === userName,
 				);
@@ -207,7 +204,7 @@ const UserMain = () => {
 			<Header />
 			<Container>
 				<Sec1>
-					{userData?.userName == userName ? (
+					{userData?.userName === userName ? (
 						<ImageWrap>
 							<UserImage src={profileImage} onClick={openModal}></UserImage>
 							<UserProfile

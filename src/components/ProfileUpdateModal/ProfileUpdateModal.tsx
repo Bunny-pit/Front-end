@@ -32,9 +32,6 @@ function UserProfile({
 }: // handleModalClose,
 UserProfileProps) {
 	const [imgFile, setImgFile] = useState<string | ArrayBuffer | null>('');
-	const [selectedImg, setSelectedImg] = useState<string | ArrayBuffer | null>(
-		'',
-	);
 	const [newIntroduction, setNewIntroduction] = useState<string>('');
 
 	const imgRef = useRef<HTMLInputElement>(null);
@@ -55,7 +52,6 @@ UserProfileProps) {
 			reader.readAsDataURL(file);
 			reader.onloadend = () => {
 				setImgFile(reader.result);
-				setSelectedImg(reader.result);
 			};
 		}
 	};

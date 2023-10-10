@@ -26,34 +26,15 @@ import { API_USER_LOGIN } from '../../../utils/constant';
 import alertList from '../../../utils/swal';
 import Swal from 'sweetalert2';
 
-interface LoginFormState {
-	email: string;
-	password: string;
-	isEmailValid: boolean;
-	isPasswordValid: boolean;
-	isFormValid: boolean;
-}
-
-const initialLoginFormState: LoginFormState = {
-	email: '',
-	password: '',
-	isEmailValid: true,
-	isPasswordValid: true,
-	isFormValid: true,
-};
-
 export default function LoginPage() {
 	const [email, setEmail] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
-	const [loginForm, setLoginForm] = useState<LoginFormState>(
-		initialLoginFormState,
-	);
+
 	const navigate = useNavigate();
 
 	useEffect(() => {
 		return () => {
 			// 컴포넌트가 언마운트될 때 상태 초기화
-			setLoginForm(initialLoginFormState);
 		};
 	}, []);
 

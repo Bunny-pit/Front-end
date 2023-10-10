@@ -14,7 +14,6 @@ const UserMembers: React.FC = () => {
 	const USER_DATA = `${process.env.REACT_APP_API_URL}/api/user/login`;
 	const [userData, setUserData] = useState<UserDataType[]>([]);
 	const [filteredUserData, setFilteredUserData] = useState<UserDataType[]>([]); // 필터링된 데이터의 새 상태
-	const [searchQuery, setSearchQuery] = useState<string>('');
 
 	useEffect(() => {
 		axios
@@ -28,10 +27,9 @@ const UserMembers: React.FC = () => {
 			.catch((error) => {
 				console.error('데이터를 가져오는 중 오류 발생:', error);
 			});
-	}, []);
+	}, [USER_DATA]);
 
 	const handleSearch = (query: string) => {
-		setSearchQuery(query);
 		const filteredData = userData.filter((user) =>
 			user.userName.toLowerCase().includes(query.toLowerCase()),
 		);

@@ -18,7 +18,7 @@ const Chat = () => {
 	const { nickname } = useParams();
 	const chatId = nickname;
 	const [messages, setMessages] = useState<MessageType[]>([]);
-	const { data: savedMessages, error: messageError } = useSWR<MessageType[]>(
+	const { data: savedMessages } = useSWR<MessageType[]>(
 		`${process.env.REACT_APP_API_URL}/api/chat/${chatId}/messages`,
 		fetcher,
 	);
@@ -32,7 +32,7 @@ const Chat = () => {
 	}
 	const userId = userData?._id;
 
-	const { data: dmList, error } = useSWR<DmListType[]>(
+	const { data: dmList } = useSWR<DmListType[]>(
 		`${process.env.REACT_APP_API_URL}/api/chat/${userId}`,
 		fetcher,
 	);
