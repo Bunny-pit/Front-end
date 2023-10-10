@@ -78,6 +78,72 @@ const UserMain = () => {
 		console.log('유저 데이터를 불러오는 중...');
 	}
 
+	//-----------------팔로우 기능------------------
+	const followToggle = async () => {
+		try {
+			getFollowings(userName);
+			const response = await post<ApiResponse>(
+				`${process.env.REACT_APP_API_URL}/api/user/toggleFollow`,
+				{ followeeName: userId },
+				getToken(),
+			);
+			mutate(
+				`${process.env.REACT_APP_API_URL}/api/user/followers?userName=${userName}`,
+			);
+			if (!isFollowed) {
+				await Swal.fire(alertList.successMessage('팔로우 하였습니다.'));
+				setIsFollowed(response.data.followed);
+			} else {
+				await Swal.fire(alertList.infoMessage('팔로우를 취소하였습니다.'));
+				setIsFollowed(response.data.followed);
+			}
+		} catch (error) {
+			console.error('Error updating follow:', error);
+			await Swal.fire(alertList.errorMessage('팔로우 실패하였습니다.'));
+		}
+	};
+	//--------------------팔로워 가져오기------------------
+	const getFollowers = async (userName: string) => {
+		try {
+			const response = await axios.get(
+				`${process.env.REACT_APP_API_URL}/api/user/followers?userName=${userName}`,
+			);
+			setFollower(response.data.length);
+		} catch (error) {
+			console.error('Error fetching getFollowers:', error);
+		}
+	};
+	//--------------------팔로잉 가져오기------------------
+	const getFollowings = useCallback(
+		async (nickName: string | undefined) => {
+			try {
+				if (nickName !== undefined) {
+					const response = await axios.get(
+						`${process.env.REACT_APP_API_URL}/api/user/followings?userName=${nickName}`,
+						getToken(),
+					);
+					const hasUserName = response.data.some(
+						(user: any) => user === userName,
+					);
+					setIsFollowed(hasUserName);
+				} else {
+					console.log('nickName = undefined');
+				}
+			} catch (error) {
+				console.error('Error fetching getFollowers:', error);
+			}
+		},
+		[userName],
+	);
+	const getToken = () => {
+		const token = localStorage.getItem('accessToken');
+		const config = {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		};
+		return config;
+	};
 	useEffect(() => {
 		const fetchPosts = async () => {
 			try {
@@ -134,70 +200,16 @@ const UserMain = () => {
 		} else {
 			fetchPosts();
 		}
-	}, [userId, follower, isFollowed, introduction]);
-	//-----------------팔로우 기능------------------
-	const followToggle = async () => {
-		try {
-			getFollowings(userName);
-			const response = await post<ApiResponse>(
-				`${process.env.REACT_APP_API_URL}/api/user/toggleFollow`,
-				{ followeeName: userId },
-				getToken(),
-			);
-			mutate(
-				`${process.env.REACT_APP_API_URL}/api/user/followers?userName=${userName}`,
-			);
-			if (!isFollowed) {
-				await Swal.fire(alertList.successMessage('팔로우 하였습니다.'));
-				setIsFollowed(response.data.followed);
-			} else {
-				await Swal.fire(alertList.infoMessage('팔로우를 취소하였습니다.'));
-				setIsFollowed(response.data.followed);
-			}
-		} catch (error) {
-			console.error('Error updating follow:', error);
-			await Swal.fire(alertList.errorMessage('팔로우 실패하였습니다.'));
-		}
-	};
-	//--------------------팔로워 가져오기------------------
-	const getFollowers = async (userName: string) => {
-		try {
-			const response = await axios.get(
-				`${process.env.REACT_APP_API_URL}/api/user/followers?userName=${userName}`,
-			);
-			setFollower(response.data.length);
-		} catch (error) {
-			console.error('Error fetching getFollowers:', error);
-		}
-	};
-	//--------------------팔로잉 가져오기------------------
-	const getFollowings = useCallback(async (nickName: string | undefined) => {
-		try {
-			if (nickName !== undefined) {
-				const response = await axios.get(
-					`${process.env.REACT_APP_API_URL}/api/user/followings?userName=${nickName}`,
-					getToken(),
-				);
-				const hasUserName = response.data.some(
-					(user: any) => user === userName,
-				);
-				setIsFollowed(hasUserName);
-			} else {
-				console.log('nickName = undefined');
-			}
-		} catch (error) {
-			console.error('Error fetching getFollowers:', error);
-		}
-	}, []);
-	const getToken = () => {
-		const token = localStorage.getItem('accessToken');
-		const config = {
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
-		};
-		return config;
-	};
+	}, [
+		userId,
+		follower,
+		isFollowed,
+		introduction,
+		getFollowings,
+		userData?.introduction,
+		userData?.profileImg,
+		userData?.userName,
+	]);
 
 	return (
 		<>
