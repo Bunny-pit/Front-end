@@ -21,14 +21,19 @@ jobs:
       - name: Check Ubuntu version
         run: lsb_release -a
 
+      # 추가: 환경 변수 파일 생성
+      - name: Create env file
+        run: |
+          touch .env
+          echo REACT_APP_API_URL=${{ secrets.REACT_APP_API_URL }} >> .env
+          cat .env
+
       # 3단계: 프로젝트 의존성을 설치
       - name: Install dependencies
         run: npm install
 
       # 4단계: 프로젝트를 빌드
       - name: Build
-        env:
-          REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
         run: npm run build
 
       # 5단계: AWS CLI 버전 표시(선택)
