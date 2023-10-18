@@ -11,22 +11,6 @@ export const swrApi = axios.create({
 	withCredentials: true,
 });
 
-// swrApi.interceptors.request.use(
-//     (config) => {
-//         //요청을 보내기 전에 수행할 로직
-//         const token = getToken();
-//         if (token) {
-//             console.log('swr 인터셉터 token 확인', token)
-//         }
-//         return config;
-//     },
-//     (error) => {
-//         //요청 에러 발생 시 수행할 로직
-//         console.log('error', error); //디버깅 로직 예정
-//         return Promise.reject(error);
-//     },
-// );
-
 swrApi.interceptors.response.use(
 	(response) => {
 		//응답에 대한 로직
@@ -43,9 +27,9 @@ swrApi.interceptors.response.use(
 //axios 인스턴스 생성시 config 설정
 export const api = axios.create({
 	baseURL: process.env.REACT_APP_API_URL,
-	// headers: {
-	// 	Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-	// },
+	headers: {
+		Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+	},
 	withCredentials: true,
 });
 

@@ -32,8 +32,18 @@ export default function RegisterPage() {
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+
 		if (userName === '' || email === '' || password === '') {
 			await Swal.fire(alertList.errorMessage(`회원가입 양식을 준수해주세요!`));
+			return;
+		}
+
+		if (!passwordValidation(password)) {
+			await Swal.fire(
+				alertList.errorMessage(
+					`비밀번호는 대소문자, 숫자, 특수문자를 포함한 8자 이상이어야 합니다!`,
+				),
+			);
 			return;
 		}
 
