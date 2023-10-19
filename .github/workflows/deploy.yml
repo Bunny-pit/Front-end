@@ -52,7 +52,3 @@ jobs:
             --region ap-northeast-2 \
             build s3://bunnypit\
             --delete
-
-      # 7단계: CloudFront 캐시 무효화.
-      - name: Invalidate CloudFront Cache
-        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_CLOUDFRONT_ID }} --paths "/*"
