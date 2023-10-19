@@ -26,7 +26,6 @@ jobs:
         run: |
           touch .env
           echo REACT_APP_API_URL=${{ secrets.REACT_APP_API_URL }} >> .env
-          cat .env
 
       # 3단계: 프로젝트 의존성을 설치
       - name: Install dependencies
@@ -53,3 +52,11 @@ jobs:
             --region ap-northeast-2 \
             build s3://bunnypit\
             --delete
+
+      # 7단계: CloudFront 캐시 무효화.
+      - name: CloudFront Invalidation
+        env:
+          CLOUD_FRONT_ID: ${{ secrets.AWS_CLOUDFRONT_ID }}
+        run: |
+          aws cloudfront create-invalidation \
+          --distribution-id $CLOUD_FRONT_ID --paths /*
