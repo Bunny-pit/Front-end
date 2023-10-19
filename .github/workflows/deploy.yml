@@ -9,8 +9,8 @@ on:
 # 작업 정의
 jobs:
   build:
-    # 이 작업은 우분투 18.04버전에서 실행
-    runs-on: ubuntu-18.04
+    # 이 작업은 우분투 최신 버전에서 실행
+    runs-on: ubuntu-latest
 
     steps:
       # 1단계: 레포지토리 코드 체크아웃
