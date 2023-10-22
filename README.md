@@ -366,7 +366,7 @@ npm run start
     <tr>
         <th>이름</th>
         <td width="100" align="center">오창현</td>
-        <td width="100" align="center">김종욱</td>
+        <td width="100" align="center">이종욱</td>
         <td width="100" align="center">김종현</td>
         <td width="100" align="center">류이서</td>
         <td width="100" align="center">이준미</td>
