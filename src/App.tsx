@@ -55,8 +55,6 @@ function App() {
 				)}
 				{/* 로그인 유무에 상관없이 접근 가능 */}
 				<Route path='/' element={<MainPage />} />
-				<Route path='/mainhome/secret' element={<MainHomeSecret />} />
-
 				<Route path='/adminMain' element={<AdminMain />} />
 				<Route path='/reportManagement' element={<ReportManagement />} />
 				<Route path='/userMembers' element={<UserMembers />} />

@@ -12,6 +12,7 @@ export const Container = styled.div`
 	@media only screen and (min-width: 0px) and (max-width: 390px) {
 		width: 100%;
 	}
+	height: 150rem;
 `;
 export const Sec1 = styled.div`
 	display: flex;

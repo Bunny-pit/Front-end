@@ -1,4 +1,4 @@
-import React, { useState, useRef, FormEvent } from 'react';
+import React, { useState, useRef, useEffect, FormEvent } from 'react';
 import Modal from 'react-modal';
 import arrowBack from './arrow_back_icon.svg';
 import media from './media_icon.svg';
@@ -43,6 +43,10 @@ UserProfileProps) {
 			closeModal();
 		}
 	};
+
+	useEffect(() => {
+		Modal.setAppElement('#root');
+	}, []);
 
 	const saveImgFile = () => {
 		const fileInput = imgRef.current;
