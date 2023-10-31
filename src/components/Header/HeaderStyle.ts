@@ -1,4 +1,8 @@
 import styled from 'styled-components';
+import unknown from '../../assets/icons/icons8-secret.png';
+import unknownChatting from '../../assets/icons/icons8-secretchat.png';
+import friends from '../../assets/icons/icons8-friend.png';
+import friendsChatting from '../../assets/icons/icons8-friendchat.png';
 
 export const HedearStyle = styled.div`
 	border-bottom: 0.1rem solid ${({ theme }) => theme.colors.logocolor};
@@ -70,6 +74,39 @@ export const MenuLi = styled.li`
 		padding: 1rem 1.5rem;
 	}
 `;
+
+export const AnonymousIcon = styled.div`
+	width: 24px;
+	height: 24px;
+	background-image: url(${unknown});
+	background-size: cover;
+	cursor: pointer;
+`;
+
+export const ChattingIcon = styled.div`
+	width: 24px;
+	height: 24px;
+	background-image: url(${unknownChatting});
+	background-size: cover;
+	cursor: pointer;
+`;
+
+export const FriendsIcon = styled.div`
+	width: 24px;
+	height: 24px;
+	background-image: url(${friends});
+	background-size: cover;
+	cursor: pointer;
+`;
+
+export const FriendChattingIcon = styled.div`
+	width: 24px;
+	height: 24px;
+	background-image: url(${friendsChatting});
+	background-size: cover;
+	cursor: pointer;
+`;
+
 export const Option = styled.img`
 	width: 3.4rem;
 	height: 3.4rem;

@@ -6,6 +6,10 @@ import {
 	MenuLi,
 	Option,
 	SearchImage,
+	AnonymousIcon,
+	FriendsIcon,
+	ChattingIcon,
+	FriendChattingIcon,
 } from './HeaderStyle';
 import { Link } from 'react-router-dom';
 import HeaderLogo from '../../assets/icons/HedearLogo.png';
@@ -14,10 +18,6 @@ import { useNavigate } from 'react-router-dom';
 import searchicon from '../../assets/icons/search.png';
 import SearchModal from '../../pages/SearchModal/SearchModal';
 import { useState, useEffect } from 'react';
-import unknown from '../../assets/icons/icons8-secret.png';
-import unknownChatting from '../../assets/icons/icons8-secretchat.png';
-import friends from '../../assets/icons/icons8-friend.png';
-import friendsChatting from '../../assets/icons/icons8-friendchat.png';
 
 const DefaultHeader = () => {
 	const navigate = useNavigate();
@@ -70,45 +70,17 @@ const DefaultHeader = () => {
 					</MenuUl>
 				) : (
 					<MenuUl>
-						<MenuLi>
-							<img
-								src={unknown}
-								onClick={() => {
-									navigate('/mainhome/secret');
-								}}
-								alt={'익명의 한마디'}
-							/>
-							{/* <Link to='/mainhome/unknown'></Link> */}
+						<MenuLi onClick={() => navigate('/mainhome/secret')}>
+							<AnonymousIcon />
 						</MenuLi>
-						<MenuLi>
-							<img
-								src={unknownChatting}
-								onClick={() => {
-									navigate('/chatting/*');
-								}}
-								alt={'익명채팅'}
-							/>
-							{/* <Link to='/chatting/*'></Link> */}
+						<MenuLi onClick={() => navigate('/chatting/*')}>
+							<ChattingIcon />
 						</MenuLi>
-						<MenuLi>
-							<img
-								src={friends}
-								onClick={() => {
-									navigate('/mainhome/friends');
-								}}
-								alt={'친구의 한마디'}
-							/>
-							{/* <Link to='/mainhome/friends'></Link> */}
+						<MenuLi onClick={() => navigate('/mainhome/friends')}>
+							<FriendsIcon />
 						</MenuLi>
-						<MenuLi>
-							<img
-								src={friendsChatting}
-								onClick={() => {
-									navigate('/friendchatting/*');
-								}}
-								alt={'친구 채팅'}
-							/>
-							{/* <Link to='/friendchatting/*'></Link> */}
+						<MenuLi onClick={() => navigate('/friendchatting/*')}>
+							<FriendChattingIcon />
 						</MenuLi>
 					</MenuUl>
 				)}
@@ -118,7 +90,7 @@ const DefaultHeader = () => {
 						alt='search'
 						onClick={openSearchModal}
 					/>
-					{/* 아래 navigate 현재 정보수정 및 탈퇴 페이지(마이 페이지 하위 기능)로 넘어감. */}
+
 					<Option
 						onClick={() => {
 							navigate('/user/edit');
