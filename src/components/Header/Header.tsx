@@ -14,10 +14,10 @@ import { useNavigate } from 'react-router-dom';
 import searchicon from '../../assets/icons/search.png';
 import SearchModal from '../../pages/SearchModal/SearchModal';
 import { useState, useEffect } from 'react';
-import unknown from '../../assets/icons/Unknown.png';
-import unknownChatting from '../../assets/icons/unknown-chatting.png';
-import friends from '../../assets/icons/friends.png';
-import friendsChatting from '../../assets/icons/friend-chatting.png';
+import unknown from '../../assets/icons/icons8-secret-96.png';
+import unknownChatting from '../../assets/icons/icons8-잡담-96.png';
+import friends from '../../assets/icons/icons8-friend-96.png';
+import friendsChatting from '../../assets/icons/icons8-어떤-채팅-없습니다-96.png';
 
 const DefaultHeader = () => {
 	const navigate = useNavigate();

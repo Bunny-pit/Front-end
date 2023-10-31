@@ -52,7 +52,8 @@ export const ModalTitle = styled.div`
 	margin-bottom: 20px;
 	flex-grow: 1;
 	text-align: center;
-	font-size: 2.5rem;
+	font-size: 3rem;
+	font-weight: bold;
 `;
 
 export const ModalMain = styled.div`
@@ -85,21 +86,26 @@ export const ModalUploadImg = styled.img`
 `;
 
 export const ModalPostButton = styled.button`
-	width: 10rem;
-	height: 5rem;
+	display: flex;
+	margin: 0 auto;
+	justify-content: center;
+	align-items: center;
+	width: 20rem;
+	height: 6rem;
 	background: ${({ theme }) => theme.colors.commentpurple};
 	border: none;
 	border-radius: 1rem;
 	color: ${({ theme }) => theme.colors.background};
 	font-size: 2rem;
+	font-weight: bold;
 	font-weigth: 600;
-	pointer: cursor;
-	margin-top: 3rem;
+	cursor: pointer;
+	margin-top: 10rem;
 `;
 
 export const InputTitle = styled.div`
 	font-size: 2rem;
-	font-weight: 500;
+	font-weight: 600;
 	margin-bottom: 3rem;
 `;
 export const InputWrap = styled.div`
@@ -120,5 +126,4 @@ export const InputBar = styled.input`
 	border: none;
 	outline: none;
 	height: 2rem;
-	text-align: center;
 `;

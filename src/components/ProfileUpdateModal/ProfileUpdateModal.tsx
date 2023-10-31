@@ -138,19 +138,19 @@ UserProfileProps) {
 						ref={imgRef}
 						onChange={saveImgFile}
 					/>
-					<InputTitle>한 줄 소개</InputTitle>
+					<InputTitle>간단한 자기소개를 추가해주세요!</InputTitle>
 					<InputWrap>
 						<InputBar
 							type='text'
-							placeholder='안녕하세요. 버니핏입니다.'
+							placeholder='ex)안녕하세요. 버니핏입니다.'
 							value={newIntroduction}
 							onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
 								onChangeInputSetter(setNewIntroduction)(e)
 							}
 						/>
 					</InputWrap>
-					<ModalPostButton onClick={handleSelect}>수정완료</ModalPostButton>
 				</ModalMain>
+				<ModalPostButton onClick={handleSelect}>수정완료</ModalPostButton>
 			</Box>
 		</Modal>
 	);
