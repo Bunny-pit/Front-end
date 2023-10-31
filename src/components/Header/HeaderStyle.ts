@@ -30,7 +30,7 @@ export const HeaderWrapper = styled.div`
 				margin: 0 2rem;
 
 				img {
-					width: 3rem;
+					width: 24px;
 				}
 			}
 		}
