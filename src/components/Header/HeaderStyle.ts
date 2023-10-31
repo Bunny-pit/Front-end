@@ -31,6 +31,7 @@ export const HeaderWrapper = styled.div`
 
 				img {
 					width: 24px;
+					cursor: pointer;
 				}
 			}
 		}

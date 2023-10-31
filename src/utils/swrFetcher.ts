@@ -5,7 +5,6 @@ import { UserDataType } from '../types/dataType';
 
 export const fetcher = (url: string) =>
 	api.get(url).then((res) => {
-		console.log(res);
 		return res.data;
 	});
 

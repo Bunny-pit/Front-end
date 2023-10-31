@@ -5,6 +5,8 @@ import media from './media_icon.svg';
 import axios from 'axios';
 import alertList from '../../utils/swal';
 import Swal from 'sweetalert2';
+import { mutate } from 'swr';
+import { API_USER_ACCESS_TOKEN } from '../../utils/constant';
 import { onChangeInputSetter } from '../../utils/inputStateSetter';
 import {
 	customModalStyles,
@@ -95,6 +97,9 @@ UserProfileProps) {
 					},
 				},
 			);
+			const fetchingURL = `${process.env.REACT_APP_API_URL}${API_USER_ACCESS_TOKEN}`;
+			mutate(fetchingURL);
+
 			await Swal.fire(alertList.successMessage(`정보 변경 성공!`));
 		} catch (error) {
 			console.error('Error updating profile:', error);
