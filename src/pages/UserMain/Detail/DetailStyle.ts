@@ -30,6 +30,7 @@ export const Profile = styled.div`
 	align-items: center;
 	margin-left: 1rem;
 `;
+
 export const ProfileUserImage = styled.img`
 	width: 10rem;
 	height: 10rem;

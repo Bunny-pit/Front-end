@@ -74,14 +74,11 @@ const Detail = () => {
 	}
 	useEffect(() => {
 		const token = localStorage.getItem('accessToken');
-		// 헤더에 토큰을 추가하는 config 객체를 만듭니다.
 		const config = {
 			headers: {
 				Authorization: `Bearer ${token}`,
 			},
 		};
-		// MongoDB에서 데이터 가져오는 함수
-		//게시글 가져옴
 		const fetchPosts = async () => {
 			try {
 				const response = await axios.get(
@@ -101,14 +98,11 @@ const Detail = () => {
 					setIsLiked(false);
 					setUserName(response.data.post.userName);
 				}
-				// console.log(response.data.post);
 			} catch (error) {
 				console.error('Error fetching posts:', error);
 			}
 		};
-		//댓글 가져옴
 		const fetchComments = async () => {
-			// 댓글을 가져오는 함수
 			try {
 				const response = await axios.get(
 					`${process.env.REACT_APP_API_URL}/api/comment/${postId}`,
