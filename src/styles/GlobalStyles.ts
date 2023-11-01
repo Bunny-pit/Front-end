@@ -3,7 +3,7 @@ import { createGlobalStyle } from "styled-components";
 const GlobalStyles = createGlobalStyle`
 
   * {
-    font-family: 'SUITE-Regular', AppleSDGothicNeo, sans-serif;
+    font-family: 'Pretendard-Regular'
   }
 
   html {
