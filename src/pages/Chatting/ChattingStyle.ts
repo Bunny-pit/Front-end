@@ -5,13 +5,13 @@ export const WorkSpaceWrapper = styled.div`
 	flex: 1;
 `;
 
-export const Channels = styled.nav<{ isRoot: boolean }>`
+export const Channels = styled.nav<{ $isRoot: boolean }>`
 	max-width: 44rem;
 	display: inline-flex;
 	flex-direction: column;
 	background: rgba(252, 155, 249, 0.29);
 	color: ${({ theme }) => theme.colors.text};
-	min-height: ${({ isRoot }) => (isRoot ? '200rem' : 'auto')};
+	min-height: ${({ $isRoot }) => ($isRoot ? '200rem' : 'auto')};
 	max-height: 200rem;
 	overflow-y: auto;
 	vertical-align: top;
@@ -32,13 +32,13 @@ export const Channels = styled.nav<{ isRoot: boolean }>`
 	}
 `;
 
-export const FriendChannels = styled.nav<{ isRoot: boolean }>`
+export const FriendChannels = styled.nav<{ $isRoot: boolean }>`
 	max-width: 44rem;
 	display: inline-flex;
 	flex-direction: column;
 	background: ${({ theme }) => theme.colors.gray200};
 	color: ${({ theme }) => theme.colors.text};
-	min-height: ${({ isRoot }) => (isRoot ? '200rem' : 'auto')};
+	min-height: ${({ $isRoot }) => ($isRoot ? '200rem' : 'auto')};
 	vertical-align: top;
 	& a {
 		padding-left: 36px;
@@ -53,6 +53,7 @@ export const FriendChannels = styled.nav<{ isRoot: boolean }>`
 		max-width: 33rem;
 	}
 `;
+
 export const WorkspaceName = styled.button`
 	height: 64px;
 	line-height: 64px;

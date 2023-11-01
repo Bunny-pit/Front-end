@@ -27,8 +27,6 @@ const FriendChat = () => {
 
 	if (isError) {
 		console.log('유저 데이터를 불러오는데 실패했습니다.');
-	} else if (!userData) {
-		console.log('유저 데이터를 불러오는 중...');
 	}
 	const userId = userData?._id;
 

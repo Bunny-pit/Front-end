@@ -230,8 +230,8 @@ const useMainHomePost = (pathname: string) => {
 
 	const moveToChatPage = async (_id: string, userId: string, name: string) => {
 		const CHAT_NAVIGATE_PATH = pathname.includes('secret')
-			? '/chatting'
-			: '/friendchatting';
+			? '/chatting/*'
+			: '/friendchatting/*';
 
 		const API_CHTTING_ENDPOINT = pathname.includes('secret')
 			? API_CHATTING_START

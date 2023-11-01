@@ -5,20 +5,28 @@ interface MessageBubbleProps {
 	currentUser: boolean;
 }
 
-const Bubble = styled.div<{ width: string; currentUser: boolean }>`
+interface BubbleProps {
+	$width: number;
+	$currentUser: boolean;
+}
+
+const Bubble = styled.div<BubbleProps>`
 	margin: 10px;
 	padding: 10px;
-	background-color: ${(props) => (props.currentUser ? '#cdc0fc' : '#ffff')};
+	background-color: ${({ $currentUser }) =>
+		$currentUser ? '#cdc0fc' : '#fff'};
 	border-radius: 19.34px;
-	border: ${(props) => (props.currentUser ? 'none' : '1px solid #cdc0fc')};
+	border: ${({ $currentUser }) =>
+		$currentUser ? 'none' : '1px solid #cdc0fc'};
 	display: inline-flex;
-	width: ${(props) => props.width}rem;
+	width: ${({ $width }) => `${$width}rem`};
 	max-width: 40%;
 	white-space: pre-wrap;
 	word-break: break-all;
 	font-size: 2rem;
 	justify-content: center;
-	align-self: ${(props) => (props.currentUser ? 'flex-end' : 'flex-start')};
+	align-self: ${({ $currentUser }) =>
+		$currentUser ? 'flex-end' : 'flex-start'};
 `;
 
 const MessageBubble: React.FC<MessageBubbleProps> = ({
@@ -27,7 +35,7 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({
 }) => {
 	const adjustedWidth = message.length * 1.8;
 	return (
-		<Bubble width={adjustedWidth.toString()} currentUser={currentUser}>
+		<Bubble $width={adjustedWidth} $currentUser={currentUser}>
 			{message}
 		</Bubble>
 	);

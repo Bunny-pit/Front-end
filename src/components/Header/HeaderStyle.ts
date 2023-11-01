@@ -21,7 +21,7 @@ export const HeaderWrapper = styled.div`
 		display: flex;
 		justify-content: space-between;
 	}
-	@media (min-width: 0px) and (max-width: 393px) {
+	@media (min-width: 0px) and (max-width: 391px) {
 		margin: 0;
 		width: 100%;
 		justify-content: space-evenly;
@@ -40,7 +40,7 @@ export const HeaderWrapper = styled.div`
 			}
 		}
 	}
-	@media (min-width: 392px) and (max-width: 768px) {
+	@media (min-width: 391px) and (max-width: 768px) {
 		margin: 0 1rem;
 		padding: 0;
 
@@ -55,6 +55,7 @@ export const HeaderWrapper = styled.div`
 		}
 	}
 `;
+
 export const Logo = styled.img`
 	width: 6.3rem;
 `;

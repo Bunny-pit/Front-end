@@ -54,7 +54,7 @@ const UserMain = () => {
 	const [follower, setFollower] = useState<string>('');
 	const [isFollowed, setIsFollowed] = useState<boolean>(false);
 	const { userId } = useParams();
-	const { userData, isError } = useUser();
+	const { userData } = useUser();
 	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 	const [introduction, setIntroduction] = useState<string>('');
 
@@ -71,12 +71,6 @@ const UserMain = () => {
 			closeModal();
 		}
 	};
-
-	if (isError) {
-		console.log('유저 데이터를 불러오는데 실패했습니다.');
-	} else if (!userData) {
-		console.log('유저 데이터를 불러오는 중...');
-	}
 
 	//-----------------팔로우 기능------------------
 	const followToggle = async () => {
@@ -126,8 +120,6 @@ const UserMain = () => {
 						(user: any) => user === userName,
 					);
 					setIsFollowed(hasUserName);
-				} else {
-					console.log('nickName = undefined');
 				}
 			} catch (error) {
 				console.error('Error fetching getFollowers:', error);
