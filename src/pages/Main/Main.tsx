@@ -1,6 +1,5 @@
 import MainLogo from '../../assets/icons/MainLogo.png';
 import { Link } from 'react-router-dom';
-import mainhomeImage from '../../assets/images/mainhome.png';
 import chattingImage from '../../assets/images/chatting.png';
 import friend from '../../assets/images/friend.webp';
 import messagebubble from '../../assets/images/messagebubble.webp';
@@ -84,8 +83,9 @@ const MainPage = () => {
 							<BigText1>친구들과 함께 만드는,</BigText1>
 							<BigText2>우리의 공간</BigText2>
 							<MidText>
-								자유롭게 사진을 올리고, 공유할 수 있는<br />
-								우리만의 공간을 {' '} 버니톡과 함께 만들어가요
+								자유롭게 사진을 올리고, 공유할 수 있는
+								<br />
+								우리만의 공간을 버니톡과 함께 만들어가요
 							</MidText>
 						</TextContainer>
 						<ImgContainer>
@@ -100,17 +100,20 @@ const MainPage = () => {
 					<RightContent>
 						<MidContent>실시간 멘션 기능</MidContent>
 						<MidSecContent>
-							익명의 사용자와 친구들의 생각을 실시간으로 확인하고<br />
+							익명의 사용자와 친구들의 생각을 실시간으로 확인하고
+							<br />
 							공유하는 실시간 멘션기능을 이용해보세요!
 						</MidSecContent>
 						<MidSecContentMo>
-							익명의 사용자와 친구들의 생각을<br />
-							실시간으로 확인하고 공유하는<br />
+							익명의 사용자와 친구들의 생각을
+							<br />
+							실시간으로 확인하고 공유하는
+							<br />
 							실시간 멘션기능을 이용해보세요!
 						</MidSecContentMo>
 					</RightContent>
 				</SecondSection>
-				
+
 				<ThirdSection>
 					<ThirdContentWrap>
 						<LeftContent>
@@ -145,8 +148,10 @@ const MainPage = () => {
 							링크 하나로 이어지는 우리들의 마음
 						</MidSecContent>
 						<MidSecContentMo>
-							내 공간으로<br />
-							초대하고 싶은 친구 소환하기<br />
+							내 공간으로
+							<br />
+							초대하고 싶은 친구 소환하기
+							<br />
 							링크 하나로 이어지는 우리들의 마음
 						</MidSecContentMo>
 					</LastContent>
