@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import BunnyTalkTitle from '../../../assets/icons/BunnyTalkTitle.png';
 import BunnyTalkLogo from '../../../assets/icons/BunnyTalkLogo.png';
 import { useNavigate } from 'react-router-dom';
@@ -31,12 +31,6 @@ export default function LoginPage() {
 	const [password, setPassword] = useState<string>('');
 
 	const navigate = useNavigate();
-
-	useEffect(() => {
-		return () => {
-			// 컴포넌트가 언마운트될 때 상태 초기화
-		};
-	}, []);
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
