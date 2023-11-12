@@ -52,14 +52,14 @@ const MainHomeSendBox = () => {
 
 	return (
 		<TextBox>
-			<TextWrapper>
+			<TextWrapper onSubmit={handleSubmit}>
 				<TextInput
 					placeholder={placeholderText}
 					value={newPostContent}
 					onChange={handleInputChange}
 					onKeyUp={handleKeyUp}
 				/>
-				<SendButton type='submit' onSubmit={handleSubmit}>
+				<SendButton type='submit'>
 					<SendIcon src={sendIcon} alt='Send Icon' />
 				</SendButton>
 			</TextWrapper>

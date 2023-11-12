@@ -28,11 +28,7 @@ type UserProfileProps = {
 	closeModal: () => void;
 	handleModalClose: () => void;
 };
-function UserProfile({
-	isModalOpen,
-	closeModal,
-}: // handleModalClose,
-UserProfileProps) {
+function UserProfile({ isModalOpen, closeModal }: UserProfileProps) {
 	const [imgFile, setImgFile] = useState<string | ArrayBuffer | null>('');
 	const [newIntroduction, setNewIntroduction] = useState<string>('');
 
