@@ -16,7 +16,7 @@ import { useState, useEffect } from 'react';
 import FriendChat from '../../components/Chat/FriendChat';
 import { useLocation } from 'react-router-dom';
 import FriendDMList from '../DMList/FriendDMList';
-import exiticon from '../../assets/icons/CommentDeleteIcon.png';
+import exiticon from '../../assets/icons/CommentDeleteIcon_11zon.webp';
 
 const FriendChatting = () => {
 	const location = useLocation();

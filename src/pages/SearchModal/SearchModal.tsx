@@ -10,7 +10,7 @@ import {
 	NoResultText,
 	ResultContainer,
 } from '../SearchModal/SearchModalStyle';
-import exitmodal from '../../assets/icons/CommentDeleteIcon.png';
+import exitmodal from '../../assets/icons/CommentDeleteIcon_11zon.webp';
 import { get } from '../../api/api';
 import { Link } from 'react-router-dom';
 interface SearchModalProps {

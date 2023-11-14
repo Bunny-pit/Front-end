@@ -16,7 +16,7 @@ import { Routes, Route } from 'react-router-dom';
 import Chat from '../../components/Chat/Chat';
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import exiticon from '../../assets/icons/CommentDeleteIcon.png';
+import exiticon from '../../assets/icons/CommentDeleteIcon_11zon.webp';
 
 const Chatting = () => {
 	const location = useLocation();

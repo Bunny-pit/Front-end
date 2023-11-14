@@ -10,7 +10,7 @@ import { NavLink } from 'react-router-dom';
 import { useUser, fetcher } from '../../utils/swrFetcher';
 import { del } from '../../api/api';
 import { DmListType } from '../../types/chatType';
-import deleteicon from '../../assets/icons/DeleteIcon.png';
+import deleteicon from '../../assets/icons/DeleteIcon_11zon.webp';
 import alertList from '../../utils/swal';
 import Swal from 'sweetalert2';
 import useSWR, { mutate } from 'swr';

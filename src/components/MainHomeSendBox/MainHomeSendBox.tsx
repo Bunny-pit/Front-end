@@ -8,7 +8,7 @@ import {
 	SendButton,
 	SendIcon,
 } from './MainHomeSendBoxStyle';
-import sendIcon from '../../assets/icons/Sendicon.png';
+import sendIcon from '../../assets/icons/Sendicon_11zon.webp';
 
 const MainHomeSendBox = () => {
 	const [placeholderText, setPlaceholderText] = useState<string>('');

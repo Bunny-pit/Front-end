@@ -1,4 +1,4 @@
-import sendBtn from '../../assets/icons/Sendicon.png';
+import sendBtn from '../../assets/icons/Sendicon_11zon.webp';
 import { Container, InputBar, SendButton } from './ChatBoxStyle';
 import { useEffect, useState } from 'react';
 import { useSocket } from '../../hooks/useSocket';

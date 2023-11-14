@@ -12,10 +12,10 @@ import {
 	FriendChattingIcon,
 } from './HeaderStyle';
 import { Link } from 'react-router-dom';
-import HeaderLogo from '../../assets/icons/HedearLogo.png';
-import HeaderOption from '../../assets/icons/HedearOption.png';
+import HeaderLogo from '../../assets/icons/HedearLogo_11zon.webp';
+import HeaderOption from '../../assets/icons/HedearOption_11zon.webp';
 import { useNavigate } from 'react-router-dom';
-import searchicon from '../../assets/icons/search.png';
+import searchicon from '../../assets/icons/search_11zon.webp';
 import SearchModal from '../../pages/SearchModal/SearchModal';
 import { useState, useEffect } from 'react';
 

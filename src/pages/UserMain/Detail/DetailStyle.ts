@@ -2,12 +2,11 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
 	width: 50%;
-	height: 150rem;
 	margin: 0 auto;
 	box-sizing: border-box;
 
 	@media only screen and (min-width: 769px) and (max-width: 1980px) {
-		width: 50%;
+		width: 35%;
 	}
 	@media only screen and (min-width: 391px) and (max-width: 768px) {
 		width: 60%;
@@ -28,7 +27,6 @@ export const ProfileWrap = styled.div`
 export const Profile = styled.div`
 	display: flex;
 	align-items: center;
-	margin-left: 1rem;
 `;
 
 export const ProfileUserImage = styled.img`
@@ -172,6 +170,7 @@ export const CommentInput = styled.input`
 	padding: 0;
 	margin: 2rem 0 6rem;
 	padding: 1rem;
-	border: 1px solid ${({ theme }) => theme.colors.gray400};
-	border-radius: 0.5rem;
+	font-weight: bold;
+	border: 2px solid ${({ theme }) => theme.colors.gray400};
+	border-radius: 10px;
 `;

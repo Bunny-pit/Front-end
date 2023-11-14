@@ -2,7 +2,7 @@
 <br />
 
 <div align="center">
-<img width=1000" src="./src/assets/images/intro.png"/>
+<img width=1000" src="./src/assets/images/intro_2_11zon.webp"/>
 <br />
 <br />
 </div>

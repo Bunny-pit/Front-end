@@ -1,5 +1,5 @@
 import { HedearStyle, BackButton, Title, BackImage } from './DetailHeaderStyle';
-import Back from '../../../assets/icons/Back.png';
+import Back from '../../../assets/icons/Back_11zon.webp';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const DefaultHeader = () => {

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import BunnyTalkTitle from '../../../assets/icons/BunnyTalkTitle.png';
-import BunnyTalkLogo from '../../../assets/icons/BunnyTalkLogo.png';
+import BunnyTalkTitle from '../../../assets/icons/BunnyTalkTitle_11zon.webp';
+import BunnyTalkLogo from '../../../assets/icons/BunnyTalkLogo_11zon.webp';
 import { useNavigate } from 'react-router-dom';
 import {
 	emailValidation,

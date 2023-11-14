@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import unknown from '../../assets/icons/icons8-secret.png';
-import unknownChatting from '../../assets/icons/icons8-secretchat.png';
-import friends from '../../assets/icons/icons8-friend.png';
-import friendsChatting from '../../assets/icons/icons8-friendchat.png';
+import unknown from '../../assets/icons/icons8-secret_11zon.webp';
+import unknownChatting from '../../assets/icons/icons8-secretchat_11zon.webp';
+import friends from '../../assets/icons/icons8-friend_11zon.webp';
+import friendsChatting from '../../assets/icons/icons8-friendchat_11zon.webp';
 
 export const HedearStyle = styled.div`
 	border-bottom: 0.1rem solid ${({ theme }) => theme.colors.logocolor};

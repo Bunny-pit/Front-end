@@ -93,7 +93,7 @@ const UserMain = () => {
 			<Container>
 				<UploadWrap>
 					<StyledForm onSubmit={handleSubmit}>
-						{!fileSelected && ( // fileSelected가 false일 때만 StyledFileInputLabel 및 StyledFileInput 렌더링
+						{!fileSelected && (
 							<StyledFileInputLabel htmlFor='fileUpload'>
 								<StyledFileInput
 									id='fileUpload'

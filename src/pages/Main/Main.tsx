@@ -1,6 +1,6 @@
 import MainLogo from '../../assets/icons/MainLogo.png';
 import { Link } from 'react-router-dom';
-import chattingImage from '../../assets/images/chatting.png';
+import chattingImage from '../../assets/images/chatting_1_11zon.webp';
 import friend from '../../assets/images/friend.webp';
 import messagebubble from '../../assets/images/messagebubble.webp';
 import link from '../../assets/images/link.webp';
@@ -137,7 +137,6 @@ const MainPage = () => {
 				</ThirdSection>
 				<FourthSection>
 					<LeftSection>
-						{' '}
 						<MidImage src={link} alt='link-image' />
 					</LeftSection>
 					<LastContent>

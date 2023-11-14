@@ -2,8 +2,8 @@ import { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
-import plusIcon from '../../assets/icons/UserPlus.png';
-import FollowingIcon from '../../assets/icons/FollowingIcon.png';
+import plusIcon from '../../assets/icons/UserPlus_11zon.webp';
+import FollowingIcon from '../../assets/icons/FollowingIcon_11zon.webp';
 import { Link, useParams } from 'react-router-dom';
 import { useUser } from '../../utils/swrFetcher';
 import { PostType } from '../../types/postType';
@@ -210,7 +210,10 @@ const UserMain = () => {
 				<Sec1>
 					{userData?.userName === userName ? (
 						<ImageWrap>
-							<UserImage src={profileImage} onClick={openModal}></UserImage>
+							<UserImage
+								src={profileImage}
+								onClick={openModal}
+								alt='userProfileImage'></UserImage>
 							<UserProfile
 								isModalOpen={isModalOpen}
 								closeModal={closeModal}
