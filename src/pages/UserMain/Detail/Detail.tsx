@@ -6,7 +6,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import Slider from 'react-slick';
 import DetailHeader from '../../../components/Header/DetailHeader/DetailHeader';
 import Footer from '../../../components/Footer/Footer';
-import DeleteIcon from '../../../assets/icons/DeleteIcon_11zon.webp';
+import DeleteIcon from '../../../assets/icons/DeleteIcon.png';
 import likeIcon from '../../../assets/icons/like_11zon.webp';
 import likedIcon from '../../../assets/icons/liked_11zon.webp';
 import CommentDeleteIcon from '../../../assets/icons/CommentDeleteIcon_11zon.webp';

@@ -6,7 +6,7 @@ import {
 	SearchBarBtn,
 } from './SearchBarStyle';
 import React, { useState } from 'react';
-import searchLogo from '../../assets/icons/search_11zon.webp';
+import searchLogo from '../../assets/icons/search.png';
 
 interface SearchBarProps {
 	onSearch: (query: string) => void;
