@@ -4,7 +4,7 @@ import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import plusIcon from '../../assets/icons/UserPlus_11zon.webp';
 import FollowingIcon from '../../assets/icons/FollowingIcon_11zon.webp';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useLocation } from 'react-router-dom';
 import { useUser } from '../../utils/swrFetcher';
 import { PostType } from '../../types/postType';
 import alertList from '../../utils/swal';
@@ -57,6 +57,8 @@ const UserMain = () => {
 	const { userData } = useUser();
 	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 	const [introduction, setIntroduction] = useState<string>('');
+
+	const location = useLocation();
 
 	const openModal = () => {
 		setIsModalOpen(true);
@@ -237,14 +239,17 @@ const UserMain = () => {
 								<PlusIcon src={plusIcon} onClick={followToggle} />
 							)}
 						</Wrapper1>
-						<Wrapper2>
-							<PostButton>
-								<Link to={`/post/upload`}>게시글 등록</Link>
-							</PostButton>
-							<EditButton>
-								<Link to={'/user/edit'}>프로필 편집</Link>
-							</EditButton>
-						</Wrapper2>
+
+						{location.pathname === '/post' && (
+							<Wrapper2>
+								<PostButton>
+									<Link to={`/post/upload`}>게시글 등록</Link>
+								</PostButton>
+								<EditButton>
+									<Link to={'/user/edit'}>프로필 편집</Link>
+								</EditButton>
+							</Wrapper2>
+						)}
 						<Wrapper3>
 							<p>
 								게시물 <span>{postCount}</span>
