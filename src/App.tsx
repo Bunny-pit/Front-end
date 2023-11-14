@@ -1,28 +1,45 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import MainPage from './pages/Main/Main';
-import MainHomeSecret from './pages/Mainhome/MainHomeSecret';
-import MainHomeFriends from './pages/Mainhome/MainHomeFriends';
-import UserMainPage from './pages/UserMain/UserMain';
-import Chatting from './pages/Chatting/Chatting';
-import Detail from './pages/UserMain/Detail/Detail';
-import LoginPage from './pages/UserAccount/Login/Login';
-import RegisterPage from './pages/UserAccount/Login/Register';
-import UserEditPage from './pages/UserAccount/UserEdit/UserEdit';
-import UserWithdrawalPage from './pages/UserAccount/UserWithdrawal/UserWithdrawal';
-import UploadPost from './pages/UserMain/UploadPost/UploadPost';
-import FriendChatting from './pages/Chatting/FriendChatting';
 import { getToken } from './api/token';
 
-import UserMembers from './pages/Admin/UserMembers/UserMembers';
-import ReportManagement from './pages/Admin/ReportManagement/ ReportManagement';
-import AdminMain from './pages/Admin/Main/AdminMain';
+const MainHomeSecret = React.lazy(
+	() => import('./pages/Mainhome/MainHomeSecret'),
+);
+const MainHomeFriends = React.lazy(
+	() => import('./pages/Mainhome/MainHomeFriends'),
+);
+const UserMainPage = React.lazy(() => import('./pages/UserMain/UserMain'));
+const Chatting = React.lazy(() => import('./pages/Chatting/Chatting'));
+const Detail = React.lazy(() => import('./pages/UserMain/Detail/Detail'));
+const LoginPage = React.lazy(() => import('./pages/UserAccount/Login/Login'));
+const RegisterPage = React.lazy(
+	() => import('./pages/UserAccount/Login/Register'),
+);
+const UserEditPage = React.lazy(
+	() => import('./pages/UserAccount/UserEdit/UserEdit'),
+);
+const UserWithdrawalPage = React.lazy(
+	() => import('./pages/UserAccount/UserWithdrawal/UserWithdrawal'),
+);
+const UploadPost = React.lazy(
+	() => import('./pages/UserMain/UploadPost/UploadPost'),
+);
+const FriendChatting = React.lazy(
+	() => import('./pages/Chatting/FriendChatting'),
+);
+const UserMembers = React.lazy(
+	() => import('./pages/Admin/UserMembers/UserMembers'),
+);
+const ReportManagement = React.lazy(
+	() => import('./pages/Admin/ReportManagement/ReportManagement'),
+);
+const AdminMain = React.lazy(() => import('./pages/Admin/Main/AdminMain'));
 
 function App() {
 	const [isLogin, setIsLogin] = useState(false);
 	const location = useLocation();
 
-	// 페이지 변경시마다 토큰 확인, 토큰 없으면 isLogin false, 있으면 login
 	useEffect(() => {
 		if (getToken(`accessToken`)) {
 			setIsLogin(true);
@@ -30,16 +47,17 @@ function App() {
 			setIsLogin(false);
 		}
 	}, [location.pathname]);
+
 	return (
-		<>
+		<Suspense fallback={<div>로딩중</div>}>
 			<Routes>
-				{!isLogin && ( //로그인 안되어 있을 경우에만 접근 가능한 페이지. 로그인 시 접근 불가.
+				{!isLogin && (
 					<>
 						<Route path='/register' element={<RegisterPage />} />
 						<Route path='/login' element={<LoginPage />} />
 					</>
 				)}
-				{isLogin && ( //로그인 되어 있을 경우에만 접근 가능한 페이지. 비로그인 시 접근 불가.
+				{isLogin && (
 					<>
 						<Route path='/user/edit' element={<UserEditPage />} />
 						<Route path='/user/withdrawal' element={<UserWithdrawalPage />} />
@@ -53,16 +71,15 @@ function App() {
 						<Route path='/friendchatting/*' element={<FriendChatting />} />
 					</>
 				)}
-				{/* 로그인 유무에 상관없이 접근 가능 */}
 				<Route path='/' element={<MainPage />} />
 				<Route path='/adminMain' element={<AdminMain />} />
 				<Route path='/reportManagement' element={<ReportManagement />} />
 				<Route path='/userMembers' element={<UserMembers />} />
 
-				{/* 유효하지 않은 페이지 접근시 메인페이지로 이동 */}
 				<Route path='*' element={<MainPage />} />
 			</Routes>
-		</>
+		</Suspense>
 	);
 }
+
 export default App;
