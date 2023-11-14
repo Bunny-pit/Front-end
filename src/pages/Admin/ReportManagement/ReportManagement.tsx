@@ -35,7 +35,7 @@ type Report = {
 	createdAt: string;
 };
 
-const ReportManagement: React.FC = () => {
+const ReportManagement = () => {
 	const SECRET_DATA = `${process.env.REACT_APP_API_URL}/api/mainhome/secret/reported`;
 	const FRIEND_DATA = `${process.env.REACT_APP_API_URL}/api/mainhome/friends/reported`;
 

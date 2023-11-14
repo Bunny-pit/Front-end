@@ -35,7 +35,11 @@ export const SearchResult = styled.div`
 	flex-direction: column;
 	max-height: 70vh;
 	overflow-y: auto;
-	margin-top: 20rem;
+	width: 95%;
+	margin-top: 15rem;
+	align-items: center;
+	border-left: 1px solid ${({ theme }) => theme.colors.gray200};
+	border-right: 1px solid ${({ theme }) => theme.colors.gray200};
 `;
 
 export const ResultText = styled.p`

@@ -16,7 +16,7 @@ interface Props {
 	data: UserDataType[];
 }
 
-const UserTable: React.FC<Props> = ({ data }) => {
+const UserTable = ({ data }: Props) => {
 	const [usersData, setUsersData] = useState<UserDataType[]>(data);
 
 	const deleteUser1 = (email: string) => {

@@ -49,7 +49,7 @@ type Report = {
 	createdAt: string;
 };
 
-const UserTableSecret: React.FC<Props> = ({ data }) => {
+const UserTableSecret = ({ data }: Props) => {
 	const [popupVisible, setPopupVisible] = useState<boolean>(false);
 	const [selectedUser, setSelectedUser] = useState<ApiData | null>(null);
 

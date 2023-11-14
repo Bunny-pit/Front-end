@@ -37,7 +37,7 @@ interface SearchResponse {
 	user: userSearchData;
 }
 
-const SearchModal: React.FC<SearchModalProps> = ({ onClose }) => {
+const SearchModal = ({ onClose }: SearchModalProps) => {
 	const [searchResults, setSearchResults] = useState<userSearchData[]>([]);
 	const [noResults, setNoResults] = useState(false);
 

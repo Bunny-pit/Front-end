@@ -6,26 +6,25 @@ export const SearchBarForm = styled.form`
 	justify-content: center;
 	width: 97%;
 	height: 4rem;
+	margin-left: 2rem;
 	margin-top: 6.4rem;
 	display: flex;
-	margin-bottom: 3rem;
 `;
 
 export const InputContainer = styled.div`
 	display: flex;
 	align-items: center;
-	padding: 3rem 0;
-	border-radius: 2rem;
-	width: 24rem;
-	margin-left: 2rem;
+	gap: 10px;
+	padding: 3rem 10px;
 	border: 1px solid ${({ theme }) => theme.colors.gray300};
 	@media (max-width: 390px) {
 		width: 20rem;
 	}
+	border-radius: 1.2rem;
 `;
 
 export const SearchBarInput = styled.input`
-	margin-left: 2rem;
+	width: 200px;
 	box-sizing: border-box;
 	height: 5rem;
 	border: none;
@@ -39,13 +38,10 @@ export const SearchLogo = styled.img`
 	width: 2rem;
 	height: 2rem;
 `;
-export const SearchBarBtn = styled.button`
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	margin-left: 2rem;
-	padding: 3rem 0;
-	width: 5.5rem;
+export const SearchBarButton = styled.button`
+	margin-left: 1rem;
+	width: 7rem;
+	height: 6rem;
 	background-color: ${({ theme }) => theme.colors.pointcolor};
 	border-radius: 1.2rem;
 	color: white;

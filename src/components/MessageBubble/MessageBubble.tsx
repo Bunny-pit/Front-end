@@ -29,10 +29,7 @@ const Bubble = styled.div<BubbleProps>`
 		$currentUser ? 'flex-end' : 'flex-start'};
 `;
 
-const MessageBubble: React.FC<MessageBubbleProps> = ({
-	message,
-	currentUser,
-}) => {
+const MessageBubble = ({ message, currentUser }: MessageBubbleProps) => {
 	const adjustedWidth = message.length * 1.8;
 	return (
 		<Bubble $width={adjustedWidth} $currentUser={currentUser}>
