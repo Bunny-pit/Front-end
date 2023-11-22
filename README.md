@@ -378,19 +378,19 @@ npm run start
     <tr>
         <th>역할</th>
         <td width="150" align="center">
-            FrontEnd, BackEnd<br>
+            익명, 친구 게시판 구현<br>
         </td>
         <td width="150" align="center">
-            FrontEnd, BackEnd<br>
+            마이페이지 구현<br>
         </td>
         <td width="150" align="center">
-            FrontEnd, BackEndk<br>
+            로그인, 회원가입 구현<br>
         </td>
          <td width="150" align="center">
-            FrontEnd, BackEnd<br>
+            익명, 친구 채팅 구현<br>
         </td>
          <td width="150" align="center">
-            FrontEnd, BackEnd<br>
+            관리자 기능 구현<br>
         </td>
     </tr>
     <tr>
