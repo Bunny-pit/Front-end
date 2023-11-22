@@ -378,19 +378,19 @@ npm run start
     <tr>
         <th>역할</th>
         <td width="150" align="center">
-            FullStack<br>
+            FrontEnd, BackEnd<br>
         </td>
         <td width="150" align="center">
-            FullStack<br>
+            FrontEnd, BackEnd<br>
         </td>
         <td width="150" align="center">
-            FullStack<br>
+            FrontEnd, BackEndk<br>
         </td>
          <td width="150" align="center">
-            FullStack<br>
+            FrontEnd, BackEnd<br>
         </td>
          <td width="150" align="center">
-            FullStack<br>
+            FrontEnd, BackEnd<br>
         </td>
     </tr>
     <tr>
