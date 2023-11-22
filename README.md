@@ -378,19 +378,19 @@ npm run start
     <tr>
         <th>역할</th>
         <td width="150" align="center">
-            익명, 친구 게시판 구현<br>
+            익명, 친구 게시판<br>
         </td>
         <td width="150" align="center">
-            마이페이지 구현<br>
+            마이페이지<br>
         </td>
         <td width="150" align="center">
-            로그인, 회원가입 구현<br>
+            로그인, 회원가입<br>
         </td>
          <td width="150" align="center">
-            익명, 친구 채팅 구현<br>
+            익명, 친구 채팅<br>
         </td>
          <td width="150" align="center">
-            관리자 기능 구현<br>
+            관리자 페이지<br>
         </td>
     </tr>
     <tr>
