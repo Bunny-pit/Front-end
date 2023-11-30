@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-	Page,
+	Container,
 	TopButtonWrap,
 	TopButton,
 	FormWrap,
@@ -8,7 +8,7 @@ import {
 	InputWrap,
 	InputBar,
 	BottomButton,
-} from '../UserEdit/UserEditStyle';
+} from '../EditDeleteAccountStyle';
 import { onChangeInputSetter } from '../../../utils/inputStateSetter';
 import { useNavigate } from 'react-router-dom';
 import { removeToken } from '../../../api/token';
@@ -19,7 +19,7 @@ import { useUser } from '../../../utils/swrFetcher';
 import alertList from '../../../utils/swal';
 import Swal from 'sweetalert2';
 
-export default function UserWithdrawalPage() {
+const DeleteAccountContent = () => {
 	const [email, setEmail] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
 	const [passwordCheck, setPasswordCheck] = useState<string>('');
@@ -60,7 +60,7 @@ export default function UserWithdrawalPage() {
 	};
 
 	return (
-		<Page>
+		<Container>
 			<TopButtonWrap>
 				<TopButton
 					onClick={() => {
@@ -120,6 +120,8 @@ export default function UserWithdrawalPage() {
 				}}>
 				홈으로
 			</BottomButton>
-		</Page>
+		</Container>
 	);
-}
+};
+
+export default DeleteAccountContent;

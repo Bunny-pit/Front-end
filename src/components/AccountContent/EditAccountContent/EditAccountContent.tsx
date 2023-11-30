@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-	Page,
+	Container,
 	TopButtonWrap,
 	TopButton,
 	FormWrap,
@@ -8,7 +8,7 @@ import {
 	InputWrap,
 	InputBar,
 	BottomButton,
-} from './UserEditStyle';
+} from '../EditDeleteAccountStyle';
 import { onChangeInputSetter } from '../../../utils/inputStateSetter';
 import { useNavigate } from 'react-router-dom';
 import { patch } from '../../../api/api';
@@ -16,7 +16,7 @@ import { API_USER_EDIT } from '../../../utils/constant';
 import { useUser } from '../../../utils/swrFetcher';
 import handleLogout from '../../../utils/logout';
 
-export default function UserEditPage() {
+const EditAccountContent = () => {
 	const [email, setEmail] = useState<string>('');
 	const [prevPassword, setPrevPassword] = useState<string>('');
 	const [newPassword, setNewPassword] = useState<string>('');
@@ -49,12 +49,12 @@ export default function UserEditPage() {
 	};
 
 	return (
-		<Page>
+		<Container>
 			<TopButtonWrap>
 				<TopButton style={{ borderBottom: 'none' }}>정보 수정</TopButton>
 				<TopButton
 					onClick={() => {
-						navigate('/user/withdrawal');
+						navigate('/user/delete');
 					}}>
 					회원 탈퇴
 				</TopButton>
@@ -116,6 +116,8 @@ export default function UserEditPage() {
 				}}>
 				로그아웃
 			</BottomButton>
-		</Page>
+		</Container>
 	);
-}
+};
+
+export default EditAccountContent;

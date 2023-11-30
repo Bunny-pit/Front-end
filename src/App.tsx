@@ -14,13 +14,13 @@ const Chatting = React.lazy(() => import('./pages/Chatting/Chatting'));
 const Detail = React.lazy(() => import('./pages/UserMain/Detail/Detail'));
 const LoginPage = React.lazy(() => import('./pages/UserAccount/Login/Login'));
 const RegisterPage = React.lazy(
-	() => import('./pages/UserAccount/Login/Register'),
+	() => import('./pages/UserAccount/Register/Register'),
 );
 const UserEditPage = React.lazy(
-	() => import('./pages/UserAccount/UserEdit/UserEdit'),
+	() => import('./pages/UserAccount/EditAccount/EditAccount'),
 );
-const UserWithdrawalPage = React.lazy(
-	() => import('./pages/UserAccount/UserWithdrawal/UserWithdrawal'),
+const UserDeletePage = React.lazy(
+	() => import('./pages/UserAccount/DeleteAccount/DeleteAccount'),
 );
 const UploadPost = React.lazy(
 	() => import('./pages/UserMain/UploadPost/UploadPost'),
@@ -53,14 +53,14 @@ function App() {
 			<Routes>
 				{!isLogin && (
 					<>
-						<Route path='/register' element={<RegisterPage />} />
 						<Route path='/login' element={<LoginPage />} />
+						<Route path='/register' element={<RegisterPage />} />
 					</>
 				)}
 				{isLogin && (
 					<>
 						<Route path='/user/edit' element={<UserEditPage />} />
-						<Route path='/user/withdrawal' element={<UserWithdrawalPage />} />
+						<Route path='/user/delete' element={<UserDeletePage />} />
 						<Route path='/post' element={<UserMainPage />} />
 						<Route path='/post/user/:userId' element={<UserMainPage />} />
 						<Route path='/post/:postId' element={<Detail />} />
@@ -71,12 +71,11 @@ function App() {
 						<Route path='/friendchatting/*' element={<FriendChatting />} />
 					</>
 				)}
+				<Route path='*' element={<MainPage />} />
 				<Route path='/' element={<MainPage />} />
 				<Route path='/adminMain' element={<AdminMain />} />
 				<Route path='/reportManagement' element={<ReportManagement />} />
 				<Route path='/userMembers' element={<UserMembers />} />
-
-				<Route path='*' element={<MainPage />} />
 			</Routes>
 		</Suspense>
 	);

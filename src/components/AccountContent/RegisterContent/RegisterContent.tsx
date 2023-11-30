@@ -18,11 +18,11 @@ import {
 	InputBar,
 	ButtonWrap,
 	BottomButton,
-} from './LoginStyle';
+} from '../AccountContentStyle';
 import alertList from '../../../utils/swal';
 import Swal from 'sweetalert2';
 
-export default function RegisterPage() {
+const RegisterContent = () => {
 	const [userName, setUserName] = useState<string>('');
 	const [email, setEmail] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
@@ -150,4 +150,6 @@ export default function RegisterPage() {
 			</FormWrap>
 		</Page>
 	);
-}
+};
+
+export default RegisterContent;
