@@ -16,7 +16,7 @@ import HeaderLogo from '../../assets/icons/HedearLogo_11zon.webp';
 import HeaderOption from '../../assets/icons/HedearOption_11zon.webp';
 import { useNavigate } from 'react-router-dom';
 import searchicon from '../../assets/icons/search.png';
-import SearchModal from '../../pages/SearchModal/SearchModal';
+import SearchModal from '../SearchModal/SearchModal';
 import { useState, useEffect } from 'react';
 
 const DefaultHeader = () => {
