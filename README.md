@@ -241,6 +241,9 @@ MongoDB, CloudType
  ┃ ┃ ┣ 📂SearchBar
  ┃ ┃ ┃ ┣ 📜SearchBar.tsx
  ┃ ┃ ┃ ┗ 📜SearchBarStyle.ts
+ ┃ ┃ ┣ 📂SearchModal
+ ┃ ┃ ┃ ┣ 📜SearchModal.tsx
+ ┃ ┃ ┃ ┗ 📜SearchModalStyle.ts
  ┃ ┣ 📂hooks
  ┃ ┃ ┣ 📜useAutoScroll.ts
  ┃ ┃ ┣ 📜useMainHomePost.ts
@@ -274,9 +277,6 @@ MongoDB, CloudType
  ┃ ┃ ┃ ┣ 📜MainHomeFriends.tsx
  ┃ ┃ ┃ ┣ 📜MainHomeSecret.tsx
  ┃ ┃ ┃ ┗ 📜MainHomeStyle.ts
- ┃ ┃ ┣ 📂SearchModal
- ┃ ┃ ┃ ┣ 📜SearchModal.tsx
- ┃ ┃ ┃ ┗ 📜SearchModalStyle.ts
  ┃ ┃ ┣ 📂UserAccount
  ┃ ┃ ┃ ┣ 📂Login
  ┃ ┃ ┃ ┃ ┣ 📜Login.tsx
