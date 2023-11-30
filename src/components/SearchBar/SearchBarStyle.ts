@@ -4,7 +4,7 @@ export const SearchBarForm = styled.form`
 	position: relative;
 	display: flex;
 	justify-content: center;
-	width: 97%;
+	width: 90%;
 	height: 4rem;
 	margin-left: 2rem;
 	margin-top: 6.4rem;
@@ -24,7 +24,7 @@ export const InputContainer = styled.div`
 `;
 
 export const SearchBarInput = styled.input`
-	width: 200px;
+	width: 80%;
 	box-sizing: border-box;
 	height: 5rem;
 	border: none;

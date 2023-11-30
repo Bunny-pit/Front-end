@@ -11,7 +11,7 @@ import {
 	ModalBackground,
 	ExitButton,
 } from './ChattingStyle';
-import DMList from '../DMList/DMList';
+import DMList from '../../components/DMList/DMList';
 import { Routes, Route } from 'react-router-dom';
 import Chat from '../../components/Chat/Chat';
 import { useState, useEffect } from 'react';

@@ -1,4 +1,4 @@
-import sendBtn from '../../assets/icons/Sendicon_11zon.webp';
+import sendButton from '../../assets/icons/Vector.png';
 import { Container, InputBar, SendButton } from './ChatBoxStyle';
 import { useEffect, useState } from 'react';
 import { useSocket } from '../../hooks/useSocket';
@@ -12,10 +12,7 @@ interface ChatBoxProps {
 
 const ChatBox = ({ chatId, userId, onNewMessage }: ChatBoxProps) => {
 	const [inputArea, setInputArea] = useState('');
-	const socket = useSocket(
-		// 'https://port-0-back-end-kvmh2mljxnw03c.sel4.cloudtype.app',
-		`${process.env.REACT_APP_API_URL}`,
-	);
+	const socket = useSocket(`${process.env.REACT_APP_API_URL}`);
 
 	useEffect(() => {
 		if (socket) {
@@ -72,7 +69,7 @@ const ChatBox = ({ chatId, userId, onNewMessage }: ChatBoxProps) => {
 					placeholder='메시지 보내기'
 				/>
 				<SendButton
-					src={sendBtn}
+					src={sendButton}
 					alt='send-button'
 					onClick={handleSendButtonClick}
 				/>

@@ -1,4 +1,4 @@
-import sendBtn from '../../assets/icons/Sendicon_11zon.webp';
+import sendButton from '../../assets/icons/Vector.png';
 import { Container, InputBar, SendButton } from './ChatBoxStyle';
 import { useEffect, useState } from 'react';
 import { useSocket } from '../../hooks/useSocket';
@@ -69,7 +69,7 @@ const FriendChatBox = ({ chatId, userId, onNewMessage }: ChatBoxProps) => {
 					placeholder='메시지 보내기'
 				/>
 				<SendButton
-					src={sendBtn}
+					src={sendButton}
 					alt='send-button'
 					onClick={handleSendButtonClick}
 				/>

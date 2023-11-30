@@ -11,6 +11,7 @@ export const Container = styled.div`
 export const InputBar = styled.textarea`
 	background-color: ${({ theme }) => theme.colors.gray200};
 	height: 5rem;
+	font-size: 2.5rem;
 	width: 70%;
 	border-radius: 2.1rem;
 	border: none;
