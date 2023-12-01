@@ -2,15 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { useState } from 'react';
 import { UserDataType } from '../../../types/dataType';
-import {
-	Button,
-	TableDiv,
-	Th,
-	Td,
-	Table,
-	Thead,
-	Tbody,
-} from './UserMembersStyle';
+import { Button, Th, Td, Table, Thead, Tbody } from './UserMembersStyle';
 
 interface Props {
 	data: UserDataType[];
@@ -41,30 +33,27 @@ const UserTable = ({ data }: Props) => {
 	};
 
 	return (
-		<TableDiv>
-			<Table>
-				<Thead>
-					<tr>
-						<Th>가입날짜</Th>
-						<Th>닉네임</Th>
-						<Th>이메일</Th>
-						<Th></Th>
+		<Table>
+			<Thead>
+				<tr>
+					<Th>가입일</Th>
+					<Th>닉네임</Th>
+					<Th>이메일</Th>
+				</tr>
+			</Thead>
+			<Tbody>
+				{data.map((user) => (
+					<tr key={user._id}>
+						<Td>{user.createdAt.slice(0, 10)}</Td>
+						<Td>{user.userName}</Td>
+						<Td>
+							{user.email}
+							<Button onClick={() => deleteUser1(user.email)}>삭제</Button>
+						</Td>
 					</tr>
-				</Thead>
-				<Tbody>
-					{data.map((user) => (
-						<tr key={user._id}>
-							<Td>{user.createdAt.slice(0, 10)}</Td>
-							<Td>{user.userName}</Td>
-							<Td>{user.email}</Td>
-							<Td>
-								<Button onClick={() => deleteUser1(user.email)}>삭제</Button>
-							</Td>
-						</tr>
-					))}
-				</Tbody>
-			</Table>
-		</TableDiv>
+				))}
+			</Tbody>
+		</Table>
 	);
 };
 

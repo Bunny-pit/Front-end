@@ -29,12 +29,6 @@ export const Title = styled.p`
 	}
 `;
 
-export const TableDiv = styled.div`
-	margin: 60px auto;
-	width: 80%;
-
-	box-sizing: border-box;
-`;
 export const Thead = styled.thead`
 	background-color: #7954f8;
 	color: #fff;
@@ -97,6 +91,7 @@ export const Button = styled.button`
 export const ChangeButtonDiv = styled.div`
 	width: 50%;
 	margin: 0 auto;
+	margin-bottom: 6rem;
 `;
 
 export const ButtonAnonymous = styled.button`

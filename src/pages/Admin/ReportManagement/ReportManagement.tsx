@@ -100,14 +100,14 @@ const ReportManagement = () => {
 						친구 한마디 신고내역
 					</Buttonfriends>
 				</ChangeButtonDiv>
+				<TableContainer>
+					{activeButton === 'anonymous' ? (
+						showSecretUserTable && <UserTableSecret data={secretUserData} />
+					) : (
+						<UserTableFriends data={filteredUserData} />
+					)}
+				</TableContainer>
 			</Container>
-			<TableContainer>
-				{activeButton === 'anonymous' ? (
-					showSecretUserTable && <UserTableSecret data={secretUserData} />
-				) : (
-					<UserTableFriends data={filteredUserData} />
-				)}
-			</TableContainer>
 
 			<DefaultFooter />
 		</>

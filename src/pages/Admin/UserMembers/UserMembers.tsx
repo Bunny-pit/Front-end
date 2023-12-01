@@ -8,7 +8,7 @@ import { UserDataType } from '../../../types/dataType';
 
 import UserTable from './UserMembersHooks';
 
-import { Container, Title, TableContainer } from './UserMembersStyle';
+import { Container, Content, Title, TableContainer } from './UserMembersStyle';
 
 const UserMembers = () => {
 	const USER_DATA = `${process.env.REACT_APP_API_URL}/api/user/login`;
@@ -43,18 +43,17 @@ const UserMembers = () => {
 	};
 
 	return (
-		<>
+		<Container>
 			<AdminHeader />
-			<Container>
+			<Content>
 				<Title>회원관리</Title>
-
 				<SearchBar onSearch={handleSearch} />
-			</Container>
-			<TableContainer>
-				<UserTable data={filteredUserData} />
-			</TableContainer>
+				<TableContainer>
+					<UserTable data={filteredUserData} />
+				</TableContainer>
+			</Content>
 			<DefaultFooter />
-		</>
+		</Container>
 	);
 };
 export default UserMembers;

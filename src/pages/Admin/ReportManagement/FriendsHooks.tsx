@@ -10,7 +10,6 @@ import { API_ADMIN_DELETE_TALK_FRIENDS } from '../../../utils/constant';
 
 import {
 	Button,
-	TableDiv,
 	Th,
 	Td,
 	Table,
@@ -88,34 +87,32 @@ const UserTableFriends = ({ data }: Props) => {
 
 	return (
 		<>
-			<TableDiv>
-				<Table>
-					<Thead>
-						<tr>
-							<Th>익명닉네임</Th>
-							<Th>이메일</Th>
-							<Th>내용</Th>
-							<Th></Th>
-							<Th></Th>
+			<Table>
+				<Thead>
+					<tr>
+						<Th>익명닉네임</Th>
+						<Th>이메일</Th>
+						<Th>내용</Th>
+						<Th></Th>
+						<Th></Th>
+					</tr>
+				</Thead>
+				<Tbody>
+					{data.map((user) => (
+						<tr key={user._id}>
+							<Td>{user.name}</Td>
+							<Td>{user.email}</Td>
+							<Td>{user.content}</Td>
+							<Td>
+								<Button onClick={() => openPopup(user)}>신고내역</Button>
+							</Td>
+							<Td>
+								<Button onClick={() => deletePost(user._id)}>삭제</Button>
+							</Td>
 						</tr>
-					</Thead>
-					<Tbody>
-						{data.map((user) => (
-							<tr key={user._id}>
-								<Td>{user.name}</Td>
-								<Td>{user.email}</Td>
-								<Td>{user.content}</Td>
-								<Td>
-									<Button onClick={() => openPopup(user)}>신고내역</Button>
-								</Td>
-								<Td>
-									<Button onClick={() => deletePost(user._id)}>삭제</Button>
-								</Td>
-							</tr>
-						))}
-					</Tbody>
-				</Table>
-			</TableDiv>
+					))}
+				</Tbody>
+			</Table>
 
 			{popupVisible && (
 				<PopupOverlay className='popup'>

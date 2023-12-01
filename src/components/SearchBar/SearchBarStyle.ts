@@ -1,13 +1,12 @@
 import styled from 'styled-components';
 
 export const SearchBarForm = styled.form`
-	position: relative;
 	display: flex;
 	justify-content: center;
-	width: 90%;
+	width: 100%;
 	height: 4rem;
-	margin-left: 2rem;
-	margin-top: 6.4rem;
+	margin-top: 6rem;
+	margin-bottom: 6rem;
 	display: flex;
 `;
 

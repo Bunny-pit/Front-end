@@ -1,23 +1,20 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-	min-width: 100vw;
-	min-height: 100vh;
-	margin: 0 auto;
+	min-width: 100vh;
+	height: 100vh;
 	text-align: center;
 	box-sizing: border-box;
-
-	@media (max-width: 390px) {
-		margin: 0;
-		padding: 0;
-	}
 `;
 
-export const TableContainer = styled.div`
-	@media (max-width: 390px) {
-		width: 0;
-	}
+export const Content = styled.div`
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 `;
+
 export const Title = styled.p`
 	font-size: 5rem;
 	font-weight: 700;
@@ -30,11 +27,15 @@ export const Title = styled.p`
 	}
 `;
 
-export const TableDiv = styled.div`
-	margin: 60px auto;
+export const TableContainer = styled.div`
 	width: 80%;
-	box-sizing: border-box;
 `;
+
+export const Table = styled.table`
+	border-collapse: collapse;
+	width: 100%;
+`;
+
 export const Thead = styled.thead`
 	background-color: #7954f8;
 	color: #fff;
@@ -59,10 +60,6 @@ export const Tbody = styled.tbody`
 	}
 `;
 
-export const Table = styled.table`
-	border-collapse: collapse;
-	width: 100%;
-`;
 export const Th = styled.th`
 	text-align: center;
 	padding: 20px;
