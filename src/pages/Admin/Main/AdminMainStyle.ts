@@ -1,16 +1,20 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export const Container = styled.div`
-	width: 100%;
-	max-width: 1280px;
-	margin: 0 auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	min-width: 100vw;
+	min-height: 100vh;
 	text-align: center;
 	box-sizing: border-box;
 `;
 
-export const Title = styled.p`
+export const Title = styled.div`
+	margin-top: 100px;
 	font-size: 5rem;
-	font-weight: 700;
+	font-weight: bold;
 
 	@media (max-width: 768px) {
 		font-size: 4rem;
@@ -23,34 +27,38 @@ export const Title = styled.p`
 
 export const MenuFlex = styled.div`
 	display: flex;
-	padding: 1%;
-	width: 70rem;
-	margin: 8% auto;
+	justify-content: center;
+	align-items: center;
+	margin-top: 100px;
+	gap: 30px;
 
-	@media (max-width: 768px) {
+	width: @media (max-width: 768px) {
 		width: 45rem;
-		margin: 6% auto;
 	}
 
 	@media (max-width: 390px) {
 		width: 30rem;
-		padding: 10%;
-		margin: 6% auto;
 	}
 `;
-export const Menu = styled.div`
-	border: 1px solid #7954f8;
-	padding: 1.8%;
-	border-radius: 15px;
 
-	width: 44%;
-	margin: 5px;
-	display: flex;
-	flex-direction: column;
+export const LinkStyle = styled(Link)`
+	text-decoration: none;
 `;
 
-export const H2 = styled.p`
-	font-size: 3.4rem;
+export const MenuButton = styled.button`
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: 1px solid #7954f8;
+	border-radius: 20px;
+	flex-direction: column;
+	width: 35rem;
+	height: 10rem;
+	cursor: pointer;
+`;
+
+export const SubTitle = styled.div`
+	font-size: 3rem;
 	color: #7954f8;
 	font-weight: 700;
 

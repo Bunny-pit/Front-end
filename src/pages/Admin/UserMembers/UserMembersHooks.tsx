@@ -41,32 +41,30 @@ const UserTable = ({ data }: Props) => {
 	};
 
 	return (
-		<>
-			<TableDiv>
-				<Table>
-					<Thead>
-						<tr>
-							<Th>가입날짜</Th>
-							<Th>닉네임</Th>
-							<Th>이메일</Th>
-							<Th></Th>
+		<TableDiv>
+			<Table>
+				<Thead>
+					<tr>
+						<Th>가입날짜</Th>
+						<Th>닉네임</Th>
+						<Th>이메일</Th>
+						<Th></Th>
+					</tr>
+				</Thead>
+				<Tbody>
+					{data.map((user) => (
+						<tr key={user._id}>
+							<Td>{user.createdAt.slice(0, 10)}</Td>
+							<Td>{user.userName}</Td>
+							<Td>{user.email}</Td>
+							<Td>
+								<Button onClick={() => deleteUser1(user.email)}>삭제</Button>
+							</Td>
 						</tr>
-					</Thead>
-					<Tbody>
-						{data.map((user) => (
-							<tr key={user._id}>
-								<Td>{user.createdAt.slice(0, 10)}</Td>
-								<Td>{user.userName}</Td>
-								<Td>{user.email}</Td>
-								<Td>
-									<Button onClick={() => deleteUser1(user.email)}>삭제</Button>
-								</Td>
-							</tr>
-						))}
-					</Tbody>
-				</Table>
-			</TableDiv>
-		</>
+					))}
+				</Tbody>
+			</Table>
+		</TableDiv>
 	);
 };
 
