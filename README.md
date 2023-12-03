@@ -213,6 +213,10 @@ MongoDB, CloudType
  ┃ ┃ ┃ ┣ 📜ChatBox.tsx
  ┃ ┃ ┃ ┣ 📜FriendChatBox.tsx
  ┃ ┃ ┃ ┗ 📜ChatBoxStyle.ts
+ ┃ ┃ ┣ 📂DMList
+ ┃ ┃ ┃ ┣ 📜DMList.tsx
+ ┃ ┃ ┃ ┣ 📜FriendDMList.tsx
+ ┃ ┃ ┃ ┗ 📜DMListStyle.ts
  ┃ ┃ ┣ 📂Footer
  ┃ ┃ ┃ ┣ 📜Footer.tsx
  ┃ ┃ ┃ ┗ 📜FooterStyle.ts
@@ -266,10 +270,6 @@ MongoDB, CloudType
  ┃ ┃ ┃ ┣ 📜Chatting.tsx
  ┃ ┃ ┃ ┣ 📜FriendChatting.tsx
  ┃ ┃ ┃ ┗ 📜ChattingStyle.ts
- ┃ ┃ ┣ 📂DMList
- ┃ ┃ ┃ ┣ 📜DMList.tsx
- ┃ ┃ ┃ ┣ 📜FriendDMList.tsx
- ┃ ┃ ┃ ┗ 📜DMListStyle.ts
  ┃ ┃ ┣ 📂Main
  ┃ ┃ ┃ ┣ 📜Main.tsx
  ┃ ┃ ┃ ┗ 📜MainStyle.ts
