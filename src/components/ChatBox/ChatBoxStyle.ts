@@ -5,19 +5,15 @@ export const Container = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	margin: 0 auto;
 `;
 
-export const InputBar = styled.textarea`
+export const InputBar = styled.input`
 	background-color: ${({ theme }) => theme.colors.gray200};
-	height: 5rem;
 	font-size: 2.5rem;
 	width: 70%;
-	border-radius: 2.1rem;
+	border-radius: 2rem;
 	border: none;
-	padding-left: 2rem;
-	padding-top: 2rem;
-	resize: none;
+	padding: 2rem;
 	@media (max-width: 628px) {
 		width: 100%;
 	}

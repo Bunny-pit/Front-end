@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 export const TopContainer = styled.div`
-	margin-top: 2rem;
 	width: 100%;
 	display: flex;
 	align-items: center;
@@ -12,9 +11,7 @@ export const TopContainer = styled.div`
 `;
 
 export const MemberList = styled.div`
-	margin-top: 5rem;
 	font-size: 2rem;
-	margin-bottom: 6rem;
 
 	& a {
 		margin-bottom: 5rem;
@@ -31,6 +28,7 @@ export const MemberList = styled.div`
 export const Nickname = styled.p`
 	width: 100%;
 `;
+
 export const Profile = styled.img`
 	border-radius: 50%;
 	margin-right: 2rem;
@@ -42,7 +40,6 @@ export const Profile = styled.img`
 `;
 export const Exiticon = styled.img`
 	margin-left: 3rem;
-	margin-right: 2rem;
 	cursor: pointer;
 	width: 6%;
 	@media (max-width: 628px) {

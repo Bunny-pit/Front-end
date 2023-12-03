@@ -33,7 +33,6 @@ export const SearchBarInput = styled.input`
 `;
 
 export const SearchLogo = styled.img`
-	margin-left: 2rem;
 	width: 2rem;
 	height: 2rem;
 `;

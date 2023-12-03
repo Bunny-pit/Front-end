@@ -6,17 +6,16 @@ export const WorkSpaceWrapper = styled.div`
 `;
 
 export const Channels = styled.nav<{ $isRoot: boolean }>`
-	max-width: 44rem;
+	width: 35rem;
+	padding: 5rem;
 	display: inline-flex;
 	flex-direction: column;
 	background: rgba(252, 155, 249, 0.29);
 	color: ${({ theme }) => theme.colors.text};
-	min-height: ${({ $isRoot }) => ($isRoot ? '200rem' : 'auto')};
-	max-height: 200rem;
+	min-height: ${({ $isRoot }) => ($isRoot ? '100vh' : '100vh')};
 	overflow-y: auto;
 	vertical-align: top;
 	& a {
-		padding-left: 36px;
 		color: inherit;
 		text-decoration: none;
 		height: 28px;
@@ -33,15 +32,15 @@ export const Channels = styled.nav<{ $isRoot: boolean }>`
 `;
 
 export const FriendChannels = styled.nav<{ $isRoot: boolean }>`
-	max-width: 44rem;
+	width: 35rem;
+	padding: 5rem;
 	display: inline-flex;
 	flex-direction: column;
 	background: ${({ theme }) => theme.colors.gray200};
 	color: ${({ theme }) => theme.colors.text};
-	min-height: ${({ $isRoot }) => ($isRoot ? '200rem' : 'auto')};
+	min-height: ${({ $isRoot }) => ($isRoot ? '100vh' : '100vh')};
 	vertical-align: top;
 	& a {
-		padding-left: 36px;
 		color: inherit;
 		text-decoration: none;
 		height: 28px;
@@ -55,28 +54,23 @@ export const FriendChannels = styled.nav<{ $isRoot: boolean }>`
 `;
 
 export const WorkspaceName = styled.button`
-	height: 64px;
 	line-height: 64px;
 	border: none;
 	width: 100%;
-	text-align: left;
+	text-align: center;
 	font-weight: 900;
 	font-size: 24px;
 	background: transparent;
 	text-overflow: ellipsis;
 	overflow: hidden;
 	white-space: nowrap;
-	padding: 0;
-	padding-left: 16px;
-	margin: 0;
 	color: ${({ theme }) => theme.colors.text};
 	cursor: pointer;
 `;
 
 export const PlaceHoldContent = styled.div`
-	margin-top: 5rem;
+	margin: 5rem;
 	font-size: 2.5rem;
-	margin-left: 5rem;
 	color: ${({ theme }) => theme.colors.gray500};
 `;
 export const ButtonWrapper = styled.div`

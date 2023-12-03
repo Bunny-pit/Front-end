@@ -30,7 +30,7 @@ const FriendChatBox = ({ chatId, userId, onNewMessage }: ChatBoxProps) => {
 		};
 	}, [chatId, userId, onNewMessage, socket]);
 
-	const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setInputArea(event.target.value);
 	};
 
@@ -53,12 +53,13 @@ const FriendChatBox = ({ chatId, userId, onNewMessage }: ChatBoxProps) => {
 		setInputArea('');
 	};
 
-	const handleKeyUp = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+	const handleKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => {
 		if (event.key === 'Enter') {
 			event.preventDefault();
 			handleSendButtonClick();
 		}
 	};
+
 	return (
 		<>
 			<Container>
@@ -68,6 +69,7 @@ const FriendChatBox = ({ chatId, userId, onNewMessage }: ChatBoxProps) => {
 					onKeyUp={handleKeyUp}
 					placeholder='메시지 보내기'
 				/>
+
 				<SendButton
 					src={sendButton}
 					alt='send-button'
