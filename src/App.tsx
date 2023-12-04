@@ -29,7 +29,7 @@ const FriendChatting = React.lazy(
 	() => import('./pages/Chatting/FriendChatting'),
 );
 const UserMembers = React.lazy(
-	() => import('./pages/Admin/UserMembers/UserMembers'),
+	() => import('./pages/Admin/MemberManagement/MemberMangement'),
 );
 const ReportManagement = React.lazy(
 	() => import('./pages/Admin/ReportManagement/ReportManagement'),

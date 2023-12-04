@@ -1,4 +1,3 @@
-import React from 'react';
 import { useState } from 'react';
 
 import Swal from 'sweetalert2';
@@ -22,7 +21,7 @@ import {
 	PopupLI,
 	PopupSpan,
 	Tbody,
-} from './ReportManagementStyle';
+} from './ReportDetailStyle';
 
 interface ApiData {
 	_id: string;

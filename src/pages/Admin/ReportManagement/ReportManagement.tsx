@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { get } from '../../../api/api';
 import AdminHeader from '../../../components/AdminHeader/AdminHeader';
 import DefaultFooter from '../../../components/Footer/Footer';
 
@@ -12,8 +12,8 @@ import {
 	TableContainer,
 } from './ReportManagementStyle';
 
-import UserTableFriends from './FriendsHooks';
-import UserTableSecret from './SecretHooks';
+import UserTableFriends from '../../../components/AdminDetail/ReportDetail/FriendsDetail';
+import UserTableSecret from '../../../components/AdminDetail/ReportDetail/SecretDetail';
 
 interface ApiData {
 	_id: string;
@@ -59,10 +59,10 @@ const ReportManagement = () => {
 	useEffect(() => {
 		const fetchSecretData = async () => {
 			try {
-				const response = await axios.get(SECRET_DATA);
-				const fetchedData: ApiData[] = response.data;
-				setSecretUserData(fetchedData);
-				console.log('익명 데이터 가져오기 성공', fetchedData);
+				const response = await get<ApiData[]>(SECRET_DATA);
+
+				setSecretUserData(response.data);
+				console.log('익명 데이터 가져오기 성공', response.data);
 			} catch (error) {
 				console.error('익명 데이터를 가져오는 중 오류 발생:', error);
 			}
@@ -70,10 +70,9 @@ const ReportManagement = () => {
 
 		const fetchFriendData = async () => {
 			try {
-				const response = await axios.get(FRIEND_DATA);
-				const fetchedData: ApiData[] = response.data;
-				setFilteredUserData(fetchedData);
-				console.log('친구 데이터 가져오기 성공', fetchedData);
+				const response = await get<ApiData[]>(FRIEND_DATA);
+				setFilteredUserData(response.data);
+				console.log('친구 데이터 가져오기 성공', response.data);
 			} catch (error) {
 				console.error('친구 데이터를 가져오는 중 오류 발생:', error);
 			}

@@ -1,6 +1,4 @@
-import React from 'react';
 import { useState } from 'react';
-
 import Swal from 'sweetalert2';
 import { del } from '../../../api/api';
 import alertList from '../../../utils/swal';
@@ -9,11 +7,12 @@ import { UserDataType, Post } from '../../../types/dataType';
 import { API_ADMIN_DELETE_TALK_FRIENDS } from '../../../utils/constant';
 
 import {
-	Button,
-	Th,
-	Td,
 	Table,
 	Thead,
+	Tbody,
+	Th,
+	Td,
+	Button,
 	PopupOverlay,
 	PopupContent,
 	CloseButton,
@@ -21,8 +20,7 @@ import {
 	PopupUL,
 	PopupLI,
 	PopupSpan,
-	Tbody,
-} from './ReportManagementStyle';
+} from './ReportDetailStyle';
 
 interface ApiData {
 	_id: string;

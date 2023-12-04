@@ -199,6 +199,13 @@ MongoDB, CloudType
  ┃ ┃ ┣ 📂icons
  ┃ ┃ ┗ 📂images
  ┃ ┣ 📂components
+ ┃ ┃ ┣ 📂AdminDetail
+ ┃ ┃ ┃ ┣ 📂MemberDetail
+ ┃ ┃ ┃ ┃ ┣ 📜MemberDetail.tsx
+ ┃ ┃ ┃ ┃ ┗ 📜MemberDetailStyle.ts
+ ┃ ┃ ┃ ┗ 📂ReportDetail
+ ┃ ┃ ┃ ┃ ┣ 📜ReportDetail.tsx
+ ┃ ┃ ┃ ┃ ┗ 📜ReportDetailStyle.ts
  ┃ ┃ ┣ 📂AdminHeader
  ┃ ┃ ┃ ┣ 📜AdminHeader.tsx
  ┃ ┃ ┃ ┗ 📜AdminHeaderStyle.ts
@@ -259,13 +266,10 @@ MongoDB, CloudType
  ┃ ┃ ┃ ┃ ┗ 📜AdminMainStyle.ts
  ┃ ┃ ┃ ┣ 📂ReportManagement
  ┃ ┃ ┃ ┃ ┣ 📜ReportManagement.tsx
- ┃ ┃ ┃ ┃ ┣ 📜FriendsHooks.tsx
- ┃ ┃ ┃ ┃ ┣ 📜SecretHooks.tsx
  ┃ ┃ ┃ ┃ ┗ 📜ReportManagementStyle.ts
- ┃ ┃ ┃ ┗ 📂UserMembers
- ┃ ┃ ┃ ┃ ┣ 📜UserMembers.tsx
- ┃ ┃ ┃ ┃ ┣ 📜UserMembersHooks.tsx
- ┃ ┃ ┃ ┃ ┗ 📜UserMembersStyle.ts
+ ┃ ┃ ┃ ┗ 📂MemberManagement
+ ┃ ┃ ┃ ┃ ┣ 📜MemberManagement.tsx
+ ┃ ┃ ┃ ┃ ┗ 📜MemberManagementStyle.ts
  ┃ ┃ ┣ 📂Chatting
  ┃ ┃ ┃ ┣ 📜Chatting.tsx
  ┃ ┃ ┃ ┣ 📜FriendChatting.tsx

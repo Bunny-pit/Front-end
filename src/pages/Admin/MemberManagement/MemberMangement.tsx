@@ -1,27 +1,35 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { get } from '../../../api/api';
 import AdminHeader from '../../../components/AdminHeader/AdminHeader';
 import DefaultFooter from '../../../components/Footer/Footer';
 
 import SearchBar from '../../../components/SearchBar/SearchBar';
 import { UserDataType } from '../../../types/dataType';
 
-import UserTable from './UserMembersHooks';
+import UserTable from '../../../components/AdminDetail/MemberDetail/MembersDetail';
 
-import { Container, Content, Title, TableContainer } from './UserMembersStyle';
+import {
+	Container,
+	Content,
+	Title,
+	TableContainer,
+} from './MemberManagementStyle';
 
-const UserMembers = () => {
-	const USER_DATA = `${process.env.REACT_APP_API_URL}/api/user/login`;
+interface ApiResponse {
+	data: UserDataType[];
+}
+
+const MemberManagement = () => {
+	const USER_DATA = `${process.env.REACT_APP_API_URL}/api/user/findAll`;
 	const [userData, setUserData] = useState<UserDataType[]>([]);
-	const [filteredUserData, setFilteredUserData] = useState<UserDataType[]>([]); // 필터링된 데이터의 새 상태
+	const [filteredUserData, setFilteredUserData] = useState<UserDataType[]>([]);
 
 	useEffect(() => {
-		axios
-			.get(USER_DATA)
+		get<ApiResponse>(USER_DATA)
 			.then((response) => {
-				const fetchedData: UserDataType[] = response.data.data;
+				const fetchedData = response.data.data;
 				setUserData(fetchedData);
-				setFilteredUserData(fetchedData); // 모든 데이터로 FilteredUserData 초기화
+				setFilteredUserData(fetchedData);
 				console.log('성공', fetchedData);
 			})
 			.catch((error) => {
@@ -56,4 +64,4 @@ const UserMembers = () => {
 		</Container>
 	);
 };
-export default UserMembers;
+export default MemberManagement;
