@@ -42,13 +42,11 @@ function App() {
 	const location = useLocation();
 
 	useEffect(() => {
-		checkTokenExpirationAndRefresh().then(() => {
-			if (getToken(`accessToken`)) {
-				setIsLogin(true);
-			} else {
-				setIsLogin(false);
-			}
-		});
+		if (getToken(`accessToken`)) {
+			setIsLogin(true);
+		} else {
+			setIsLogin(false);
+		}
 	}, [location.pathname]);
 
 	return (
