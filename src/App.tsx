@@ -1,7 +1,6 @@
 import React, { useState, useEffect, Suspense } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import MainPage from './pages/Main/Main';
-import checkTokenExpirationAndRefresh from './utils/checkTokenExpirationAndRefresh';
 import { getToken } from './api/token';
 
 const MainHomeSecret = React.lazy(
