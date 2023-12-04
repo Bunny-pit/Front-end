@@ -1,6 +1,7 @@
 import React, { useState, useEffect, Suspense } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import MainPage from './pages/Main/Main';
+import checkTokenExpirationAndRefresh from './utils/checkTokenExpirationAndRefresh';
 import { getToken } from './api/token';
 
 const MainHomeSecret = React.lazy(
@@ -41,11 +42,13 @@ function App() {
 	const location = useLocation();
 
 	useEffect(() => {
-		if (getToken(`accessToken`)) {
-			setIsLogin(true);
-		} else {
-			setIsLogin(false);
-		}
+		checkTokenExpirationAndRefresh().then(() => {
+			if (getToken(`accessToken`)) {
+				setIsLogin(true);
+			} else {
+				setIsLogin(false);
+			}
+		});
 	}, [location.pathname]);
 
 	return (

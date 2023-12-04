@@ -2,7 +2,7 @@ import { getToken } from '../api/token';
 import alertList from './swal';
 import Swal from 'sweetalert2';
 
-export const checkTokenExpirationAndRefresh = async () => {
+const checkTokenExpirationAndRefresh = async () => {
 	const accessToken = getToken('accessToken');
 	const refreshToken = getToken('refreshToken');
 
@@ -22,3 +22,5 @@ export const checkTokenExpirationAndRefresh = async () => {
 		return;
 	}
 };
+
+export default checkTokenExpirationAndRefresh;
