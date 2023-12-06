@@ -1,19 +1,17 @@
-<<<<<<< Updated upstream
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
-import plusIcon from '../../assets/icons/UserPlus.png';
-import FollowingIcon from '../../assets/icons/FollowingIcon.png';
-import { Link, useParams, useNavigate } from 'react-router-dom';
+import plusIcon from '../../assets/icons/UserPlus_11zon.webp';
+import FollowingIcon from '../../assets/icons/FollowingIcon_11zon.webp';
+import { Link, useParams, useLocation } from 'react-router-dom';
 import { useUser } from '../../utils/swrFetcher';
 import { PostType } from '../../types/postType';
 import alertList from '../../utils/swal';
 import Swal from 'sweetalert2';
-import useSWR, { mutate } from 'swr';
+import { mutate } from 'swr';
 import { post } from '../../api/api';
 import UserProfile from '../../components/ProfileUpdateModal/ProfileUpdateModal';
-import Modal from 'react-modal';
 
 import {
 	Container,
@@ -25,7 +23,6 @@ import {
 	Wrapper2,
 	Wrapper3,
 	Wrapper4,
-	FriendButton,
 	EditButton,
 	ProfileUl,
 	ProfileLi,
@@ -58,10 +55,11 @@ const UserMain = () => {
 	const [following, setFollowing] = useState<string>('');
 	const [isFollowed, setIsFollowed] = useState<boolean>(false);
 	const { userId } = useParams();
-	const { userData, isError } = useUser();
+	const { userData } = useUser();
 	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 	const [introduction, setIntroduction] = useState<string>('');
-	const navigate = useNavigate();
+
+	const location = useLocation();
 
 	const openModal = () => {
 		setIsModalOpen(true);
@@ -77,12 +75,70 @@ const UserMain = () => {
 		}
 	};
 
-	if (isError) {
-		console.log('유저 데이터를 불러오는데 실패했습니다.');
-	} else if (!userData) {
-		console.log('유저 데이터를 불러오는 중...');
-	}
-
+	//-----------------팔로우 기능------------------
+	const followToggle = async () => {
+		try {
+			getFollowings(userName);
+			const response = await post<ApiResponse>(
+				`${process.env.REACT_APP_API_URL}/api/user/toggleFollow`,
+				{ followeeName: userId },
+				getToken(),
+			);
+			mutate(
+				`${process.env.REACT_APP_API_URL}/api/user/followers?userName=${userName}`,
+			);
+			if (!isFollowed) {
+				await Swal.fire(alertList.successMessage('팔로우 하였습니다.'));
+				setIsFollowed(response.data.followed);
+			} else {
+				await Swal.fire(alertList.infoMessage('팔로우를 취소하였습니다.'));
+				setIsFollowed(response.data.followed);
+			}
+		} catch (error) {
+			console.error('Error updating follow:', error);
+			await Swal.fire(alertList.errorMessage('팔로우 실패하였습니다.'));
+		}
+	};
+	//--------------------팔로워 가져오기------------------
+	const getFollowers = async (userName: string) => {
+		try {
+			const response = await axios.get(
+				`${process.env.REACT_APP_API_URL}/api/user/followers?userName=${userName}`,
+			);
+			setFollower(response.data.length);
+		} catch (error) {
+			console.error('Error fetching getFollowers:', error);
+		}
+	};
+	//--------------------팔로잉 가져오기------------------
+	const getFollowings = useCallback(
+		async (nickName: string | undefined) => {
+			try {
+				if (nickName !== undefined) {
+					const response = await axios.get(
+						`${process.env.REACT_APP_API_URL}/api/user/followings?userName=${nickName}`,
+						getToken(),
+					);
+					const hasUserName = response.data.some(
+						(user: any) => user === userName,
+					);
+					setIsFollowed(hasUserName);
+				}
+			} catch (error) {
+				console.error('Error fetching getFollowers:', error);
+			}
+		},
+		[userName],
+	);
+	const getToken = () => {
+		const token = localStorage.getItem('accessToken');
+		const config = {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		};
+		return config;
+	};
 	useEffect(() => {
 		const fetchPosts = async () => {
 			try {
@@ -139,80 +195,28 @@ const UserMain = () => {
 		} else {
 			fetchPosts();
 		}
-	}, [userId, follower, isFollowed, introduction]);
-	//-----------------팔로우 기능------------------
-	const followToggle = async () => {
-		try {
-			getFollowings(userName);
-			const response = await post<ApiResponse>(
-				`${process.env.REACT_APP_API_URL}/api/user/toggleFollow`,
-				{ followeeName: userId },
-				getToken(),
-			);
-			mutate(
-				`${process.env.REACT_APP_API_URL}/api/user/followers?userName=${userName}`,
-			);
-			if (!isFollowed) {
-				await Swal.fire(alertList.successMessage('팔로우 하였습니다.'));
-				setIsFollowed(response.data.followed);
-			} else {
-				await Swal.fire(alertList.infoMessage('팔로우를 취소하였습니다.'));
-				setIsFollowed(response.data.followed);
-			}
-		} catch (error) {
-			console.error('Error updating follow:', error);
-			await Swal.fire(alertList.errorMessage('팔로우 실패하였습니다.'));
-		}
-	};
-	//--------------------팔로워 가져오기------------------
-	const getFollowers = async (userName: string) => {
-		try {
-			const response = await axios.get(
-				`${process.env.REACT_APP_API_URL}/api/user/followers?userName=${userName}`,
-			);
-			setFollower(response.data.length);
-		} catch (error) {
-			console.error('Error fetching getFollowers:', error);
-		}
-	};
-	//--------------------팔로잉 가져오기------------------
-	const getFollowings = async (nickName: string | undefined) => {
-		try {
-			if (nickName !== undefined) {
-				const response = await axios.get(
-					`${process.env.REACT_APP_API_URL}/api/user/followings?userName=${nickName}`,
-					getToken(),
-				);
-				setFollowing(response.data);
-				const hasUserName = response.data.some(
-					(user: any) => user === userName,
-				);
-				setIsFollowed(hasUserName);
-			} else {
-				console.log('nickName = undefined');
-			}
-		} catch (error) {
-			console.error('Error fetching getFollowers:', error);
-		}
-	};
-	const getToken = () => {
-		const token = localStorage.getItem('accessToken');
-		const config = {
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
-		};
-		return config;
-	};
+	}, [
+		userId,
+		follower,
+		isFollowed,
+		introduction,
+		getFollowings,
+		userData?.introduction,
+		userData?.profileImg,
+		userData?.userName,
+	]);
 
 	return (
 		<>
 			<Header />
 			<Container>
 				<Sec1>
-					{userData?.userName == userName ? (
+					{userData?.userName === userName ? (
 						<ImageWrap>
-							<UserImage src={profileImage} onClick={openModal}></UserImage>
+							<UserImage
+								src={profileImage}
+								onClick={openModal}
+								alt='userProfileImage'></UserImage>
 							<UserProfile
 								isModalOpen={isModalOpen}
 								closeModal={closeModal}
@@ -235,22 +239,18 @@ const UserMain = () => {
 							) : (
 								<PlusIcon src={plusIcon} onClick={followToggle} />
 							)}
-
-							{/* <FriendButton
-								onClick={() => {
-									alert('친구초대하기');
-								}}>
-								친구초대하기
-							</FriendButton> */}
 						</Wrapper1>
-						<Wrapper2>
-							<PostButton>
-								<Link to={`/post/upload`}>게시글 등록</Link>
-							</PostButton>
-							<EditButton>
-								<Link to={'/user/edit'}>프로필 편집</Link>
-							</EditButton>
-						</Wrapper2>
+
+						{location.pathname === '/post' && (
+							<Wrapper2>
+								<PostButton>
+									<Link to={`/post/upload`}>게시글 등록</Link>
+								</PostButton>
+								<EditButton>
+									<Link to={'/user/edit'}>프로필 편집</Link>
+								</EditButton>
+							</Wrapper2>
+						)}
 						<Wrapper3>
 							<p>
 								게시물 <span>{postCount}</span>
@@ -293,12 +293,6 @@ const UserMain = () => {
 			<Footer />
 		</>
 	);
-=======
-import UserMainComp from '../../components/UserMain/UserMainComp';
-
-const UserMain = () => {
-	return <UserMainComp />;
->>>>>>> Stashed changes
 };
 
 export default UserMain;

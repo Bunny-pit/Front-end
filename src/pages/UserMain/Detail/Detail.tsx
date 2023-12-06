@@ -7,15 +7,15 @@ import Slider from 'react-slick';
 import DetailHeader from '../../../components/Header/DetailHeader/DetailHeader';
 import Footer from '../../../components/Footer/Footer';
 import DeleteIcon from '../../../assets/icons/DeleteIcon.png';
-import likeIcon from '../../../assets/icons/like.png';
-import likedIcon from '../../../assets/icons/liked.png';
-import CommentDeleteIcon from '../../../assets/icons/CommentDeleteIcon.png';
+import likeIcon from '../../../assets/icons/like_11zon.webp';
+import likedIcon from '../../../assets/icons/liked_11zon.webp';
+import CommentDeleteIcon from '../../../assets/icons/CommentDeleteIcon_11zon.webp';
 import { useUser } from '../../../utils/swrFetcher';
 import alertList from '../../../utils/swal';
 import { del } from '../../../api/api';
 import { PostDetailType, PostType, CommentType } from '../../../types/postType';
 import Swal from 'sweetalert2';
-import useSWR, { mutate } from 'swr';
+import { mutate } from 'swr';
 import dayjs from 'dayjs';
 import {
 	Container,
@@ -71,19 +71,14 @@ const Detail = () => {
 	const { userData, isError } = useUser();
 	if (isError) {
 		console.log('유저 데이터를 불러오는데 실패했습니다.');
-	} else if (!userData) {
-		console.log('유저 데이터를 불러오는 중...');
 	}
 	useEffect(() => {
 		const token = localStorage.getItem('accessToken');
-		// 헤더에 토큰을 추가하는 config 객체를 만듭니다.
 		const config = {
 			headers: {
 				Authorization: `Bearer ${token}`,
 			},
 		};
-		// MongoDB에서 데이터 가져오는 함수
-		//게시글 가져옴
 		const fetchPosts = async () => {
 			try {
 				const response = await axios.get(
@@ -103,14 +98,11 @@ const Detail = () => {
 					setIsLiked(false);
 					setUserName(response.data.post.userName);
 				}
-				// console.log(response.data.post);
 			} catch (error) {
 				console.error('Error fetching posts:', error);
 			}
 		};
-		//댓글 가져옴
 		const fetchComments = async () => {
-			// 댓글을 가져오는 함수
 			try {
 				const response = await axios.get(
 					`${process.env.REACT_APP_API_URL}/api/comment/${postId}`,
@@ -123,7 +115,7 @@ const Detail = () => {
 
 		fetchPosts();
 		fetchComments();
-	}, [postId, isLiked]);
+	}, [postId, isLiked, userData?._id]);
 	// --------토큰 받아오는 함수 ---------
 	const getToken = () => {
 		const token = localStorage.getItem('accessToken');
@@ -248,7 +240,7 @@ const Detail = () => {
 						<ProfileUserImage src={profileImage} alt='userImg' />
 						<ProfileId>{userName}</ProfileId>
 					</Profile>
-					{userData?.userName == userName ? (
+					{userData?.userName === userName ? (
 						<DeleteButtonWrap>
 							<DeleteButton onClick={deletePost}>
 								<DeleteButtonIcon src={DeleteIcon} alt='삭제버튼' />

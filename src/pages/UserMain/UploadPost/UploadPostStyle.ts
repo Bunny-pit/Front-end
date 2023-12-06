@@ -1,10 +1,10 @@
 import styled from 'styled-components';
-import UploadPost from '../../../assets/icons/UploadPost.png';
+import UploadPost from '../../../assets/icons/UploadPost_11zon.webp';
 export const Container = styled.div`
 	margin: 0 auto;
 
 	@media only screen and (min-width: 769px) and (max-width: 1980px) {
-		width: 50%;
+		width: 35%;
 		height: auto;
 	}
 	@media only screen and (min-width: 391px) and (max-width: 768px) {
@@ -66,8 +66,7 @@ export const StyledFileInputLabel = styled.label`
 	padding: 30rem 0;
 	width: 100%;
 	box-sizing: border-box;
-	background-color: ${({ theme }) =>
-		theme.colors.gray200}; // 백그라운드 색 설정
+
 	cursor: pointer;
 	background-image: url(${UploadPost});
 	background-repeat: no-repeat;
@@ -75,11 +74,14 @@ export const StyledFileInputLabel = styled.label`
 	background-size: 26rem 32rem;
 `;
 export const StyledTextArea = styled.textarea`
-	resize: none; // textarea 크기 조절 비활성화
+	resize: none;
 	width: 100%;
 	height: 15rem;
+	border-radius: 15px;
+	padding: 10px;
 	box-sizing: border-box;
-	border: 1px solid ${({ theme }) => theme.colors.gray600};
+	font-weight: bold;
+	border: 2px solid ${({ theme }) => theme.colors.gray600};
 `;
 export const SubmitButton = styled.input`
 	width: 100%;
@@ -90,5 +92,5 @@ export const SubmitButton = styled.input`
 	color: ${({ theme }) => theme.colors.background};
 	font-size: 3.2rem;
 	font-weigth: 600;
-	pointer: cursor;
+	cursor: pointer;
 `;

@@ -60,17 +60,20 @@ const useMainHomePost = (pathname: string) => {
 	}
 
 	const observer = useRef<IntersectionObserver | null>(null);
-	const lastPostElementRef = useCallback((element: HTMLDivElement | null) => {
-		if (observer.current) observer.current.disconnect();
-		if (!element) return;
-		observer.current = new IntersectionObserver((entries) => {
-			if (entries[0].isIntersecting) {
-				setSize((size) => size + 1);
-			}
-		});
+	const lastPostElementRef = useCallback(
+		(element: HTMLDivElement | null) => {
+			if (observer.current) observer.current.disconnect();
+			if (!element) return;
+			observer.current = new IntersectionObserver((entries) => {
+				if (entries[0].isIntersecting) {
+					setSize((size) => size + 1);
+				}
+			});
 
-		observer.current.observe(element);
-	}, []);
+			observer.current.observe(element);
+		},
+		[setSize],
+	);
 
 	const updatePost = async (postId: string) => {
 		try {
@@ -79,9 +82,7 @@ const useMainHomePost = (pathname: string) => {
 				return;
 			} else if (updatedContent.trim().length > 100) {
 				Swal.fire(
-					alertList.errorMessage(
-						'게시글은 최대 100글자 미만으로 작성해주세요.',
-					),
+					alertList.errorMessage('게시글은 최대 100자 미만으로 작성해주세요.'),
 				);
 				return;
 			}
@@ -139,7 +140,7 @@ const useMainHomePost = (pathname: string) => {
 			return;
 		} else if (newPostContent.length > 100) {
 			Swal.fire(
-				alertList.errorMessage('게시글은 최대 100글자 미만으로 작성해주세요.'),
+				alertList.errorMessage('게시글은 최대 100자 미만으로 작성해주세요.'),
 			);
 			return;
 		}
@@ -229,8 +230,8 @@ const useMainHomePost = (pathname: string) => {
 
 	const moveToChatPage = async (_id: string, userId: string, name: string) => {
 		const CHAT_NAVIGATE_PATH = pathname.includes('secret')
-			? '/chatting'
-			: '/friendchatting';
+			? '/chatting/*'
+			: '/friendchatting/*';
 
 		const API_CHTTING_ENDPOINT = pathname.includes('secret')
 			? API_CHATTING_START

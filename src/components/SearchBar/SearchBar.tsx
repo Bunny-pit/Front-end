@@ -3,16 +3,16 @@ import {
 	InputContainer,
 	SearchLogo,
 	SearchBarInput,
-	SearchBarBtn,
+	SearchBarButton,
 } from './SearchBarStyle';
 import React, { useState } from 'react';
-import searchLogo from '../../assets/icons/search.svg';
+import searchLogo from '../../assets/icons/search.png';
 
 interface SearchBarProps {
 	onSearch: (query: string) => void;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
+const SearchBar = ({ onSearch }: SearchBarProps) => {
 	const [query, setQuery] = useState('');
 
 	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,7 +34,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
 					placeholder='이름 검색'
 				/>
 			</InputContainer>
-			<SearchBarBtn type='submit'>검색</SearchBarBtn>
+			<SearchBarButton type='submit'>검색</SearchBarButton>
 		</SearchBarForm>
 	);
 };

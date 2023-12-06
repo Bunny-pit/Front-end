@@ -11,12 +11,12 @@ import {
 	ModalBackground,
 	ExitButton,
 } from './ChattingStyle';
-import DMList from '../DMList/DMList';
+import DMList from '../../components/DMList/DMList';
 import { Routes, Route } from 'react-router-dom';
 import Chat from '../../components/Chat/Chat';
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import exiticon from '../../assets/icons/CommentDeleteIcon.png';
+import exiticon from '../../assets/icons/CommentDeleteIcon_11zon.webp';
 
 const Chatting = () => {
 	const location = useLocation();
@@ -55,7 +55,7 @@ const Chatting = () => {
 						)}
 					</ButtonWrapper>
 				) : (
-					<Channels isRoot={location.pathname === '/chatting/*'}>
+					<Channels $isRoot={location.pathname === '/chatting/*'}>
 						<WorkspaceName>다이렉트 메시지</WorkspaceName>
 						<DMList />
 					</Channels>

@@ -1,9 +1,9 @@
 import { HedearStyle, BackButton, Title, BackImage } from './DetailHeaderStyle';
-import Back from '../../../assets/icons/Back.png';
+import Back from '../../../assets/icons/Back_11zon.webp';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const DefaultHeader = () => {
-	const { postId } = useParams(); // id라는 파라미터를 가져옵니다.
+	const { postId } = useParams();
 	const post = '게시물';
 	const uploadPost = '게시물 올리기';
 	let navigate = useNavigate();

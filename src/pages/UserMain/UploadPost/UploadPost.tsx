@@ -31,14 +31,12 @@ const UserMain = () => {
 	const [content, setContent] = useState<string>('');
 	const [files, setFiles] = useState<FileList | null>(null);
 	const [previewURLs, setPreviewURLs] = useState<string[]>([]);
-	const { userData, isError } = useUser();
+	const { isError } = useUser();
 	const [fileSelected, setFileSelected] = useState<boolean>(false); // 사진이 선택되었는지 여부를 추적하는 상태 변수 추가
 	const navigate = useNavigate();
 
 	if (isError) {
 		console.log('유저 데이터를 불러오는데 실패했습니다.');
-	} else if (!userData) {
-		console.log('유저 데이터를 불러오는 중...');
 	}
 
 	const handleContentChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -95,7 +93,7 @@ const UserMain = () => {
 			<Container>
 				<UploadWrap>
 					<StyledForm onSubmit={handleSubmit}>
-						{!fileSelected && ( // fileSelected가 false일 때만 StyledFileInputLabel 및 StyledFileInput 렌더링
+						{!fileSelected && (
 							<StyledFileInputLabel htmlFor='fileUpload'>
 								<StyledFileInput
 									id='fileUpload'

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
 	margin-top: 5rem;
-	width: 77%;
+	width: 75%;
 	display: flex;
 	flex-direction: column;
 	@media (max-width: 628px) {

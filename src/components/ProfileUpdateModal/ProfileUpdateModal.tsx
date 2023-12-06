@@ -1,11 +1,12 @@
-import React, { useState, useRef, FormEvent } from 'react';
+import React, { useState, useRef, useEffect, FormEvent } from 'react';
 import Modal from 'react-modal';
 import arrowBack from './arrow_back_icon.svg';
 import media from './media_icon.svg';
 import axios from 'axios';
 import alertList from '../../utils/swal';
 import Swal from 'sweetalert2';
-import { useNavigate } from 'react-router-dom';
+import { mutate } from 'swr';
+import { API_USER_ACCESS_TOKEN } from '../../utils/constant';
 import { onChangeInputSetter } from '../../utils/inputStateSetter';
 import {
 	customModalStyles,
@@ -27,27 +28,11 @@ type UserProfileProps = {
 	closeModal: () => void;
 	handleModalClose: () => void;
 };
-function UserProfile({
-	isModalOpen,
-	closeModal,
-}: // handleModalClose,
-UserProfileProps) {
+function UserProfile({ isModalOpen, closeModal }: UserProfileProps) {
 	const [imgFile, setImgFile] = useState<string | ArrayBuffer | null>('');
-	const [selectedImg, setSelectedImg] = useState<string | ArrayBuffer | null>(
-		'',
-	);
 	const [newIntroduction, setNewIntroduction] = useState<string>('');
 
 	const imgRef = useRef<HTMLInputElement>(null);
-	// const [isModalOpen, setIsModalOpen] = useState(false);
-
-	// const openModal = () => {
-	// 	setIsModalOpen(true);
-	// };
-
-	// const closeModal = () => {
-	// 	setIsModalOpen(false);
-	// };
 
 	const handleModalClose = async () => {
 		if (
@@ -57,6 +42,10 @@ UserProfileProps) {
 		}
 	};
 
+	useEffect(() => {
+		Modal.setAppElement('#root');
+	}, []);
+
 	const saveImgFile = () => {
 		const fileInput = imgRef.current;
 		if (fileInput && fileInput.files && fileInput.files[0]) {
@@ -65,46 +54,10 @@ UserProfileProps) {
 			reader.readAsDataURL(file);
 			reader.onloadend = () => {
 				setImgFile(reader.result);
-				setSelectedImg(reader.result);
 			};
 		}
 	};
-	// const handleSelect = async (e: FormEvent) => {
-	// 	e.preventDefault();
-	// 	const fileInput = imgRef.current;
-	// 	const token = localStorage.getItem('accessToken');
 
-	// 	if (
-	// 		fileInput &&
-	// 		fileInput.files &&
-	// 		fileInput.files[0] &&
-	// 		imgFile &&
-	// 		selectedImg
-	// 	) {
-	// 		const file = fileInput.files[0];
-	// 		const formData = new FormData();
-	// 		formData.append('file', file);
-	// 		try {
-	// 			await axios.patch(
-	// 				`${process.env.REACT_APP_API_URL}/api/user/profile/edit`,
-	// 				formData,
-	// 				{
-	// 					headers: {
-	// 						Authorization: `Bearer ${token}`, // attach the token as a bearer token
-	// 					},
-	// 				},
-	// 			);
-	// 			await Swal.fire(alertList.successMessage(`정보 변경 성공!`));
-	// 			// navigate('/post');
-	// 		} catch (error) {
-	// 			console.error('Error creating post:', error);
-	// 			await Swal.fire(alertList.errorMessage('정보 변경에 실패하였습니다.'));
-	// 		}
-	// 		closeModal();
-	// 	} else {
-	// 		alert('이미지를 등록해 주세요.');
-	// 	}
-	// };
 	const handleSelect = async (e: FormEvent) => {
 		e.preventDefault();
 		const fileInput = imgRef.current;
@@ -140,6 +93,9 @@ UserProfileProps) {
 					},
 				},
 			);
+			const fetchingURL = `${process.env.REACT_APP_API_URL}${API_USER_ACCESS_TOKEN}`;
+			mutate(fetchingURL);
+
 			await Swal.fire(alertList.successMessage(`정보 변경 성공!`));
 		} catch (error) {
 			console.error('Error updating profile:', error);
@@ -183,19 +139,19 @@ UserProfileProps) {
 						ref={imgRef}
 						onChange={saveImgFile}
 					/>
-					<InputTitle>한 줄 소개</InputTitle>
+					<InputTitle>간단한 자기소개를 추가해주세요!</InputTitle>
 					<InputWrap>
 						<InputBar
 							type='text'
-							placeholder='안녕하세요. 버니핏입니다.'
+							placeholder='ex)안녕하세요. 버니핏입니다.'
 							value={newIntroduction}
 							onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
 								onChangeInputSetter(setNewIntroduction)(e)
 							}
 						/>
 					</InputWrap>
-					<ModalPostButton onClick={handleSelect}>수정완료</ModalPostButton>
 				</ModalMain>
+				<ModalPostButton onClick={handleSelect}>수정완료</ModalPostButton>
 			</Box>
 		</Modal>
 	);

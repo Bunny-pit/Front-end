@@ -15,8 +15,8 @@ import { Routes, Route } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import FriendChat from '../../components/Chat/FriendChat';
 import { useLocation } from 'react-router-dom';
-import FriendDMList from '../DMList/FriendDMList';
-import exiticon from '../../assets/icons/CommentDeleteIcon.png';
+import FriendDMList from '../../components/DMList/FriendDMList';
+import exiticon from '../../assets/icons/CommentDeleteIcon_11zon.webp';
 
 const FriendChatting = () => {
 	const location = useLocation();
@@ -53,7 +53,7 @@ const FriendChatting = () => {
 						)}
 					</ButtonWrapper>
 				) : (
-					<FriendChannels isRoot={location.pathname === '/friendchatting/*'}>
+					<FriendChannels $isRoot={location.pathname === '/friendchatting/*'}>
 						<WorkspaceName>다이렉트 메시지</WorkspaceName>
 						<FriendDMList></FriendDMList>
 					</FriendChannels>

@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
-import HeaderLogo from '../../assets/icons/HedearLogo.png';
-import AdminHome from '../../assets/icons/AdminHome.png';
-import AdminExite from '../../assets/icons/AdminExite.png';
+import HeaderLogo from '../../assets/icons/HedearLogo_11zon.webp';
+import AdminHome from '../../assets/icons/AdminHome_11zon.webp';
+import AdminExite from '../../assets/icons/AdminExite_11zon.webp';
 
 import {
 	HedearStyle,

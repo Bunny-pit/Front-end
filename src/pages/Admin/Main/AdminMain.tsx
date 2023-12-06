@@ -1,13 +1,14 @@
-import { Routes, Route } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
 import AdminHeader from '../../../components/AdminHeader/AdminHeader';
 import DefaultFooter from '../../../components/Footer/Footer';
-import { Link } from 'react-router-dom';
 
-import UserMembers from '../UserMembers/UserMembers';
-import ReportManagement from '../ReportManagement/ ReportManagement';
-
-import { Container, Title, Menu, H2, MenuFlex } from './AdminMainStyle';
+import {
+	Container,
+	Title,
+	MenuFlex,
+	MenuButton,
+	LinkStyle,
+	SubTitle,
+} from './AdminMainStyle';
 
 const AdminMain = () => {
 	return (
@@ -16,16 +17,16 @@ const AdminMain = () => {
 			<Container>
 				<Title>관리자 페이지</Title>
 				<MenuFlex>
-					<Menu>
-						<Link to='/userMembers'>
-							<H2>회원관리</H2>
-						</Link>
-					</Menu>
-					<Menu>
-						<Link to='/reportManagement'>
-							<H2>신고관리</H2>
-						</Link>
-					</Menu>
+					<LinkStyle to='/userMembers'>
+						<MenuButton>
+							<SubTitle>회원관리</SubTitle>
+						</MenuButton>
+					</LinkStyle>
+					<LinkStyle to='/reportManagement'>
+						<MenuButton>
+							<SubTitle>신고관리</SubTitle>
+						</MenuButton>
+					</LinkStyle>
 				</MenuFlex>
 			</Container>
 			<DefaultFooter />

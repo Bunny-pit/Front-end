@@ -1,4 +1,8 @@
 import styled from 'styled-components';
+import unknown from '../../assets/icons/icons8-secret_11zon.webp';
+import unknownChatting from '../../assets/icons/icons8-secretchat_11zon.webp';
+import friends from '../../assets/icons/icons8-friend_11zon.webp';
+import friendsChatting from '../../assets/icons/icons8-friendchat_11zon.webp';
 
 export const HedearStyle = styled.div`
 	border-bottom: 0.1rem solid ${({ theme }) => theme.colors.logocolor};
@@ -30,7 +34,8 @@ export const HeaderWrapper = styled.div`
 				margin: 0 2rem;
 
 				img {
-					width: 3rem;
+					width: 24px;
+					cursor: pointer;
 				}
 			}
 		}
@@ -50,6 +55,7 @@ export const HeaderWrapper = styled.div`
 		}
 	}
 `;
+
 export const Logo = styled.img`
 	width: 6.3rem;
 `;
@@ -69,6 +75,39 @@ export const MenuLi = styled.li`
 		padding: 1rem 1.5rem;
 	}
 `;
+
+export const AnonymousIcon = styled.div`
+	width: 24px;
+	height: 24px;
+	background-image: url(${unknown});
+	background-size: cover;
+	cursor: pointer;
+`;
+
+export const ChattingIcon = styled.div`
+	width: 24px;
+	height: 24px;
+	background-image: url(${unknownChatting});
+	background-size: cover;
+	cursor: pointer;
+`;
+
+export const FriendsIcon = styled.div`
+	width: 24px;
+	height: 24px;
+	background-image: url(${friends});
+	background-size: cover;
+	cursor: pointer;
+`;
+
+export const FriendChattingIcon = styled.div`
+	width: 24px;
+	height: 24px;
+	background-image: url(${friendsChatting});
+	background-size: cover;
+	cursor: pointer;
+`;
+
 export const Option = styled.img`
 	width: 3.4rem;
 	height: 3.4rem;

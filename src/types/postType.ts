@@ -14,7 +14,7 @@ export interface PostDetailType {
 	images: string[];
 	content: string;
 	createdAt: string;
-	likeCount: number; // 추가된 부분
+	likeCount: number;
 }
 
 export interface CommentType {

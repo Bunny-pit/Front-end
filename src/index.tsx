@@ -9,16 +9,15 @@ import GlobalFont from './styles/GlobalFont';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
-    <Router>
-      <ThemeProvider theme={theme}>
-        <GlobalStyles />
-        <GlobalFont />
-        <App />
-      </ThemeProvider>
-    </Router>
-
-  </React.StrictMode>
+	<React.StrictMode>
+		<Router>
+			<ThemeProvider theme={theme}>
+				<GlobalStyles />
+				<GlobalFont />
+				<App />
+			</ThemeProvider>
+		</Router>
+	</React.StrictMode>,
 );
 
 reportWebVitals();
