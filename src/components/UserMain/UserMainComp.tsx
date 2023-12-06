@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
@@ -11,7 +11,8 @@ import alertList from '../../utils/swal';
 import Swal from 'sweetalert2';
 import { mutate } from 'swr';
 import { post } from '../../api/api';
-import UserProfile from '../../components/ProfileUpdateModal/ProfileUpdateModal';
+import UserProfile from '../ProfileUpdateModal/ProfileUpdateModal';
+import ImageWrapComp from './ImageWrapComponent/ImageWrapComp';
 
 import {
 	Container,
@@ -38,21 +39,20 @@ import {
 	PostButton,
 	PostUlEmpty,
 	OtherUserImage,
-} from './UserMainStyle';
+} from './style';
 
 type ApiResponse = {
 	message: string;
 	followed: boolean;
 };
 
-const UserMain = () => {
+const UserMainComp = () => {
 	const [posts, setPosts] = useState<PostType[]>([]);
 	const [postCount, setPostCount] = useState<number>(0);
 	const [userName, setUserName] = useState<string>('');
 	const [profileImage, setProfileImage] = useState<string>('');
 	const [getEmail, setEmail] = useState<string>('');
 	const [follower, setFollower] = useState<string>('');
-	const [following, setFollowing] = useState<string>('');
 	const [isFollowed, setIsFollowed] = useState<boolean>(false);
 	const { userId } = useParams();
 	const { userData } = useUser();
@@ -211,23 +211,10 @@ const UserMain = () => {
 			<Header />
 			<Container>
 				<Sec1>
-					{userData?.userName === userName ? (
-						<ImageWrap>
-							<UserImage
-								src={profileImage}
-								onClick={openModal}
-								alt='userProfileImage'></UserImage>
-							<UserProfile
-								isModalOpen={isModalOpen}
-								closeModal={closeModal}
-								handleModalClose={handleModalClose}
-							/>
-						</ImageWrap>
-					) : (
-						<ImageWrap>
-							<OtherUserImage src={profileImage}></OtherUserImage>
-						</ImageWrap>
-					)}
+					<ImageWrapComp
+						currentName={userData?.userName || ''}
+						userName={userName}
+						profileImage={profileImage}></ImageWrapComp>
 
 					<ProfileWrap>
 						<Wrapper1>
@@ -295,4 +282,4 @@ const UserMain = () => {
 	);
 };
 
-export default UserMain;
+export default UserMainComp;
