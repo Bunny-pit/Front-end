@@ -43,18 +43,22 @@ export const MenuFlex = styled.div`
 
 export const LinkStyle = styled(Link)`
 	text-decoration: none;
+	:hover {
+		background-color: #eee;
+	}
 `;
 
 export const MenuButton = styled.button`
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	border: 1px solid #7954f8;
+	border: 2px solid #7954f8;
 	border-radius: 20px;
 	flex-direction: column;
 	width: 35rem;
 	height: 10rem;
 	cursor: pointer;
+	background-color: #fff;
 `;
 
 export const SubTitle = styled.div`

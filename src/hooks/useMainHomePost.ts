@@ -75,14 +75,60 @@ const useMainHomePost = (pathname: string) => {
 		[setSize],
 	);
 
+	const createPost = async (imageFile?: File, onPostCreated?: () => void) => {
+		const token = localStorage.getItem('accessToken');
+		if (!token) {
+			Swal.fire(
+				alertList.infoMessage('게시글 작성을 위해서는 로그인이 필요합니다.'),
+			);
+			setNewPostContent('');
+			return;
+		} else if (newPostContent.trim().length > 300) {
+			Swal.fire(
+				alertList.infoMessage('게시글은 최대 300자 미만으로 작성해주세요.'),
+			);
+			return;
+		}
+
+		const formData = new FormData();
+		formData.append('content', newPostContent.trim());
+		if (imageFile) {
+			formData.append('images', imageFile);
+		}
+
+		try {
+			await post<Post>(API_ENDPOINT, formData, {
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+				withCredentials: true,
+			});
+			setNewPostContent('');
+			mutate();
+			Swal.fire(
+				alertList.successMessage('게시글이 성공적으로 업로드 되었습니다.'),
+			);
+			if (onPostCreated) {
+				onPostCreated();
+			}
+		} catch (err) {
+			console.error(err);
+			Swal.fire(
+				alertList.errorMessage('게시글 업로드 중 오류가 발생했습니다.'),
+			);
+		}
+	};
+
 	const updatePost = async (postId: string) => {
 		try {
 			if (updatedContent.trim().length < 1) {
-				Swal.fire(alertList.errorMessage('최소 1글자 이상 작성해주세요.'));
-				return;
-			} else if (updatedContent.trim().length > 100) {
 				Swal.fire(
-					alertList.errorMessage('게시글은 최대 100자 미만으로 작성해주세요.'),
+					alertList.errorMessage('게시글은 최소 1글자 이상 작성해주세요.'),
+				);
+				return;
+			} else if (updatedContent.trim().length > 300) {
+				Swal.fire(
+					alertList.errorMessage('게시글은 최대 300자 미만으로 작성해주세요.'),
 				);
 				return;
 			}
@@ -127,42 +173,6 @@ const useMainHomePost = (pathname: string) => {
 				Swal.fire(alertList.errorMessage('삭제 권한이 없습니다.'));
 				return;
 			}
-		}
-	};
-
-	const createPost = async () => {
-		const token = localStorage.getItem('accessToken');
-		if (!token) {
-			Swal.fire(
-				alertList.errorMessage('게시글 작성을 위해서는 로그인이 필요합니다.'),
-			);
-			setNewPostContent('');
-			return;
-		} else if (newPostContent.length > 100) {
-			Swal.fire(
-				alertList.errorMessage('게시글은 최대 100자 미만으로 작성해주세요.'),
-			);
-			return;
-		}
-		try {
-			await post<Post>(
-				API_ENDPOINT,
-				{
-					content: newPostContent,
-				},
-				{
-					withCredentials: true,
-				},
-			);
-			setNewPostContent('');
-
-			mutate();
-
-			Swal.fire(
-				alertList.successMessage('게시글이 성공적으로 업로드 되었습니다.'),
-			);
-		} catch (err) {
-			console.log(err);
 		}
 	};
 

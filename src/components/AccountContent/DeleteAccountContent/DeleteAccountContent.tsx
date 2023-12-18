@@ -112,7 +112,7 @@ const DeleteAccountContent = () => {
 			<BottomButton
 				onClick={async () => {
 					const result = await Swal.fire(
-						alertList.doubleCheckMessage(`돌아가시겠어요?`),
+						alertList.doubleCheckMessage(`돌아가시겠습니까?`),
 					);
 					if (result.isConfirmed) {
 						navigate('/');

@@ -1,27 +1,46 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
 	width: 50%;
-	margin: auto;
-	height: 100rem;
-	overflow-y: auto;
-	border-radius: 2rem;
-	overflow-x: hidden;
-
+	margin: 0 auto;
 	@media (max-width: 768px) {
-		width: 80%;
+		width: 100%;
 	}
+`;
 
-	@media (max-width: 390px) {
-		width: 95%;
-	}
+export const AddContentButton = styled.button`
+	width: auto;
+	padding: 1.5rem 5rem;
+	margin-bottom: 5%;
+	color: #fff;
+	font-weight: bold;
+	background-color: #cdc0fc;
+	border: none;
+	border-radius: 0.7rem;
+	cursor: pointer;
+`;
+
+export const InnerContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 100%;
+	height: 100vh;
+	overflow-y: auto;
+	overflow-x: hidden;
+	border-radius: 1rem;
+	margin-bottom: 10rem;
+	box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 `;
 
 export const EmptyArea = styled.h1`
 	color: ${({ theme }) => theme.colors.gray600};
 	font-size: 3.5rem;
 	position: absolute;
-	top: 50%;
+	top: 60%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 `;
