@@ -52,7 +52,6 @@ const UserMain = () => {
 	const [profileImage, setProfileImage] = useState<string>('');
 	const [getEmail, setEmail] = useState<string>('');
 	const [follower, setFollower] = useState<string>('');
-	const [following, setFollowing] = useState<string>('');
 	const [isFollowed, setIsFollowed] = useState<boolean>(false);
 	const { userId } = useParams();
 	const { userData } = useUser();
