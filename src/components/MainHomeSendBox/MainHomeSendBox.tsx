@@ -33,11 +33,7 @@ const MainHomeSendBox = ({ onPostCreated }: MainHomeSendBoxProps) => {
 
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
-		if (imageFiles.length > 0) {
-			createPost(imageFiles[0], onPostCreated);
-		} else {
-			createPost(undefined, onPostCreated);
-		}
+		createPost(imageFiles, onPostCreated);
 	};
 
 	const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {

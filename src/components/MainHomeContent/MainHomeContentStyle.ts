@@ -34,6 +34,11 @@ export const InnerContainer = styled.div`
 	border-radius: 1rem;
 	margin-bottom: 10rem;
 	box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+	&::-webkit-scrollbar {
+		display: none;
+	}
+	scrollbar-width: none;
+	-ms-overflow-style: none;
 `;
 
 export const EmptyArea = styled.h1`
@@ -47,7 +52,6 @@ export const EmptyArea = styled.h1`
 
 export const ContentBox = styled.div`
 	width: 100%;
-	height: 25rem;
 	display: flex;
 	padding: 2rem 5rem 2rem 5rem;
 	box-sizing: border-box;
@@ -61,22 +65,20 @@ export const ContentBox = styled.div`
 `;
 
 export const ImageWrap = styled.div`
-	flex: 0.5;
-	margin: auto;
-	display: flex;
+	margin-right: 1.5rem;
 `;
 
 export const UserImage = styled.img`
 	width: 8rem;
 	height: 8rem;
 	object-fit: cover;
-	margin: 0 auto;
 	border-radius: 50%;
 `;
 
 export const UserContainer = styled.div`
 	display: flex;
 	align-items: center;
+	margin-bottom: 1.5rem;
 `;
 
 export const UserName = styled.h2`
@@ -147,6 +149,9 @@ export const Report = styled.button`
 `;
 
 export const InnerContent = styled.div`
+	width: 80%;
+	min-height: 100px;
+	max-height: 800px;
 	flex: 2;
 	position: relative;
 	padding: 1rem 3rem;
@@ -156,19 +161,58 @@ export const ContentContainer = styled.div`
 	position: relative;
 `;
 
-export const Content = styled.p`
+export const Content = styled.div`
 	color: ${({ theme }) => theme.colors.text};
 	font-size: 1.8rem;
 `;
 
-export const EditContentArea = styled.textarea`
-	position: absolute;
-	border-radius: 1rem;
-	top: 0;
-	left: 0;
+export const SliderContainer = styled.div`
+	display: flex;
+	overflow-x: auto;
+	scroll-snap-type: x mandatory;
+	-webkit-overflow-scrolling: touch;
+	scrollbar-width: none;
+	&::-webkit-scrollbar {
+		display: none;
+	}
+`;
+
+export const ImageContainer = styled.div`
 	width: 100%;
-	height: 7rem;
+	height: 100%;
+	overflow: hidden;
+	margin-bottom: 2rem;
+	flex: 0 0 auto;
+	scroll-snap-align: start;
+	margin-right: 10px;
+	&:last-child {
+		margin-right: 0;
+	}
+`;
+
+export const Image = styled.img`
+	width: 100%;
+	height: auto;
+	max-height: 450px;
+`;
+
+export const TextArea = styled.div`
+	width: 100%;
+	max-height: 300px;
+	overflow-wrap: break-word;
+`;
+
+export const EditContentArea = styled.textarea`
+	border-radius: 1rem;
+	width: 100%;
+	height: 10rem;
 	resize: none;
+`;
+
+export const BottomContainer = styled.div`
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 `;
 
 export const Date = styled.div`
@@ -177,12 +221,8 @@ export const Date = styled.div`
 `;
 
 export const ButtonWrapper = styled.div`
-	position: absolute;
 	display: flex;
 	gap: 1.5rem;
-	bottom: 0;
-	right: 0;
-	padding-right: 2.5rem;
 `;
 
 export const Edit = styled.button`

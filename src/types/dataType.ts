@@ -36,6 +36,7 @@ export interface Post {
 	name: string;
 	email: string;
 	title: string;
+	images: string[];
 	content: string;
 	createdAt: string;
 	updatedAt: string;

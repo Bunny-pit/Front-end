@@ -15,13 +15,19 @@ import {
 	InnerContent,
 	ContentContainer,
 	Content,
+	SliderContainer,
+	ImageContainer,
+	Image,
+	TextArea,
 	EditContentArea,
+	BottomContainer,
 	Date,
 	ButtonWrapper,
 	Edit,
 	Delete,
 	Report,
 } from '../MainHomeContentStyle';
+import MainHomeContentImage from './MainHomeContentImage';
 
 interface InnerContentProps {
 	post: Post;
@@ -58,6 +64,7 @@ const MainHomeContentInnerContent = ({ post }: InnerContentProps) => {
 	return (
 		<InnerContent>
 			<UserContainer>
+				<MainHomeContentImage post={post} />
 				<UserName>{post.name}</UserName>
 				<IconContainer>
 					{isOnFriendsPage && (
@@ -88,38 +95,50 @@ const MainHomeContentInnerContent = ({ post }: InnerContentProps) => {
 						onChange={handleContentChange}
 					/>
 				) : (
-					<Content>{post.content}</Content>
+					<Content>
+						<SliderContainer>
+							{post.images &&
+								post.images.map((image, index) => (
+									<ImageContainer key={index}>
+										<Image src={image} alt={`Post Image ${index}`} />
+									</ImageContainer>
+								))}
+						</SliderContainer>
+						<TextArea>{post.content}</TextArea>
+					</Content>
 				)}
 			</ContentContainer>
-			<Date>
-				<p>{post.createdAt}</p>
-			</Date>
-			<ButtonWrapper>
-				{userData?._id === post.userId &&
-					(editingPostId === post._id ? (
-						<>
-							<Edit onClick={() => updatePost(post._id)}>저장</Edit>
-							<Edit
-								onClick={() => {
-									setEditingPostId('');
-									setUpdatedContent('');
-								}}>
-								취소
-							</Edit>
-						</>
-					) : (
-						<>
-							<Edit
-								onClick={() => {
-									setEditingPostId(post._id);
-									setUpdatedContent(post.content);
-								}}>
-								수정
-							</Edit>
-							<Delete onClick={() => deletePost(post._id)}>삭제</Delete>
-						</>
-					))}
-			</ButtonWrapper>
+			<BottomContainer>
+				<Date>
+					<p>{post.createdAt}</p>
+				</Date>
+				<ButtonWrapper>
+					{userData?._id === post.userId &&
+						(editingPostId === post._id ? (
+							<>
+								<Edit onClick={() => updatePost(post._id)}>저장</Edit>
+								<Edit
+									onClick={() => {
+										setEditingPostId('');
+										setUpdatedContent('');
+									}}>
+									취소
+								</Edit>
+							</>
+						) : (
+							<>
+								<Edit
+									onClick={() => {
+										setEditingPostId(post._id);
+										setUpdatedContent(post.content);
+									}}>
+									수정
+								</Edit>
+								<Delete onClick={() => deletePost(post._id)}>삭제</Delete>
+							</>
+						))}
+				</ButtonWrapper>
+			</BottomContainer>
 		</InnerContent>
 	);
 };

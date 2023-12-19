@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import MainHomeContentImage from './MainHomeContentDetail/MainHomeContentImage';
+
 import MainHomeContentInnerContent from './MainHomeContentDetail/MainHomeContentInnerContent';
 import MainHomeSendBox from '../MainHomeSendBox/MainHomeSendBox';
 import {
@@ -58,7 +58,6 @@ const MainHomeContent = () => {
 						<ContentBox
 							key={post._id}
 							ref={index === posts.length - 1 ? lastPostElementRef : null}>
-							<MainHomeContentImage post={post} />
 							<MainHomeContentInnerContent post={post} />
 						</ContentBox>
 					))

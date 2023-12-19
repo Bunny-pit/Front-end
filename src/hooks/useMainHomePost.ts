@@ -75,7 +75,7 @@ const useMainHomePost = (pathname: string) => {
 		[setSize],
 	);
 
-	const createPost = async (imageFile?: File, onPostCreated?: () => void) => {
+	const createPost = async (imageFiles: File[], onPostCreated?: () => void) => {
 		const token = localStorage.getItem('accessToken');
 		if (!token) {
 			Swal.fire(
@@ -92,9 +92,9 @@ const useMainHomePost = (pathname: string) => {
 
 		const formData = new FormData();
 		formData.append('content', newPostContent.trim());
-		if (imageFile) {
-			formData.append('images', imageFile);
-		}
+		imageFiles.forEach((file) => {
+			formData.append('images', file);
+		});
 
 		try {
 			await post<Post>(API_ENDPOINT, formData, {
