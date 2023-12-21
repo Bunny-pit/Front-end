@@ -29,12 +29,13 @@ const toKST = (utcDate: string) => {
 	return dayjs(utcDate).tz('Asia/Seoul').format('YYYY-MM-DD HH:mm');
 };
 
-const useMainHomePost = (pathname: string) => {
+const useMainHomePost = (pathname: string, shouldLoad: boolean) => {
 	const API_ENDPOINT = pathname.includes('secret')
 		? API_MAINHOME_SECRET
 		: API_MAINHOME_FRIENDS;
 
 	const getKey = (pageIndex: number, previousPageData: Post[] | null) => {
+		if (!shouldLoad) return null;
 		if (previousPageData && !previousPageData.length) return null;
 		return `${process.env.REACT_APP_API_URL}${API_ENDPOINT}?page=${
 			pageIndex + 1

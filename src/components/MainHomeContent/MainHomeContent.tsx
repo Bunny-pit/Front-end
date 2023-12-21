@@ -17,9 +17,9 @@ import useMainHomePost from '../../hooks/useMainHomePost';
 
 const MainHomeContent = () => {
 	const location = useLocation();
-	const mainHomePost = useMainHomePost(location.pathname);
-	const { posts, lastPostElementRef } = mainHomePost;
 	const [showSendBox, setShowSendBox] = useState(false);
+	const mainHomePost = useMainHomePost(location.pathname, !showSendBox);
+	const { posts, lastPostElementRef } = mainHomePost;
 
 	const handleAddContentClick = () => {
 		setShowSendBox(true);

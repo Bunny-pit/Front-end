@@ -30,6 +30,7 @@ const MainHomeSendBox = ({ onPostCreated }: MainHomeSendBoxProps) => {
 	const location = useLocation();
 	const { createPost, newPostContent, setNewPostContent } = useMainHomePost(
 		location.pathname,
+		false,
 	);
 
 	const handleSubmit = (e: React.FormEvent) => {

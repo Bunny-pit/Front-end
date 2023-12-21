@@ -47,7 +47,7 @@ const MainHomeContentInnerContent = ({ post }: InnerContentProps) => {
 		updatePost,
 		deletePost,
 		sendReport,
-	} = useMainHomePost(location.pathname);
+	} = useMainHomePost(location.pathname, true);
 
 	if (isError && error) {
 		const errorMessage =
