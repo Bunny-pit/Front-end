@@ -130,7 +130,7 @@ const UserMain = () => {
 		[userName],
 	);
 	const getToken = () => {
-		const token = localStorage.getItem('accessToken');
+		const token = sessionStorage.getItem('accessToken');
 		const config = {
 			headers: {
 				Authorization: `Bearer ${token}`,
@@ -141,7 +141,7 @@ const UserMain = () => {
 	useEffect(() => {
 		const fetchPosts = async () => {
 			try {
-				const token = localStorage.getItem('accessToken');
+				const token = sessionStorage.getItem('accessToken');
 				const config = {
 					headers: {
 						Authorization: `Bearer ${token}`,
@@ -165,7 +165,7 @@ const UserMain = () => {
 
 		const fetchOtherUserPosts = async () => {
 			try {
-				const token = localStorage.getItem('accessToken');
+				const token = sessionStorage.getItem('accessToken');
 				const config = {
 					headers: {
 						Authorization: `Bearer ${token}`,
