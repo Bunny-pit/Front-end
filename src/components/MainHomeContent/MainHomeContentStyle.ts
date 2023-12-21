@@ -58,6 +58,7 @@ export const ContentBox = styled.div`
 	display: flex;
 	padding: 2rem 5rem 2rem 5rem;
 	box-sizing: border-box;
+	border-bottom: 1px solid #eee;
 	background-color: ${({ theme }) => theme.colors.gray100};
 `;
 
@@ -75,7 +76,7 @@ export const UserImage = styled.img`
 export const UserContainer = styled.div`
 	display: flex;
 	align-items: center;
-	margin-bottom: 1.5rem;
+	margin-bottom: 2.5rem;
 `;
 
 export const UserName = styled.h2`
@@ -109,11 +110,16 @@ export const GoChat = styled.button`
 	@media (max-width: 768px) {
 		margin-top: 0.3rem;
 		width: 6.3rem;
+		background-position: center 0.3rem;
+		background-size: 75%;
 	}
 
 	@media (max-width: 390px) {
 		margin-top: 0.3rem;
-		width: 6rem;
+		width: 7rem;
+		height: 5rem;
+		background-position: center 0.7rem;
+		background-size: 80%;
 	}
 `;
 
@@ -145,19 +151,22 @@ export const Report = styled.button`
 	background-image: url(${reportIcon});
 	background-repeat: no-repeat;
 	background-position: center;
-	background-size: 50%;
+	background-size: 60%;
 	cursor: pointer;
 
 	@media (max-width: 768px) {
 		margin-top: 0.1rem;
-		width: 45px;
-		height: 3.5rem;
+		width: 7rem;
+		height: 4rem;
+		background-position: center;
+		background-size: 70%;
 	}
 
 	@media (max-width: 390px) {
 		margin-top: 0.1rem;
-		width: 40px;
-		height: 25px;
+		width: 6rem;
+		height: 5rem;
+		background-size: 90%;
 	}
 `;
 
