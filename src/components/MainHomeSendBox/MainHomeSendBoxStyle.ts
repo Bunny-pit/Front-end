@@ -63,10 +63,12 @@ export const DeleteButton = styled.button`
 
 export const ImageUploadButtonArea = styled.div`
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	width: 100%;
 	height: 10%;
+	gap: 1.5rem;
 	background-color: #fff;
 	border-top: 1px solid #eee;
 `;
@@ -80,6 +82,10 @@ export const ImageUploadButton = styled.button`
 	border: none;
 	border-radius: 0.7rem;
 	cursor: pointer;
+`;
+
+export const ImageUploadIntroText = styled.div`
+	color: #df0101;
 `;
 
 export const TextAreaAndButtonContainer = styled.div`

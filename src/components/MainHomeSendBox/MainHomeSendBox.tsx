@@ -11,6 +11,7 @@ import {
 	DeleteButton,
 	ImageUploadButtonArea,
 	ImageUploadButton,
+	ImageUploadIntroText,
 	TextAreaAndButtonContainer,
 	TextAreaInput,
 	SendButton,
@@ -104,6 +105,9 @@ const MainHomeSendBox = ({ onPostCreated }: MainHomeSendBoxProps) => {
 							이미지 추가
 						</ImageUploadButton>
 					)}
+					<ImageUploadIntroText>
+						*이미지 파일은 업로드 이후 수정이 불가능합니다*
+					</ImageUploadIntroText>
 				</ImageUploadButtonArea>
 				<TextAreaAndButtonContainer>
 					<TextAreaInput

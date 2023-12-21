@@ -1,4 +1,7 @@
 import styled from 'styled-components';
+import reportIcon from '../../assets/icons/flasher.png';
+import message from '../../assets/icons/message.png';
+import Group from '../../assets/icons/Group.png';
 
 export const Container = styled.div`
 	display: flex;
@@ -56,12 +59,6 @@ export const ContentBox = styled.div`
 	padding: 2rem 5rem 2rem 5rem;
 	box-sizing: border-box;
 	background-color: ${({ theme }) => theme.colors.gray100};
-	&:hover {
-		background-color: ${({ theme }) => theme.colors.gray200};
-		transition: 0.5s;
-		transform: scale(1.05);
-		border-radius: 2rem;
-	}
 `;
 
 export const ImageWrap = styled.div`
@@ -87,7 +84,6 @@ export const UserName = styled.h2`
 
 export const IconContainer = styled.div`
 	display: flex;
-	gap: 2rem;
 	margin-left: auto;
 
 	@media (max-width: 768px) {
@@ -99,8 +95,15 @@ export const IconContainer = styled.div`
 	}
 `;
 
-export const GoChat = styled.div`
-	margin-top: 0.3rem;
+export const GoChat = styled.button`
+	width: 7rem;
+	height: 4rem;
+	border: none;
+	background-color: transparent;
+	background-image: url(${message});
+	background-repeat: no-repeat;
+	background-position: center 0.5rem;
+	background-size: 60%;
 	cursor: pointer;
 
 	@media (max-width: 768px) {
@@ -114,9 +117,17 @@ export const GoChat = styled.div`
 	}
 `;
 
-export const GoProfile = styled.div`
+export const GoProfile = styled.button`
+	width: 7rem;
+	height: 4rem;
+	border: none;
+	background-color: transparent;
+	background-image: url(${Group});
+	background-repeat: no-repeat;
+	background-position: center 0.3rem;
+	background-size: 55%;
 	cursor: pointer;
-
+	padding: 0 10px;
 	@media (max-width: 768px) {
 		width: 6.5rem;
 	}
@@ -127,12 +138,14 @@ export const GoProfile = styled.div`
 `;
 
 export const Report = styled.button`
-	width: 50px;
+	width: 7rem;
 	height: 3.5rem;
-	border: 0;
-	border-radius: 0.7rem;
-	background-color: ${({ theme }) => theme.colors.maincolor};
-	color: #fff;
+	border: none;
+	background-color: transparent;
+	background-image: url(${reportIcon});
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 50%;
 	cursor: pointer;
 
 	@media (max-width: 768px) {
@@ -167,6 +180,7 @@ export const Content = styled.div`
 `;
 
 export const SliderContainer = styled.div`
+	overflow: hidden;
 	display: flex;
 	overflow-x: auto;
 	scroll-snap-type: x mandatory;
@@ -175,13 +189,13 @@ export const SliderContainer = styled.div`
 	&::-webkit-scrollbar {
 		display: none;
 	}
+	margin-bottom: 2rem;
 `;
 
 export const ImageContainer = styled.div`
 	width: 100%;
 	height: 100%;
 	overflow: hidden;
-	margin-bottom: 2rem;
 	flex: 0 0 auto;
 	scroll-snap-align: start;
 	margin-right: 10px;
@@ -191,9 +205,29 @@ export const ImageContainer = styled.div`
 `;
 
 export const Image = styled.img`
-	width: 100%;
+	width: auto;
 	height: auto;
 	max-height: 450px;
+`;
+
+export const DotsContainer = styled.div`
+	text-align: center;
+	width: 100%;
+	margin-bottom: 2rem;
+`;
+
+export const Dot = styled.span`
+	height: 1.5rem;
+	width: 1.5rem;
+	margin: 0 5px;
+	background-color: #bbb;
+	border-radius: 50%;
+	display: inline-block;
+	transition: background-color 0.6s ease;
+	cursor: pointer;
+	&.active {
+		background-color: #717171;
+	}
 `;
 
 export const TextArea = styled.div`

@@ -61,7 +61,7 @@ function UserProfile({ isModalOpen, closeModal }: UserProfileProps) {
 	const handleSelect = async (e: FormEvent) => {
 		e.preventDefault();
 		const fileInput = imgRef.current;
-		const token = localStorage.getItem('accessToken');
+		const token = sessionStorage.getItem('accessToken');
 
 		// 둘 다 없을 때의 검증
 		if (

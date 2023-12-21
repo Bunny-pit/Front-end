@@ -72,7 +72,7 @@ const UserMain = () => {
 			});
 		}
 
-		const token = localStorage.getItem('accessToken');
+		const token = sessionStorage.getItem('accessToken');
 
 		try {
 			await axios.post(`${process.env.REACT_APP_API_URL}/api/post`, formData, {

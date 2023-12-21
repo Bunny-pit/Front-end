@@ -76,7 +76,7 @@ const useMainHomePost = (pathname: string) => {
 	);
 
 	const createPost = async (imageFiles: File[], onPostCreated?: () => void) => {
-		const token = localStorage.getItem('accessToken');
+		const token = sessionStorage.getItem('accessToken');
 		if (!token) {
 			Swal.fire(
 				alertList.infoMessage('게시글 작성을 위해서는 로그인이 필요합니다.'),
@@ -203,7 +203,7 @@ const useMainHomePost = (pathname: string) => {
 					return;
 				}
 
-				const token = localStorage.getItem('accessToken');
+				const token = sessionStorage.getItem('accessToken');
 				if (!token) {
 					Swal.fire(
 						alertList.errorMessage(

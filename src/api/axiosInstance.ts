@@ -25,7 +25,7 @@ swrApi.interceptors.response.use(
 export const api = axios.create({
 	baseURL: process.env.REACT_APP_API_URL,
 	headers: {
-		Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+		Authorization: `Bearer ${sessionStorage.getItem('accessToken')}`,
 	},
 	withCredentials: true,
 });

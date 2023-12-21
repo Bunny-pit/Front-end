@@ -73,7 +73,7 @@ const Detail = () => {
 		console.log('유저 데이터를 불러오는데 실패했습니다.');
 	}
 	useEffect(() => {
-		const token = localStorage.getItem('accessToken');
+		const token = sessionStorage.getItem('accessToken');
 		const config = {
 			headers: {
 				Authorization: `Bearer ${token}`,
@@ -118,7 +118,7 @@ const Detail = () => {
 	}, [postId, isLiked, userData?._id]);
 	// --------토큰 받아오는 함수 ---------
 	const getToken = () => {
-		const token = localStorage.getItem('accessToken');
+		const token = sessionStorage.getItem('accessToken');
 		const config = {
 			headers: {
 				Authorization: `Bearer ${token}`,
