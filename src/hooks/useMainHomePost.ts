@@ -86,7 +86,7 @@ const useMainHomePost = (pathname: string, shouldLoad: boolean) => {
 			return;
 		} else if (newPostContent.trim().length > 300) {
 			Swal.fire(
-				alertList.infoMessage('게시글은 최대 300자 미만으로 작성해주세요.'),
+				alertList.infoMessage('게시글은 최대 300자 이하로 작성해주세요.'),
 			);
 			return;
 		}
@@ -129,7 +129,7 @@ const useMainHomePost = (pathname: string, shouldLoad: boolean) => {
 				return;
 			} else if (updatedContent.trim().length > 300) {
 				Swal.fire(
-					alertList.errorMessage('게시글은 최대 300자 미만으로 작성해주세요.'),
+					alertList.errorMessage('게시글은 최대 300자 이하로 작성해주세요.'),
 				);
 				return;
 			}

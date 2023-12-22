@@ -77,6 +77,7 @@ export const ImageUploadButton = styled.button`
 	width: auto;
 	padding: 1.5rem 5rem;
 	color: #fff;
+	font-size: 2rem;
 	font-weight: bold;
 	background-color: ${({ theme }) => theme.colors.maincolor};
 	border: none;
@@ -86,6 +87,7 @@ export const ImageUploadButton = styled.button`
 
 export const ImageUploadIntroText = styled.div`
 	color: #df0101;
+	font-size: 1.5rem;
 `;
 
 export const TextAreaAndButtonContainer = styled.div`
@@ -125,3 +127,13 @@ export const SendButton = styled.button`
 export const SendIcon = styled.img`
 	cursor: pointer;
 `;
+
+export const TextCountArea = styled.div`
+	font-size: 1.5rem;
+	color: #999;
+	width: 85%;
+	display: flex;
+	justify-content: flex-end;
+`;
+
+export const TextCount = styled.div``;

@@ -53,8 +53,8 @@ const DefaultFooter = () => {
 							</MemberLink>
 						</List>
 					</MemberList>
-					<ProjectLink href='https://github.com/Bunny-pit/bunny-pit'>
-						https://github.com/Bunny-pit/bunny-pit
+					<ProjectLink href='https://github.com/Bunny-pit'>
+						https://github.com/Bunny-pit
 					</ProjectLink>
 				</Sec2>
 			</Wrapper>

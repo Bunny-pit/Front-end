@@ -16,6 +16,8 @@ import {
 	TextAreaInput,
 	SendButton,
 	SendIcon,
+	TextCountArea,
+	TextCount,
 } from './MainHomeSendBoxStyle';
 import sendIcon from '../../assets/icons/Vector.png';
 
@@ -26,6 +28,7 @@ interface MainHomeSendBoxProps {
 const MainHomeSendBox = ({ onPostCreated }: MainHomeSendBoxProps) => {
 	const [imageFiles, setImageFiles] = useState<File[]>([]);
 	const [imagePreviews, setImagePreviews] = useState<string[]>([]);
+	const [postLength, setPostLength] = useState(0);
 
 	const location = useLocation();
 	const { createPost, newPostContent, setNewPostContent } = useMainHomePost(
@@ -65,6 +68,7 @@ const MainHomeSendBox = ({ onPostCreated }: MainHomeSendBoxProps) => {
 	const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		const { value } = e.target;
 		setNewPostContent(value);
+		setPostLength(value.length);
 	};
 
 	const handleKeyUp = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -117,10 +121,20 @@ const MainHomeSendBox = ({ onPostCreated }: MainHomeSendBoxProps) => {
 						onChange={handleInputChange}
 						onKeyUp={handleKeyUp}
 					/>
+
 					<SendButton type='submit'>
 						<SendIcon src={sendIcon} alt='Send Icon' />
 					</SendButton>
 				</TextAreaAndButtonContainer>
+				<TextCountArea>
+					최대 300자 이하&nbsp;|&nbsp;
+					<TextCount
+						style={{
+							color: postLength > 300 ? 'red' : '#999',
+						}}>
+						현재 글자 수: {postLength}
+					</TextCount>
+				</TextCountArea>
 			</Content>
 		</Container>
 	);

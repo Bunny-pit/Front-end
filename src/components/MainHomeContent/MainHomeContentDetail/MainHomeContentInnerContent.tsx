@@ -20,6 +20,8 @@ import {
 	Dot,
 	TextArea,
 	EditContentArea,
+	TextCountArea,
+	TextCount,
 	BottomContainer,
 	Date,
 	ButtonWrapper,
@@ -106,10 +108,20 @@ const MainHomeContentInnerContent = ({ post }: InnerContentProps) => {
 
 			<ContentContainer>
 				{editingPostId === post._id ? (
-					<EditContentArea
-						value={updatedContent}
-						onChange={handleContentChange}
-					/>
+					<>
+						<EditContentArea
+							value={updatedContent}
+							onChange={handleContentChange}
+						/>
+						<TextCountArea>
+							<TextCount
+								style={{
+									color: updatedContent.length > 300 ? 'red' : '#999',
+								}}>
+								글자 수: {updatedContent.length}
+							</TextCount>
+						</TextCountArea>
+					</>
 				) : (
 					<Content>
 						<SliderContainer ref={sliderRef} onScroll={handleScroll}>

@@ -19,6 +19,7 @@ export const AddContentButton = styled.button`
 	padding: 1.5rem 5rem;
 	margin-bottom: 5%;
 	color: #fff;
+	font-size: 2rem;
 	font-weight: bold;
 	background-color: #cdc0fc;
 	border: none;
@@ -254,7 +255,19 @@ export const EditContentArea = styled.textarea`
 	border-radius: 1rem;
 	width: 100%;
 	height: 10rem;
+	font-size: 1.8rem;
 	resize: none;
+	border: none;
+`;
+
+export const TextCountArea = styled.div`
+	width: 100%;
+	display: flex;
+	justify-content: flex-end;
+`;
+
+export const TextCount = styled.div`
+	font-size: 1.5rem;
 `;
 
 export const BottomContainer = styled.div`
@@ -280,6 +293,7 @@ export const Edit = styled.button`
 	border-radius: 0.7rem;
 	background-color: #cdc0fc;
 	color: #fff;
+	font-weight: bold;
 	cursor: pointer;
 `;
 
@@ -290,5 +304,7 @@ export const Delete = styled.button`
 	border-radius: 0.7rem;
 	background-color: ${({ theme }) => theme.colors.maincolor};
 	color: #fff;
+	font-weight: bold;
+
 	cursor: pointer;
 `;

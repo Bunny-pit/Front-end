@@ -5,9 +5,10 @@ import friends from '../../assets/icons/icons8-friend_11zon.webp';
 import friendsChatting from '../../assets/icons/icons8-friendchat_11zon.webp';
 
 export const HedearStyle = styled.div`
-	border-bottom: 0.1rem solid ${({ theme }) => theme.colors.logocolor};
 	width: 100%;
+	box-shadow: 0 0.8rem 0.6rem -0.6rem rgba(219, 123, 249, 0.5);
 `;
+
 export const HeaderWrapper = styled.div`
 	margin: 0 4rem;
 	height: 10rem;
@@ -71,7 +72,8 @@ export const MenuLi = styled.li`
 	a {
 		text-decoration: none;
 		font-size: 2rem;
-		color: black;
+		color: #777;
+		font-weight: 600;
 		padding: 1rem 1.5rem;
 	}
 `;

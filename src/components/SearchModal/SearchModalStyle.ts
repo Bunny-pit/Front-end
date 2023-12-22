@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 export const ModalWrapper = styled.div`
-	position: fixed;
-	width: 50%;
+	position: absolute;
+	width: 450px;
 	height: 50%;
 	background-color: white;
 	display: flex;
@@ -10,13 +10,21 @@ export const ModalWrapper = styled.div`
 	justify-content: center;
 	align-items: center;
 	border-radius: 2rem;
-	border: 1px solid ${({ theme }) => theme.colors.strongpurple};
 	z-index: 999;
-	top: 10%;
-	left: 25%;
-	@media (max-width: 390px) {
+	right: 5%;
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+
+	@media (max-width: 768px) {
+		width: 60%;
+		right: 10%;
+	}
+
+	@media (max-width: 500px) {
+		width: 100%;
+		right: 0;
 	}
 `;
+
 export const ExitImage = styled.img`
 	cursor: pointer;
 	position: absolute;
@@ -42,6 +50,10 @@ export const SearchResult = styled.div`
 	border-right: 1px solid ${({ theme }) => theme.colors.gray200};
 `;
 
+export const Result = styled.div`
+	width: 80%;
+`;
+
 export const ResultText = styled.p`
 	font-size: 2rem;
 	cursor: pointer;
@@ -57,8 +69,10 @@ export const ProfileImage = styled.img`
 	border-radius: 50%;
 	margin-right: 2rem;
 `;
-export const NoResultText = styled.p`
+export const NoResultText = styled.div`
+	text-align: center;
 	font-size: 2rem;
+	font-weight: bold;
 	color: ${({ theme }) => theme.colors.strongpurple};
 `;
 export const ResultContainer = styled.div`

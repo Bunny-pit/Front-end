@@ -3,6 +3,7 @@ import SearchBar from '../../components/SearchBar/SearchBar';
 import {
 	ModalWrapper,
 	SearchResult,
+	Result,
 	SearchBarContainer,
 	ExitImage,
 	ResultText,
@@ -69,20 +70,22 @@ const SearchModal = ({ onClose }: SearchModalProps) => {
 				<SearchBar onSearch={handleSearch} />
 			</SearchBarContainer>
 			<SearchResult>
-				{noResults ? (
-					<NoResultText>찾는 사용자가 없습니다.</NoResultText>
-				) : (
-					searchResults[0]?.map((result: any) => (
-						<ResultContainer key={result._id}>
-							<ProfileImage src={result.profileImg} alt='profile' />
-							<Link
-								to={`/post/user/${result.userName}`}
-								style={{ textDecoration: 'none' }}>
-								<ResultText>{result.userName}</ResultText>
-							</Link>
-						</ResultContainer>
-					))
-				)}
+				<Result>
+					{noResults ? (
+						<NoResultText>찾는 사용자가 없습니다.</NoResultText>
+					) : (
+						searchResults[0]?.map((result: any) => (
+							<ResultContainer key={result._id}>
+								<ProfileImage src={result.profileImg} alt='profile' />
+								<Link
+									to={`/post/user/${result.userName}`}
+									style={{ textDecoration: 'none' }}>
+									<ResultText>{result.userName}</ResultText>
+								</Link>
+							</ResultContainer>
+						))
+					)}
+				</Result>
 			</SearchResult>
 		</ModalWrapper>
 	);
