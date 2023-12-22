@@ -189,6 +189,8 @@ export const Content = styled.div`
 `;
 
 export const SliderContainer = styled.div`
+	width: 100%;
+	height: auto;
 	overflow: hidden;
 	display: flex;
 	overflow-x: auto;
@@ -202,6 +204,9 @@ export const SliderContainer = styled.div`
 `;
 
 export const ImageContainer = styled.div`
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	width: 100%;
 	height: 100%;
 	overflow: hidden;
