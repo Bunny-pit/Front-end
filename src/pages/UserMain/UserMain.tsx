@@ -77,27 +77,40 @@ const UserMain = () => {
 	//-----------------팔로우 기능------------------
 	const followToggle = async () => {
 		try {
-			getFollowings(userName);
 			const response = await post<ApiResponse>(
 				`${process.env.REACT_APP_API_URL}/api/user/toggleFollow`,
 				{ followeeName: userId },
 				getToken(),
 			);
-			mutate(
-				`${process.env.REACT_APP_API_URL}/api/user/followers?userName=${userName}`,
-			);
-			if (!isFollowed) {
+			setIsFollowed(response.data.followed);
+			if (response.data.followed) {
+				mutate(
+					`${process.env.REACT_APP_API_URL}/api/user/followers?userName=${userName}`,
+				);
 				await Swal.fire(alertList.successMessage('팔로우 하였습니다.'));
-				setIsFollowed(response.data.followed);
 			} else {
+				mutate(
+					`${process.env.REACT_APP_API_URL}/api/user/followers?userName=${userName}`,
+				);
 				await Swal.fire(alertList.infoMessage('팔로우를 취소하였습니다.'));
-				setIsFollowed(response.data.followed);
 			}
 		} catch (error) {
 			console.error('Error updating follow:', error);
 			await Swal.fire(alertList.errorMessage('팔로우 실패하였습니다.'));
 		}
 	};
+
+	useEffect(() => {
+		const initializeFollowStatus = async () => {
+			if (userData?.userName) {
+				await getFollowers(userData.userName);
+				await getFollowings(userData.userName);
+			}
+		};
+
+		initializeFollowStatus();
+	}, [userData?.userName]);
+
 	//--------------------팔로워 가져오기------------------
 	const getFollowers = async (userName: string) => {
 		try {
