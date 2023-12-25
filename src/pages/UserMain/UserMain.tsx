@@ -230,42 +230,44 @@ const UserMain = () => {
 					)}
 
 					<ProfileWrap>
-						<Wrapper1>
-							<UserId>{userName}</UserId>
-							{userData?.userName === userName ? (
-								<span></span>
-							) : isFollowed ? (
-								<PlusIcon src={FollowingIcon} onClick={followToggle} />
-							) : (
-								<PlusIcon src={plusIcon} onClick={followToggle} />
+						<div>
+							<Wrapper1>
+								<UserId>{userName}</UserId>
+								{userData?.userName === userName ? (
+									<span></span>
+								) : isFollowed ? (
+									<PlusIcon src={FollowingIcon} onClick={followToggle} />
+								) : (
+									<PlusIcon src={plusIcon} onClick={followToggle} />
+								)}
+							</Wrapper1>
+
+							{location.pathname === '/post' && (
+								<Wrapper2>
+									<PostButton>
+										<Link to={`/post/upload`}>게시글 등록</Link>
+									</PostButton>
+									<EditButton>
+										<Link to={'/user/edit'}>프로필 편집</Link>
+									</EditButton>
+								</Wrapper2>
 							)}
-						</Wrapper1>
+							<Wrapper3>
+								<p>
+									게시물 <span>{postCount}</span>
+								</p>
 
-						{location.pathname === '/post' && (
-							<Wrapper2>
-								<PostButton>
-									<Link to={`/post/upload`}>게시글 등록</Link>
-								</PostButton>
-								<EditButton>
-									<Link to={'/user/edit'}>프로필 편집</Link>
-								</EditButton>
-							</Wrapper2>
-						)}
-						<Wrapper3>
-							<p>
-								게시물 <span>{postCount}</span>
-							</p>
-
-							<p>
-								나를 좋아하는 버니들 <span>{follower ? follower : 0}</span>
-							</p>
-						</Wrapper3>
-						<Wrapper4>
-							<ProfileUl>
-								<ProfileLi>{introduction}</ProfileLi>
-							</ProfileUl>
-							<Email href='#'>{userId ? getEmail : userData?.email}</Email>
-						</Wrapper4>
+								<p>
+									나를 좋아하는 버니들 <span>{follower ? follower : 0}</span>
+								</p>
+							</Wrapper3>
+							<Wrapper4>
+								<ProfileUl>
+									<ProfileLi>{introduction}</ProfileLi>
+								</ProfileUl>
+								<Email href='#'>{userId ? getEmail : userData?.email}</Email>
+							</Wrapper4>
+						</div>
 					</ProfileWrap>
 				</Sec1>
 				<hr />

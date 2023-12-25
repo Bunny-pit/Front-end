@@ -15,16 +15,18 @@ export const Container = styled.div`
 	height: 150rem;
 `;
 export const Sec1 = styled.div`
+	width: 80%;
+	margin: 0 auto;
 	display: flex;
-	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
 	padding: 10rem 0;
 `;
 export const ImageWrap = styled.div`
-	width: 50%
-	text-align: right;
-	margin-right: 2rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 50%;
 `;
 export const UserImage = styled.img`
 	border-radius: 50%;
@@ -59,7 +61,9 @@ export const OtherUserImage = styled.img`
 	}
 `;
 export const ProfileWrap = styled.div`
-	margin-left: 2rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 	width: 50%;
 `;
 export const Wrapper1 = styled.div`
@@ -68,13 +72,12 @@ export const Wrapper1 = styled.div`
 	align-items: center;
 `;
 export const UserId = styled.h4`
-	font-size: 2.6rem;
-	margin-right: 2rem;
+	font-size: 2.5rem;
 `;
+
 export const PlusIcon = styled.img`
 	width: 3.1rem;
 	cursor: pointer;
-	margin-right: 2rem;
 `;
 export const FriendButton = styled.button`
 	width: 10rem;

@@ -43,9 +43,6 @@ const DefaultHeader = () => {
 	}, []);
 
 	const handleModalClick = (event: React.MouseEvent<HTMLDivElement>) => {
-		console.log('Clicked element:', event.target);
-		console.log('Current target:', event.currentTarget);
-
 		if (event.target === event.currentTarget) {
 			closeSearchModal();
 		}
