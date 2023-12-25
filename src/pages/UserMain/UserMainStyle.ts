@@ -22,18 +22,17 @@ export const Sec1 = styled.div`
 	padding: 10rem 0;
 `;
 export const ImageWrap = styled.div`
-
-  width: 50%;
-  orange;
-  text-align: right;
-  margin-right: 2rem;
+	width: 50%
+	text-align: right;
+	margin-right: 2rem;
 `;
 export const UserImage = styled.img`
-	border-radius: 200px;
+	border-radius: 50%;
 	width: 31rem;
 	height: 31rem;
 	object-fit: cover;
 	background-color: #fff;
+	box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
 	cursor: pointer;
 	@media only screen and (min-width: 391px) and (max-width: 768px) {
 		width: 18rem;
