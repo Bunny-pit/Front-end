@@ -51,8 +51,8 @@ const MainHomeSendBox = ({ onPostCreated }: MainHomeSendBoxProps) => {
 					new Promise((resolve) => {
 						Resizer.imageFileResizer(
 							file,
-							800,
-							800,
+							1500,
+							1500,
 							'WEBP',
 							80,
 							0,
