@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import useMainHomePost from '../../hooks/useMainHomePost';
+import Resizer from 'react-image-file-resizer';
 import {
 	Container,
 	Content,
@@ -43,15 +44,39 @@ const MainHomeSendBox = ({ onPostCreated }: MainHomeSendBoxProps) => {
 
 	const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		if (e.target.files) {
-			const newFilesArray = Array.from(e.target.files);
-			const updatedImageFiles = [...imageFiles, ...newFilesArray];
-			setImageFiles(updatedImageFiles);
+			const fileArray = Array.from(e.target.files);
 
-			const newImagePreviews = newFilesArray.map((file) =>
-				URL.createObjectURL(file),
+			const resizeImagePromises = fileArray.map(
+				(file) =>
+					new Promise((resolve) => {
+						Resizer.imageFileResizer(
+							file,
+							800,
+							800,
+							'WEBP',
+							80,
+							0,
+							(uri) => {
+								resolve(uri);
+							},
+							'file',
+						);
+					}),
 			);
-			const updatedImagePreviews = [...imagePreviews, ...newImagePreviews];
-			setImagePreviews(updatedImagePreviews);
+
+			Promise.all(resizeImagePromises)
+				.then((resizedImages) => {
+					const newImageFiles = resizedImages as File[];
+					setImageFiles([...imageFiles, ...newImageFiles]);
+
+					const newImagePreviews = newImageFiles.map((file) =>
+						URL.createObjectURL(file),
+					);
+					setImagePreviews([...imagePreviews, ...newImagePreviews]);
+				})
+				.catch((error) => {
+					console.error('Error resizing images:', error);
+				});
 		}
 	};
 

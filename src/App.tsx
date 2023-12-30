@@ -3,12 +3,8 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import MainPage from './pages/Main/Main';
 import { getToken } from './api/token';
 
-const MainHomeSecret = React.lazy(
-	() => import('./pages/Mainhome/MainHomeSecret'),
-);
-const MainHomeFriends = React.lazy(
-	() => import('./pages/Mainhome/MainHomeFriends'),
-);
+import MainHomeSecret from './pages/Mainhome/MainHomeSecret';
+import MainHomeFriends from './pages/Mainhome/MainHomeFriends';
 const UserMainPage = React.lazy(() => import('./pages/UserMain/UserMain'));
 const Chatting = React.lazy(() => import('./pages/Chatting/Chatting'));
 const Detail = React.lazy(() => import('./pages/UserMain/Detail/Detail'));
